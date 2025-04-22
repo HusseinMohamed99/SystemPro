@@ -1,28 +1,64 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
-
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
-linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at https://dart.dev/lints.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
-  rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+analyzer:
+  errors:
+    unrelated_type_equality_checks: ignore
+    unused_import: ignore
+  plugins:
+    - custom_lint
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+linter:
+  rules:
+    # Style and readability rules
+    avoid_empty_else: true
+    camel_case_types: true
+    constant_identifier_names: true
+    control_flow_in_finally: true
+    directives_ordering: true
+    file_names: true
+    implementation_imports: true
+    library_prefixes: true
+    lines_longer_than_80_chars: true
+    non_constant_identifier_names: true
+    prefer_typing_uninitialized_variables: true
+    sort_constructors_first: true
+    unnecessary_brace_in_string_interps: true
+    unnecessary_getters_setters: true
+    avoid_print: true
+    prefer_single_quotes: true
+    sort_child_properties_last: true
+    unawaited_futures: true
+    no_self_assignments: true
+    use_enums: true
+    avoid_unused_constructor_parameters: true
+    unnecessary_lambdas: true
+    prefer_const_constructors: true
+    always_use_package_imports: true
+    prefer_final_fields: true
+    annotate_overrides: true
+    sort_pub_dependencies: true
+    avoid_single_cascade_in_expression_statements: true
+    prefer_const_declarations: true
+    avoid_redundant_argument_values: true
+    prefer_const_literals_to_create_immutables: true
+
+    # Additional rules for better code quality
+    empty_catches: true
+    prefer_final_locals: true
+    avoid_returning_null: true
+    avoid_renaming_method_parameters: true
+    avoid_shadowing_type_parameters: true
+    avoid_types_as_parameter_names: true
+    prefer_conditional_assignment: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    prefer_null_aware_operators: true
+
+dart_code_metrics:
+  metrics-exclude:
+    - test/**
+
+  rules:
+    - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
+    - always-remove-listener
