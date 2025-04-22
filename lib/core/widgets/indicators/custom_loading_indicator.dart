@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:system_pro/core/helpers/extensions/color_extension.dart';
+import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+
+class LoadingIndicator extends StatelessWidget {
+  const LoadingIndicator({
+    super.key,
+    required this.isLoading,
+    required this.child,
+  });
+
+  final bool isLoading;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        child,
+        if (isLoading)
+          Container(
+            color: HexColorExtension('#80000000').toColor(),
+            child: const Center(
+              child: SpinKitWaveSpinner(
+                color: ColorManager.primaryBlue,
+                waveColor: ColorManager.primaryBlue,
+                trackColor: ColorManager.primaryBlue,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}

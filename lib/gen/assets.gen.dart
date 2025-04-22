@@ -51,11 +51,22 @@ class $AssetsFontsGen {
   ];
 }
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/error.svg
+  String get error => 'assets/images/error.svg';
+
+  /// List of all assets
+  List<String> get values => [error];
+}
+
 class Assets {
   const Assets._();
 
   static const String aEnv = '.env';
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
+  static const $AssetsImagesGen images = $AssetsImagesGen();
 
   /// List of all assets
   static List<String> get values => [aEnv];
