@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/adaptive/adaptive_layout.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:system_pro/core/logic/localization/localization_cubit.dart';
+import 'package:system_pro/core/logic/localization/localization_state.dart';
+import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
+import 'package:system_pro/core/logic/theming/change_theming_state.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/themingManager/light_theming.dart';
 import 'package:system_pro/generated/l10n.dart';
 
 class SystemProApp extends StatelessWidget {
@@ -16,47 +21,84 @@ class SystemProApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AdaptiveLayout(
-      mobileLayout:
-          (context) => ScreenUtilInit(
-            designSize: const Size(375, 812),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (_, child) {
-              SystemChrome.setPreferredOrientations([
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.portraitDown,
-              ]);
-              return MediaQuery(
-                data: MediaQuery.of(
-                  context,
-                ).copyWith(textScaler: const TextScaler.linear(1.0)),
-                child: MaterialApp(
-                  theme: buildLightTheming(),
-                  darkTheme: buildLightTheming(),
-                  themeMode: ThemeMode.light,
-                  locale: const Locale('ar'),
-                  debugShowCheckedModeBanner: false,
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: S.delegate.supportedLocales,
-                  onGenerateRoute: appRouter.generateRoute,
-                  title: 'Fakahani',
-                  initialRoute: getInitialRoute(),
-                ),
+    final changeLocalizationCubit = getIt<ChangeLocalizationCubit>();
+    final changeThemingCubit = getIt<ChangeThemingCubit>();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ChangeLocalizationCubit>(
+          create: (context) => changeLocalizationCubit,
+        ),
+        BlocProvider<ChangeThemingCubit>(
+          create: (context) => changeThemingCubit,
+        ),
+      ],
+      child: BlocBuilder<ChangeLocalizationCubit, ChangeLocalizationState>(
+        builder: (context, localizationState) {
+          final locale = localizationState.map(
+            initial: (state) => const Locale('en'),
+            loading: (state) => const Locale('en'),
+            loaded: (state) => Locale(state.localization),
+            error: (state) => const Locale('en'),
+            // orElse: () => const Locale('en'),
+          );
+
+          return BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
+            builder: (context, themingState) {
+              final theme = themingState.map(
+                initial: (s) => s.theme,
+                loading: (s) => s.theme,
+                loaded: (s) => s.theme,
+              );
+
+              return AdaptiveLayout(
+                mobileLayout:
+                    (context) => ScreenUtilInit(
+                      designSize: const Size(375, 812),
+                      minTextAdapt: true,
+                      splitScreenMode: true,
+                      builder: (_, child) {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                          DeviceOrientation.portraitDown,
+                        ]);
+                        return MediaQuery(
+                          data: MediaQuery.of(
+                            context,
+                          ).copyWith(textScaler: const TextScaler.linear(1.0)),
+                          child: MaterialApp(
+                            theme: theme,
+                            darkTheme: theme,
+                            themeMode: ThemeMode.light,
+                            locale: locale,
+                            localizationsDelegates: const [
+                              S.delegate,
+                              GlobalMaterialLocalizations.delegate,
+                              GlobalWidgetsLocalizations.delegate,
+                              GlobalCupertinoLocalizations.delegate,
+                            ],
+                            supportedLocales: S.delegate.supportedLocales,
+                            onGenerateRoute: appRouter.generateRoute,
+                            initialRoute: getInitialRoute(),
+                            title: 'System Pro',
+                            debugShowCheckedModeBanner: false,
+                          ),
+                        );
+                      },
+                    ),
+                tabletLayout:
+                    (context) => const Center(child: Text('Tablet Layout')),
+                desktopLayout:
+                    (context) => const Center(child: Text('Desktop Layout')),
               );
             },
-          ),
-      tabletLayout: (context) => const Center(child: Text('Tablet Layout')),
-      desktopLayout: (context) => const Center(child: Text('Desktop Layout')),
+          );
+        },
+      ),
     );
   }
 
   String getInitialRoute() {
-    return isLoggedInUser ? Routes.mainView : Routes.loginView;
+    return !isLoggedInUser ? Routes.mainView : Routes.loginView;
   }
 }

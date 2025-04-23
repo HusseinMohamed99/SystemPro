@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/bloc_observer.dart';
+import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
 
 void main() async {
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
+  await initServices();
   runApp(SystemProApp(appRouter: AppRouters()));
 }
 
 Future<void> initServices() async {
+  await setupGetIt();
+  await dotenv.load();
   await ScreenUtil.ensureScreenSize();
   Bloc.observer = MyBlocObserver();
 }

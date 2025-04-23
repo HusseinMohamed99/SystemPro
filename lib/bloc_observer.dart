@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-
-import 'core/helpers/functions/app_logs.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
