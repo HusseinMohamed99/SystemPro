@@ -4,8 +4,8 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 
-class MainView extends StatelessWidget {
-  const MainView({super.key});
+class TestingView extends StatelessWidget {
+  const TestingView({super.key});
 
   @override
   Widget build(BuildContext context) {

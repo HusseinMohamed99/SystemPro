@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/main_view.dart';
+import 'package:system_pro/testing_view.dart';
 
 class AppRouters {
   Route? generateRoute(RouteSettings settings) {
@@ -9,8 +9,8 @@ class AppRouters {
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      case Routes.mainView:
-        return MaterialPageRoute(builder: (_) => const MainView());
+      case Routes.testingView:
+        return MaterialPageRoute(builder: (_) => const TestingView());
       // case Routes.loginView:
       //   return MaterialPageRoute(
       //     builder:

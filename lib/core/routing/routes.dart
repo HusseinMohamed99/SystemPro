@@ -1,4 +1,4 @@
 class Routes {
-  static const String mainView = '/mainView';
+  static const String testingView = '/mainView';
   static const String loginView = '/loginView';
 }
