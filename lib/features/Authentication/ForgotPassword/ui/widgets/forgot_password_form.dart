@@ -14,6 +14,7 @@ class ForgotPasswordForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: context.read<ForgotPasswordCubit>().formKey,
       child: Column(
         spacing: kSpacingXLarge.h,
         crossAxisAlignment: CrossAxisAlignment.stretch,
