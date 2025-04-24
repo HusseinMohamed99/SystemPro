@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_response.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_request_body.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_response.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_request_body.dart';
@@ -17,4 +19,8 @@ abstract class ApiService {
 
   @POST(ApiConstants.signup)
   Future<SignupResponse> signup(@Body() SignupRequestBody signupRequestBody);
+  @POST(ApiConstants.forgotPassword)
+  Future<ForgotPasswordResponse> forgotPassword(
+    @Body() ForgotPasswordRequestBody forgotPasswordRequestBody,
+  );
 }

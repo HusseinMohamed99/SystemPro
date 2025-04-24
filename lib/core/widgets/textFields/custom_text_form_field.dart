@@ -59,7 +59,7 @@ class CustomTextFormField extends StatelessWidget {
       ).textTheme.titleLarge?.copyWith(color: ColorManager.darkBlack),
       decoration: InputDecoration(
         filled: true,
-        fillColor: ColorManager.softWhite,
+        fillColor: ColorManager.pureWhite,
         hintText: hintText,
         hintStyle: Theme.of(
           context,

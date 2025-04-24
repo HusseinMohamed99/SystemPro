@@ -169,6 +169,10 @@
       "enter_email":"Enter your email",
       "@enter_email":{},
       "enter_password":"Enter your password",
-      "@enter_password":{}
+      "@enter_password":{},
+      "forgot_password_subtitle":"Don’t worry! It happens. Please enter the email associated with your account.",
+      "@forgot_password_subtitle":{},
+      "send_code":"Send Code",
+      "@send_code":{}
 
 }

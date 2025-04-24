@@ -87,6 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter your password",
     ),
     "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
+    "forgot_password_subtitle": MessageLookupByLibrary.simpleMessage(
+      "Don’t worry! It happens. Please enter the email associated with your account.",
+    ),
     "full_name": MessageLookupByLibrary.simpleMessage("Full Name"),
     "full_name_cannot_be_only_numbers": MessageLookupByLibrary.simpleMessage(
       "Name cannot be only numbers",
@@ -189,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacy_policy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
+    "send_code": MessageLookupByLibrary.simpleMessage("Send Code"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "Sign in successfully",

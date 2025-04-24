@@ -169,5 +169,9 @@
        "enter_email":"ادخل البريد الالكترونى",
       "@enter_email":{},
       "enter_password":"ادخل كلمة المرور",
-      "@enter_password":{}
+      "@enter_password":{},
+      "forgot_password_subtitle":"لا تقلق! هذا قد يحدث. يرجى إدخال البريد الإلكتروني المرتبط بالحساب الخاص بك.",
+      "@forgot_password_subtitle":{},
+       "send_code":"إرسال الكود",
+      "@send_code":{}
 }

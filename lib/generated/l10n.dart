@@ -814,6 +814,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Don’t worry! It happens. Please enter the email associated with your account.`
+  String get forgot_password_subtitle {
+    return Intl.message(
+      'Don’t worry! It happens. Please enter the email associated with your account.',
+      name: 'forgot_password_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Code`
+  String get send_code {
+    return Intl.message('Send Code', name: 'send_code', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

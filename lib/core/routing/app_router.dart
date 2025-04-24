@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/routing/routes.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/forgot_password_view.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
@@ -34,8 +35,15 @@ class AppRouters {
                 child: const SignupView(),
               ),
         );
-      case Routes.forgotPasswordView:
-        return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
+         case Routes.forgotPasswordView:
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => getIt<ForgotPasswordCubit>(),
+                child: const ForgotPasswordView(),
+              ),
+        );
+      
 
       //    case Routes.productDetailsView:
       //   return MaterialPageRoute(

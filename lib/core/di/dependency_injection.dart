@@ -7,6 +7,8 @@ import 'package:system_pro/core/networking/backend/api_service.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/styleManager/text_style.dart';
 import 'package:system_pro/core/theming/themingManager/light_theming.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forgot_password_repo.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
@@ -52,5 +54,18 @@ void setupGetIt({required BuildContext context}) {
   if (!getIt.isRegistered<SignupCubit>()) {
     getIt.registerLazySingleton<SignupRepo>(() => SignupRepo(getIt()));
     getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
+  }  
+  // FORGOT PASSWORD
+  if (!getIt.isRegistered<ForgotPasswordCubit>()) {
+   
+    getIt.registerLazySingleton<ForgotPasswordRepo>(
+      () => ForgotPasswordRepo(getIt()),
+    );
+    getIt.registerFactory<ForgotPasswordCubit>(
+      () => ForgotPasswordCubit(getIt()),
+    );
+
   }
+
+
 }

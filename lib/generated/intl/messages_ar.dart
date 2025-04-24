@@ -91,6 +91,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgot_password": MessageLookupByLibrary.simpleMessage(
       "نسيت كلمة المرور؟",
     ),
+    "forgot_password_subtitle": MessageLookupByLibrary.simpleMessage(
+      "لا تقلق! هذا قد يحدث. يرجى إدخال البريد الإلكتروني المرتبط بالحساب الخاص بك.",
+    ),
     "full_name": MessageLookupByLibrary.simpleMessage("الاسم كامل"),
     "full_name_cannot_be_only_numbers": MessageLookupByLibrary.simpleMessage(
       "لا يمكن أن يكون الاسم مكونًا فقط من الأرقام",
@@ -191,6 +194,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacy_policy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
+    "send_code": MessageLookupByLibrary.simpleMessage("إرسال الكود"),
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "تم تسجيل الدخول بنجاح",

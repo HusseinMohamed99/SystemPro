@@ -34,7 +34,6 @@ class EmailFormField extends StatelessWidget {
             return ValidationManager.emailValidator(context, value!);
           },
           textInputType: TextInputType.emailAddress,
-
           hintText: context.localization.email,
           onChanged: (value) {
             onTextChanged(controller: emailController, value: value);
