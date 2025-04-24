@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           GestureDetector(
             onTap: () {
-              // context.pushNamed(Routes.forgotPasswordView);
+           context.pushNamed(Routes.forgotPasswordView);
             },
             child: Text(
               context.localization.forgot_password,
