@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
+import 'package:system_pro/core/widgets/textFields/confirm_password_form_field_widget.dart';
 import 'package:system_pro/core/widgets/textFields/email_form_field_widget.dart';
+import 'package:system_pro/core/widgets/textFields/name_form_field_widget.dart';
 import 'package:system_pro/core/widgets/textFields/password_form_field_widget.dart';
 import 'package:system_pro/core/widgets/texts/have_an_account.dart';
-import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignupFormState extends State<SignupForm> {
   bool isPassword = true;
   IconData? suffix = Icons.visibility_off;
 
@@ -30,68 +29,71 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   late TextEditingController passwordController;
+  late TextEditingController confirmPasswordController;
   @override
   void initState() {
     super.initState();
-    passwordController = context.read<LoginCubit>().passwordController;
+    // passwordController = context.read<SignupCubit>().passwordController;
+    // confirmPasswordController = context.read<SignupCubit>().confirmPasswordController;
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<LoginCubit>().formKey,
       child: Column(
         spacing: kSpacingXLarge.h,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          NameFormField(
+            nameController: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
           EmailFormField(
-            emailController: context.read<LoginCubit>().emailController,
-            focusNode: context.read<LoginCubit>().emailFocusNode,
+            emailController: TextEditingController(),
+            focusNode: FocusNode(),
           ),
           PasswordFormField(
-            focusNode: context.read<LoginCubit>().passwordFocusNode,
-            passwordController: context.read<LoginCubit>().passwordController,
+            focusNode: FocusNode(),
+            passwordController: TextEditingController(),
             isPassword: isPassword,
             suffixIconOnTap: () {
               setState(changePassword);
             },
             visibilityIcon: suffix!,
           ),
-          GestureDetector(
-            onTap: () {
-              // context.pushNamed(Routes.forgotPasswordView);
+          ConfirmPasswordFormField(
+            focusNode: FocusNode(),
+            passwordController: TextEditingController(),
+            isPassword: isPassword,
+            suffixIconOnTap: () {
+              setState(changePassword);
             },
-            child: Text(
-              context.localization.forgot_password,
-              textAlign: TextAlign.right,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: ColorManager.primaryBlue,
-              ),
-            ),
+            visibilityIcon: suffix!,
+            confirmPasswordController: TextEditingController(),
           ),
           verticalSpacing(kSpacingSmaller),
           CustomButton(
-            text: context.localization.login,
+            text: context.localization.sign_up,
             onPressed: () {
-              validateThenDoLogin(context);
+              validateThenDoSignUp(context);
             },
           ),
           const Spacer(),
           HaveAnAccountWidget(
-            title1: context.localization.do_not_have_account,
-            title2: context.localization.sign_up,
+            title1: context.localization.have_account,
+            title2: context.localization.login,
             onTap: () {
-              context.pushNamed(Routes.signupView);
-          },
+              context.pushReplacementNamed(Routes.loginView);
+            },
           ),
         ],
       ),
     );
   }
 
-  void validateThenDoLogin(BuildContext context) {
-    if (context.read<LoginCubit>().formKey.currentState!.validate()) {
-      context.read<LoginCubit>().emitLoginStates();
-    }
+  void validateThenDoSignUp(BuildContext context) {
+    // if (context.read<SignUpCubit>().formKey.currentState!.validate()) {
+    //   context.read<SignUpCubit>().emitSignUpStates();
+    // }
   }
 }

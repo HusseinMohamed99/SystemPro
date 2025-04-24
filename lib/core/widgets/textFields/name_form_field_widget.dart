@@ -6,9 +6,14 @@ import 'package:system_pro/core/helpers/functions/remove_spacing.dart';
 import 'package:system_pro/core/helpers/validations/validation_manager.dart';
 import 'package:system_pro/core/widgets/textFields/custom_text_form_field.dart';
 
-class EmailFormField extends StatelessWidget {
-  const EmailFormField({super.key, required this.emailController, required this.focusNode});
-  final TextEditingController emailController;
+class NameFormField extends StatelessWidget {
+  const NameFormField({
+    super.key,
+    required this.nameController,
+    required this.focusNode,
+  });
+
+  final TextEditingController nameController;
   final FocusNode focusNode;
 
   @override
@@ -18,21 +23,21 @@ class EmailFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.localization.email,
+          context.localization.full_name,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         CustomTextFormField(
-          focusNode:     focusNode,
-          controller: emailController,
-          onSaved: (value) => emailController.text = value!,
+          focusNode: focusNode,
+          controller: nameController,
+          onSaved: (value) => nameController.text = value!,
           validator: (value) {
-            return ValidationManager.emailValidator(context, value!);
+            return ValidationManager.displayNameValidator(context, value!);
           },
-          textInputType: TextInputType.emailAddress,
+          textInputType: TextInputType.name,
 
-          hintText: context.localization.email,
+          hintText: context.localization.full_name,
           onChanged: (value) {
-            onTextChanged(controller: emailController, value: value);
+            onTextChanged(controller: nameController, value: value);
           },
         ),
       ],
