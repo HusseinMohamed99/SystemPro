@@ -4,6 +4,7 @@ import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
+import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/testing_view.dart';
 
 class AppRouters {
@@ -23,14 +24,9 @@ class AppRouters {
                 child: const LoginView(),
               ),
         );
-      // case Routes.loginView:
-      //   return MaterialPageRoute(
-      //     builder:
-      //         (_) => BlocProvider(
-      //           create: (context) => SigninCubit(getIt<AuthRepo>()),
-      //           child: const SigninView(),
-      //         ),
-      //   );
+         case Routes.signupView:
+        return MaterialPageRoute(builder: (_) => const SignupView());
+     
       //    case Routes.productDetailsView:
       //   return MaterialPageRoute(
       //     builder:

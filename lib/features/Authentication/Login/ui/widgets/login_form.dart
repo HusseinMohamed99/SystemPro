@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/texts/have_an_account.dart';
@@ -68,22 +70,26 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           verticalSpacing(kSpacingSmaller),
-          CustomButton(text: context.localization.login, onPressed: () {
+          CustomButton(
+            text: context.localization.login,
+            onPressed: () {
               validateThenDoLogin(context);
-          }),
+            },
+          ),
           const Spacer(),
           HaveAnAccountWidget(
             title1: context.localization.do_not_have_account,
             title2: context.localization.sign_up,
             onTap: () {
-              // context.pushNamed(Routes.signUpView);
-            },
+              context.pushNamed(Routes.signupView);
+          },
           ),
         ],
       ),
     );
   }
-   void validateThenDoLogin(BuildContext context) {
+
+  void validateThenDoLogin(BuildContext context) {
     if (context.read<LoginCubit>().formKey.currentState!.validate()) {
       context.read<LoginCubit>().emitLoginStates();
     }
