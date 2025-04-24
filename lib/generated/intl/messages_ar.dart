@@ -36,6 +36,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "change_password": MessageLookupByLibrary.simpleMessage(
       "تغيير كلمة المرور",
     ),
+    "check_email": MessageLookupByLibrary.simpleMessage(
+      "يرجى التحقق من بريدك الالكترونى",
+    ),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور الجديدة",
     ),
@@ -195,6 +198,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
     "send_code": MessageLookupByLibrary.simpleMessage("إرسال الكود"),
+    "send_code_again": MessageLookupByLibrary.simpleMessage(
+      "ارسل الكود مرة اخرى",
+    ),
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "تم تسجيل الدخول بنجاح",
@@ -216,6 +222,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user_not_found_message": MessageLookupByLibrary.simpleMessage(
       "لم يتم العثور على حساب باستخدام هذا البريد الإلكتروني.",
     ),
+    "verify": MessageLookupByLibrary.simpleMessage("تحقق"),
+    "we_sent_code": MessageLookupByLibrary.simpleMessage("لقد ارسلنا الكود"),
     "weak_password_error": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور ضعيفة جدًا. يرجى تقديم كلمة مرور أقوى.",
     ),

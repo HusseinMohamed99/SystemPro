@@ -34,6 +34,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sign-in canceled by the user.",
     ),
     "change_password": MessageLookupByLibrary.simpleMessage("Change Password"),
+    "check_email": MessageLookupByLibrary.simpleMessage(
+      "Please check your email",
+    ),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
@@ -193,6 +196,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
     "send_code": MessageLookupByLibrary.simpleMessage("Send Code"),
+    "send_code_again": MessageLookupByLibrary.simpleMessage("Send code again"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "Sign in successfully",
@@ -213,6 +217,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "user_not_found_message": MessageLookupByLibrary.simpleMessage(
       "No user found with this email.",
+    ),
+    "verify": MessageLookupByLibrary.simpleMessage("Verify"),
+    "we_sent_code": MessageLookupByLibrary.simpleMessage(
+      "We\'ve sent a code to",
     ),
     "weak_password_error": MessageLookupByLibrary.simpleMessage(
       "The password provided is too weak.",

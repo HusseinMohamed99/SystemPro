@@ -3,6 +3,8 @@ class ApiConstants {
   static const String login = '';
   static const String signup = '';
   static const String forgotPassword = '';
+    static const String checkOtp = '';
+  static const String resendOtp = '';
 }
 
 class ApiErrors {

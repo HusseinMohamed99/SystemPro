@@ -829,6 +829,41 @@ class S {
   String get send_code {
     return Intl.message('Send Code', name: 'send_code', desc: '', args: []);
   }
+
+  /// `Please check your email`
+  String get check_email {
+    return Intl.message(
+      'Please check your email',
+      name: 'check_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We've sent a code to`
+  String get we_sent_code {
+    return Intl.message(
+      'We\'ve sent a code to',
+      name: 'we_sent_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify`
+  String get verify {
+    return Intl.message('Verify', name: 'verify', desc: '', args: []);
+  }
+
+  /// `Send code again`
+  String get send_code_again {
+    return Intl.message(
+      'Send code again',
+      name: 'send_code_again',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

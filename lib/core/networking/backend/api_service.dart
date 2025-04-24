@@ -3,6 +3,10 @@ import 'package:retrofit/retrofit.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_response.dart';
+import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/check_otp_request_body.dart';
+import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/check_otp_response.dart';
+import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_request_body.dart';
+import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_response.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_request_body.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_response.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_request_body.dart';
@@ -22,5 +26,13 @@ abstract class ApiService {
   @POST(ApiConstants.forgotPassword)
   Future<ForgotPasswordResponse> forgotPassword(
     @Body() ForgotPasswordRequestBody forgotPasswordRequestBody,
+  );
+    @POST(ApiConstants.checkOtp)
+  Future<CheckOtpResponse> checkOtp(
+    @Body() CheckOtpRequestBody checkOtpRequestBody,
+  );
+  @POST(ApiConstants.resendOtp)
+  Future<ResendOtpResponse> resendOtp(
+    @Body() ResendOtpRequestBody resendOtpRequestBody,
   );
 }

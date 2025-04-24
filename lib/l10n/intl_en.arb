@@ -173,6 +173,15 @@
       "forgot_password_subtitle":"Don’t worry! It happens. Please enter the email associated with your account.",
       "@forgot_password_subtitle":{},
       "send_code":"Send Code",
-      "@send_code":{}
+      "@send_code":{},
+      "check_email":"Please check your email",
+      "@check_email":{},
+      "we_sent_code": "We've sent a code to",
+      "@we_sent_code":{},
+      "verify": "Verify",
+      "@verify":{},
+      "send_code_again": "Send code again",
+      "@send_code_again":{}
+     
 
 }

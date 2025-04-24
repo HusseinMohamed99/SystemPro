@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
+import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_cubit.dart';
+import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_state.dart';
+import 'package:system_pro/features/Authentication/ForgotPasswordOtp/ui/widgets/forgot_password_otp_view_body.dart';
+
+class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
+  const ForgotPasswordOtpBlocConsumer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<OtpCubit, OtpState>(
+      listener: (context, state) {
+        if (state is OtpSuccess) {
+          context.showSnackBar(
+            context.localization.send_code,
+          );
+          // context.pushReplacementNamed(Routes.loginView);
+        }
+        if (state is OtpError) {
+          context.showSnackBar(state.error);
+        }
+      },
+      builder: (context, state) {
+        return LoadingIndicator(
+          isLoading: state is OtpLoading ? true : false,
+          child: const ForgotPasswordOtpViewBody().allPadding(
+            vPadding: kPaddingLargeVertical,
+            hPadding: kPaddingDefaultHorizontal,
+          ),
+        );
+      },
+    );
+  }
+}
