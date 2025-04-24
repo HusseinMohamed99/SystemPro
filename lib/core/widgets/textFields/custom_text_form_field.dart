@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     required this.hintText,
+  required this.  focusNode,
     this.textInputType,
     this.controller,
     this.textInputAction,
@@ -31,10 +32,12 @@ class CustomTextFormField extends StatelessWidget {
   final Function()? suffixIconOnTap;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       onChanged: onChanged,
       obscuringCharacter: '*',
       controller: controller ?? TextEditingController(),
@@ -53,7 +56,7 @@ class CustomTextFormField extends StatelessWidget {
           },
       style: Theme.of(
         context,
-      ).textTheme.titleLarge?.copyWith(color: ColorManager.grey),
+      ).textTheme.titleLarge?.copyWith(color: ColorManager.darkBlack),
       decoration: InputDecoration(
         filled: true,
         fillColor: ColorManager.softWhite,

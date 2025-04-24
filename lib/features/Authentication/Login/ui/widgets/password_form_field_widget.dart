@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
@@ -16,25 +13,27 @@ class PasswordFormField extends StatelessWidget {
     required this.passwordController,
     required this.visibilityIcon,
     this.suffixIconOnTap,
-    required this.isPassword,
+    required this.isPassword, required this.focusNode,
   });
   final TextEditingController passwordController;
   final IconData visibilityIcon;
   final Function()? suffixIconOnTap;
   final bool isPassword;
+    final FocusNode focusNode;
+
 
   @override
   Widget build(BuildContext context) {
     return Column(
-        spacing: kSpacingSmall.h,
+      spacing: kSpacingSmall.h,
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
-          Text(
+        Text(
           context.localization.password,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         CustomTextFormField(
+          focusNode: focusNode,
           isPassword: isPassword,
           controller: passwordController,
           onSaved: (value) => passwordController.text = value!,

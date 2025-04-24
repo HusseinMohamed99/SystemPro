@@ -23,6 +23,7 @@ class LoadingIndicator extends StatelessWidget {
             color: HexColorExtension('#80000000').toColor(),
             child: const Center(
               child: SpinKitWaveSpinner(
+                duration: Duration(seconds: 5),
                 color: ColorManager.primaryBlue,
                 waveColor: ColorManager.primaryBlue,
                 trackColor: ColorManager.primaryBlue,

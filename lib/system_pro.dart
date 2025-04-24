@@ -46,7 +46,7 @@ class SystemProApp extends StatelessWidget {
 
           return BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
             builder: (context, themingState) {
-              final theme = themingState.theme;
+              // final theme = themingState.theme;
               final isDark = themingState.isDarkMode;
 
               return AdaptiveLayout(

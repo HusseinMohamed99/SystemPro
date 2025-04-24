@@ -89,7 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "enter_password": MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور"),
     "forgot_password": MessageLookupByLibrary.simpleMessage(
-      "؟ نسيت كلمة المرور",
+      "نسيت كلمة المرور؟",
     ),
     "full_name": MessageLookupByLibrary.simpleMessage("الاسم كامل"),
     "full_name_cannot_be_only_numbers": MessageLookupByLibrary.simpleMessage(

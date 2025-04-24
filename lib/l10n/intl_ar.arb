@@ -8,7 +8,7 @@
       "@email": {},
       "password": "كلمة المرور",
       "@password": {},
-      "forgot_password": "؟ نسيت كلمة المرور",
+      "forgot_password": "نسيت كلمة المرور؟",
       "@forgot_password": {},
       "do_not_have_account": "لا تملك حساب؟",
       "@do_not_have_account": {},
