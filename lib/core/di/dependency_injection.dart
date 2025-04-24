@@ -9,6 +9,8 @@ import 'package:system_pro/core/theming/styleManager/text_style.dart';
 import 'package:system_pro/core/theming/themingManager/light_theming.dart';
 import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
+import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
+import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -45,5 +47,10 @@ void setupGetIt({required BuildContext context}) {
   if (!getIt.isRegistered<LoginCubit>()) {
     getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt()));
     getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt()));
+  }  
+  // SIGNUP
+  if (!getIt.isRegistered<SignupCubit>()) {
+    getIt.registerLazySingleton<SignupRepo>(() => SignupRepo(getIt()));
+    getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
   }
 }
