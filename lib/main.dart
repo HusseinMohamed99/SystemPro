@@ -8,18 +8,31 @@ import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
 
 void main() async {
-  final WidgetsBinding widgetsBinding =
-      WidgetsFlutterBinding.ensureInitialized();
-  await initServices();
-  runApp(SystemProApp(appRouter: AppRouters()));
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
+  Bloc.observer = MyBlocObserver();
+
+  runApp(
+    ScreenUtilInit(
+      designSize: const Size(393, 852),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, __) => const AppBootstrap(),
+    ),
+  );
 }
 
-Future<void> initServices() async {
-  await setupGetIt();
-  await dotenv.load();
-  await ScreenUtil.ensureScreenSize();
-  Bloc.observer = MyBlocObserver();
+class AppBootstrap extends StatelessWidget {
+  const AppBootstrap({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    setupGetIt(context: context); // هنا يكون عندنا context بعد build
+
+    return SystemProApp(appRouter: AppRouters());
+  }
 }
+
 
 // checkIfLoggedInUser() async {
 //   final String userToken = await CachingHelper.getSecuredString(

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_family.dart';
+import 'package:system_pro/core/theming/styleManager/text_style.dart';
 
-ThemeData buildLightTheming({Color? seedColor}) {
+ThemeData buildLightTheming({required TextTheme textTheme}) {
   return ThemeData(
     fontFamily: FontFamilyHelper.standardFont,
     scaffoldBackgroundColor: ColorManager.pureWhite,
@@ -19,7 +20,8 @@ ThemeData buildLightTheming({Color? seedColor}) {
       ),
     ),
     colorScheme: ColorScheme.fromSeed(
-      seedColor: seedColor ?? ColorManager.primaryBlue,
+      seedColor: ColorManager.primaryBlue,
     ),
+     textTheme:textTheme,
   );
 }

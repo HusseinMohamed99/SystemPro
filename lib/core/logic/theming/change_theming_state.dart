@@ -5,9 +5,18 @@ part 'change_theming_state.freezed.dart';
 
 @freezed
 class ChangeThemingState with _$ChangeThemingState {
-  const factory ChangeThemingState.initial({required ThemeData theme}) =
-      _Initial;
-  const factory ChangeThemingState.loading({required ThemeData theme}) =
-      _Loading;
-  const factory ChangeThemingState.loaded({required ThemeData theme}) = _Loaded;
+  const factory ChangeThemingState.initial({
+    required ThemeData theme,
+    required bool isDarkMode,
+  }) = _Initial;
+
+  const factory ChangeThemingState.loading({
+    required ThemeData theme,
+    required bool isDarkMode,
+  }) = _Loading;
+
+  const factory ChangeThemingState.loaded({
+    required ThemeData theme,
+    required bool isDarkMode,
+  }) = _Loaded;
 }

@@ -2,8 +2,8 @@
 const double kPaddingLargeHorizontal = 33.0;
 const double kPaddingLargeVertical = 33.0;
 const double kPaddingXLargeVertical = 80.0;
-const double kPaddingDefaultHorizontal = 16.0;
-const double kPaddingDefaultVertical = 16.0;
+const double kPaddingDefaultHorizontal = 20.0;
+const double kPaddingDefaultVertical = 20.0;
 const double kPaddingMediumHorizontal = 12.0;
 const double kPaddingMediumVertical = 12.0;
 const double kPaddingSmallHorizontal = 8.0;
@@ -21,7 +21,7 @@ const double kPaddingContentHorizontal = 20.0;
 const double kPaddingContentVertical = 15.0;
 
 // Button Dimensions
-const double kButtonHeightPrimary = 54.0;
+const double kButtonHeightPrimary = 48.0;
 const double kButtonHeightSecondary = 32.0;
 const double kButtonMaxHeight = 74.0;
 
@@ -38,11 +38,13 @@ const double kSizeMediumHeight = 16.0;
 
 // Border Radius Values
 const double kBorderRadiusDefault = 16.0;
+const double kBorderRadiusLarge = 10.0;
 const double kBorderRadiusMedium = 8.0;
 const double kBorderRadiusRounded = 4.0;
 
 // Spacing Values
-const double kSpacingXXLarge = 33.0;
+const double kSpacingXXXLarge = 40.0;
+const double kSpacingXXLarge = 32.0;
 const double kSpacingXLarge = 24.0;
 const double kSpacingLarge = 20.0;
 const double kSpacingDefault = 16.0;

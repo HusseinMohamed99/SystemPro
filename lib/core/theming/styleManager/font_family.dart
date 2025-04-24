@@ -1,5 +1,5 @@
 import 'package:system_pro/gen/fonts.gen.dart';
 
-class FontFamilyHelper {
-  static String standardFont = FontFamily.poppins;
+ class FontFamilyHelper {
+  static const String standardFont = FontFamily.poppins;
 }

@@ -82,7 +82,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Please enter a valid email address",
     ),
     "english": MessageLookupByLibrary.simpleMessage("English"),
-    "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot Password"),
+    "enter_email": MessageLookupByLibrary.simpleMessage("Enter your email"),
+    "enter_password": MessageLookupByLibrary.simpleMessage(
+      "Enter your password",
+    ),
+    "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "full_name": MessageLookupByLibrary.simpleMessage("Full Name"),
     "full_name_cannot_be_only_numbers": MessageLookupByLibrary.simpleMessage(
       "Name cannot be only numbers",
@@ -117,7 +121,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "The email address is badly formatted.",
     ),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
-    "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "login": MessageLookupByLibrary.simpleMessage("Log in"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "my_account": MessageLookupByLibrary.simpleMessage("My Account"),
     "network_request_failed_message": MessageLookupByLibrary.simpleMessage(
@@ -189,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "Sign in successfully",
     ),
+    "sign_up": MessageLookupByLibrary.simpleMessage("Sign Up"),
     "terms_of_conditions_error": MessageLookupByLibrary.simpleMessage(
       "You must agree to the terms of conditions.",
     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/routing/routes.dart';
+import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
 import 'package:system_pro/testing_view.dart';
 
 class AppRouters {
@@ -11,6 +12,8 @@ class AppRouters {
     switch (settings.name) {
       case Routes.testingView:
         return MaterialPageRoute(builder: (_) => const TestingView());
+           case Routes.loginView:
+        return MaterialPageRoute(builder: (_) => const LoginView());
       // case Routes.loginView:
       //   return MaterialPageRoute(
       //     builder:

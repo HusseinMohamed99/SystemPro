@@ -84,7 +84,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "الرجاء إدخال عنوان بريد إلكتروني صالح",
     ),
     "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
-    "forgot_password": MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور"),
+    "enter_email": MessageLookupByLibrary.simpleMessage(
+      "ادخل البريد الالكترونى",
+    ),
+    "enter_password": MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور"),
+    "forgot_password": MessageLookupByLibrary.simpleMessage(
+      "؟ نسيت كلمة المرور",
+    ),
     "full_name": MessageLookupByLibrary.simpleMessage("الاسم كامل"),
     "full_name_cannot_be_only_numbers": MessageLookupByLibrary.simpleMessage(
       "لا يمكن أن يكون الاسم مكونًا فقط من الأرقام",
@@ -189,6 +195,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "تم تسجيل الدخول بنجاح",
     ),
+    "sign_up": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
     "terms_of_conditions_error": MessageLookupByLibrary.simpleMessage(
       "يجب عليك الموافقة على الشروط والأحكام.",
     ),

@@ -9,7 +9,9 @@ extension SnackBarExtension on BuildContext {
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 1),
         backgroundColor: ColorManager.darkGrey,
-        content: Text(message, style: TextStyleManager.bold13(context: this)),
+        content: Text(message, 
+        // style: TextStyleManager.bold13(context: this),
+        ),
       ),
     );
   }
@@ -23,7 +25,9 @@ onTap(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       backgroundColor: ColorManager.darkGrey,
-      content: Text('Tapped', style: TextStyleManager.bold13(context: context)),
+      content: Text('Tapped', 
+     // style:  TextStyleManager.bold13(context: context),
+       ),
     ),
   );
 }

@@ -1,12 +1,14 @@
 {
       "@@locale": "en",
-      "login": "Login",
+      "login": "Log in",
       "@login": {},
+           "sign_up": "Sign Up",
+      "@sign_up": {},
       "email": "Email",
       "@email": {},
       "password": "Password",
       "@password": {},
-      "forgot_password": "Forgot Password",
+      "forgot_password": "Forgot Password?",
       "@forgot_password": {},
       "do_not_have_account": "Don't have an account?",
       "@do_not_have_account": {},
@@ -163,5 +165,10 @@
       "personal_profile": "Personal Profile",
       "@personal_profile": {},
       "search": "Search",
-      "@search": {}
+      "@search": {},
+      "enter_email":"Enter your email",
+      "@enter_email":{},
+      "enter_password":"Enter your password",
+      "@enter_password":{}
+
 }

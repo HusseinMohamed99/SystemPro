@@ -12,6 +12,8 @@ import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_state.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/core/routing/routes.dart';
+import 'package:system_pro/core/theming/themingManager/dark_theming.dart';
+import 'package:system_pro/core/theming/themingManager/light_theming.dart';
 import 'package:system_pro/generated/l10n.dart';
 
 class SystemProApp extends StatelessWidget {
@@ -40,16 +42,12 @@ class SystemProApp extends StatelessWidget {
             loading: (state) => const Locale('en'),
             loaded: (state) => Locale(state.localization),
             error: (state) => const Locale('en'),
-            // orElse: () => const Locale('en'),
           );
 
           return BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
             builder: (context, themingState) {
-              final theme = themingState.map(
-                initial: (s) => s.theme,
-                loading: (s) => s.theme,
-                loaded: (s) => s.theme,
-              );
+              final theme = themingState.theme;
+              final isDark = themingState.isDarkMode;
 
               return AdaptiveLayout(
                 mobileLayout:
@@ -67,9 +65,14 @@ class SystemProApp extends StatelessWidget {
                             context,
                           ).copyWith(textScaler: const TextScaler.linear(1.0)),
                           child: MaterialApp(
-                            theme: theme,
-                            darkTheme: theme,
-                            themeMode: ThemeMode.light,
+                            theme: buildLightTheming(
+                              textTheme: changeThemingCubit.lightTextTheme,
+                            ),
+                            darkTheme: buildDarkTheming(
+                              textTheme: changeThemingCubit.darkTextTheme,
+                            ),
+                            themeMode:
+                                isDark ? ThemeMode.dark : ThemeMode.light,
                             locale: locale,
                             localizationsDelegates: const [
                               S.delegate,
@@ -86,10 +89,13 @@ class SystemProApp extends StatelessWidget {
                         );
                       },
                     ),
-                tabletLayout:
-                    (context) => const Center(child: Text('Tablet Layout')),
-                desktopLayout:
-                    (context) => const Center(child: Text('Desktop Layout')),
+
+                tabletLayout: (BuildContext context) {
+                  return const Text('Tablet Layout');
+                },
+                desktopLayout: (BuildContext context) {
+                  return const Text('Desktop Layout');
+                },
               );
             },
           );
@@ -99,6 +105,6 @@ class SystemProApp extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return !isLoggedInUser ? Routes.testingView : Routes.loginView;
+    return isLoggedInUser ? Routes.testingView : Routes.loginView;
   }
 }

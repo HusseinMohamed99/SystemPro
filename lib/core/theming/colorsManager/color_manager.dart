@@ -7,11 +7,12 @@ class ColorManager {
   static const Color pureWhite = Color(0xFFFFFFFF); // Formerly white
   static const Color softWhite = Color(0xFFF9FAFA); // Formerly secondaryWhite
   static const Color offWhite = Color(0xFFE6E9E9); // Soft, muted white
-  static const Color grey = Color(0xFF888FA0); // Very light grey
-  static const Color softGray = Color(0xFFEEEEEE); // Very light orange
+  static const Color grey = Color(0xFF999CA1); // Very light grey
+  static const Color softGray = Color(0xFF666666); // Very light orange
   static const Color lightGrey = Color(0xFFC9CECF); // Formerly lighterGrey
   static const Color lighterGrey = Color(0xFFDCDEDE); // Very light grey
   static const Color mediumGrey = Color(0xFF949D9E); // Formerly lightGrey
+  static const Color borderGrey = Color(0xFFD8DADC); // Formerly lightGrey
   static const Color darkGrey = Color(0xFF4E5556); // Formerly grey
   static const Color brightRed = Color(0xFFF30202); // Formerly red
   static const Color errorRed = Color(0xFFB00020); // Red color for error text

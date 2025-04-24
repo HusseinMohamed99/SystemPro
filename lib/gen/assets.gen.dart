@@ -57,8 +57,11 @@ class $AssetsImagesGen {
   /// File path: assets/images/error.svg
   String get error => 'assets/images/error.svg';
 
+  /// File path: assets/images/logoTest.svg
+  String get logoTest => 'assets/images/logoTest.svg';
+
   /// List of all assets
-  List<String> get values => [error];
+  List<String> get values => [error, logoTest];
 }
 
 class Assets {

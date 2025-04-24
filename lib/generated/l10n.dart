@@ -55,9 +55,14 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Login`
+  /// `Log in`
   String get login {
-    return Intl.message('Login', name: 'login', desc: '', args: []);
+    return Intl.message('Log in', name: 'login', desc: '', args: []);
+  }
+
+  /// `Sign Up`
+  String get sign_up {
+    return Intl.message('Sign Up', name: 'sign_up', desc: '', args: []);
   }
 
   /// `Email`
@@ -70,10 +75,10 @@ class S {
     return Intl.message('Password', name: 'password', desc: '', args: []);
   }
 
-  /// `Forgot Password`
+  /// `Forgot Password?`
   String get forgot_password {
     return Intl.message(
-      'Forgot Password',
+      'Forgot Password?',
       name: 'forgot_password',
       desc: '',
       args: [],
@@ -788,6 +793,26 @@ class S {
   /// `Search`
   String get search {
     return Intl.message('Search', name: 'search', desc: '', args: []);
+  }
+
+  /// `Enter your email`
+  String get enter_email {
+    return Intl.message(
+      'Enter your email',
+      name: 'enter_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your password`
+  String get enter_password {
+    return Intl.message(
+      'Enter your password',
+      name: 'enter_password',
+      desc: '',
+      args: [],
+    );
   }
 }
 

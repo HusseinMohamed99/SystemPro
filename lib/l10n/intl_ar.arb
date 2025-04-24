@@ -2,11 +2,13 @@
       "@@locale": "ar",
       "login": "تسجيل الدخول",
       "@login": {},
+      "sign_up": "إنشاء حساب",
+      "@sign_up": {},
       "email": "البريد الإلكترونى",
       "@email": {},
       "password": "كلمة المرور",
       "@password": {},
-      "forgot_password": "نسيت كلمة المرور",
+      "forgot_password": "؟ نسيت كلمة المرور",
       "@forgot_password": {},
       "do_not_have_account": "لا تملك حساب؟",
       "@do_not_have_account": {},
@@ -163,5 +165,9 @@
       "confirm_password": "تأكيد كلمة المرور الجديدة",
       "@confirm_password": {},
       "save_changes": "حفظ التغييرات",
-      "@save_changes": {}
+      "@save_changes": {},
+       "enter_email":"ادخل البريد الالكترونى",
+      "@enter_email":{},
+      "enter_password":"ادخل كلمة المرور",
+      "@enter_password":{}
 }

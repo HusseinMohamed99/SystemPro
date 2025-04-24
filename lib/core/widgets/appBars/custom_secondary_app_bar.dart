@@ -29,7 +29,7 @@ AppBar customSecondaryAppBar(
     title: Text(
       title,
       textAlign: TextAlign.center,
-      style: TextStyleManager.bold13(context: context),
+      // style: TextStyleManager.bold13(context: context),
     ),
   );
 }

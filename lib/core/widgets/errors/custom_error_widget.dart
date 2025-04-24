@@ -9,7 +9,7 @@ class CustomErrorWidget extends StatelessWidget {
     return Center(
       child: Text(
         errorMessage,
-        style: TextStyleManager.bold13(context: context),
+        // style: TextStyleManager.bold13(context: context),
       ),
     );
   }

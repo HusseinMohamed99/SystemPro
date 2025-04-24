@@ -5,18 +5,27 @@ import 'package:system_pro/core/theming/themingManager/dark_theming.dart';
 import 'package:system_pro/core/theming/themingManager/light_theming.dart';
 
 class ChangeThemingCubit extends Cubit<ChangeThemingState> {
-  ChangeThemingCubit()
-    : super(ChangeThemingState.initial(theme: buildLightTheming()));
+  ChangeThemingCubit({
+    required ThemeData initialTheme,
+    required this.lightTextTheme,
+    required this.darkTextTheme,
+  }) : super(
+         ChangeThemingState.initial(theme: initialTheme, isDarkMode: false),
+       );
 
-  bool isDarkMode = false;
+  final TextTheme lightTextTheme;
+  final TextTheme darkTextTheme;
 
   void toggleTheme() {
-    emit(ChangeThemingState.loading(theme: state.theme));
+    final isDark = !state.isDarkMode;
+    emit(ChangeThemingState.loading(theme: state.theme, isDarkMode: isDark));
 
-    isDarkMode = !isDarkMode;
+    final newTheme =
+        isDark
+            ? buildDarkTheming(textTheme: darkTextTheme)
+            : buildLightTheming(textTheme: lightTextTheme);
 
-    final newTheme = isDarkMode ? buildDarkTheming() : buildLightTheming();
-    emit(ChangeThemingState.loaded(theme: newTheme));
+    emit(ChangeThemingState.loaded(theme: newTheme, isDarkMode: isDark));
   }
 
   ThemeData get currentTheme => state.theme;

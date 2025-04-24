@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/core/theming/styleManager/text_style.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -52,15 +51,16 @@ class CustomTextFormField extends StatelessWidget {
             }
             return null;
           },
-      style: TextStyleManager.bold13(
-        context: context,
-        color: ColorManager.darkBlack,
-      ),
+      style: Theme.of(
+        context,
+      ).textTheme.titleLarge?.copyWith(color: ColorManager.grey),
       decoration: InputDecoration(
         filled: true,
         fillColor: ColorManager.softWhite,
         hintText: hintText,
-        hintStyle: TextStyleManager.bold13(context: context),
+        hintStyle: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(color: ColorManager.grey),
         contentPadding: EdgeInsets.symmetric(
           horizontal: kPaddingContentHorizontal.w,
           vertical: kPaddingContentVertical.h,
@@ -85,8 +85,11 @@ class CustomTextFormField extends StatelessWidget {
 
   OutlineInputBorder buildOutlineBorder({Color? color}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(kBorderRadiusRounded).r,
-      borderSide: BorderSide(width: 1.w, color: color ?? ColorManager.offWhite),
+      borderRadius: BorderRadius.circular(kBorderRadiusLarge).r,
+      borderSide: BorderSide(
+        width: 1.w,
+        color: color ?? ColorManager.borderGrey,
+      ),
     );
   }
 }

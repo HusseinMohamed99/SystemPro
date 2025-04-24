@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/core/theming/styleManager/text_style.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -26,14 +25,18 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? ColorManager.primaryBlue,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBorderRadiusDefault).r,
+            borderRadius: BorderRadius.circular(kBorderRadiusLarge).r,
           ),
         ),
         onPressed: onPressed,
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: textStyle ?? TextStyleManager.bold13(context: context),
+          style:
+              textStyle ??
+              Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(color: ColorManager.pureWhite),
         ),
       ),
     );
