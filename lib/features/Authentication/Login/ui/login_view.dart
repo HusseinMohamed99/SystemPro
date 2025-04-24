@@ -17,28 +17,25 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: basicAppBar(),
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: BlocConsumer<LoginCubit, LoginState>(
-          listener: (context, state) {
-            if (state is LoginSuccess) {
-              context.showSnackBar(context.localization.sign_in_successfully);
-              // context.pushReplacementNamed(Routes.mainView);
-            }
-            if (state is LoginError) {
-              context.showSnackBar(state.error);
-            }
-          },
-          builder: (context, state) {
-            return LoadingIndicator(
-              isLoading: state is LoginLoading ? true : false,
-              child: const LoginViewBody().allPadding(
-                vPadding: kPaddingLargeVertical,
-                hPadding: kPaddingDefaultHorizontal,
-              ),
-            );
-          },
-        ),
+      body: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginSuccess) {
+            context.showSnackBar(context.localization.sign_in_successfully);
+            // context.pushReplacementNamed(Routes.mainView);
+          }
+          if (state is LoginError) {
+            context.showSnackBar(state.error);
+          }
+        },
+        builder: (context, state) {
+          return LoadingIndicator(
+            isLoading: state is LoginLoading ? true : false,
+            child: const LoginViewBody().allPadding(
+              vPadding: kPaddingLargeVertical,
+              hPadding: kPaddingDefaultHorizontal,
+            ),
+          );
+        },
       ),
     );
   }
