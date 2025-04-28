@@ -199,6 +199,16 @@
       "favorites":"المفضلة",
       "@favorites":{},
       "profile":"الملف الشخصي",
-      "@profile":{}
+      "@profile":{},
+       "edit_profile":"تعديل الملف الشخصي",
+      "@edit_profile":{},
+     "contact_us":"اتصل بنا",
+      "@contact_us":{},
+      "terms_of_use":"الشروط والأحكام",
+      "@terms_of_use":{},
+      "light_mode":"فاتح",
+      "@light_mode":{},
+      "dark_mode":"غامق",
+      "@dark_mode":{}
     
 }

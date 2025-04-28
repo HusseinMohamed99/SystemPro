@@ -44,6 +44,12 @@ class AppTextStyleManager {
   static const _fontFamily = FontFamilyHelper.standardFont;
 
   static TextTheme lightTextTheme(BuildContext context) => TextTheme(
+    displaySmall: TextStyle(
+      color: ColorManager.primaryBlue,
+      fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s36),
+      fontWeight: FontWeightHelper.semiBold,
+      fontFamily: _fontFamily,
+    ),
     headlineLarge: TextStyle(
       color: ColorManager.pureBlack,
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s32),
@@ -79,6 +85,12 @@ class AppTextStyleManager {
   );
 
   static TextTheme darkTextTheme(BuildContext context) => TextTheme(
+     displaySmall: TextStyle(
+      color: ColorManager.primaryBlue,
+      fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s36),
+      fontWeight: FontWeightHelper.semiBold,
+      fontFamily: _fontFamily,
+    ),
     headlineLarge: TextStyle(
       color: ColorManager.pureWhite,
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s32),

@@ -160,7 +160,7 @@
       "@help": {},
       "about_us": "About Us",
       "@about_us": {},
-      "logout": "Logout",
+      "logout": "Log out",
       "@logout": {},
       "personal_profile": "Personal Profile",
       "@personal_profile": {},
@@ -201,7 +201,18 @@
       "favorites":"Favorites",
       "@favorites":{},
       "profile":"Profile",
-      "@profile":{}
+      "@profile":{},
+      "edit_profile":"Edit Profile",
+      "@edit_profile":{},
+     "contact_us":"Contact Us",
+      "@contact_us":{},
+      "terms_of_use":"Terms of Use",
+      "@terms_of_use":{},
+      "light_mode":"Light",
+      "@light_mode":{},
+      "dark_mode":"Dark",
+      "@dark_mode":{}
+   
 
  
      

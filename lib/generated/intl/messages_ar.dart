@@ -43,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور الجديدة",
     ),
+    "contact_us": MessageLookupByLibrary.simpleMessage("اتصل بنا"),
     "create_account": MessageLookupByLibrary.simpleMessage("قم بإنشاء حساب"),
     "create_new_account": MessageLookupByLibrary.simpleMessage(
       "إنشاء حساب جديد",
@@ -50,9 +51,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "current_password": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور الحالية",
     ),
+    "dark_mode": MessageLookupByLibrary.simpleMessage("غامق"),
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "لا تملك حساب؟",
     ),
+    "edit_profile": MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
     "email": MessageLookupByLibrary.simpleMessage("البريد الإلكترونى"),
     "email_already_exists": MessageLookupByLibrary.simpleMessage(
       "البريد الإلكتروني موجود بالفعل",
@@ -132,6 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "عنوان البريد الإلكتروني بتنسيق غير صحيح.",
     ),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+    "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
     "my_account": MessageLookupByLibrary.simpleMessage("حسابي"),
@@ -227,6 +231,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "terms_of_service": MessageLookupByLibrary.simpleMessage(
       "الشروط والأحكام الخاصة بنا",
     ),
+    "terms_of_use": MessageLookupByLibrary.simpleMessage("الشروط والأحكام"),
     "theme_mode": MessageLookupByLibrary.simpleMessage("الوضع"),
     "too_many_requests_message": MessageLookupByLibrary.simpleMessage(
       "تم إرسال العديد من الطلبات. يرجى المحاولة لاحقًا.",

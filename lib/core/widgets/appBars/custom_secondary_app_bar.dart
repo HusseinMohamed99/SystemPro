@@ -21,7 +21,7 @@ AppBar customSecondaryAppBar(
             style: IconButton.styleFrom(
               minimumSize: Size(40.w, 40.h),
               maximumSize: Size(40.w, 40.h),
-              side: BorderSide(color: ColorManager.grey, width: 2.w),
+              side: BorderSide(color: ColorManager.borderGrey, width: 2.w),
             ),
             icon: Icon(
               Icons.arrow_back_ios_new,

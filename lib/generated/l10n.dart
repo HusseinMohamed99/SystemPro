@@ -775,9 +775,9 @@ class S {
     return Intl.message('About Us', name: 'about_us', desc: '', args: []);
   }
 
-  /// `Logout`
+  /// `Log out`
   String get logout {
-    return Intl.message('Logout', name: 'logout', desc: '', args: []);
+    return Intl.message('Log out', name: 'logout', desc: '', args: []);
   }
 
   /// `Personal Profile`
@@ -938,6 +938,41 @@ class S {
   /// `Profile`
   String get profile {
     return Intl.message('Profile', name: 'profile', desc: '', args: []);
+  }
+
+  /// `Edit Profile`
+  String get edit_profile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'edit_profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Us`
+  String get contact_us {
+    return Intl.message('Contact Us', name: 'contact_us', desc: '', args: []);
+  }
+
+  /// `Terms of Use`
+  String get terms_of_use {
+    return Intl.message(
+      'Terms of Use',
+      name: 'terms_of_use',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get light_mode {
+    return Intl.message('Light', name: 'light_mode', desc: '', args: []);
+  }
+
+  /// `Dark`
+  String get dark_mode {
+    return Intl.message('Dark', name: 'dark_mode', desc: '', args: []);
   }
 }
 

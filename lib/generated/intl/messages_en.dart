@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
+    "contact_us": MessageLookupByLibrary.simpleMessage("Contact Us"),
     "create_account": MessageLookupByLibrary.simpleMessage("Create an Account"),
     "create_new_account": MessageLookupByLibrary.simpleMessage(
       "Create New Account",
@@ -48,9 +49,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "current_password": MessageLookupByLibrary.simpleMessage(
       "Current Password",
     ),
+    "dark_mode": MessageLookupByLibrary.simpleMessage("Dark"),
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account?",
     ),
+    "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
     "email_already_exists": MessageLookupByLibrary.simpleMessage(
       "Email already exists",
@@ -130,8 +133,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "The email address is badly formatted.",
     ),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
+    "light_mode": MessageLookupByLibrary.simpleMessage("Light"),
     "login": MessageLookupByLibrary.simpleMessage("Log in"),
-    "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "logout": MessageLookupByLibrary.simpleMessage("Log out"),
     "my_account": MessageLookupByLibrary.simpleMessage("My Account"),
     "network_request_failed_message": MessageLookupByLibrary.simpleMessage(
       "Please check your internet connection",
@@ -225,6 +229,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "terms_of_service": MessageLookupByLibrary.simpleMessage(
       "Terms of Service",
     ),
+    "terms_of_use": MessageLookupByLibrary.simpleMessage("Terms of Use"),
     "theme_mode": MessageLookupByLibrary.simpleMessage("Theme Mode"),
     "too_many_requests_message": MessageLookupByLibrary.simpleMessage(
       "Too many requests. Please try again later.",
