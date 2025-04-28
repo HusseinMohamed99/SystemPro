@@ -43,22 +43,20 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
   void startTimer() {
     _canResend = false;
     const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 00) {
-          setState(() {
-            _canResend = true;
-            timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
+    _timer = Timer.periodic(oneSec, (Timer timer) {
+      if (_start == 00) {
+        setState(() {
+          _canResend = true;
+          timer.cancel();
+        });
+      } else {
+        setState(() {
+          _start--;
+        });
+      }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -84,13 +82,22 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
                         color: ColorManager.softGray,
                       ),
                     ),
-                    TextSpan(
-                      text: ' hussein@systempro.com',
+                    if (widget.email.isNotEmpty)
+                      TextSpan(
+                        text: '  ${widget.email}',
 
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: ColorManager.primaryBlue,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: ColorManager.primaryBlue,
+                        ),
+                      )
+                    else
+                      TextSpan(
+                        text: '  ahmed@systempro.com',
+
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: ColorManager.primaryBlue,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -117,33 +124,35 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
           ),
           SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
           SliverToBoxAdapter(
-            child:  Text.rich(
+            child: Text.rich(
               textAlign: TextAlign.center,
-                TextSpan(
-                  text: '${context.localization.send_code_again}  ',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color:_canResend? ColorManager.primaryBlue:ColorManager.softGray,
-                    fontWeight: FontWeightHelper.semiBold,
-                  ),
-                  recognizer:
-                      TapGestureRecognizer()
-                        ..onTap = () {
-                          if(_canResend) {
-                            validateThenDoResendOtp(context);
-                          }
-                        },
-                  children: [
-                    TextSpan(
-                      text: '00:${_start.toString()}',
-                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: ColorManager.softGray,
-                          fontWeight: FontWeightHelper.semiBold,
-                      ),
-                    ),
-                  ],
+              TextSpan(
+                text: '${context.localization.send_code_again}  ',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color:
+                      _canResend
+                          ? ColorManager.primaryBlue
+                          : ColorManager.softGray,
+                  fontWeight: FontWeightHelper.semiBold,
                 ),
+                recognizer:
+                    TapGestureRecognizer()
+                      ..onTap = () {
+                        if (_canResend) {
+                          validateThenDoResendOtp(context);
+                        }
+                      },
+                children: [
+                  TextSpan(
+                    text: '00:${_start.toString()}',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: ColorManager.softGray,
+                      fontWeight: FontWeightHelper.semiBold,
+                    ),
+                  ),
+                ],
               ),
-            
+            ),
           ),
         ],
       ),

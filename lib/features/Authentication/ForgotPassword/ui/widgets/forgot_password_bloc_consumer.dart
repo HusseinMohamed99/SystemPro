@@ -7,6 +7,7 @@ import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_state.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/widgets/forgot_password_view_body.dart';
@@ -22,7 +23,12 @@ class ForgotPasswordBlocConsumer extends StatelessWidget {
           context.showSnackBar(
             context.localization.account_created_successfully,
           );
-          context.pushReplacementNamed(Routes.loginView);
+          context.pushReplacementNamed(
+            Routes.forgotPasswordOtpView,
+            arguments: ForgotPasswordRequestBody(
+              email: context.read<ForgotPasswordCubit>().emailController.text,
+            ),
+          );
         }
         if (state is ForgotPasswordError) {
           context.showSnackBar(state.error);

@@ -8,6 +8,7 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/textFields/email_form_field_widget.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 
 class ForgotPasswordForm extends StatelessWidget {
@@ -30,7 +31,12 @@ class ForgotPasswordForm extends StatelessWidget {
           CustomButton(
             text: context.localization.send_code,
             onPressed: () {
-              context.pushNamed(Routes.forgotPasswordOtpView);
+              context.pushNamed(Routes.forgotPasswordOtpView,
+                arguments: ForgotPasswordRequestBody(
+                  email:
+                      context.read<ForgotPasswordCubit>().emailController.text,
+                ),
+              );
               // validateThenDoForgotPassword(context);
             },
           ),

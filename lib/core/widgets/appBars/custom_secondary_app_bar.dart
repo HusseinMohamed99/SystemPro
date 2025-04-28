@@ -13,32 +13,28 @@ AppBar customSecondaryAppBar(
     backgroundColor: ColorManager.pureWhite,
     elevation: 0,
     centerTitle: true,
-    leading: GestureDetector(
-      onTap:
-          onBackPress ??
-          () {
-            context.pop();
-          },
-      child: Container(
-        width: 2.w,
-        height: 2.h,
-        decoration: ShapeDecoration(
-          color: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-            side: const BorderSide(
-              strokeAlign: BorderSide.strokeAlignOutside,
-              color: ColorManager.borderGrey,
+    leadingWidth: 200.w,
+    leading: Row(
+      children: [
+        SizedBox(width: 20.w),
+       IconButton(
+            style: IconButton.styleFrom(
+              minimumSize: Size(40.w, 40.h),
+              maximumSize: Size(40.w, 40.h),
+              side: BorderSide(color: ColorManager.grey, width: 2.w),
             ),
-          ),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: ColorManager.pureBlack,
+              size: 20.sp,
+            ),
+            onPressed:  onBackPress ??
+              () {
+                context.pop();
+              },
+          
         ),
-
-        child: Icon(
-          Icons.arrow_back_ios_new,
-          color: ColorManager.pureBlack,
-          size: kIconSizeDefault.sp,
-        ),
-      ),
+      ],
     ),
     title: Text(
       title ?? '',
