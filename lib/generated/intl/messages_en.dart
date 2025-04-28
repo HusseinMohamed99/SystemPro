@@ -135,6 +135,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "new_account": MessageLookupByLibrary.simpleMessage("New Account"),
     "new_password": MessageLookupByLibrary.simpleMessage("New Password"),
+    "not_receive_code": MessageLookupByLibrary.simpleMessage(
+      "Didn\'t receive code?",
+    ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "operation_not_allowed_message": MessageLookupByLibrary.simpleMessage(
       "Email/password accounts are not enabled. Please enable it in Firebase.",

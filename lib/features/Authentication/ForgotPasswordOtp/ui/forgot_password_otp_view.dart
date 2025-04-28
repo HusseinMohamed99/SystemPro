@@ -9,7 +9,7 @@ class ForgotPasswordOtpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customSecondaryAppBar(context, title: ''),
-      body: const ForgotPasswordOtpBlocConsumer(),
+      body: const ForgotPasswordOtpBlocConsumer(email: 'email',),
     );
   }
 }

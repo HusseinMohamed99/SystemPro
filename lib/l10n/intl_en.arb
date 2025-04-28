@@ -181,7 +181,9 @@
       "verify": "Verify",
       "@verify":{},
       "send_code_again": "Send code again",
-      "@send_code_again":{}
+      "@send_code_again":{},
+      "not_receive_code":"Didn't receive code?",
+      "@not_receive_code":{}
      
 
 }

@@ -137,6 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "new_account": MessageLookupByLibrary.simpleMessage("حساب جديد"),
     "new_password": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
+    "not_receive_code": MessageLookupByLibrary.simpleMessage("لم يصل الكود؟"),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "operation_not_allowed_message": MessageLookupByLibrary.simpleMessage(
       "حسابات البريد الإلكتروني/كلمة المرور غير مفعلّة. الرجاء تفعيلها في Firebase.",

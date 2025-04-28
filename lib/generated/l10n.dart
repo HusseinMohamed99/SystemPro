@@ -864,6 +864,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Didn't receive code?`
+  String get not_receive_code {
+    return Intl.message(
+      'Didn\'t receive code?',
+      name: 'not_receive_code',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

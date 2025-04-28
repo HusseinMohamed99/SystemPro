@@ -181,5 +181,7 @@
       "verify": "تحقق",
       "@verify": {},
       "send_code_again": "ارسل الكود مرة اخرى",
-      "@send_code_again": {}
+      "@send_code_again": {},
+      "not_receive_code": "لم يصل الكود؟",
+      "@not_receive_code": {}
 }

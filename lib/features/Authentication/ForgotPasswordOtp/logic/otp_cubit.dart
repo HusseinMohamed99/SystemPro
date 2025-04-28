@@ -6,8 +6,8 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/repo/o
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_state.dart';
 
 class OtpCubit extends Cubit<OtpState> {
-  final OtpRepo _otpRepo;
   OtpCubit(this._otpRepo) : super(const OtpState.initial());
+  final OtpRepo _otpRepo;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController validationCodeController = TextEditingController();

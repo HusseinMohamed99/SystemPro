@@ -10,7 +10,8 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_s
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/ui/widgets/forgot_password_otp_view_body.dart';
 
 class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
-  const ForgotPasswordOtpBlocConsumer({super.key});
+  const ForgotPasswordOtpBlocConsumer({super.key, required this.email});
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return LoadingIndicator(
           isLoading: state is OtpLoading ? true : false,
-          child: const ForgotPasswordOtpViewBody().allPadding(
+          child:  ForgotPasswordOtpViewBody(email: email,).allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),
