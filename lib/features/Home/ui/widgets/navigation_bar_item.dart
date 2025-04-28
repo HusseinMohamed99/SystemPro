@@ -25,6 +25,7 @@ class NavigationBarItem extends StatelessWidget {
               )
               : InactiveNavigationItem(
                 icon: bottomNavigationBarEntity.inActiveIcon,
+                title: bottomNavigationBarEntity.title,
               ),
     );
   }

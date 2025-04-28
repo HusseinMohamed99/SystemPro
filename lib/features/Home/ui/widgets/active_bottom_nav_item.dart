@@ -15,38 +15,17 @@ class BottomNavItemActive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        padding: EdgeInsets.only(left: kPaddingDefaultHorizontal.w),
-        decoration: ShapeDecoration(
-          color: ColorManager.primaryBlue,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30).r,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(icon),
+          Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.titleSmall?.copyWith(color: ColorManager.primaryBlue),
           ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: ShapeDecoration(
-                color: ColorManager.primaryBlue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30).r,
-                ),
-              ),
-              child: Center(child: SvgPicture.asset(icon)),
-            ),
-            horizontalSpacing(kSpacingSmaller),
-            Text(
-              title,
-              // style: TextStyleManager.semiBold11(
-              //   context: context,
-              // ).copyWith(color: ColorManager.primaryGreen),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

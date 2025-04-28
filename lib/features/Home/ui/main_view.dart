@@ -16,22 +16,15 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: ColorManager.primaryBlue,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: ColorManager.primaryBlue,
+    return Scaffold(
+      body: SafeArea(
+        child: MainViewBody(currentViewIndex: currentViewIndex),
       ),
-      child: Scaffold(
-        body: SafeArea(
-          child: MainViewBody(currentViewIndex: currentViewIndex),
-        ),
-        bottomNavigationBar: CustomBottomNavigationBar(
-          onItemTapped: (index) {
-            currentViewIndex = index;
-            setState(() {});
-          },
-        ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        onItemTapped: (index) {
+          currentViewIndex = index;
+          setState(() {});
+        },
       ),
     );
   }
