@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
@@ -20,7 +22,7 @@ class ChangePasswordSuccessfully extends StatelessWidget {
       appBar: basicAppBar(),
       body: Center(
         child: Column(
-          
+
         
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -45,7 +47,9 @@ class ChangePasswordSuccessfully extends StatelessWidget {
               verticalSpacing(kSpacingXXLarge),
             CustomButton(
               text: context.localization.back_to_login,
-              onPressed: () {},
+              onPressed: () {
+                context.pushReplacementNamed(Routes.loginView);
+              },
             ),
           ],
         ).allPadding(
