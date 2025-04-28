@@ -211,7 +211,9 @@
       "light_mode":"Light",
       "@light_mode":{},
       "dark_mode":"Dark",
-      "@dark_mode":{}
+      "@dark_mode":{},
+      "delete_my_account":"Delete My Account",
+      "@delete_my_account":{}
    
 
  

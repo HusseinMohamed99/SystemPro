@@ -209,6 +209,8 @@
       "light_mode":"فاتح",
       "@light_mode":{},
       "dark_mode":"غامق",
-      "@dark_mode":{}
+      "@dark_mode":{},
+        "delete_my_account":"حذف حسابي",
+      "@delete_my_account":{}
     
 }

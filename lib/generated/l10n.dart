@@ -974,6 +974,16 @@ class S {
   String get dark_mode {
     return Intl.message('Dark', name: 'dark_mode', desc: '', args: []);
   }
+
+  /// `Delete My Account`
+  String get delete_my_account {
+    return Intl.message(
+      'Delete My Account',
+      name: 'delete_my_account',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

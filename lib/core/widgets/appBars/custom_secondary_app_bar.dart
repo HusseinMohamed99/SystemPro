@@ -13,7 +13,7 @@ AppBar customSecondaryAppBar(
     backgroundColor: ColorManager.pureWhite,
     elevation: 0,
     centerTitle: true,
-    leadingWidth: 200.w,
+    leadingWidth: 100.w,
     leading: Row(
       children: [
         SizedBox(width: 20.w),
@@ -39,7 +39,9 @@ AppBar customSecondaryAppBar(
     title: Text(
       title ?? '',
       textAlign: TextAlign.center,
-      // style: TextStyleManager.bold13(context: context),
+      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+        color: ColorManager.primaryBlue,
+      ),
     ),
   );
 }
