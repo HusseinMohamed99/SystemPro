@@ -183,5 +183,16 @@
       "send_code_again": "ارسل الكود مرة اخرى",
       "@send_code_again": {},
       "not_receive_code": "لم يصل الكود؟",
-      "@not_receive_code": {}
+      "@not_receive_code": {},
+      "reset_password": "تغيير كلمة المرور",
+      "@reset_password": {},
+      "reset_password_subtitle": "يرجى كتابة شيء يمكنك تذكره",
+      "@reset_password_subtitle": {},
+     "password_changed":"تغيير كلمة المرور",
+      "@password_changed":{},
+      "password_changed_subtitle":"تم تغيير كلمة المرور بنجاح",
+      "@password_changed_subtitle":{},
+      "back_to_login":"رجوع لتسجيل الدخول",
+      "@back_to_login":{}
+    
 }

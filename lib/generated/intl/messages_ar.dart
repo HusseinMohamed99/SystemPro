@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "يوجد حساب بالفعل ببيانات مختلفة.",
     ),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
+    "back_to_login": MessageLookupByLibrary.simpleMessage("رجوع لتسجيل الدخول"),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "تم إلغاء تسجيل الدخول بواسطة المستخدم.",
     ),
@@ -156,6 +157,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "الرجاء إدخال رمز التحقق صالح",
     ),
     "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
+    "password_changed": MessageLookupByLibrary.simpleMessage(
+      "تغيير كلمة المرور",
+    ),
+    "password_changed_subtitle": MessageLookupByLibrary.simpleMessage(
+      "تم تغيير كلمة المرور بنجاح",
+    ),
     "password_does_not_match": MessageLookupByLibrary.simpleMessage(
       "كلمات المرور لا تتطابق",
     ),
@@ -196,6 +203,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "الرجاء إدخال رقم هاتف صالح",
     ),
     "privacy_policy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
+    "reset_password": MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
+    "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
+      "يرجى كتابة شيء يمكنك تذكره",
+    ),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
     "send_code": MessageLookupByLibrary.simpleMessage("إرسال الكود"),

@@ -54,6 +54,9 @@ class $AssetsFontsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Star.svg
+  String get star => 'assets/images/Star.svg';
+
   /// File path: assets/images/error.svg
   String get error => 'assets/images/error.svg';
 
@@ -61,7 +64,7 @@ class $AssetsImagesGen {
   String get logoTest => 'assets/images/logoTest.svg';
 
   /// List of all assets
-  List<String> get values => [error, logoTest];
+  List<String> get values => [star, error, logoTest];
 }
 
 class Assets {

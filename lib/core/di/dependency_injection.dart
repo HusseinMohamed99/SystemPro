@@ -7,6 +7,8 @@ import 'package:system_pro/core/networking/backend/api_service.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/styleManager/text_style.dart';
 import 'package:system_pro/core/theming/themingManager/light_theming.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/data/repo/change_password_repo.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forgot_password_repo.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/repo/otp_repo.dart';
@@ -69,5 +71,11 @@ void setupGetIt({required BuildContext context}) {
   if (!getIt.isRegistered<OtpCubit>()) {
     getIt.registerLazySingleton<OtpRepo>(() => OtpRepo(getIt()));
     getIt.registerFactory<OtpCubit>(() => OtpCubit(getIt()));
+  }  
+  
+  // Change Password
+  if (!getIt.isRegistered<ChangePasswordCubit>()) {
+    getIt.registerLazySingleton<ChangePasswordRepo>(() => ChangePasswordRepo(getIt()));
+    getIt.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit(getIt()));
   }
 }

@@ -9,6 +9,8 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_response.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_request_body.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_response.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_request_body.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_response.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_request_body.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_response.dart';
 
@@ -34,5 +36,9 @@ abstract class ApiService {
   @POST(ApiConstants.resendOtp)
   Future<ResendOtpResponse> resendOtp(
     @Body() ResendOtpRequestBody resendOtpRequestBody,
+  );
+  @POST(ApiConstants.changePassword)
+  Future<ChangePasswordResponse> changePassword(
+    @Body() ChangePasswordRequestBody changePasswordRequestBody,
   );
 }

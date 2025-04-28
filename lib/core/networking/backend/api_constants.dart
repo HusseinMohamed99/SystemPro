@@ -5,6 +5,8 @@ class ApiConstants {
   static const String forgotPassword = '';
     static const String checkOtp = '';
   static const String resendOtp = '';
+    static const String changePassword = '';
+
 }
 
 class ApiErrors {

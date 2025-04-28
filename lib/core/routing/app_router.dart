@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/routing/routes.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/change_password_successfully.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/forgot_password_view.dart';
@@ -9,6 +11,7 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_c
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/ui/forgot_password_otp_view.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/ui/change_password_view.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/testing_view.dart';
@@ -55,6 +58,19 @@ class AppRouters {
                   arguments: arguments as ForgotPasswordRequestBody,
                 ),
               ),
+        );
+      case Routes.resetPasswordView:
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => getIt<ChangePasswordCubit>(),
+                child: const ChangePasswordView(),
+              ),
+        );
+  case Routes.passwordChangedView:
+        return MaterialPageRoute(
+          builder:
+              (_) => const ChangePasswordSuccessfully(),
         );
 
       //    case Routes.productDetailsView:

@@ -183,7 +183,19 @@
       "send_code_again": "Send code again",
       "@send_code_again":{},
       "not_receive_code":"Didn't receive code?",
-      "@not_receive_code":{}
+      "@not_receive_code":{},
+      "reset_password":"Reset Password",
+      "@reset_password":{},
+      "reset_password_subtitle":"Please type something you’ll remember",
+      "@reset_password_subtitle":{},
+      "password_changed":"Password changed",
+      "@password_changed":{},
+      "password_changed_subtitle":"Your password has been changed successfully",
+      "@password_changed_subtitle":{},
+      "back_to_login":"Back to Login",
+      "@back_to_login":{}
+
+ 
      
 
 }

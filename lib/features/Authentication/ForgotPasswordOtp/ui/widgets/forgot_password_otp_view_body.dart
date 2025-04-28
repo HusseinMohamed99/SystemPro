@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
@@ -118,7 +120,8 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
             child: CustomButton(
               text: context.localization.verify,
               onPressed: () {
-                validateThenDoCheckOtp(context);
+                context.pushNamed(Routes.resetPasswordView);
+                // validateThenDoCheckOtp(context);
               },
             ),
           ),

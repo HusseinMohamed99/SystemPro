@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "An account already exists with a different credential.",
     ),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
+    "back_to_login": MessageLookupByLibrary.simpleMessage("Back to Login"),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "Sign-in canceled by the user.",
     ),
@@ -152,6 +153,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Please enter a valid OTP",
     ),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
+    "password_changed": MessageLookupByLibrary.simpleMessage(
+      "Password changed",
+    ),
+    "password_changed_subtitle": MessageLookupByLibrary.simpleMessage(
+      "Your password has been changed successfully",
+    ),
     "password_does_not_match": MessageLookupByLibrary.simpleMessage(
       "Passwords don\'t match",
     ),
@@ -196,6 +203,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Please enter a valid phone number",
     ),
     "privacy_policy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+    "reset_password": MessageLookupByLibrary.simpleMessage("Reset Password"),
+    "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
+      "Please type something you’ll remember",
+    ),
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
     "send_code": MessageLookupByLibrary.simpleMessage("Send Code"),
