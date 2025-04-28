@@ -193,7 +193,15 @@
       "password_changed_subtitle":"Your password has been changed successfully",
       "@password_changed_subtitle":{},
       "back_to_login":"Back to Login",
-      "@back_to_login":{}
+      "@back_to_login":{},
+
+
+      "home":"Home",
+      "@home":{},
+      "favorites":"Favorites",
+      "@favorites":{},
+      "profile":"Profile",
+      "@profile":{}
 
  
      

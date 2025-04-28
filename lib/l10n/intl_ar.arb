@@ -193,6 +193,12 @@
       "password_changed_subtitle":"تم تغيير كلمة المرور بنجاح",
       "@password_changed_subtitle":{},
       "back_to_login":"رجوع لتسجيل الدخول",
-      "@back_to_login":{}
+      "@back_to_login":{},
+      "home":"الرئيسية",
+      "@home":{},
+      "favorites":"المفضلة",
+      "@favorites":{},
+      "profile":"الملف الشخصي",
+      "@profile":{}
     
 }

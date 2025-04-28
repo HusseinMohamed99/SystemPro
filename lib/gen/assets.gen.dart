@@ -54,17 +54,45 @@ class $AssetsFontsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/HomeActive.svg
+  String get homeActive => 'assets/images/HomeActive.svg';
+
+  /// File path: assets/images/HomeInActive.svg
+  String get homeInActive => 'assets/images/HomeInActive.svg';
+
+  /// File path: assets/images/IconActive.svg
+  String get iconActive => 'assets/images/IconActive.svg';
+
+  /// File path: assets/images/IconInActive.svg
+  String get iconInActive => 'assets/images/IconInActive.svg';
+
   /// File path: assets/images/Star.svg
   String get star => 'assets/images/Star.svg';
 
   /// File path: assets/images/error.svg
   String get error => 'assets/images/error.svg';
 
+  /// File path: assets/images/heartActive.svg
+  String get heartActive => 'assets/images/heartActive.svg';
+
+  /// File path: assets/images/heartInActive.svg
+  String get heartInActive => 'assets/images/heartInActive.svg';
+
   /// File path: assets/images/logoTest.svg
   String get logoTest => 'assets/images/logoTest.svg';
 
   /// List of all assets
-  List<String> get values => [star, error, logoTest];
+  List<String> get values => [
+    homeActive,
+    homeInActive,
+    iconActive,
+    iconInActive,
+    star,
+    error,
+    heartActive,
+    heartInActive,
+    logoTest,
+  ];
 }
 
 class Assets {

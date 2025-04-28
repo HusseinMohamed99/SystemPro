@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           GestureDetector(
             onTap: () {
-           context.pushNamed(Routes.forgotPasswordView);
+              context.pushNamed(Routes.forgotPasswordView);
             },
             child: Text(
               context.localization.forgot_password,
@@ -73,7 +73,8 @@ class _LoginFormState extends State<LoginForm> {
           CustomButton(
             text: context.localization.login,
             onPressed: () {
-              validateThenDoLogin(context);
+              context.pushNamed(Routes.mainView);
+              // validateThenDoLogin(context);
             },
           ),
           const Spacer(),
@@ -82,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
             title2: context.localization.sign_up,
             onTap: () {
               context.pushNamed(Routes.signupView);
-          },
+            },
           ),
         ],
       ),

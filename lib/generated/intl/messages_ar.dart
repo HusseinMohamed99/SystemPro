@@ -92,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ادخل البريد الالكترونى",
     ),
     "enter_password": MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور"),
+    "favorites": MessageLookupByLibrary.simpleMessage("المفضلة"),
     "forgot_password": MessageLookupByLibrary.simpleMessage(
       "نسيت كلمة المرور؟",
     ),
@@ -120,6 +121,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "have_account": MessageLookupByLibrary.simpleMessage("تمتلك حساب بالفعل؟"),
     "help": MessageLookupByLibrary.simpleMessage("المساعدة"),
+    "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "internal_error_message": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ داخلي. يرجى المحاولة مرة أخرى لاحقًا.",
     ),
@@ -203,6 +205,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "الرجاء إدخال رقم هاتف صالح",
     ),
     "privacy_policy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
+    "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "reset_password": MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "يرجى كتابة شيء يمكنك تذكره",

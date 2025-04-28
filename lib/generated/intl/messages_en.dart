@@ -90,6 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_password": MessageLookupByLibrary.simpleMessage(
       "Enter your password",
     ),
+    "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
     "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "forgot_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Don’t worry! It happens. Please enter the email associated with your account.",
@@ -118,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Already have an account?",
     ),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
+    "home": MessageLookupByLibrary.simpleMessage("Home"),
     "internal_error_message": MessageLookupByLibrary.simpleMessage(
       "An internal error occurred. Please try again later.",
     ),
@@ -203,6 +205,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Please enter a valid phone number",
     ),
     "privacy_policy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+    "profile": MessageLookupByLibrary.simpleMessage("Profile"),
     "reset_password": MessageLookupByLibrary.simpleMessage("Reset Password"),
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Please type something you’ll remember",
