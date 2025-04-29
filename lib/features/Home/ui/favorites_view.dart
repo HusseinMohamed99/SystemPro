@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/ui/fav_widgets/favorites_view_body.dart';
+import 'package:system_pro/gen/assets.gen.dart';
 
 class FavoritesView extends StatelessWidget {
   const FavoritesView({super.key});
@@ -26,8 +30,17 @@ class FavoritesView extends StatelessWidget {
         verticalSpacing(kSpacingLarge),
         const Divider(color: ColorManager.borderGrey),
         verticalSpacing(kSpacingXLarge),
-        const Expanded(child: FavoritesViewBody()),
+        const Expanded(
+          child: FavoritesViewBody(),
+          
+        ),
       ],
     ).vPadding(kPaddingDefaultVertical.h);
   }
 }
+
+
+
+
+
+

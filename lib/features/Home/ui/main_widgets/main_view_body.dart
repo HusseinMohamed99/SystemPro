@@ -15,10 +15,7 @@ class MainViewBody extends StatelessWidget {
     return IndexedStack(
       index: currentViewIndex,
       children: [
-        const HomeView().allPadding(
-          vPadding: kPaddingDefaultVertical,
-          hPadding: kPaddingDefaultHorizontal,
-        ),
+        const HomeView(),
         const FavoritesView(),
         const ProfileView().allPadding(
           vPadding: kPaddingDefaultVertical,

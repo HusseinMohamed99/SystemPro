@@ -108,6 +108,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/phone.svg
   String get phone => 'assets/images/phone.svg';
 
+  /// File path: assets/images/search.svg
+  String get search => 'assets/images/search.svg';
+
   /// File path: assets/images/whatsapp.svg
   String get whatsapp => 'assets/images/whatsapp.svg';
 
@@ -130,6 +133,7 @@ class $AssetsImagesGen {
     image2Svg,
     logoTest,
     phone,
+    search,
     whatsapp,
   ];
 }
