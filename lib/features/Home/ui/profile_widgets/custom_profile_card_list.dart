@@ -12,7 +12,7 @@ import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/ui/widgets/custom_profile_card.dart';
+import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
 
 class CsutomProfileCardList extends StatelessWidget {
   const CsutomProfileCardList({super.key});

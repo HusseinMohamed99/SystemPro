@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:system_pro/features/Home/ui/widgets/custom_bottom_navigation_bar.dart';
-import 'package:system_pro/features/Home/ui/widgets/main_view_body.dart';
+import 'package:system_pro/features/Home/ui/main_widgets/custom_bottom_navigation_bar.dart';
+import 'package:system_pro/features/Home/ui/main_widgets/main_view_body.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});

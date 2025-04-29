@@ -4,8 +4,8 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/ui/widgets/custom_profile_card_list.dart';
-import 'package:system_pro/features/Home/ui/widgets/custom_profile_info.dart';
+import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card_list.dart';
+import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_info.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});

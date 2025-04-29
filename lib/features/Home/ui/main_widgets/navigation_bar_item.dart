@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:system_pro/features/Home/data/model/bottom_navigation_bar_model.dart';
-import 'package:system_pro/features/Home/ui/widgets/active_bottom_nav_item.dart';
-import 'package:system_pro/features/Home/ui/widgets/in_active_bottom_nav_item.dart';
+import 'package:system_pro/features/Home/ui/main_widgets/active_bottom_nav_item.dart';
+import 'package:system_pro/features/Home/ui/main_widgets/in_active_bottom_nav_item.dart';
 
 class NavigationBarItem extends StatelessWidget {
   const NavigationBarItem({
