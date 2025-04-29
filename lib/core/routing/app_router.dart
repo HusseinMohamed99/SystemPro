@@ -15,7 +15,7 @@ import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/features/Home/ui/main_view.dart';
-import 'package:system_pro/features/Home/ui/widgets/edit_profile_view.dart';
+import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
 
 class AppRouters {
   Route? generateRoute(RouteSettings settings) {

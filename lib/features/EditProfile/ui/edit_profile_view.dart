@@ -18,7 +18,7 @@ class EditProfileView extends StatelessWidget {
       appBar: customSecondaryAppBar(
         context,
         title: context.localization.edit_profile,
-      ),
+      ), 
       body: Column(
         spacing: kSpacingXXXLarge.h,
         children: [

@@ -13,6 +13,8 @@ import 'package:system_pro/features/Authentication/ChangePassword/data/model/cha
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_response.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_request_body.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_response.dart';
+import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
+import 'package:system_pro/features/EditProfile/data/model/edit_profile_response.dart';
 
 part 'api_service.g.dart';
 
@@ -40,5 +42,16 @@ abstract class ApiService {
   @POST(ApiConstants.changePassword)
   Future<ChangePasswordResponse> changePassword(
     @Body() ChangePasswordRequestBody changePasswordRequestBody,
+  );
+  // @POST(ApiConstants.logout)
+  // Future<ApiSuccessModel> logout();
+  //   @POST(ApiConstants.deleteAccount)
+  // Future<PrivacySettingsResponse> deleteAccount();
+
+  @GET(ApiConstants.getUserData)
+  Future<EditProfileResponse> getUserData();
+    @POST(ApiConstants.editProfile)
+  Future<EditProfileResponse> editProfile(
+    @Body() EditProfileRequestBody editProfileRequestBody,
   );
 }
