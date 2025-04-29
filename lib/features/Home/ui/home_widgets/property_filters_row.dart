@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -21,9 +22,8 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
         children:
             filters.map((filter) {
               final isSelected = selectedFilters.contains(filter);
-
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
+                padding: EdgeInsets.only(right: 4.w),
                 child: ChoiceChip(
                   showCheckmark: false, // ⛔️ تمنع ظهور أيقونة الصح
                   label: Text(

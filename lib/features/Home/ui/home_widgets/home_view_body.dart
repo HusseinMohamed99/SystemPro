@@ -15,20 +15,18 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SearchBarWithFilterButton().allPadding(
-          vPadding: kPaddingDefaultVertical,
-          hPadding: kPaddingDefaultHorizontal,
+        const SearchBarWithFilterButton().onlyPadding(
+          leftPadding: kPaddingDefaultHorizontal,
+          rightPadding: kPaddingDefaultHorizontal,
+          bottomPadding: kPaddingVertical,
+          topPadding: kPaddingDefaultVertical,
         ),
         const PropertyFiltersRow().onlyPadding(
           leftPadding: kPaddingDefaultHorizontal,
           rightPadding: kPaddingDefaultHorizontal,
-          bottomPadding: kPaddingDefaultVertical,
+          bottomPadding: kPaddingVertical,
         ),
-        Divider(
-          color: ColorManager.borderGrey,
-          thickness: 1,
-          height: 1.h,
-        ),
+        Divider(color: ColorManager.borderGrey, thickness: 1, height: 1.h),
         const ResultsCountAndSortButton().onlyPadding(
           leftPadding: kPaddingDefaultHorizontal,
           rightPadding: kPaddingDefaultHorizontal,

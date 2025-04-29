@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class ResultsCountAndSortButton extends StatefulWidget {
   const ResultsCountAndSortButton({super.key});
@@ -13,8 +18,8 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
 
   final List<String> sortOptions = [
     'Newest',
-    'Price (Low to High)',
-    'Price (High to Low)',
+    'Price (Low)',
+    'Price (High)',
   ];
 
   @override
@@ -22,11 +27,17 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text('1537 Properties', style: TextStyle(fontSize: 16)),
+        Text(
+          '1537 Properties',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: ColorManager.softGray,
+            fontWeight: FontWeightHelper.medium,
+          ),
+        ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
+          padding:  EdgeInsets.symmetric(horizontal: 16.w,vertical: 10.h),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
+            border: Border.all(color: ColorManager.borderGrey, width: 1.5.w),
             borderRadius: BorderRadius.circular(8),
           ),
           child: PopupMenuButton<String>(
@@ -45,8 +56,10 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
             },
             child: Row(
               children: [
-                const Icon(Icons.swap_vert, size: 18),
-                const SizedBox(width: 4),
+                 Icon(Icons.swap_vert, size: kIconSizeDefault.sp,
+                  color: ColorManager.softGray,
+                ),
+               horizontalSpacing(4),
                 Text(selectedSort),
               ],
             ),
