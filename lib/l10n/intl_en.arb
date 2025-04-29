@@ -213,7 +213,9 @@
       "dark_mode":"Dark",
       "@dark_mode":{},
       "delete_my_account":"Delete My Account",
-      "@delete_my_account":{}
+      "@delete_my_account":{},
+      "change":"Change",
+      "@change":{}
    
 
  

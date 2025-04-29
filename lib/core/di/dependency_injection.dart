@@ -6,6 +6,7 @@ import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 import 'package:system_pro/core/networking/backend/api_service.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/styleManager/text_style.dart';
+import 'package:system_pro/core/theming/themingManager/dark_theming.dart';
 import 'package:system_pro/core/theming/themingManager/light_theming.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/repo/change_password_repo.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
@@ -20,7 +21,10 @@ import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.da
 
 final getIt = GetIt.instance;
 
-void setupGetIt({required BuildContext context}) {
+void setupGetIt({required BuildContext context,
+  required String initialLocale,
+  required bool isDarkMode,
+}) {
   // Dio & ApiService
   if (!getIt.isRegistered<Dio>()) {
     final Dio dio = DioFactory.getDio();
@@ -33,20 +37,25 @@ void setupGetIt({required BuildContext context}) {
   final lightText = AppTextStyleManager.lightTextTheme(context);
   final darkText = AppTextStyleManager.darkTextTheme(context);
 
-  if (!getIt.isRegistered<ChangeThemingCubit>()) {
-    getIt.registerLazySingleton<ChangeThemingCubit>(
-      () => ChangeThemingCubit(
-        initialTheme: buildLightTheming(textTheme: lightText),
+    if (!getIt.isRegistered<ChangeThemingCubit>()) {
+    getIt.registerSingleton<ChangeThemingCubit>(
+      ChangeThemingCubit(
+        initialTheme:
+            isDarkMode
+                ? buildDarkTheming(textTheme: darkText)
+                : buildLightTheming(textTheme: lightText),
         lightTextTheme: lightText,
         darkTextTheme: darkText,
+        isDark: isDarkMode,
       ),
     );
   }
+
   // LOCALIZATION
   if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
-    getIt.registerLazySingleton<ChangeLocalizationCubit>(
-      ChangeLocalizationCubit.new,
-    );
+    final localizationCubit = ChangeLocalizationCubit();
+    localizationCubit.changeLocalization(initialLocale);
+    getIt.registerSingleton<ChangeLocalizationCubit>(localizationCubit);
   }
   // LOGIN
   if (!getIt.isRegistered<LoginCubit>()) {

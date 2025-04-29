@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "تم إلغاء تسجيل الدخول بواسطة المستخدم.",
     ),
+    "change": MessageLookupByLibrary.simpleMessage("تغير"),
     "change_password": MessageLookupByLibrary.simpleMessage(
       "تغيير كلمة المرور",
     ),

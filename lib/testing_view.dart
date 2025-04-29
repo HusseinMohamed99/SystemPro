@@ -28,7 +28,7 @@ class TestingView extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 final localeCubit = context.read<ChangeLocalizationCubit>();
-                localeCubit.changeLocalization();
+                localeCubit.changeLocalization('en');
               },
               child: Text(context.localization.do_not_have_account),
             ),

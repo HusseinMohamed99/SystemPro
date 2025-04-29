@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "Sign-in canceled by the user.",
     ),
+    "change": MessageLookupByLibrary.simpleMessage("Change"),
     "change_password": MessageLookupByLibrary.simpleMessage("Change Password"),
     "check_email": MessageLookupByLibrary.simpleMessage(
       "Please check your email",

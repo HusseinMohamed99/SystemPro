@@ -4,6 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/bloc_observer.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
+import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
 
@@ -12,22 +14,40 @@ void main() async {
   await dotenv.load();
   Bloc.observer = MyBlocObserver();
 
+  await CachingHelper.init();
+  final savedLocale =
+      CachingHelper.getString(SharedPrefKeys.selectedLanguage) ?? 'en';
+  final isDarkMode = await CachingHelper.getBool(SharedPrefKeys.isDarkMode);
+
   runApp(
     ScreenUtilInit(
       designSize: const Size(393, 852),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, __) => const AppBootstrap(),
+      builder:
+          (_, __) =>
+              AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode),
     ),
   );
 }
 
 class AppBootstrap extends StatelessWidget {
-  const AppBootstrap({super.key});
+  const AppBootstrap({
+    super.key,
+    required this.initialLocale,
+    required this.isDarkMode,
+  });
+
+  final String initialLocale;
+  final bool isDarkMode;
 
   @override
   Widget build(BuildContext context) {
-    setupGetIt(context: context); // هنا يكون عندنا context بعد build
+    setupGetIt(
+      initialLocale: initialLocale,
+      isDarkMode: isDarkMode,
+      context: context,
+    ); // هنا يكون عندنا context بعد build
 
     return SystemProApp(appRouter: AppRouters());
   }
@@ -45,3 +65,6 @@ class AppBootstrap extends StatelessWidget {
 //     isLoggedInUser = false;
 //   }
 // }
+
+
+

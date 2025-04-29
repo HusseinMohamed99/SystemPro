@@ -9,23 +9,20 @@ class ChangeLocalizationCubit extends Cubit<ChangeLocalizationState> {
 
   String currentLocalization = 'en';
 
-  bool isArabic() {
-    return Intl.getCurrentLocale() == 'ar';
-  }
-
-  void changeLocalization() {
+  /// تُستخدم لتحميل اللغة المبدئية أثناء التشغيل
+  void changeLocalization(String localeCode) async {
     emit(const ChangeLocalizationState.loading());
-    if (isArabic()) {
-      currentLocalization = 'en';
-      S.load(Locale(currentLocalization)); // Load English localization
-      emit(ChangeLocalizationState.loaded(localization: currentLocalization));
-    } else {
-      currentLocalization = 'ar';
-      S.load(Locale(currentLocalization)); // Load Arabic localization
-      emit(ChangeLocalizationState.loaded(localization: currentLocalization));
-    }
-
-    // Update the locale for the app
+    currentLocalization = localeCode;
     Intl.defaultLocale = currentLocalization;
+    await S.load(Locale(currentLocalization));
+    emit(ChangeLocalizationState.loaded(localization: currentLocalization));
   }
+
+  /// للتبديل بين اللغتين (عربي / إنجليزي)
+  void toggleLocale() {
+    final newLocale = currentLocalization == 'ar' ? 'en' : 'ar';
+    changeLocalization(newLocale);
+  }
+
+  bool get isArabic => currentLocalization == 'ar';
 }
