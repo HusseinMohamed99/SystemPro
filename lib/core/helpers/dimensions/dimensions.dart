@@ -11,6 +11,7 @@ const double kPaddingSmallVertical = 8.0;
 const double kPaddingSmallerHorizontal = 2.0;
 const double kPaddingSmallerVertical = 2.0;
 const double kPaddingHorizontal = 16.0;
+const double kPaddingVertical = 16.0;
 
 // Specific Padding Use Cases
 const double kPaddingAppBarBottom = 24.0;

@@ -95,8 +95,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/image 1.png
   AssetGenImage get image1 => const AssetGenImage('assets/images/image 1.png');
 
-  /// File path: assets/images/image 2.svg
-  String get image2 => 'assets/images/image 2.svg';
+  /// File path: assets/images/image 2.png
+  AssetGenImage get image2Png =>
+      const AssetGenImage('assets/images/image 2.png');
+
+  /// File path: assets/images/image2.svg
+  String get image2Svg => 'assets/images/image2.svg';
 
   /// File path: assets/images/logoTest.svg
   String get logoTest => 'assets/images/logoTest.svg';
@@ -122,7 +126,8 @@ class $AssetsImagesGen {
     heartActive,
     heartInActive,
     image1,
-    image2,
+    image2Png,
+    image2Svg,
     logoTest,
     phone,
     whatsapp,
