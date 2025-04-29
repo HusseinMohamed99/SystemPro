@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/features/Home/ui/widgets/custom_bottom_navigation_bar.dart';
 import 'package:system_pro/features/Home/ui/widgets/main_view_body.dart';
 
@@ -17,12 +15,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: MainViewBody(currentViewIndex: currentViewIndex).allPadding(
-          vPadding: kPaddingDefaultVertical,
-          hPadding: kPaddingDefaultHorizontal,
-        ),
-      ),
+      body: SafeArea(child: MainViewBody(currentViewIndex: currentViewIndex)),
       bottomNavigationBar: CustomBottomNavigationBar(
         onItemTapped: (index) {
           currentViewIndex = index;

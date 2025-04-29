@@ -20,7 +20,6 @@ class ProfileView extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
               color: ColorManager.primaryBlue,
-              fontWeight: FontWeightHelper.semiBold,
             ),
           ),
         ),

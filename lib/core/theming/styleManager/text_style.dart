@@ -71,13 +71,13 @@ class AppTextStyleManager {
     titleLarge: TextStyle(
       color: ColorManager.pureBlack,
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s16),
-      fontWeight: FontWeightHelper.regular,
+      fontWeight: FontWeightHelper.semiBold,
       fontFamily: _fontFamily,
     ),
     titleMedium: TextStyle(
       color: ColorManager.pureBlack,
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s14),
-      fontWeight: FontWeightHelper.regular,
+      fontWeight: FontWeightHelper.semiBold,
       fontFamily: _fontFamily,
     ),
 
