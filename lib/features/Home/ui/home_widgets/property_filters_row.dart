@@ -11,8 +11,8 @@ class PropertyFiltersRow extends StatefulWidget {
 }
 
 class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
-  final List<String> filters = ['Residential', 'Buy', 'Property type', 'Rooms'];
-  final Set<String> selectedFilters = {'Residential', 'Buy'};
+  final List<String> filters = ['Buy', 'Rent'];
+  final Set<String> selectedFilters = {'Buy'};
 
   @override
   Widget build(BuildContext context) {

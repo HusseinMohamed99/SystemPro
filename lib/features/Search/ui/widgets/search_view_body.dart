@@ -136,6 +136,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
         horizontalSpacing(kSpacingSmall),
         Expanded(
           child: CustomSearchTextField(
+            readOnly: false,
             controller: _searchController,
             onChanged: _handleSearch,
           ),
