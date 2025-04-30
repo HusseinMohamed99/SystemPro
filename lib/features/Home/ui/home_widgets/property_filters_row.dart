@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -11,39 +14,49 @@ class PropertyFiltersRow extends StatefulWidget {
 }
 
 class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
-  final List<String> filters = ['Buy', 'Rent'];
-  final Set<String> selectedFilters = {'Buy'};
+  late String selectedFilter;
+
+  List<String> filters(BuildContext context) => [
+    context.localization.buy,
+    context.localization.rent,
+  ];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedFilter = context.localization.buy; // ✅ استخدم context هنا بأمان
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children:
-            filters.map((filter) {
-              final isSelected = selectedFilters.contains(filter);
-              return Padding(
-                padding: EdgeInsets.only(right: 4.w),
+    final allFilters = filters(context);
+    return Row(
+      children:
+          allFilters.map((filter) {
+            final isSelected = selectedFilter == filter;
+            return Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: ChoiceChip(
-                  showCheckmark: false, // ⛔️ تمنع ظهور أيقونة الصح
-                  label: Text(
-                    filter,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color:
-                          isSelected
-                              ? ColorManager.primaryBlue
-                              : ColorManager.softGray,
-                      fontWeight: FontWeightHelper.medium,
+                  labelPadding: EdgeInsets.symmetric(vertical: 2.h),
+                  label: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      filter,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color:
+                            isSelected
+                                ? ColorManager.primaryBlue
+                                : ColorManager.softGray,
+                        fontWeight: FontWeightHelper.medium,
+                      ),
                     ),
                   ),
                   selected: isSelected,
-                  onSelected: (selected) {
+                  onSelected: (_) {
                     setState(() {
-                      if (selected) {
-                        selectedFilters.add(filter);
-                      } else {
-                        selectedFilters.remove(filter);
-                      }
+                      selectedFilter = filter;
                     });
                   },
                   selectedColor: ColorManager.shadowBlue,
@@ -52,10 +65,11 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
                     borderRadius: BorderRadius.circular(8),
                     side: const BorderSide(color: ColorManager.borderGrey),
                   ),
+                  showCheckmark: false,
                 ),
-              );
-            }).toList(),
-      ),
+              ),
+            );
+          }).toList(),
     );
   }
 }
