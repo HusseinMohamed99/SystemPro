@@ -1110,6 +1110,16 @@ class S {
     return Intl.message('Amenities', name: 'amenities', desc: '', args: []);
   }
 
+  /// `See More Amenities`
+  String get see_more_amenities {
+    return Intl.message(
+      'See More Amenities',
+      name: 'see_more_amenities',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Find`
   String get find {
     return Intl.message('Find', name: 'find', desc: '', args: []);

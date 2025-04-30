@@ -256,6 +256,8 @@
       "@property_size":{},
       "amenities":"Amenities",
       "@amenities":{},
+      "see_more_amenities":"See More Amenities",
+      "@see_more_amenities":{},
       "find":"Find",
       "@find":{},
       "whatsApp":"WhatsApp",

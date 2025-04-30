@@ -10,12 +10,13 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.textStyle,
-    this.backgroundColor,
+    this.backgroundColor, this.textStyleColor,
   });
   final String text;
   final VoidCallback onPressed;
   final TextStyle? textStyle;
   final Color? backgroundColor;
+  final Color? textStyleColor;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -36,7 +37,7 @@ class CustomButton extends StatelessWidget {
               textStyle ??
               Theme.of(
                 context,
-              ).textTheme.titleLarge?.copyWith(color: ColorManager.pureWhite),
+              ).textTheme.titleLarge?.copyWith(color:textStyleColor?? ColorManager.pureWhite),
         ),
       ),
     );

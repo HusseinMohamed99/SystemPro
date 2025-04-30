@@ -17,9 +17,7 @@ class FilterView extends StatelessWidget {
         context,
         title: context.localization.filter,
       ),
-      body: Column(
-        children: [FilterViewBody(locationArgument: locationArgument)],
-      ).allPadding(
+      body:FilterViewBody(locationArgument: locationArgument).allPadding(
         vPadding: kPaddingDefaultVertical,
         hPadding: kPaddingDefaultHorizontal,
       ),

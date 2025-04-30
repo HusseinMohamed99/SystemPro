@@ -246,6 +246,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
+    "see_more_amenities": MessageLookupByLibrary.simpleMessage(
+      "عرض المزيد من الوسائل",
+    ),
     "see_more_property_type": MessageLookupByLibrary.simpleMessage(
       "عرض المزيد من الأنواع",
     ),

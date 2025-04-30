@@ -238,6 +238,9 @@
   "@property_type": {},
   "see_more_property_type": "عرض المزيد من الأنواع",
   "@see_more_property_type": {},
+      "see_more_amenities":"عرض المزيد من الوسائل",
+      
+      "@see_more_amenities":{},
   "price_range": "نطاق السعر",
   "@price_range": {},
   "min": "الحد الأدنى",
