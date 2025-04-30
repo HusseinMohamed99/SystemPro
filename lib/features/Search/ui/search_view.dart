@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
+import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
@@ -38,16 +39,20 @@ class RecentSearchesScreen extends StatefulWidget {
 
 class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<Map<String, String>> _recentSearches = [];
+
+  List<Map<String, String>> _recentSearches = [];
   List<Map<String, String>> _searchResults = [];
   List<Map<String, String>> _allDistricts = [];
 
-  Map<String, String>? _selectedLocation;
+  Map<String, String>? _selectedLocation; // ✅ لحفظ الاختيار الحالي
+
+  static const String recentSearchesKey = 'recent_searches';
 
   @override
   void initState() {
     super.initState();
     _loadLocationData();
+    _loadRecentSearches();
   }
 
   Future<void> _loadLocationData() async {
@@ -72,6 +77,22 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     });
   }
 
+  Future<void> _loadRecentSearches() async {
+    final data = await CachingHelper.getListString(
+      SharedPrefKeys.recentSearchesKey,
+    );
+    setState(() {
+      _recentSearches =
+          data.map((e) {
+            final decoded = Map<String, dynamic>.from(json.decode(e));
+            return {
+              'district': decoded['district'] as String,
+              'city': decoded['city'] as String,
+            };
+          }).toList();
+    });
+  }
+
   void _onSearch(String query) {
     final results =
         _allDistricts.where((item) {
@@ -86,18 +107,22 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     });
   }
 
-  void _onSelect(Map<String, String> selected) {
+Future<void> _onSelect(Map<String, String> selected) async {
+    _recentSearches.removeWhere(
+      (item) =>
+          item['district'] == selected['district'] &&
+          item['city'] == selected['city'],
+    );
+
+    _recentSearches.insert(0, selected);
+    _selectedLocation = selected;
+
+    final stringified = _recentSearches.map((e) => json.encode(e)).toList();
+    await CachingHelper.setData(recentSearchesKey, stringified);
+
     setState(() {
-      _selectedLocation = selected;
-
-      // حذف أي تكرار سابق ثم إضافته أول القائمة
-      _recentSearches.removeWhere(
-        (item) =>
-            item['district'] == selected['district'] &&
-            item['city'] == selected['city'],
-      );
-
-      _recentSearches.insert(0, selected);
+      _controller.text =
+          '${selected['district']}, ${selected['city']}'; // ✅ عرض العنوان
     });
   }
 
@@ -108,36 +133,34 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Search bar
         Row(
           children: [
             GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(context);
+              },
               child: Icon(
                 Icons.close,
-                size: kIconSizeDefault.sp,
+                size: 24.sp,
                 color: ColorManager.softGray,
               ),
             ),
-            horizontalSpacing(8),
+            const SizedBox(width: 8),
             Expanded(
               child: CustomSearchTextField(
-                controller: _controller,
                 readOnly: false,
+                controller: _controller,
                 onChanged: _onSearch,
               ),
             ),
           ],
         ),
-
         const SizedBox(height: 20),
-
         Text(
-          isSearching ? 'Results' : 'Recent searches',
+          isSearching ? 'Results' : 'Recent Searches',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
-
         Expanded(
           child: ListView.builder(
             itemCount:
@@ -150,20 +173,38 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
                   isSearching ? Icons.place : Icons.history,
                   size: 20,
                 ),
-                title: Text(item['district']!),
-                subtitle: Text(item['city']!),
+                title: Text(item['district'] ?? ''),
+                subtitle: Text(item['city'] ?? ''),
                 onTap: () => _onSelect(item),
               );
             },
           ),
         ),
-
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
               if (_selectedLocation != null) {
-                Navigator.pop(context, _selectedLocation);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder:
+                //         (context) => FilterScreen(
+                //           district: _selectedLocation!['district']!,
+                //           city: _selectedLocation!['city']!,
+                //         ),
+                //   ),
+                // );
+                AppLogs.infoLog(
+                  'district: ${_selectedLocation!['district']!} && city: ${_selectedLocation!['city']!}',
+                );
+              } else {
+                // عرض رسالة تنبيه
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Please select a location first'),
+                  ),
+                );
               }
             },
             style: ElevatedButton.styleFrom(
