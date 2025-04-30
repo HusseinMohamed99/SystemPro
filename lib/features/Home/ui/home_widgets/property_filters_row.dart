@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -36,8 +34,21 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
             final isSelected = selectedFilter == filter;
             return Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                padding: EdgeInsets.only(
+                  right:
+                      selectedFilter == context.localization.buy && isSelected
+                          ? 8.w
+                          : 0,
+                  left:
+                      selectedFilter == context.localization.rent && isSelected
+                          ? 8.w
+                          : 0,
+                ),
                 child: ChoiceChip(
+                  side: BorderSide(
+                    color: ColorManager.borderGrey,
+                    width: 1.5.w,
+                  ),
                   labelPadding: EdgeInsets.symmetric(vertical: 2.h),
                   label: SizedBox(
                     width: double.infinity,
