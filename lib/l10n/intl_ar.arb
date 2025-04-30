@@ -274,7 +274,12 @@
 "select_location": "يرجى اختيار الموقع أولاً",
 "@select_location": {},
 "sar":"ر.س",
-"@sar":{}
+"@sar":{},
+"location":"الموقع",
+"@location":{},
+"about":"الوصف",
+"@about":{}
 
     
+
 }

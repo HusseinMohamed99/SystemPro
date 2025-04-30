@@ -187,7 +187,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
         _buildSearchHeader(),
         verticalSpacing(kSpacingXLarge),
         Text(
-          isSearching ? 'Results' : 'Recent Searches',
+          isSearching ? context.localization.result : context.localization.recent_search,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),

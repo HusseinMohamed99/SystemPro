@@ -275,5 +275,10 @@
       "select_location":"Please select a location first",
       "@select_location":{},
       "sar":"SAR",
-      "@sar":{}
+      "@sar":{},
+      "location":"Location",
+      "@location":{},
+      "about":"About",
+      "@about":{}
+
 }

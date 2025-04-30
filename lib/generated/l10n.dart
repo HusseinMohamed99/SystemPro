@@ -1169,6 +1169,16 @@ class S {
   String get sar {
     return Intl.message('SAR', name: 'sar', desc: '', args: []);
   }
+
+  /// `Location`
+  String get location {
+    return Intl.message('Location', name: 'location', desc: '', args: []);
+  }
+
+  /// `About`
+  String get about {
+    return Intl.message('About', name: 'about', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

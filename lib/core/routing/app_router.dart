@@ -14,6 +14,7 @@ import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart'
 import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
+import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
 import 'package:system_pro/features/Home/ui/main_view.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
@@ -81,11 +82,15 @@ class AppRouters {
       case Routes.editProfileView:
         return MaterialPageRoute(builder: (_) => const EditProfileView());
       case Routes.searchView:
-        return MaterialPageRoute(builder: (_) => const SearchView()); 
-         case Routes.filterView:
-        return MaterialPageRoute(builder: (_) =>  FilterView(
-          locationArgument: arguments as LocationArgument,
-        ));
+        return MaterialPageRoute(builder: (_) => const SearchView());
+      case Routes.filterView:
+        return MaterialPageRoute(
+          builder:
+              (_) =>
+                  FilterView(locationArgument: arguments as LocationArgument),
+        );
+      case Routes.companyProfileView:
+        return MaterialPageRoute(builder: (_) => const CompanyProfileView());
 
       //    case Routes.productDetailsView:
       //   return MaterialPageRoute(
