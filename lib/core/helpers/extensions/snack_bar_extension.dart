@@ -7,12 +7,12 @@ extension SnackBarExtension on BuildContext {
       SnackBar(
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
-        backgroundColor: ColorManager.mediumGrey,
+        backgroundColor: ColorManager.shadowBlue,
         content: Text(
           message,
           style: Theme.of(
             this,
-          ).textTheme.titleMedium?.copyWith(color: ColorManager.offWhite),
+          ).textTheme.titleMedium?.copyWith(color: ColorManager.errorRed),
         ),
       ),
     );
@@ -26,12 +26,12 @@ onTap(BuildContext context) {
   // Instead Of
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: ColorManager.mediumGrey,
+      backgroundColor: ColorManager.shadowBlue,
       content: Text(
         'Tapped',
         style: Theme.of(
           context,
-        ).textTheme.titleMedium?.copyWith(color: ColorManager.offWhite),
+        ).textTheme.titleMedium?.copyWith(color: ColorManager.errorRed),
       ),
     ),
   );

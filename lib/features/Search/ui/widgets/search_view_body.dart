@@ -11,10 +11,12 @@ import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
+import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/gen/assets.gen.dart';
 
 class RecentSearchesScreen extends StatefulWidget {
@@ -58,7 +60,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
           }).toList();
       setState(() {});
     } catch (e) {
-        AppLogs.errorLog('Error loading locations: $e');
+      AppLogs.errorLog('Error loading locations: $e');
     }
   }
 
@@ -197,6 +199,13 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
             if (_selectedLocation != null) {
               AppLogs.successLog(
                 'district: ${_selectedLocation!['district']!} && city: ${_selectedLocation!['city']!}',
+              );
+              context.pushNamed(
+                Routes.filterView,
+                arguments: LocationArgument(
+                  district: _selectedLocation!['district']!,
+                  city: _selectedLocation!['city']!,
+                ),
               );
             } else {
               context.showSnackBar(context.localization.select_location);

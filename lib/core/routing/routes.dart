@@ -9,4 +9,5 @@ class Routes {
   static const String mainView = '/mainView';
   static const String editProfileView = '/editProfileView';
   static const String searchView = '/searchView';
+  static const String filterView = '/filterView';
 }
