@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -28,7 +29,7 @@ class CustomConnectionButton extends StatelessWidget {
             onPressed: () {},
             icon: SvgPicture.asset(Assets.images.whatsapp),
             label: Text(
-              'WhatsApp',
+              context.localization.whatsApp,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
               ),
@@ -48,7 +49,7 @@ class CustomConnectionButton extends StatelessWidget {
             onPressed: () {},
             icon: SvgPicture.asset(Assets.images.phone),
             label: Text(
-              'Call',
+              context.localization.call,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
               ),
