@@ -138,12 +138,23 @@ class $AssetsImagesGen {
   ];
 }
 
+class $AssetsLocationGen {
+  const $AssetsLocationGen();
+
+  /// File path: assets/location/locations.json
+  String get locations => 'assets/location/locations.json';
+
+  /// List of all assets
+  List<String> get values => [locations];
+}
+
 class Assets {
   const Assets._();
 
   static const String aEnv = '.env';
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLocationGen location = $AssetsLocationGen();
 
   /// List of all assets
   static List<String> get values => [aEnv];

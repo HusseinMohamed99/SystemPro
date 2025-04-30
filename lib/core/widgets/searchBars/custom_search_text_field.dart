@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
@@ -16,6 +18,7 @@ class CustomSearchTextField extends StatelessWidget {
     this.onSubmitted,
     this.isSearcView = true,
     this.widget,
+    this.onChanged,
   });
   final bool? readOnly;
   final VoidCallback? onTap;
@@ -23,14 +26,16 @@ class CustomSearchTextField extends StatelessWidget {
   final void Function(String)? onSubmitted;
   final bool? isSearcView;
   final Widget? widget;
+  final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextField(
       onTap: () {
         if (readOnly == true) {
-          // context.pushNamed(Routes.searchView);
+         context.pushNamed(Routes.searchView);
         }
       },
+      onChanged: onChanged,
       controller: controller,
       readOnly: readOnly ?? true,
       keyboardType: TextInputType.text,

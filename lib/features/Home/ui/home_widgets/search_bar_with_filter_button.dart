@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
 
@@ -10,7 +11,7 @@ class SearchBarWithFilterButton extends StatelessWidget {
     return Row(
       children: [
         const Expanded(child: CustomSearchTextField()),
-        const SizedBox(width: 8),
+        horizontalSpacing(8),
         Container(
           decoration: BoxDecoration(
             color: ColorManager.primaryBlue, // Purple

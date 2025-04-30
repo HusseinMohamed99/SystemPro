@@ -7,6 +7,6 @@ class Routes {
   static const String resetPasswordView = '/resetPasswordView';
   static const String passwordChangedView = '/passwordChangedView';
   static const String mainView = '/mainView';
-  static const String  editProfileView= '/editProfileView';
-  
+  static const String editProfileView = '/editProfileView';
+  static const String searchView = '/searchView';
 }
