@@ -989,6 +989,171 @@ class S {
   String get change {
     return Intl.message('Change', name: 'change', desc: '', args: []);
   }
+
+  /// `Done`
+  String get done {
+    return Intl.message('Done', name: 'done', desc: '', args: []);
+  }
+
+  /// `Recent Search`
+  String get recent_search {
+    return Intl.message(
+      'Recent Search',
+      name: 'recent_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear All`
+  String get clear_all {
+    return Intl.message('Clear All', name: 'clear_all', desc: '', args: []);
+  }
+
+  /// `Result`
+  String get result {
+    return Intl.message('Result', name: 'result', desc: '', args: []);
+  }
+
+  /// `No Result`
+  String get no_result {
+    return Intl.message('No Result', name: 'no_result', desc: '', args: []);
+  }
+
+  /// `Filter`
+  String get filter {
+    return Intl.message('Filter', name: 'filter', desc: '', args: []);
+  }
+
+  /// `Residentail`
+  String get residentail {
+    return Intl.message('Residentail', name: 'residentail', desc: '', args: []);
+  }
+
+  /// `Commercial`
+  String get commercial {
+    return Intl.message('Commercial', name: 'commercial', desc: '', args: []);
+  }
+
+  /// `Buy`
+  String get buy {
+    return Intl.message('Buy', name: 'buy', desc: '', args: []);
+  }
+
+  /// `Rent`
+  String get rent {
+    return Intl.message('Rent', name: 'rent', desc: '', args: []);
+  }
+
+  /// `Property Type`
+  String get property_type {
+    return Intl.message(
+      'Property Type',
+      name: 'property_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See More Property Type`
+  String get see_more_property_type {
+    return Intl.message(
+      'See More Property Type',
+      name: 'see_more_property_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price Range`
+  String get price_range {
+    return Intl.message('Price Range', name: 'price_range', desc: '', args: []);
+  }
+
+  /// `Min`
+  String get min {
+    return Intl.message('Min', name: 'min', desc: '', args: []);
+  }
+
+  /// `Max`
+  String get max {
+    return Intl.message('Max', name: 'max', desc: '', args: []);
+  }
+
+  /// `Bedrooms`
+  String get bedrooms {
+    return Intl.message('Bedrooms', name: 'bedrooms', desc: '', args: []);
+  }
+
+  /// `Bathrooms`
+  String get bathrooms {
+    return Intl.message('Bathrooms', name: 'bathrooms', desc: '', args: []);
+  }
+
+  /// `Any`
+  String get any {
+    return Intl.message('Any', name: 'any', desc: '', args: []);
+  }
+
+  /// `Property Size`
+  String get property_size {
+    return Intl.message(
+      'Property Size',
+      name: 'property_size',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amenities`
+  String get amenities {
+    return Intl.message('Amenities', name: 'amenities', desc: '', args: []);
+  }
+
+  /// `Find`
+  String get find {
+    return Intl.message('Find', name: 'find', desc: '', args: []);
+  }
+
+  /// `WhatsApp`
+  String get whatsApp {
+    return Intl.message('WhatsApp', name: 'whatsApp', desc: '', args: []);
+  }
+
+  /// `Call`
+  String get call {
+    return Intl.message('Call', name: 'call', desc: '', args: []);
+  }
+
+  /// `Newest`
+  String get newest {
+    return Intl.message('Newest', name: 'newest', desc: '', args: []);
+  }
+
+  /// `Price(Low)`
+  String get price_low {
+    return Intl.message('Price(Low)', name: 'price_low', desc: '', args: []);
+  }
+
+  /// `Price(High)`
+  String get price_high {
+    return Intl.message('Price(High)', name: 'price_high', desc: '', args: []);
+  }
+
+  /// `Properties`
+  String get properties {
+    return Intl.message('Properties', name: 'properties', desc: '', args: []);
+  }
+
+  /// `Please select a location first`
+  String get select_location {
+    return Intl.message(
+      'Please select a location first',
+      name: 'select_location',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

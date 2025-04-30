@@ -29,8 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "account_exists_message": MessageLookupByLibrary.simpleMessage(
       "An account already exists with a different credential.",
     ),
+    "amenities": MessageLookupByLibrary.simpleMessage("Amenities"),
+    "any": MessageLookupByLibrary.simpleMessage("Any"),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
     "back_to_login": MessageLookupByLibrary.simpleMessage("Back to Login"),
+    "bathrooms": MessageLookupByLibrary.simpleMessage("Bathrooms"),
+    "bedrooms": MessageLookupByLibrary.simpleMessage("Bedrooms"),
+    "buy": MessageLookupByLibrary.simpleMessage("Buy"),
+    "call": MessageLookupByLibrary.simpleMessage("Call"),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "Sign-in canceled by the user.",
     ),
@@ -39,6 +45,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "check_email": MessageLookupByLibrary.simpleMessage(
       "Please check your email",
     ),
+    "clear_all": MessageLookupByLibrary.simpleMessage("Clear All"),
+    "commercial": MessageLookupByLibrary.simpleMessage("Commercial"),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
@@ -57,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account?",
     ),
+    "done": MessageLookupByLibrary.simpleMessage("Done"),
     "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
     "email_already_exists": MessageLookupByLibrary.simpleMessage(
@@ -98,6 +107,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter your password",
     ),
     "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
+    "filter": MessageLookupByLibrary.simpleMessage("Filter"),
+    "find": MessageLookupByLibrary.simpleMessage("Find"),
     "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "forgot_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Don’t worry! It happens. Please enter the email associated with your account.",
@@ -140,12 +151,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "light_mode": MessageLookupByLibrary.simpleMessage("Light"),
     "login": MessageLookupByLibrary.simpleMessage("Log in"),
     "logout": MessageLookupByLibrary.simpleMessage("Log out"),
+    "max": MessageLookupByLibrary.simpleMessage("Max"),
+    "min": MessageLookupByLibrary.simpleMessage("Min"),
     "my_account": MessageLookupByLibrary.simpleMessage("My Account"),
     "network_request_failed_message": MessageLookupByLibrary.simpleMessage(
       "Please check your internet connection",
     ),
     "new_account": MessageLookupByLibrary.simpleMessage("New Account"),
     "new_password": MessageLookupByLibrary.simpleMessage("New Password"),
+    "newest": MessageLookupByLibrary.simpleMessage("Newest"),
+    "no_result": MessageLookupByLibrary.simpleMessage("No Result"),
     "not_receive_code": MessageLookupByLibrary.simpleMessage(
       "Didn\'t receive code?",
     ),
@@ -212,14 +227,30 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone_valid": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid phone number",
     ),
+    "price_high": MessageLookupByLibrary.simpleMessage("Price(High)"),
+    "price_low": MessageLookupByLibrary.simpleMessage("Price(Low)"),
+    "price_range": MessageLookupByLibrary.simpleMessage("Price Range"),
     "privacy_policy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "properties": MessageLookupByLibrary.simpleMessage("Properties"),
+    "property_size": MessageLookupByLibrary.simpleMessage("Property Size"),
+    "property_type": MessageLookupByLibrary.simpleMessage("Property Type"),
+    "recent_search": MessageLookupByLibrary.simpleMessage("Recent Search"),
+    "rent": MessageLookupByLibrary.simpleMessage("Rent"),
     "reset_password": MessageLookupByLibrary.simpleMessage("Reset Password"),
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Please type something you’ll remember",
     ),
+    "residentail": MessageLookupByLibrary.simpleMessage("Residentail"),
+    "result": MessageLookupByLibrary.simpleMessage("Result"),
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
+    "see_more_property_type": MessageLookupByLibrary.simpleMessage(
+      "See More Property Type",
+    ),
+    "select_location": MessageLookupByLibrary.simpleMessage(
+      "Please select a location first",
+    ),
     "send_code": MessageLookupByLibrary.simpleMessage("Send Code"),
     "send_code_again": MessageLookupByLibrary.simpleMessage("Send code again"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
@@ -251,6 +282,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "weak_password_error": MessageLookupByLibrary.simpleMessage(
       "The password provided is too weak.",
     ),
+    "whatsApp": MessageLookupByLibrary.simpleMessage("WhatsApp"),
     "wrong_password_message": MessageLookupByLibrary.simpleMessage(
       "Incorrect password. Please try again.",
     ),

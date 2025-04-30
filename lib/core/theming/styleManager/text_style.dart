@@ -79,6 +79,11 @@ class AppTextStyleManager {
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s14),
       fontWeight: FontWeightHelper.semiBold,
       fontFamily: _fontFamily,
+    ),    titleSmall: TextStyle(
+      color: ColorManager.pureBlack,
+      fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s12),
+      fontWeight: FontWeightHelper.regular,
+      fontFamily: _fontFamily,
     ),
 
     // ضيف باقي الأنماط حسب احتياجك

@@ -29,8 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "account_exists_message": MessageLookupByLibrary.simpleMessage(
       "يوجد حساب بالفعل ببيانات مختلفة.",
     ),
+    "amenities": MessageLookupByLibrary.simpleMessage("وسائل الراحة"),
+    "any": MessageLookupByLibrary.simpleMessage("أي"),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
     "back_to_login": MessageLookupByLibrary.simpleMessage("رجوع لتسجيل الدخول"),
+    "bathrooms": MessageLookupByLibrary.simpleMessage("الحمامات"),
+    "bedrooms": MessageLookupByLibrary.simpleMessage("غرف النوم"),
+    "buy": MessageLookupByLibrary.simpleMessage("شراء"),
+    "call": MessageLookupByLibrary.simpleMessage("اتصال"),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "تم إلغاء تسجيل الدخول بواسطة المستخدم.",
     ),
@@ -41,6 +47,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "check_email": MessageLookupByLibrary.simpleMessage(
       "يرجى التحقق من بريدك الالكترونى",
     ),
+    "clear_all": MessageLookupByLibrary.simpleMessage("مسح الكل"),
+    "commercial": MessageLookupByLibrary.simpleMessage("تجاري"),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور الجديدة",
     ),
@@ -57,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "لا تملك حساب؟",
     ),
+    "done": MessageLookupByLibrary.simpleMessage("تم"),
     "edit_profile": MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
     "email": MessageLookupByLibrary.simpleMessage("البريد الإلكترونى"),
     "email_already_exists": MessageLookupByLibrary.simpleMessage(
@@ -98,6 +107,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "enter_password": MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور"),
     "favorites": MessageLookupByLibrary.simpleMessage("المفضلة"),
+    "filter": MessageLookupByLibrary.simpleMessage("فلتر"),
+    "find": MessageLookupByLibrary.simpleMessage("بحث"),
     "forgot_password": MessageLookupByLibrary.simpleMessage(
       "نسيت كلمة المرور؟",
     ),
@@ -140,12 +151,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+    "max": MessageLookupByLibrary.simpleMessage("الحد الأقصى"),
+    "min": MessageLookupByLibrary.simpleMessage("الحد الأدنى"),
     "my_account": MessageLookupByLibrary.simpleMessage("حسابي"),
     "network_request_failed_message": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ في الشبكة. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
     ),
     "new_account": MessageLookupByLibrary.simpleMessage("حساب جديد"),
     "new_password": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
+    "newest": MessageLookupByLibrary.simpleMessage("الأحدث"),
+    "no_result": MessageLookupByLibrary.simpleMessage(
+      "لم يتم العثور على نتائج",
+    ),
     "not_receive_code": MessageLookupByLibrary.simpleMessage("لم يصل الكود؟"),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "operation_not_allowed_message": MessageLookupByLibrary.simpleMessage(
@@ -210,14 +227,30 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone_valid": MessageLookupByLibrary.simpleMessage(
       "الرجاء إدخال رقم هاتف صالح",
     ),
+    "price_high": MessageLookupByLibrary.simpleMessage("السعر من الأعلى"),
+    "price_low": MessageLookupByLibrary.simpleMessage("السعر من الأقل"),
+    "price_range": MessageLookupByLibrary.simpleMessage("نطاق السعر"),
     "privacy_policy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
     "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+    "properties": MessageLookupByLibrary.simpleMessage("عقارات"),
+    "property_size": MessageLookupByLibrary.simpleMessage("مساحة العقار"),
+    "property_type": MessageLookupByLibrary.simpleMessage("نوع العقار"),
+    "recent_search": MessageLookupByLibrary.simpleMessage("البحث الأخير"),
+    "rent": MessageLookupByLibrary.simpleMessage("إيجار"),
     "reset_password": MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "يرجى كتابة شيء يمكنك تذكره",
     ),
+    "residentail": MessageLookupByLibrary.simpleMessage("سكني"),
+    "result": MessageLookupByLibrary.simpleMessage("نتائج"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
+    "see_more_property_type": MessageLookupByLibrary.simpleMessage(
+      "عرض المزيد من الأنواع",
+    ),
+    "select_location": MessageLookupByLibrary.simpleMessage(
+      "يرجى اختيار الموقع أولاً",
+    ),
     "send_code": MessageLookupByLibrary.simpleMessage("إرسال الكود"),
     "send_code_again": MessageLookupByLibrary.simpleMessage(
       "ارسل الكود مرة اخرى",
@@ -249,6 +282,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "weak_password_error": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور ضعيفة جدًا. يرجى تقديم كلمة مرور أقوى.",
     ),
+    "whatsApp": MessageLookupByLibrary.simpleMessage("واتساب"),
     "wrong_password_message": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور خاطئة. يرجى المحاولة مرة أخرى.",
     ),
