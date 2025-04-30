@@ -243,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residentail": MessageLookupByLibrary.simpleMessage("سكني"),
     "result": MessageLookupByLibrary.simpleMessage("نتائج"),
+    "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
     "see_more_property_type": MessageLookupByLibrary.simpleMessage(

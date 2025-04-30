@@ -271,5 +271,7 @@
       "properties":"Properties",
       "@properties":{},
       "select_location":"Please select a location first",
-      "@select_location":{}
+      "@select_location":{},
+      "sar":"SAR",
+      "@sar":{}
 }

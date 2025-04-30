@@ -269,7 +269,9 @@
   "properties": "عقارات",
   "@properties": {},
 "select_location": "يرجى اختيار الموقع أولاً",
-"@select_location": {}
+"@select_location": {},
+"sar":"ر.س",
+"@sar":{}
 
     
 }

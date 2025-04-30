@@ -243,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residentail": MessageLookupByLibrary.simpleMessage("Residentail"),
     "result": MessageLookupByLibrary.simpleMessage("Result"),
+    "sar": MessageLookupByLibrary.simpleMessage("SAR"),
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
     "see_more_property_type": MessageLookupByLibrary.simpleMessage(
