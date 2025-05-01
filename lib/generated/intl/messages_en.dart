@@ -260,6 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "send_code": MessageLookupByLibrary.simpleMessage("Send Code"),
     "send_code_again": MessageLookupByLibrary.simpleMessage("Send code again"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+    "show_less": MessageLookupByLibrary.simpleMessage("Show Less"),
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "Sign in successfully",
     ),

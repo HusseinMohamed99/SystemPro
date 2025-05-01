@@ -262,6 +262,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ارسل الكود مرة اخرى",
     ),
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
+    "show_less": MessageLookupByLibrary.simpleMessage("إظهار أقل"),
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "تم تسجيل الدخول بنجاح",
     ),

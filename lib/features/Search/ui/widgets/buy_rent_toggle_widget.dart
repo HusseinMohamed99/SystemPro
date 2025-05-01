@@ -4,14 +4,14 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
-class PropertyFiltersRow extends StatefulWidget {
-  const PropertyFiltersRow({super.key});
+class BuyRentToggleWidget extends StatefulWidget {
+  const BuyRentToggleWidget({super.key});
 
   @override
-  State<PropertyFiltersRow> createState() => _PropertyFiltersRowState();
+  State<BuyRentToggleWidget> createState() => _BuyRentToggleWidgetState();
 }
 
-class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
+class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
   late String selectedFilter;
 
   List<String> filters(BuildContext context) => [
@@ -45,7 +45,10 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
                           : 0,
                 ),
                 child: ChoiceChip(
-                   side:isSelected ?  BorderSide.none: BorderSide(
+                  side:
+                      isSelected
+                          ? BorderSide.none
+                          : BorderSide(
                             color: ColorManager.borderGrey,
                             width: 1.5.w,
                           ),

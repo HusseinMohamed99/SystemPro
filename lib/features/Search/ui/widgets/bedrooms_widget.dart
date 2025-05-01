@@ -6,14 +6,22 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
-class BedroomsWidget extends StatelessWidget {
+class BedroomsWidget extends StatefulWidget {
   const BedroomsWidget({super.key});
+
+  @override
+  State<BedroomsWidget> createState() => _BedroomsWidgetState();
+}
+
+class _BedroomsWidgetState extends State<BedroomsWidget> {
+  final List<String> options = ["Any", "1", "2", "3", "4", "5", "6", "7", "8+"];
+
+  String? selectedOption;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: kSpacingSmall.h,
       children: [
         Text(
           context.localization.bedrooms,
@@ -21,10 +29,26 @@ class BedroomsWidget extends StatelessWidget {
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-
-        //  const PropertyTypeRow(),
         verticalSpacing(kSpacingSmall),
+        Wrap(
+          spacing: 8,
+          children:
+              options.map((e) {
+                final isSelected = selectedOption == e;
+                return ChoiceChip(
+                  showCheckmark: false,
+                  label: Text(e),
+                  selected: isSelected,
+                  onSelected: (_) {
+                    setState(() {
+                      selectedOption = isSelected ? null : e;
+                    });
+                  },
+                );
+              }).toList(),
+        ),
       ],
     );
   }
 }
+

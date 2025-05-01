@@ -1179,6 +1179,11 @@ class S {
   String get about {
     return Intl.message('About', name: 'about', desc: '', args: []);
   }
+
+  /// `Show Less`
+  String get show_less {
+    return Intl.message('Show Less', name: 'show_less', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

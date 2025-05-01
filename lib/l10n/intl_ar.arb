@@ -278,7 +278,9 @@
 "location":"الموقع",
 "@location":{},
 "about":"الوصف",
-"@about":{}
+"@about":{},
+"show_less":"إظهار أقل",
+"@show_less":{}
 
     
 

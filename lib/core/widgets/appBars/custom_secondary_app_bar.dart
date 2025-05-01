@@ -7,6 +7,7 @@ AppBar customSecondaryAppBar(
   BuildContext context, {
   VoidCallback? onBackPress,
   String? title,
+  Color? textColor,
 }) {
   return AppBar(
     backgroundColor: ColorManager.pureWhite,
@@ -24,7 +25,7 @@ AppBar customSecondaryAppBar(
       textAlign: TextAlign.center,
       style: Theme.of(
         context,
-      ).textTheme.headlineMedium?.copyWith(color: ColorManager.primaryBlue),
+      ).textTheme.headlineMedium?.copyWith(color:textColor ?? ColorManager.primaryBlue),
     ),
   );
 }
