@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
@@ -10,13 +9,18 @@ class BedroomsWidget extends StatefulWidget {
   const BedroomsWidget({super.key});
 
   @override
-  State<BedroomsWidget> createState() => _BedroomsWidgetState();
+  State<BedroomsWidget> createState() => BedroomsWidgetState();
 }
 
-class _BedroomsWidgetState extends State<BedroomsWidget> {
-  final List<String> options = ["Any", "1", "2", "3", "4", "5", "6", "7", "8+"];
+class BedroomsWidgetState extends State<BedroomsWidget> {
+  final List<String> options = ['Any', '1', '2', '3', '4', '5', '6', '7', '8+'];
 
   String? selectedOption;
+  void clearSelection() {
+    setState(() {
+      selectedOption = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,22 @@ class _BedroomsWidgetState extends State<BedroomsWidget> {
                 final isSelected = selectedOption == e;
                 return ChoiceChip(
                   showCheckmark: false,
-                  label: Text(e),
+                  label: Text(
+                    e,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeightHelper.regular,
+                      color:
+                          isSelected
+                              ? ColorManager.pureWhite
+                              : ColorManager.softGray,
+                    ),
+                  ),
+                  selectedColor: ColorManager.primaryBlue,
+                  backgroundColor: ColorManager.pureWhite,
+                  side:
+                      isSelected
+                          ? BorderSide.none
+                          : const BorderSide(color: ColorManager.borderGrey),
                   selected: isSelected,
                   onSelected: (_) {
                     setState(() {
@@ -51,4 +70,3 @@ class _BedroomsWidgetState extends State<BedroomsWidget> {
     );
   }
 }
-

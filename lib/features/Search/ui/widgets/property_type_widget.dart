@@ -9,10 +9,10 @@ class PropertyTypeWidget extends StatefulWidget {
   const PropertyTypeWidget({super.key});
 
   @override
-  State<PropertyTypeWidget> createState() => _PropertyTypeWidgetState();
+  State<PropertyTypeWidget> createState() => PropertyTypeWidgetState();
 }
 
-class _PropertyTypeWidgetState extends State<PropertyTypeWidget> {
+class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
   final List<String> allPropertyTypes = [
     'Apartment',
     'Villa',
@@ -26,6 +26,10 @@ class _PropertyTypeWidgetState extends State<PropertyTypeWidget> {
 
   final Set<String> selectedTypes = {};
   bool showAll = false;
+
+  void clearSelection() {
+    setState(selectedTypes.clear);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +50,25 @@ class _PropertyTypeWidgetState extends State<PropertyTypeWidget> {
           spacing: 8,
           children:
               typesToShow.map((type) {
+                final isSelected = selectedTypes.contains(type);
                 return FilterChip(
                   showCheckmark: false,
-                  label: Text(type),
+                  label: Text(
+                    type,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeightHelper.regular,
+                      color:
+                          isSelected
+                              ? ColorManager.pureWhite
+                              : ColorManager.softGray,
+                    ),
+                  ),
+                  selectedColor: ColorManager.primaryBlue,
+                  backgroundColor: ColorManager.pureWhite,
+                  side:
+                      isSelected
+                          ? BorderSide.none
+                          : const BorderSide(color: ColorManager.borderGrey),
                   selected: selectedTypes.contains(type),
                   onSelected: (selected) {
                     setState(() {

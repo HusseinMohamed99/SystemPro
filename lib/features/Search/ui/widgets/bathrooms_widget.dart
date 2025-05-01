@@ -10,13 +10,19 @@ class BathroomsWidget extends StatefulWidget {
   const BathroomsWidget({super.key});
 
   @override
-  State<BathroomsWidget> createState() => _BathroomsWidgetState();
+  State<BathroomsWidget> createState() => BathroomsWidgetState();
 }
 
-class _BathroomsWidgetState extends State<BathroomsWidget> {
+class BathroomsWidgetState extends State<BathroomsWidget> {
     final List<String> options = ["Any", "1", "2", "3", "4", "5+"];
 
   String? selectedOption;
+
+  void clearSelection() {
+    setState(() {
+      selectedOption = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +44,22 @@ class _BathroomsWidgetState extends State<BathroomsWidget> {
                 final isSelected = selectedOption == e;
                 return ChoiceChip(
                   showCheckmark: false,
-                  label: Text(e),
+                         label: Text(
+                    e,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeightHelper.regular,
+                      color:
+                          isSelected
+                              ? ColorManager.pureWhite
+                              : ColorManager.softGray,
+                    ),
+                  ),
+                  selectedColor: ColorManager.primaryBlue,
+                  backgroundColor: ColorManager.pureWhite,
+                  side:
+                      isSelected
+                          ? BorderSide.none
+                          : const BorderSide(color: ColorManager.borderGrey),
                   selected: isSelected,
                   onSelected: (_) {
                     setState(() {

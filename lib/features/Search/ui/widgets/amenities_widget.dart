@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -10,10 +9,10 @@ class AmenitiesWidget extends StatefulWidget {
   const AmenitiesWidget({super.key});
 
   @override
-  State<AmenitiesWidget> createState() => _AmenitiesWidgetState();
+  State<AmenitiesWidget> createState() => AmenitiesWidgetState();
 }
 
-class _AmenitiesWidgetState extends State<AmenitiesWidget> {
+class AmenitiesWidgetState extends State<AmenitiesWidget> {
   final List<String> allAmenities = [
     'Central A/C',
     'Balcony',
@@ -26,6 +25,10 @@ class _AmenitiesWidgetState extends State<AmenitiesWidget> {
   ];
   final Set<String> selectedAmenities = {};
   bool showAll = false;
+  void clearSelection() {
+    setState(selectedAmenities.clear);
+  }
+
   @override
   Widget build(BuildContext context) {
     final amenitiesToShow =
@@ -46,9 +49,25 @@ class _AmenitiesWidgetState extends State<AmenitiesWidget> {
           spacing: 8,
           children:
               amenitiesToShow.map((amenity) {
+                final isSelected = selectedAmenities.contains(amenity);
                 return FilterChip(
                   showCheckmark: false,
-                  label: Text(amenity),
+                  label: Text(
+                    amenity,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeightHelper.regular,
+                      color:
+                          isSelected
+                              ? ColorManager.pureWhite
+                              : ColorManager.softGray,
+                    ),
+                  ),
+                  selectedColor: ColorManager.primaryBlue,
+                  backgroundColor: ColorManager.pureWhite,
+                  side:
+                      isSelected
+                          ? BorderSide.none
+                          : const BorderSide(color: ColorManager.borderGrey),
                   selected: selectedAmenities.contains(amenity),
                   onSelected: (selected) {
                     setState(() {
@@ -62,8 +81,8 @@ class _AmenitiesWidgetState extends State<AmenitiesWidget> {
                 );
               }).toList(),
         ),
-        
-        if (allAmenities.length > 5) 
+
+        if (allAmenities.length > 5)
           GestureDetector(
             onTap: () {
               setState(() {
@@ -81,8 +100,6 @@ class _AmenitiesWidgetState extends State<AmenitiesWidget> {
               ),
             ),
           ),
-          
-       
       ],
     );
   }

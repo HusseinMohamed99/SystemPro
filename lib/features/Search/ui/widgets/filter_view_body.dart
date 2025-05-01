@@ -5,9 +5,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
-import 'package:system_pro/features/Home/ui/home_widgets/property_filters_row.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/features/Search/ui/widgets/amenities_widget.dart';
 import 'package:system_pro/features/Search/ui/widgets/bathrooms_widget.dart';
@@ -18,9 +16,28 @@ import 'package:system_pro/features/Search/ui/widgets/property_size_widget.dart'
 import 'package:system_pro/features/Search/ui/widgets/property_type_widget.dart';
 import 'package:system_pro/features/Search/ui/widgets/toggle_category_widget.dart';
 
-class FilterViewBody extends StatelessWidget {
+class FilterViewBody extends StatefulWidget {
   const FilterViewBody({super.key, required this.locationArgument});
   final LocationArgument locationArgument;
+
+  @override
+  State<FilterViewBody> createState() => _FilterViewBodyState();
+}
+
+class _FilterViewBodyState extends State<FilterViewBody> {
+  final bedroomsKey = GlobalKey<BedroomsWidgetState>();
+  final bathroomsKey = GlobalKey<BathroomsWidgetState>();
+  final amenitiesKey = GlobalKey<AmenitiesWidgetState>();
+  final propertyKey = GlobalKey<PropertyTypeWidgetState>();
+  // كرر للباقي حسب ما تحتاج
+
+  void clearAll() {
+    bedroomsKey.currentState?.clearSelection();
+    bathroomsKey.currentState?.clearSelection();
+    amenitiesKey.currentState?.clearSelection();
+    propertyKey.currentState?.clearSelection();
+    // كرر للباقي
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +50,17 @@ class FilterViewBody extends StatelessWidget {
         Expanded(
           child: CustomScrollView(
             slivers: [
-              const SliverToBoxAdapter(child: PropertyTypeWidget()),
+               SliverToBoxAdapter(child: PropertyTypeWidget(key: propertyKey)),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
               const SliverToBoxAdapter(child: PriceRangeWidget()),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              const SliverToBoxAdapter(child: BedroomsWidget()),
+              SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              const SliverToBoxAdapter(child: BathroomsWidget()),
+              SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
               const SliverToBoxAdapter(child: PropertySizeWidget()),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              const SliverToBoxAdapter(child: AmenitiesWidget()),
+              SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey)),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
             ],
           ),
@@ -57,7 +74,7 @@ class FilterViewBody extends StatelessWidget {
             Expanded(
               child: CustomButton(
                 text: context.localization.clear_all,
-                onPressed: () {},
+                onPressed: clearAll,
                 backgroundColor: ColorManager.shadowBlue,
                 textStyleColor: ColorManager.primaryBlue,
               ),
@@ -75,5 +92,3 @@ class FilterViewBody extends StatelessWidget {
     );
   }
 }
-
-
