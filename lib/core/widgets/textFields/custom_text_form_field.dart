@@ -7,7 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     required this.hintText,
-  required this.  focusNode,
+    required this.focusNode,
     this.textInputType,
     this.controller,
     this.textInputAction,
@@ -54,12 +54,20 @@ class CustomTextFormField extends StatelessWidget {
             }
             return null;
           },
-      style: Theme.of(
-        context,
-      ).textTheme.titleLarge?.copyWith(color: ColorManager.pureBlack),
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+        color: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.pureBlack,
+          darkColor: ColorManager.pureWhite,
+        ),
+      ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: ColorManager.pureWhite,
+        fillColor: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.pureWhite,
+          darkColor: ColorManager.tertiaryBlack,
+        ),
         hintText: hintText,
         hintStyle: Theme.of(
           context,
@@ -91,7 +99,7 @@ class CustomTextFormField extends StatelessWidget {
       borderRadius: BorderRadius.circular(kBorderRadiusLarge).r,
       borderSide: BorderSide(
         width: 1.w,
-        color: color ?? ColorManager.borderGrey,
+        // color: color ?? ColorManager.borderGrey,
       ),
     );
   }

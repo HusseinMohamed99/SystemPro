@@ -9,6 +9,7 @@ import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();

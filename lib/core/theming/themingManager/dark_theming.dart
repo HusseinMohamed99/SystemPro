@@ -13,10 +13,10 @@ ThemeData buildDarkTheming({required TextTheme textTheme}) {
       elevation: 0,
       centerTitle: true,
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: ColorManager.primaryBlack,
+        statusBarColor: ColorManager.secondaryBlack,
         statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: ColorManager.primaryBlack,
+        statusBarBrightness: Brightness.dark,
+        systemNavigationBarColor: ColorManager.secondaryBlack,
       ),
     ),
     colorScheme: ColorScheme.fromSeed(

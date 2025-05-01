@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 
 class ColorManager {
   static const Color primaryBlue = Color(0xFF6E62E5); // Formerly green
+  static const Color secondaryBlue = Color(0xFFBD92FC); // Formerly green
   static const Color shadowBlue = Color(0xFFF1EFFC); // Formerly green
   static const Color pureBlack = Color(0xFF000000); // Formerly black
-  static const Color primaryBlack = Color(0xFF191D23); // Formerly secondaryBlack
+  static const Color primaryBlack = Color(
+    0xFF0D0F11,
+  ); // Formerly secondaryBlack
+  static const Color secondaryBlack = Color(
+    0xFF18181A,
+  ); // Formerly secondaryBlack
+  static const Color tertiaryBlack = Color(0xFF191D23);
   static const Color pureWhite = Color(0xFFFFFFFF); // Formerly white
   static const Color softWhite = Color(0xFFF9FAFA); // Formerly secondaryWhite
   static const Color offWhite = Color(0xFFE6E9E9); // Soft, muted white
@@ -17,4 +26,16 @@ class ColorManager {
   static const Color darkGrey = Color(0xFF4E5556); // Formerly grey
   static const Color brightRed = Color(0xFFF30202); // Formerly red
   static const Color errorRed = Color(0xFFB00020); // Red color for error text
+}
+
+class AdaptiveColor {
+  static Color adaptiveColor({
+    required BuildContext context,
+    required Color lightColor,
+    required Color darkColor,
+  }) {
+    final isDark = context.watch<ChangeThemingCubit>().state.isDarkMode;
+
+    return isDark ? darkColor : lightColor;
+  }
 }

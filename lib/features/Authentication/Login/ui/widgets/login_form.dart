@@ -65,7 +65,11 @@ class _LoginFormState extends State<LoginForm> {
               context.localization.forgot_password,
               textAlign: TextAlign.right,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: ColorManager.primaryBlue,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor:ColorManager.primaryBlue,
+                  darkColor: ColorManager.secondaryBlue,
+                ),
               ),
             ),
           ),

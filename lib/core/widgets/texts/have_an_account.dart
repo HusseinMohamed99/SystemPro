@@ -22,12 +22,22 @@ class HaveAnAccountWidget extends StatelessWidget {
             text: title1,
             style: Theme.of(
               context,
-            ).textTheme.titleMedium?.copyWith(color: ColorManager.softGray),
+            ).textTheme.titleMedium?.copyWith(
+           color:   AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.softGray,
+                darkColor: ColorManager.pureWhite,
+              ),
+            ),
           ),
           TextSpan(
             text: ' $title2',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: ColorManager.primaryBlue,
+              color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.primaryBlue,
+                darkColor: ColorManager.secondaryBlue,
+              ),
               fontWeight: FontWeightHelper.semiBold,
             ),
             recognizer: TapGestureRecognizer()..onTap = onTap,
