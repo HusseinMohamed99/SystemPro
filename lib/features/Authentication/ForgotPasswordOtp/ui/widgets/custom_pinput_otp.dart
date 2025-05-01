@@ -25,9 +25,9 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
           width: 30,
           margin: EdgeInsets.all(10.h),
           decoration: BoxDecoration(
-            color: ColorManager.darkBlack,
+            color: ColorManager.pureBlack,
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: ColorManager.darkBlack),
+            border: Border.all(),
           ),
         ),
       ),

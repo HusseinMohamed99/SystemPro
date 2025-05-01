@@ -7,20 +7,20 @@ import 'package:system_pro/core/theming/styleManager/text_style.dart';
 ThemeData buildDarkTheming({required TextTheme textTheme}) {
   return ThemeData(
     fontFamily: FontFamilyHelper.standardFont,
-    scaffoldBackgroundColor: ColorManager.primaryBlue,
+    scaffoldBackgroundColor: ColorManager.primaryBlack,
     appBarTheme: const AppBarTheme(
-      backgroundColor: ColorManager.primaryBlue,
+      backgroundColor: ColorManager.primaryBlack,
       elevation: 0,
       centerTitle: true,
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: ColorManager.primaryBlue,
+        statusBarColor: ColorManager.primaryBlack,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: ColorManager.primaryBlue,
+        systemNavigationBarColor: ColorManager.primaryBlack,
       ),
     ),
     colorScheme: ColorScheme.fromSeed(
-      seedColor: ColorManager.primaryBlue,
+      seedColor: ColorManager.primaryBlack,
     ),
     textTheme: textTheme,
   );

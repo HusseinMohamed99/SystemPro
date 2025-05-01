@@ -4,7 +4,7 @@ class ColorManager {
   static const Color primaryBlue = Color(0xFF6E62E5); // Formerly green
   static const Color shadowBlue = Color(0xFFF1EFFC); // Formerly green
   static const Color pureBlack = Color(0xFF000000); // Formerly black
-  static const Color darkBlack = Color(0xFF0C0D0D); // Formerly secondaryBlack
+  static const Color primaryBlack = Color(0xFF191D23); // Formerly secondaryBlack
   static const Color pureWhite = Color(0xFFFFFFFF); // Formerly white
   static const Color softWhite = Color(0xFFF9FAFA); // Formerly secondaryWhite
   static const Color offWhite = Color(0xFFE6E9E9); // Soft, muted white
