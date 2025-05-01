@@ -1184,6 +1184,41 @@ class S {
   String get show_less {
     return Intl.message('Show Less', name: 'show_less', desc: '', args: []);
   }
+
+  /// `Description`
+  String get description {
+    return Intl.message('Description', name: 'description', desc: '', args: []);
+  }
+
+  /// `Purpose`
+  String get purpose {
+    return Intl.message('Purpose', name: 'purpose', desc: '', args: []);
+  }
+
+  /// `Listed by`
+  String get listed_by {
+    return Intl.message('Listed by', name: 'listed_by', desc: '', args: []);
+  }
+
+  /// `View Profile`
+  String get view_profile {
+    return Intl.message(
+      'View Profile',
+      name: 'view_profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See Location`
+  String get see_location {
+    return Intl.message(
+      'See Location',
+      name: 'see_location',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

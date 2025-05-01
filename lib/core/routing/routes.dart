@@ -11,4 +11,5 @@ class Routes {
   static const String searchView = '/searchView';
   static const String filterView = '/filterView';
   static const String companyProfileView = '/companyProfileView';
+  static const String realEstateDetailsView = '/realEstateDetailsView';
 }

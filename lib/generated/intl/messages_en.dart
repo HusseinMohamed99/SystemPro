@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "delete_my_account": MessageLookupByLibrary.simpleMessage(
       "Delete My Account",
     ),
+    "description": MessageLookupByLibrary.simpleMessage("Description"),
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account?",
     ),
@@ -150,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light"),
+    "listed_by": MessageLookupByLibrary.simpleMessage("Listed by"),
     "location": MessageLookupByLibrary.simpleMessage("Location"),
     "login": MessageLookupByLibrary.simpleMessage("Log in"),
     "logout": MessageLookupByLibrary.simpleMessage("Log out"),
@@ -237,6 +239,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "properties": MessageLookupByLibrary.simpleMessage("Properties"),
     "property_size": MessageLookupByLibrary.simpleMessage("Property Size"),
     "property_type": MessageLookupByLibrary.simpleMessage("Property Type"),
+    "purpose": MessageLookupByLibrary.simpleMessage("Purpose"),
     "recent_search": MessageLookupByLibrary.simpleMessage("Recent Search"),
     "rent": MessageLookupByLibrary.simpleMessage("Rent"),
     "reset_password": MessageLookupByLibrary.simpleMessage("Reset Password"),
@@ -248,6 +251,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sar": MessageLookupByLibrary.simpleMessage("SAR"),
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
+    "see_location": MessageLookupByLibrary.simpleMessage("See Location"),
     "see_more_amenities": MessageLookupByLibrary.simpleMessage(
       "See More Amenities",
     ),
@@ -283,6 +287,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "No user found with this email.",
     ),
     "verify": MessageLookupByLibrary.simpleMessage("Verify"),
+    "view_profile": MessageLookupByLibrary.simpleMessage("View Profile"),
     "we_sent_code": MessageLookupByLibrary.simpleMessage(
       "We\'ve sent a code to",
     ),

@@ -14,7 +14,7 @@ class RealEstateSliverList extends StatelessWidget {
       itemBuilder:
           (context, index) => GestureDetector(
             onTap: () {
-              context.pushNamed(Routes.companyProfileView);
+              context.pushNamed(Routes.realEstateDetailsView);
             },
             child: const RealEstateItem(),
           ),

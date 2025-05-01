@@ -280,7 +280,19 @@
 "about":"الوصف",
 "@about":{},
 "show_less":"إظهار أقل",
-"@show_less":{}
+"@show_less":{},
+"description":"الوصف",
+"@description":{},
+
+      "purpose":"الغرض",
+      "@purpose":{},
+      "listed_by":"تم نشره بواسطة",
+      "@listed_by":{},
+      "view_profile":"عرض الملف الشخصي",
+      "@view_profile":{},
+      "see_location":"عرض الموقع",
+      "@see_location":{}
+      
 
     
 

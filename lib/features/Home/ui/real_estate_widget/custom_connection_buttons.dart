@@ -20,6 +20,7 @@ class CustomConnectionButton extends StatelessWidget {
         Expanded(
           child: TextButton.icon(
             style: TextButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: kPaddingMediumVertical.h),
               backgroundColor: ColorManager.shadowBlue,
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
@@ -40,6 +41,7 @@ class CustomConnectionButton extends StatelessWidget {
         Expanded(
           child: TextButton.icon(
             style: TextButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: kPaddingMediumVertical.h),
               backgroundColor: ColorManager.shadowBlue,
               side: BorderSide.none,
               shape: RoundedRectangleBorder(

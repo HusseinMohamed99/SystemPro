@@ -42,7 +42,7 @@ class RealEstateInfo extends StatelessWidget {
         Divider(
           color: ColorManager.borderGrey,
           height: 1.h,
-        ).vPadding(kSpacingSmall.h),
+        ).vPadding(kSpacingSmall),
         const CustomConnectionButton(),
       ],
     ).onlyPadding(

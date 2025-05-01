@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("غامق"),
     "delete_my_account": MessageLookupByLibrary.simpleMessage("حذف حسابي"),
+    "description": MessageLookupByLibrary.simpleMessage("الوصف"),
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "لا تملك حساب؟",
     ),
@@ -150,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
     "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
+    "listed_by": MessageLookupByLibrary.simpleMessage("تم نشره بواسطة"),
     "location": MessageLookupByLibrary.simpleMessage("الموقع"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -237,6 +239,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "properties": MessageLookupByLibrary.simpleMessage("عقارات"),
     "property_size": MessageLookupByLibrary.simpleMessage("مساحة العقار"),
     "property_type": MessageLookupByLibrary.simpleMessage("نوع العقار"),
+    "purpose": MessageLookupByLibrary.simpleMessage("الغرض"),
     "recent_search": MessageLookupByLibrary.simpleMessage("البحث الأخير"),
     "rent": MessageLookupByLibrary.simpleMessage("إيجار"),
     "reset_password": MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
@@ -248,6 +251,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
+    "see_location": MessageLookupByLibrary.simpleMessage("عرض الموقع"),
     "see_more_amenities": MessageLookupByLibrary.simpleMessage(
       "عرض المزيد من الوسائل",
     ),
@@ -285,6 +289,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "لم يتم العثور على حساب باستخدام هذا البريد الإلكتروني.",
     ),
     "verify": MessageLookupByLibrary.simpleMessage("تحقق"),
+    "view_profile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),
     "we_sent_code": MessageLookupByLibrary.simpleMessage("لقد ارسلنا الكود"),
     "weak_password_error": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور ضعيفة جدًا. يرجى تقديم كلمة مرور أقوى.",

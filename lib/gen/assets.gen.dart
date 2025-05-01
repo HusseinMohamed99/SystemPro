@@ -80,6 +80,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/bed.svg
   String get bed => 'assets/images/bed.svg';
 
+  /// File path: assets/images/building-apartment.svg
+  String get buildingApartment => 'assets/images/building-apartment.svg';
+
   /// File path: assets/images/error.svg
   String get error => 'assets/images/error.svg';
 
@@ -105,6 +108,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/logoTest.svg
   String get logoTest => 'assets/images/logoTest.svg';
 
+  /// File path: assets/images/map.png
+  AssetGenImage get map => const AssetGenImage('assets/images/map.png');
+
   /// File path: assets/images/phone.svg
   String get phone => 'assets/images/phone.svg';
 
@@ -124,6 +130,7 @@ class $AssetsImagesGen {
     area,
     bathroom,
     bed,
+    buildingApartment,
     error,
     fillHeart,
     heartActive,
@@ -132,6 +139,7 @@ class $AssetsImagesGen {
     image2Png,
     image2Svg,
     logoTest,
+    map,
     phone,
     search,
     whatsapp,
