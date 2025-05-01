@@ -17,7 +17,7 @@ import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
 import 'package:system_pro/features/Home/ui/main_view.dart';
-import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_details_view.dart';
+import 'package:system_pro/features/Home/ui/real_estate_details/real_estate_details_view.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/features/Search/ui/filter_view.dart';
 import 'package:system_pro/features/Search/ui/search_view.dart';
