@@ -5,7 +5,9 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class ToggleCategoryWidget extends StatefulWidget {
-  const ToggleCategoryWidget({super.key});
+  const ToggleCategoryWidget({super.key, required this.onCategoryChanged});
+
+  final Function(String) onCategoryChanged;
 
   @override
   State<ToggleCategoryWidget> createState() => _ToggleCategoryWidgetState();
@@ -18,11 +20,11 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
     context.localization.residentail,
     context.localization.commercial,
   ];
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedFilter =
-        context.localization.residentail; // ✅ استخدم context هنا بأمان
+    selectedFilter = context.localization.residentail;
   }
 
   @override
@@ -34,7 +36,6 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
         borderRadius: BorderRadius.circular(100),
         color: ColorManager.shadowBlue,
       ),
-
       child: Row(
         children:
             allFilters.map((filter) {
@@ -43,45 +44,63 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                 child: Padding(
                   padding: EdgeInsets.only(
                     right:
-                        selectedFilter == context.localization.buy && isSelected
+                        selectedFilter == context.localization.residentail &&
+                                isSelected
                             ? 8.w
                             : 0,
                     left:
-                        selectedFilter == context.localization.rent &&
+                        selectedFilter == context.localization.commercial &&
                                 isSelected
                             ? 8.w
                             : 0,
                   ),
-                  child: ChoiceChip(
-                    side: BorderSide.none,
-                    labelPadding: EdgeInsets.symmetric(vertical: 2.h),
-                    label: SizedBox(
-                      width: double.infinity,
-                      child: Text(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, animation) {
+                      // يمكن تعديل هذا التأثير هنا مثل الظهور أو التحول.
+                      return ScaleTransition(scale: animation, child: child);
+                    },
+                    child: ChoiceChip(
+                      key: ValueKey(
                         filter,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color:
-                              isSelected
-                                  ? ColorManager.pureWhite
-                                  : ColorManager.primaryBlue,
-                          fontWeight: FontWeightHelper.medium,
+                      ), // نضيف key فريد للتبديل بين الفئات.
+                      side: BorderSide.none,
+                      labelPadding: EdgeInsets.symmetric(vertical: 2.h),
+                      label: SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          filter,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleLarge?.copyWith(
+                            color:
+                                isSelected
+                                    ? ColorManager.pureWhite
+                                    : ColorManager.primaryBlue,
+                            fontWeight: FontWeightHelper.medium,
+                          ),
                         ),
                       ),
+                      selected: isSelected,
+                      onSelected: (_) {
+                        setState(() {
+                          selectedFilter = filter;
+                          widget.onCategoryChanged(
+                            filter == context.localization.residentail
+                                ? context.localization.residentail
+                                : context.localization.commercial,
+                          );
+                        });
+                      },
+                      selectedColor: ColorManager.primaryBlue,
+                      backgroundColor: ColorManager.shadowBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                        side: const BorderSide(color: ColorManager.borderGrey),
+                      ),
+                      showCheckmark: false,
                     ),
-                    selected: isSelected,
-                    onSelected: (_) {
-                      setState(() {
-                        selectedFilter = filter;
-                      });
-                    },
-                    selectedColor: ColorManager.primaryBlue,
-                    backgroundColor: ColorManager.shadowBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
-                      side: const BorderSide(color: ColorManager.borderGrey),
-                    ),
-                    showCheckmark: false,
                   ),
                 ),
               );
@@ -90,3 +109,4 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
     );
   }
 }
+

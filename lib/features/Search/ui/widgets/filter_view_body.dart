@@ -39,32 +39,94 @@ class _FilterViewBodyState extends State<FilterViewBody> {
     // كرر للباقي
   }
 
+  late String selectedCategory;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedCategory = context.localization.residentail;
+  }
+
+  List<String> get propertyTypes {
+    if (selectedCategory == 'residential') {
+      return [
+        'Apartment',
+        'Villa',
+        'Townhouse',
+        'Penthouse',
+        'Duplex',
+        'Compound',
+        'Studio',
+        'Loft',
+      ];
+    } else {
+      return [
+        'Offices',
+        'Clinic',
+        'Commercial Building',
+        'Factory',
+        'Restaurant & Cafe',
+        'Retail',
+      ];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ToggleCategoryWidget(),
+        ToggleCategoryWidget(
+          onCategoryChanged: (category) {
+            setState(() {
+              selectedCategory = category;
+            });
+          },
+        ),
         verticalSpacing(kSpacingXXLarge),
         const BuyRentToggleWidget(),
         verticalSpacing(kSpacingXXLarge),
         Expanded(
           child: CustomScrollView(
             slivers: [
-               SliverToBoxAdapter(child: PropertyTypeWidget(key: propertyKey)),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              const SliverToBoxAdapter(child: PriceRangeWidget()),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              const SliverToBoxAdapter(child: PropertySizeWidget()),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey)),
+              if (selectedCategory == context.localization.residentail) ...[
+                SliverToBoxAdapter(
+                  child: PropertyTypeWidget(
+                    key: propertyKey,
+                    propertyTypes: propertyTypes,
+                  ),
+                ),
+
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                const SliverToBoxAdapter(child: PriceRangeWidget()),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                const SliverToBoxAdapter(child: PropertySizeWidget()),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey)),
+              ],
+              if (selectedCategory == context.localization.commercial) ...[
+                SliverToBoxAdapter(
+                  child: PropertyTypeWidget(
+                    key: propertyKey,
+                    propertyTypes: propertyTypes,
+                  ),
+                ),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                const SliverToBoxAdapter(child: PriceRangeWidget()),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                // لا يوجد BedroomsWidget و BathroomsWidget في الحالة التجارية
+                const SliverToBoxAdapter(child: PropertySizeWidget()),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey)),
+              ],
               SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
             ],
           ),
         ),
+
         Divider(
           height: 1.h,
           color: ColorManager.borderGrey,
