@@ -210,7 +210,6 @@ class LocationWidget extends StatelessWidget {
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
         ),
         verticalSpacing(kSpacingSmall),
-
         Row(
           children: [
             Icon(
@@ -218,7 +217,6 @@ class LocationWidget extends StatelessWidget {
               color: ColorManager.pureBlack,
               size: kIconSizeDefault.sp,
             ),
-
             Text(
               location,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(

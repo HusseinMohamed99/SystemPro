@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
-import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
-import 'package:system_pro/gen/assets.gen.dart';
-
+import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
+import 'package:system_pro/features/Home/data/model/listing_image.dart';
 
 class RealEstateDetailsImage extends StatefulWidget {
-  const RealEstateDetailsImage({super.key});
+  const RealEstateDetailsImage({super.key, this.images});
+  final List<ListingImage>? images;
 
   @override
   State<RealEstateDetailsImage> createState() => _RealEstateDetailsImageState();
@@ -24,12 +18,6 @@ class RealEstateDetailsImage extends StatefulWidget {
 class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-
-  final List<String> imagePaths = [
-    Assets.images.image1.path,
-    Assets.images.image1.path,
-    Assets.images.image1.path,
-  ];
 
   @override
   void dispose() {
@@ -52,16 +40,16 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
             width: context.width,
             child: PageView.builder(
               controller: _pageController,
-              itemCount: imagePaths.length,
+              itemCount: widget.images?.length,
               onPageChanged: (index) {
                 setState(() {
                   _currentIndex = index;
                 });
               },
               itemBuilder: (context, index) {
-                return Image.asset(
-                  imagePaths[index],
-                  fit: BoxFit.fill,
+                return CustomCachedNetworkImageWidget(
+                  imageURL: widget.images?[index].imageUrl ?? '',
+                  // fit: BoxFit.fill,
                   height: 250.h,
                 );
               },
@@ -97,7 +85,7 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
           right: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(imagePaths.length, (index) {
+            children: List.generate(widget.images?.length ?? 0, (index) {
               final isActive = index == _currentIndex;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),

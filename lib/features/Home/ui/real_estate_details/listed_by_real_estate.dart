@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
-import 'package:system_pro/gen/assets.gen.dart';
-class ListedByWidget extends StatelessWidget {
-  const ListedByWidget({super.key});
+import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
+import 'package:system_pro/features/Home/data/model/company.dart';
 
+class ListedByWidget extends StatelessWidget {
+  const ListedByWidget({super.key, required this.company});
+
+  final Company company;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,14 +37,14 @@ class ListedByWidget extends StatelessWidget {
           child: Column(
             spacing: kSpacingDefault.h,
             children: [
-              Image.asset(
-                Assets.images.image2Png.path,
+              CustomCachedNetworkImageWidget(
+                imageURL: company.picture,
                 width: 120.w,
                 height: 40.h,
                 fit: BoxFit.fitHeight,
               ),
               Text(
-                'Mastermind Real estate',
+                company.name ?? '',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeightHelper.medium,
                 ),
@@ -55,8 +55,12 @@ class ListedByWidget extends StatelessWidget {
               ).hPadding(kSpacingDefault.w),
               GestureDetector(
                 onTap: () {
-                  context.pushNamed(Routes.companyProfileView);
+                  context.pushNamed(
+                    Routes.companyProfileView,
+                    arguments: company,
+                  );
                 },
+
                 child: Text(
                   context.localization.view_profile,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(

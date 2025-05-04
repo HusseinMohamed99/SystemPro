@@ -16,12 +16,12 @@ class RealEstateSliverList extends StatelessWidget {
       itemBuilder:
           (context, index) => GestureDetector(
             onTap: () {
-              context.pushNamed(Routes.realEstateDetailsView);
+              context.pushNamed(
+                Routes.realEstateDetailsView,
+                arguments: listings[index],
+              );
             },
-            child:  RealEstateItem(
-              listing: listings[index],
-              index: index,
-            ),
+            child: RealEstateItem(listing: listings[index], index: index),
           ),
       separatorBuilder: (context, index) => verticalSpacing(kSpacingDefault),
       itemCount: listings.length,

@@ -24,11 +24,11 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
     return CachedNetworkImage(
       width: width,
       height: height,
-      fit: fit ?? BoxFit.fill,
+      fit: fit ?? BoxFit.fitWidth,
       imageUrl:
           imageURL?.isNotEmpty == true
               ? imageURL!
-              : 'https://firebasestorage.googleapis.com/v0/b/fakahani-73130.firebasestorage.app/o/Dummy%2Fic_launcher_foreground.png?alt=media&token=bdb0f62e-0b2e-47bb-b4f8-be6e19b5a808',
+              : '',
       placeholder:
           (context, url) => const Center(
             child: SpinKitDoubleBounce(

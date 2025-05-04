@@ -3,28 +3,45 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
-import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
-import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/calculate_percentage.dart';
+import 'package:system_pro/core/helpers/functions/time_ago.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/gen/assets.gen.dart';
+
 class AboutRealEstate extends StatelessWidget {
-  const AboutRealEstate({super.key});
+  const AboutRealEstate({
+    super.key,
+    required this.price,
+    required this.downPayment,
+    required this.title,
+    required this.location,
+    required this.date,
+    required this.bedrooms,
+    required this.bathrooms,
+    required this.area,
+  });
+  final String price,
+      downPayment,
+      title,
+      location,
+      date,
+      bedrooms,
+      bathrooms,
+      area;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       spacing: kSpacingDefault.h,
       children: [
         Row(
           spacing: kSpacingDefault.w,
           children: [
             Text(
-              '${context.localization.sar} 3,143,000',
+              '${context.localization.sar} $price',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeightHelper.semiBold,
                 color: ColorManager.primaryBlue,
@@ -40,7 +57,7 @@ class AboutRealEstate extends StatelessWidget {
                 ),
               ),
               child: Text(
-                '20% Down Payment',
+                '${calculatePercentage(price, downPayment)} Down Payment',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeightHelper.medium,
                   color: ColorManager.softGray,
@@ -50,7 +67,8 @@ class AboutRealEstate extends StatelessWidget {
           ],
         ),
         Text(
-          'Fully finished apartment 65m for sale in Madinaty',
+          title,
+          textAlign: TextAlign.start,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
@@ -62,16 +80,20 @@ class AboutRealEstate extends StatelessWidget {
               color: ColorManager.softGray,
               size: kIconSizeDefault.sp,
             ),
-            Text(
-              'Privado, Madinaty',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeightHelper.regular,
-                color: ColorManager.softGray,
+            Flexible(
+              child: Text(
+                location,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeightHelper.regular,
+                  color: ColorManager.softGray,
+                ),
               ),
             ),
-            const Spacer(),
+            horizontalSpacing(kSpacingSmall),
             Text(
-              '19/03/2025',
+              timeAgo(date),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
                 color: ColorManager.softGray,
@@ -89,7 +111,7 @@ class AboutRealEstate extends StatelessWidget {
               Assets.images.bathroom,
               Assets.images.area,
             ];
-            final values = ['Apartment', '3', '2', '176 sqm'];
+            final values = ['Apartment', bedrooms, bathrooms, '$area sqm'];
 
             return Row(
               mainAxisSize: MainAxisSize.min, // مهم لتجنب أخذ كل العرض

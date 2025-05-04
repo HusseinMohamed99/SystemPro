@@ -12,9 +12,10 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/gen/assets.gen.dart';
-class DescriptionWidget extends StatelessWidget {
-  const DescriptionWidget({super.key});
 
+class DescriptionWidget extends StatelessWidget {
+  const DescriptionWidget({super.key, required this.description});
+  final String description;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,8 +33,7 @@ class DescriptionWidget extends StatelessWidget {
           builder: (context, setState) {
             final TextEditingController textController = TextEditingController(
               text:
-                  'At Mastermind Real estate , we specialize in helping clients buy, sell, and invest in real estate with confidence. With a focus on quality and expertise, we have a team of experienced professionals who are dedicated to helping our clients achieve their real estate goals. Whether you are looking to buy, sell, or invest in real estate, we have the resources and expertise to help you succeed. Contact us today to learn more about how we can help you achieve your real estate goals.',
-            );
+                  description,  );
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
