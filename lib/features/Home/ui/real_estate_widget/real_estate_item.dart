@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
 class RealEstateItem extends StatelessWidget {
-  const RealEstateItem({super.key});
-
+  const RealEstateItem({super.key, required this.listing});
+final Listing listing;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,12 +19,22 @@ class RealEstateItem extends StatelessWidget {
           border: Border.all(color: ColorManager.borderGrey, width: 1.5.w),
           color: ColorManager.pureWhite,
         ),
-        child: Column(
+        child:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const RealEstateImageSlider(),
+            RealEstateImageSlider(imagePaths: [],
+            ),
             verticalSpacing(kSpacingSmall),
-            const RealEstateInfo(),
+            RealEstateInfo(
+              price: listing.price??'',
+              location: listing.location??'',
+              title: listing.title??'',
+              bedroomNum: listing.rooms.toString(),
+              bathroomNum: listing.bathrooms.toString(),
+              area: listing.area.toString(),
+              dateTime: listing.createdAt.toString(),
+              companyImage: listing.company?.picture??'',
+            ),
           ],
         ),
       ),

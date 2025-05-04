@@ -85,7 +85,9 @@ class CompanyProfileView extends StatelessWidget {
                 const SliverToBoxAdapter(child: PropertiesWidge()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
 
-                const RealEstateSliverList(),
+                const RealEstateSliverList(
+                  listings: [],
+                ),
               ],
             ),
           ),

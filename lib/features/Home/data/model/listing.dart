@@ -11,6 +11,8 @@ class Listing {
     this.id,
     this.employeeId,
     this.companyId,
+    this.categoryId,
+    this.subcategoryId,
     this.title,
     this.description,
     this.category,
@@ -27,6 +29,8 @@ class Listing {
     this.status,
     this.createdAt,
     this.updatedAt,
+    this.rejectionReason,
+    this.releaseDate,
     this.employee,
     this.company,
     this.images,
@@ -39,6 +43,10 @@ class Listing {
   final int? employeeId;
   @JsonKey(name: 'company_id')
   final int? companyId;
+  @JsonKey(name: 'category_id')
+  final int? categoryId;
+  @JsonKey(name: 'subcategory_id')
+  final int? subcategoryId;
   final String? title;
   final String? description;
   final String? category;
@@ -60,6 +68,11 @@ class Listing {
   final String? createdAt;
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+
+  @JsonKey(name: 'rejection_reason')
+  final String? rejectionReason; // إضافة الحقل
+  @JsonKey(name: 'release_date')
+  final String? releaseDate; // إضافة الحقل
 
   final Employee? employee;
   final Company? company;

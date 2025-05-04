@@ -15,7 +15,7 @@ class DioFactory {
       dio!
         ..options.connectTimeout = timeOut
         ..options.receiveTimeout = timeOut;
-    addDioHeaders();
+    
       addDioInterceptor();
       return dio!;
     } else {
@@ -23,18 +23,17 @@ class DioFactory {
     }
   }
 
-  static void addDioHeaders() async {
-   dio?.options.headers.addAll({
-      'Accept': '*/*',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'User-Agent': 'Dart/3.x (Dio)', // اختياري
-    });
+  static void addDioHeaders() {
+  dio?.options.headers = {
+      // 'Accept': 'application/json',
+      // 'Authorization':
+      //     'Bearer ${await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken)}',
+    };
   }
 
   static void setTokenIntoHeaderAfterLogin(String token) {
-    dio?.options.headers = {'Authorization': 'Bearer $token'};
+    // إضافة الـ token إلى الـ headers الحالية
+    dio?.options.headers.addAll({'Authorization': 'Bearer $token'});
   }
 
   static void addDioInterceptor() {

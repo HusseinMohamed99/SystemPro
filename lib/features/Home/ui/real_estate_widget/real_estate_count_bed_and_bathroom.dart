@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
 
-
 class RealEstateCountBedAndBathRoom extends StatelessWidget {
-  const RealEstateCountBedAndBathRoom({super.key});
+  const RealEstateCountBedAndBathRoom({
+    super.key,
+    required this.bedroomNum,
+    required this.bathroomNum,
+    required this.area,
+  });
 
+  final String bedroomNum, bathroomNum, area;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,7 +26,7 @@ class RealEstateCountBedAndBathRoom extends StatelessWidget {
                 Assets.images.bathroom,
                 Assets.images.area,
               ];
-              final values = ['3', '2', '176 sqm'];
+              final values = [bedroomNum, bathroomNum, '$area sqm'];
               return Row(
                 children: [
                   SvgPicture.asset(images[index]),

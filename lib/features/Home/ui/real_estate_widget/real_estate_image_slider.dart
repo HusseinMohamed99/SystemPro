@@ -6,8 +6,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/gen/assets.gen.dart';
 
 class RealEstateImageSlider extends StatefulWidget {
-  const RealEstateImageSlider({super.key});
-
+  const RealEstateImageSlider({super.key, required this.imagePaths});
+final List<String> imagePaths;
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
 }
@@ -17,11 +17,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   int _currentIndex = 0;
   bool isFavorite = false;
 
-  final List<String> imagePaths = [
-    Assets.images.image1.path,
-    Assets.images.image1.path,
-    Assets.images.image1.path,
-  ];
+ 
 
   @override
   void dispose() {
@@ -44,14 +40,14 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             width: context.width,
             child: PageView.builder(
               controller: _pageController,
-              itemCount: imagePaths.length,
+              itemCount: widget.imagePaths.length,
               onPageChanged: (index) {
                 setState(() {
                   _currentIndex = index;
                 });
               },
               itemBuilder: (context, index) {
-                return Image.asset(imagePaths[index], fit: BoxFit.cover);
+                return Image.asset(widget.imagePaths[index], fit: BoxFit.cover);
               },
             ),
           ),
@@ -94,7 +90,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           right: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(imagePaths.length, (index) {
+            children: List.generate(widget.imagePaths.length, (index) {
               final isActive = index == _currentIndex;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),

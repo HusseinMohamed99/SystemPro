@@ -10,7 +10,25 @@ import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_count_bed_and_bathroom.dart';
 
 class RealEstateInfo extends StatelessWidget {
-  const RealEstateInfo({super.key});
+  const RealEstateInfo({
+    super.key,
+    required this.price,
+    required this.title,
+    required this.location,
+    required this.bedroomNum,
+    required this.bathroomNum,
+    required this.area,
+    required this.dateTime,
+    required this.companyImage,
+  });
+  final String price,
+      title,
+      location,
+      bedroomNum,
+      bathroomNum,
+      area,
+      dateTime,
+      companyImage;
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +37,33 @@ class RealEstateInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '3,143,000 ${context.localization.sar}',
+          '$price ${context.localization.sar}',
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(color: ColorManager.primaryBlue),
         ),
         Text(
-          'Fully finished apartment 65m for sale in Madinaty',
+          title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-        const RealEstateCountBedAndBathRoom(),
+        RealEstateCountBedAndBathRoom(
+          bedroomNum: bedroomNum,
+          bathroomNum: bathroomNum,
+          area: area,
+        ),
         Text(
-          'Privado, Madinaty',
+          location,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
             color: ColorManager.softGray,
           ),
         ),
-        const CustomCompanyLogoAndCratedTime(),
+        CustomCompanyLogoAndCratedTime(
+          dateTime: dateTime,
+          companyImage: companyImage,
+        ),
         Divider(
           color: ColorManager.borderGrey,
           height: 1.h,

@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
 import 'package:system_pro/core/networking/backend/api_error_model.dart';
@@ -161,7 +162,6 @@ extension DataSourceExtension on DataSource {
 }
 
 class ErrorHandler implements Exception {
-  late ApiErrorModel apiErrorModel;
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioException) {
@@ -172,6 +172,7 @@ class ErrorHandler implements Exception {
       apiErrorModel = DataSource.defaultError.getFailure();
     }
   }
+  late ApiErrorModel apiErrorModel;
 }
 
 ApiErrorModel _handleError(DioException error) {
