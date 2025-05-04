@@ -18,10 +18,13 @@ import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.da
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
+import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
+import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 
 final getIt = GetIt.instance;
 
-void setupGetIt({required BuildContext context,
+void setupGetIt({
+  required BuildContext context,
   required String initialLocale,
   required bool isDarkMode,
 }) {
@@ -37,7 +40,7 @@ void setupGetIt({required BuildContext context,
   final lightText = AppTextStyleManager.lightTextTheme(context);
   final darkText = AppTextStyleManager.darkTextTheme(context);
 
-    if (!getIt.isRegistered<ChangeThemingCubit>()) {
+  if (!getIt.isRegistered<ChangeThemingCubit>()) {
     getIt.registerSingleton<ChangeThemingCubit>(
       ChangeThemingCubit(
         initialTheme:
@@ -80,11 +83,21 @@ void setupGetIt({required BuildContext context,
   if (!getIt.isRegistered<OtpCubit>()) {
     getIt.registerLazySingleton<OtpRepo>(() => OtpRepo(getIt()));
     getIt.registerFactory<OtpCubit>(() => OtpCubit(getIt()));
-  }  
-  
+  }
+
   // Change Password
   if (!getIt.isRegistered<ChangePasswordCubit>()) {
-    getIt.registerLazySingleton<ChangePasswordRepo>(() => ChangePasswordRepo(getIt()));
-    getIt.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit(getIt()));
+    getIt.registerLazySingleton<ChangePasswordRepo>(
+      () => ChangePasswordRepo(getIt()),
+    );
+    getIt.registerFactory<ChangePasswordCubit>(
+      () => ChangePasswordCubit(getIt()),
+    );
+  }
+  if (!getIt.isRegistered<MarketplaceCubit>()) {
+    getIt.registerFactory<MarketplaceCubit>(() => MarketplaceCubit(getIt()));
+    getIt.registerLazySingleton<MarketplaceRepo>(
+      () => MarketplaceRepo(getIt()),
+    );
   }
 }

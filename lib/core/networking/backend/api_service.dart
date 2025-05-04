@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_request_body.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_response.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_response.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/check_otp_request_body.dart';
@@ -9,12 +11,11 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_response.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_request_body.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_response.dart';
-import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_request_body.dart';
-import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_response.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_request_body.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_response.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_response.dart';
+import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 
 part 'api_service.g.dart';
 
@@ -54,4 +55,6 @@ abstract class ApiService {
   Future<EditProfileResponse> editProfile(
     @Body() EditProfileRequestBody editProfileRequestBody,
   );
+  @GET(ApiConstants.getMarketplaceListings)
+  Future<MarketplaceResponse> getMarketplaceListings();
 }

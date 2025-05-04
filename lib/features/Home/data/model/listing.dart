@@ -1,0 +1,67 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:system_pro/features/Home/data/model/company.dart';
+import 'package:system_pro/features/Home/data/model/employee.dart';
+import 'package:system_pro/features/Home/data/model/listing_image.dart';
+
+part 'listing.g.dart';
+
+@JsonSerializable()
+class Listing {
+  Listing({
+    this.id,
+    this.employeeId,
+    this.companyId,
+    this.title,
+    this.description,
+    this.category,
+    this.price,
+    this.downPayment,
+    this.location,
+    this.picture,
+    this.pictureUrl,
+    this.rooms,
+    this.bathrooms,
+    this.floors,
+    this.area,
+    this.sellingStatus,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.employee,
+    this.company,
+    this.images,
+  });
+
+  factory Listing.fromJson(Map<String, dynamic> json) =>
+      _$ListingFromJson(json);
+  final int? id;
+  @JsonKey(name: 'employee_id')
+  final int? employeeId;
+  @JsonKey(name: 'company_id')
+  final int? companyId;
+  final String? title;
+  final String? description;
+  final String? category;
+  final String? price;
+  @JsonKey(name: 'down_payment')
+  final String? downPayment;
+  final String? location;
+  final String? picture;
+  @JsonKey(name: 'picture_url')
+  final String? pictureUrl;
+  final int? rooms;
+  final int? bathrooms;
+  final int? floors;
+  final String? area;
+  @JsonKey(name: 'selling_status')
+  final int? sellingStatus;
+  final String? status;
+  @JsonKey(name: 'created_at')
+  final String? createdAt;
+  @JsonKey(name: 'updated_at')
+  final String? updatedAt;
+
+  final Employee? employee;
+  final Company? company;
+  final List<ListingImage>? images;
+}

@@ -16,6 +16,7 @@ class MainViewBody extends StatelessWidget {
       index: currentViewIndex,
       children: [
         const HomeView(),
+
         const FavoritesView(),
         const ProfileView().allPadding(
           vPadding: kPaddingDefaultVertical,

@@ -1,5 +1,6 @@
 class ApiConstants {
-  static const String apiBaseUrl = '';
+  static const String apiBaseUrl =
+      'https://sienna-woodpecker-844567.hostingersite.com/';
   static const String login = '';
   static const String signup = '';
   static const String forgotPassword = '';
@@ -8,6 +9,7 @@ class ApiConstants {
   static const String changePassword = '';
   static const String getUserData = '';
   static const String editProfile = '';
+  static const String getMarketplaceListings = 'api/marketplace/listings';
 }
 
 class ApiErrors {
