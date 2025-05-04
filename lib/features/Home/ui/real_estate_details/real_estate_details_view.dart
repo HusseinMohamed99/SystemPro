@@ -35,7 +35,7 @@ class RealEstateDetailsView extends StatelessWidget {
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                 const SliverToBoxAdapter(child: ListedByWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
-                const SliverToBoxAdapter(child: LocationWidget()),
+                const SliverToBoxAdapter(child: LocationWidget(location: 'Khartoum')),
               ],
             ).allPadding(
               hPadding: kPaddingDefaultHorizontal,

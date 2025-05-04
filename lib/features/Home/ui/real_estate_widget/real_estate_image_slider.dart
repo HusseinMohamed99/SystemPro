@@ -3,11 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/gen/assets.gen.dart';
+import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
+import 'package:system_pro/features/Home/data/model/listing_image.dart';
 
 class RealEstateImageSlider extends StatefulWidget {
-  const RealEstateImageSlider({super.key, required this.imagePaths});
-final List<String> imagePaths;
+  const RealEstateImageSlider({super.key, required this.images});
+  final List<ListingImage>? images;
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
 }
@@ -16,8 +17,6 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
   bool isFavorite = false;
-
- 
 
   @override
   void dispose() {
@@ -40,14 +39,19 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             width: context.width,
             child: PageView.builder(
               controller: _pageController,
-              itemCount: widget.imagePaths.length,
+              itemCount: 3,
               onPageChanged: (index) {
                 setState(() {
                   _currentIndex = index;
                 });
               },
               itemBuilder: (context, index) {
-                return Image.asset(widget.imagePaths[index], fit: BoxFit.cover);
+                return CustomCachedNetworkImageWidget(
+                  fit: BoxFit.cover,
+                  width: context.width,
+                  height: 150.h,
+                  imageURL: widget.images?[index].imageUrl??'',
+                );
               },
             ),
           ),
@@ -90,7 +94,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           right: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(widget.imagePaths.length, (index) {
+            children: List.generate(widget.images?.length??0, (index) {
               final isActive = index == _currentIndex;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),

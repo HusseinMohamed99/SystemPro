@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_company_logo_and_created_time.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_count_bed_and_bathroom.dart';
@@ -19,7 +20,7 @@ class RealEstateInfo extends StatelessWidget {
     required this.bathroomNum,
     required this.area,
     required this.dateTime,
-    required this.companyImage,
+    required this.company,
   });
   final String price,
       title,
@@ -27,8 +28,9 @@ class RealEstateInfo extends StatelessWidget {
       bedroomNum,
       bathroomNum,
       area,
-      dateTime,
-      companyImage;
+      dateTime
+      ;
+  final Company company;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class RealEstateInfo extends StatelessWidget {
         ),
         CustomCompanyLogoAndCratedTime(
           dateTime: dateTime,
-          companyImage: companyImage,
+          company: company,
         ),
         Divider(
           color: ColorManager.borderGrey,

@@ -8,13 +8,14 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
+import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
+import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_button.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
-import 'package:system_pro/gen/assets.gen.dart';
 
 class CompanyProfileView extends StatelessWidget {
-  const CompanyProfileView({super.key});
-
+  const CompanyProfileView({super.key, required this.arguments});
+  final Company arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +38,8 @@ class CompanyProfileView extends StatelessWidget {
 
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(320),
-                    child: Image.asset(
-                      Assets.images.image2Png.path,
+                    child: CustomCachedNetworkImageWidget(
+                      imageURL: arguments.picture,
                       height: 32.h,
                       width: 100.w,
 
@@ -49,7 +50,7 @@ class CompanyProfileView extends StatelessWidget {
 
                 verticalSpacing(kSpacingDefault),
                 Text(
-                  'Mastermind Real estate',
+                  arguments.name ?? '',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeightHelper.medium,
                   ),
@@ -69,9 +70,16 @@ class CompanyProfileView extends StatelessWidget {
           Expanded(
             child: CustomScrollView(
               slivers: [
-                const SliverToBoxAdapter(child: LocationWidget()),
+                SliverToBoxAdapter(
+                  child: LocationWidget(location: arguments.address ?? ''),
+                ),
+
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-                const SliverToBoxAdapter(child: AboutRealEstateWidget()),
+                SliverToBoxAdapter(
+                  child: AboutRealEstateWidget(
+                    description: arguments.bio ?? '',
+                  ),
+                ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
                 SliverToBoxAdapter(
                   child: Divider(
@@ -82,12 +90,10 @@ class CompanyProfileView extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
 
-                const SliverToBoxAdapter(child: PropertiesWidge()),
+                //TODO: NEW END POINT
+                const SliverToBoxAdapter(child: PropertiesWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-
-                const RealEstateSliverList(
-                  listings: [],
-                ),
+                const RealEstateSliverList(listings: []),
               ],
             ),
           ),
@@ -97,8 +103,8 @@ class CompanyProfileView extends StatelessWidget {
   }
 }
 
-class PropertiesWidge extends StatelessWidget {
-  const PropertiesWidge({super.key});
+class PropertiesWidget extends StatelessWidget {
+  const PropertiesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +125,8 @@ class PropertiesWidge extends StatelessWidget {
 }
 
 class AboutRealEstateWidget extends StatelessWidget {
-  const AboutRealEstateWidget({super.key});
-
+  const AboutRealEstateWidget({super.key, required this.description});
+  final String description;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -137,8 +143,7 @@ class AboutRealEstateWidget extends StatelessWidget {
         StatefulBuilder(
           builder: (context, setState) {
             final TextEditingController textController = TextEditingController(
-              text:
-                  'At Mastermind Real estate , we specialize in helping clients buy, sell, and invest in real estate with confidence. With a focus on quality and expertise, we have a team of experienced professionals who are dedicated to helping our clients achieve their real estate goals. Whether you are looking to buy, sell, or invest in real estate, we have the resources and expertise to help you succeed. Contact us today to learn more about how we can help you achieve your real estate goals.',
+              text: description,
             );
 
             return Column(
@@ -191,8 +196,8 @@ class AboutRealEstateWidget extends StatelessWidget {
 }
 
 class LocationWidget extends StatelessWidget {
-  const LocationWidget({super.key});
-
+  const LocationWidget({super.key, required this.location});
+  final String location;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -215,7 +220,7 @@ class LocationWidget extends StatelessWidget {
             ),
 
             Text(
-              'Privado, Madinaty',
+              location,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
               ),

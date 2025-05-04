@@ -16,6 +16,7 @@ import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.da
 import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
+import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_view.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/real_estate_details_view.dart';
@@ -99,7 +100,9 @@ class AppRouters {
                   FilterView(locationArgument: arguments as LocationArgument),
         );
       case Routes.companyProfileView:
-        return MaterialPageRoute(builder: (_) => const CompanyProfileView());
+        return MaterialPageRoute(builder: (_) =>  CompanyProfileView(
+          arguments: arguments as Company
+        ));
       case Routes.realEstateDetailsView:
         return MaterialPageRoute(builder: (_) => const RealEstateDetailsView());
 

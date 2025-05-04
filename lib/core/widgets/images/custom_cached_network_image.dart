@@ -24,7 +24,7 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
     return CachedNetworkImage(
       width: width,
       height: height,
-      fit: fit,
+      fit: fit ?? BoxFit.fill,
       imageUrl:
           imageURL?.isNotEmpty == true
               ? imageURL!
@@ -39,7 +39,7 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
       errorWidget:
           (context, url, error) => SvgPicture.asset(
             Assets.images.error,
-            fit: BoxFit.fitWidth,
+            fit: BoxFit.fitHeight,
             width: width,
             height: height ?? 90.h,
           ),

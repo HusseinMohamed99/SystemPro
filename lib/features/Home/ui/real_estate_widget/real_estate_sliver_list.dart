@@ -20,6 +20,7 @@ class RealEstateSliverList extends StatelessWidget {
             },
             child:  RealEstateItem(
               listing: listings[index],
+              index: index,
             ),
           ),
       separatorBuilder: (context, index) => verticalSpacing(kSpacingDefault),

@@ -6,15 +6,17 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
+import 'package:system_pro/features/Home/data/model/company.dart';
 
 class CustomCompanyLogoAndCratedTime extends StatelessWidget {
   const CustomCompanyLogoAndCratedTime({
     super.key,
     required this.dateTime,
-    required this.companyImage,
+    required this.company,
   });
 
-  final String dateTime, companyImage;
+  final String dateTime;
+  final Company company;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +32,16 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            context.pushNamed(Routes.companyProfileView);
+            context.pushNamed(
+              Routes.companyProfileView,
+              arguments: company,
+            );
           },
           child: CustomCachedNetworkImageWidget(
             height: 32.h,
             width: 100.w,
-            fit: BoxFit.fill,
-            imageURL: companyImage,
+            fit: BoxFit.fitHeight,
+            imageURL: company.picture,
           ),
         ),
       ],
