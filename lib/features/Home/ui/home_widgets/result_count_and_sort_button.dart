@@ -7,8 +7,9 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class ResultsCountAndSortButton extends StatefulWidget {
-  const ResultsCountAndSortButton({super.key});
-
+  const ResultsCountAndSortButton({super.key, required this.propertyLength});
+final String propertyLength;
+  
   @override
   State<ResultsCountAndSortButton> createState() =>
       _ResultsCountAndSortButtonState();
@@ -35,7 +36,7 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '1537 ${context.localization.properties}',
+          '${widget.propertyLength} ${context.localization.properties}',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             color: ColorManager.softGray,
             fontWeight: FontWeightHelper.medium,

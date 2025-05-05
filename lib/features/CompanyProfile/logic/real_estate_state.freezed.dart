@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'marketplace_state.dart';
+part of 'real_estate_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,26 +16,26 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$MarketplaceState {
+mixin _$RealEstateState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -43,45 +43,45 @@ mixin _$MarketplaceState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MarketplaceStateCopyWith<$Res> {
-  factory $MarketplaceStateCopyWith(
-    MarketplaceState value,
-    $Res Function(MarketplaceState) then,
-  ) = _$MarketplaceStateCopyWithImpl<$Res, MarketplaceState>;
+abstract class $RealEstateStateCopyWith<$Res> {
+  factory $RealEstateStateCopyWith(
+    RealEstateState value,
+    $Res Function(RealEstateState) then,
+  ) = _$RealEstateStateCopyWithImpl<$Res, RealEstateState>;
 }
 
 /// @nodoc
-class _$MarketplaceStateCopyWithImpl<$Res, $Val extends MarketplaceState>
-    implements $MarketplaceStateCopyWith<$Res> {
-  _$MarketplaceStateCopyWithImpl(this._value, this._then);
+class _$RealEstateStateCopyWithImpl<$Res, $Val extends RealEstateState>
+    implements $RealEstateStateCopyWith<$Res> {
+  _$RealEstateStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -95,14 +95,14 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$RealEstateStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
     _$InitialImpl _value,
     $Res Function(_$InitialImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -113,7 +113,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'MarketplaceState.initial()';
+    return 'RealEstateState.initial()';
   }
 
   @override
@@ -130,7 +130,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
     return initial();
@@ -141,7 +141,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
     return initial?.call();
@@ -152,7 +152,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -167,7 +167,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -178,7 +178,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -189,7 +189,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -200,7 +200,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements MarketplaceState {
+abstract class _Initial implements RealEstateState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -214,14 +214,14 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$RealEstateStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
     _$LoadingImpl _value,
     $Res Function(_$LoadingImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -232,7 +232,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'MarketplaceState.loading()';
+    return 'RealEstateState.loading()';
   }
 
   @override
@@ -249,7 +249,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -260,7 +260,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -271,7 +271,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -286,7 +286,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -297,7 +297,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -308,7 +308,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -319,39 +319,39 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements MarketplaceState {
+abstract class _Loading implements RealEstateState {
   const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-    _$SuccessImpl value,
-    $Res Function(_$SuccessImpl) then,
-  ) = __$$SuccessImplCopyWithImpl<$Res>;
+abstract class _$$FilteredImplCopyWith<$Res> {
+  factory _$$FilteredImplCopyWith(
+    _$FilteredImpl value,
+    $Res Function(_$FilteredImpl) then,
+  ) = __$$FilteredImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Listing> listings});
+  $Res call({List<Listing> filteredListings});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-    _$SuccessImpl _value,
-    $Res Function(_$SuccessImpl) _then,
+class __$$FilteredImplCopyWithImpl<$Res>
+    extends _$RealEstateStateCopyWithImpl<$Res, _$FilteredImpl>
+    implements _$$FilteredImplCopyWith<$Res> {
+  __$$FilteredImplCopyWithImpl(
+    _$FilteredImpl _value,
+    $Res Function(_$FilteredImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? listings = null}) {
+  $Res call({Object? filteredListings = null}) {
     return _then(
-      _$SuccessImpl(
-        null == listings
-            ? _value._listings
-            : listings // ignore: cast_nullable_to_non_nullable
+      _$FilteredImpl(
+        null == filteredListings
+            ? _value._filteredListings
+            : filteredListings // ignore: cast_nullable_to_non_nullable
                 as List<Listing>,
       ),
     );
@@ -360,51 +360,58 @@ class __$$SuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<Listing> listings) : _listings = listings;
+class _$FilteredImpl implements _Filtered {
+  const _$FilteredImpl(final List<Listing> filteredListings)
+    : _filteredListings = filteredListings;
 
-  final List<Listing> _listings;
+  final List<Listing> _filteredListings;
   @override
-  List<Listing> get listings {
-    if (_listings is EqualUnmodifiableListView) return _listings;
+  List<Listing> get filteredListings {
+    if (_filteredListings is EqualUnmodifiableListView)
+      return _filteredListings;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listings);
+    return EqualUnmodifiableListView(_filteredListings);
   }
 
   @override
   String toString() {
-    return 'MarketplaceState.success(listings: $listings)';
+    return 'RealEstateState.filtered(filteredListings: $filteredListings)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
-            const DeepCollectionEquality().equals(other._listings, _listings));
+            other is _$FilteredImpl &&
+            const DeepCollectionEquality().equals(
+              other._filteredListings,
+              _filteredListings,
+            ));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_listings));
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_filteredListings),
+  );
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$FilteredImplCopyWith<_$FilteredImpl> get copyWith =>
+      __$$FilteredImplCopyWithImpl<_$FilteredImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
-    return success(listings);
+    return filtered(filteredListings);
   }
 
   @override
@@ -412,10 +419,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
-    return success?.call(listings);
+    return filtered?.call(filteredListings);
   }
 
   @override
@@ -423,12 +430,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(listings);
+    if (filtered != null) {
+      return filtered(filteredListings);
     }
     return orElse();
   }
@@ -438,10 +445,10 @@ class _$SuccessImpl implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
-    return success(this);
+    return filtered(this);
   }
 
   @override
@@ -449,10 +456,10 @@ class _$SuccessImpl implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
-    return success?.call(this);
+    return filtered?.call(this);
   }
 
   @override
@@ -460,26 +467,27 @@ class _$SuccessImpl implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (filtered != null) {
+      return filtered(this);
     }
     return orElse();
   }
 }
 
-abstract class _Success implements MarketplaceState {
-  const factory _Success(final List<Listing> listings) = _$SuccessImpl;
+abstract class _Filtered implements RealEstateState {
+  const factory _Filtered(final List<Listing> filteredListings) =
+      _$FilteredImpl;
 
-  List<Listing> get listings;
+  List<Listing> get filteredListings;
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+  _$$FilteredImplCopyWith<_$FilteredImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -495,14 +503,14 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$RealEstateStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
     _$ErrorImpl _value,
     $Res Function(_$ErrorImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -528,7 +536,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'MarketplaceState.error(error: $error)';
+    return 'RealEstateState.error(error: $error)';
   }
 
   @override
@@ -542,7 +550,7 @@ class _$ErrorImpl implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -555,7 +563,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -566,7 +574,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -577,7 +585,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -592,7 +600,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -603,7 +611,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -614,7 +622,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -625,12 +633,12 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements MarketplaceState {
+abstract class _Error implements RealEstateState {
   const factory _Error(final String error) = _$ErrorImpl;
 
   String get error;
 
-  /// Create a copy of MarketplaceState
+  /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

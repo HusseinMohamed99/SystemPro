@@ -8,8 +8,7 @@ class MarketplaceState with _$MarketplaceState {
   const factory MarketplaceState.initial() = _Initial;
   const factory MarketplaceState.loading() = _Loading;
   const factory MarketplaceState.success(List<Listing> listings) = _Success;
-  const factory MarketplaceState.filtered(List<Listing> filteredListings) =
-      _Filtered;
+
 
   const factory MarketplaceState.error(String error) = _Error;
 }

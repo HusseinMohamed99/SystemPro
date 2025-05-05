@@ -119,7 +119,9 @@ class PropertiesWidget extends StatelessWidget {
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
         ),
         verticalSpacing(kSpacingLarge),
-        const ResultsCountAndSortButton(),
+         ResultsCountAndSortButton(
+          propertyLength: '0',
+         ),
       ],
     );
   }
