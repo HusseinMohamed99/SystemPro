@@ -8,8 +8,11 @@ part of 'email_verify_request_body.dart';
 
 EmailVerifyRequestBody _$EmailVerifyRequestBodyFromJson(
   Map<String, dynamic> json,
-) => EmailVerifyRequestBody(otp: json['otp'] as String);
+) => EmailVerifyRequestBody(
+  email: json['email'] as String,
+  otp: json['otp'] as String,
+);
 
 Map<String, dynamic> _$EmailVerifyRequestBodyToJson(
   EmailVerifyRequestBody instance,
-) => <String, dynamic>{'otp': instance.otp};
+) => <String, dynamic>{'otp': instance.otp, 'email': instance.email};

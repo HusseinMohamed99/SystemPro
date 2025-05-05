@@ -6,7 +6,8 @@ part 'email_verify_request_body.g.dart';
 class EmailVerifyRequestBody {
 
 
-  EmailVerifyRequestBody({ required this.otp});
+  EmailVerifyRequestBody( {required this.email, required this.otp});
   final String otp;
+  final String email;
   Map<String, dynamic> toJson() => _$EmailVerifyRequestBodyToJson(this);
 }

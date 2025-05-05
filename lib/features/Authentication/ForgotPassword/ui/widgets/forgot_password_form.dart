@@ -31,12 +31,6 @@ class ForgotPasswordForm extends StatelessWidget {
           CustomButton(
             text: context.localization.send_code,
             onPressed: () {
-              // context.pushNamed(Routes.forgotPasswordOtpView,
-              //   arguments: ForgotPasswordRequestBody(
-              //     email:
-              //         context.read<ForgotPasswordCubit>().emailController.text,
-              //   ),
-              // );
               validateThenDoForgotPassword(context);
             },
           ),

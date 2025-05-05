@@ -13,11 +13,10 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   TextEditingController validationCodeController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  void emitEmailVerifyStates() async {
+  void emitEmailVerifyStates({required String email}) async {
     emit(const EmailVerifyState.emailVerifyLoading());
     final response = await _emailVerifyRepo.emailVerify(
-      EmailVerifyRequestBody(otp: validationCodeController.text),
-
+      EmailVerifyRequestBody(otp: validationCodeController.text, email: email),
     );
     response.when(
       success: (emailVerifyResponse) {
@@ -34,17 +33,17 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   }
 
   void emitResendOtpStates({required String email}) async {
-    emit(const EmailVerifyState.emailVerifyLoading());
+    emit(const EmailVerifyState.resendOtpLoading());
     final response = await _emailVerifyRepo.resendOtp(
-      ResendOtpRequestBody(email: email),
+      ResendOtpRequestBody(email: email, type: 'register'),
     );
     response.when(
       success: (otpResponse) {
-        emit(EmailVerifyState.emailVerifySuccess(otpResponse));
+        emit(EmailVerifyState.resendOtpSuccess(otpResponse));
       },
       failure: (error) {
         emit(
-          EmailVerifyState.emailVerifyError(
+          EmailVerifyState.resendOtpError(
             error: error.apiErrorModel.message ?? '',
           ),
         );

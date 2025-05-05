@@ -91,7 +91,7 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
                       )
                     else
                       TextSpan(
-                        text: '  ahmed@systempro.com',
+                        text: '  ${widget.email}',
 
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: ColorManager.primaryBlue,
@@ -117,8 +117,7 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
             child: CustomButton(
               text: context.localization.verify,
               onPressed: () {
-                context.pushReplacementNamed(Routes.loginView);
-                // validateThenDoCheckOtp(context);
+                 validateThenDoCheckOtp(context);
               },
             ),
           ),
@@ -167,7 +166,9 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
 
   void validateThenDoCheckOtp(BuildContext context) {
     if (context.read<EmailVerifyCubit>().formKey.currentState!.validate()) {
-      context.read<EmailVerifyCubit>().emitEmailVerifyStates();
+      context.read<EmailVerifyCubit>().emitEmailVerifyStates(
+        email: widget.email,
+      );
     }
   }
 }

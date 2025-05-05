@@ -94,7 +94,7 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
                       )
                     else
                       TextSpan(
-                        text: '  ahmed@systempro.com',
+                        text: '  ${widget.email}',
 
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: ColorManager.primaryBlue,
@@ -120,8 +120,7 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
             child: CustomButton(
               text: context.localization.verify,
               onPressed: () {
-                context.pushNamed(Routes.resetPasswordView);
-                // validateThenDoCheckOtp(context);
+              validateThenDoCheckOtp(context);
               },
             ),
           ),

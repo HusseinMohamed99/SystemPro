@@ -289,10 +289,10 @@ class _ApiService implements ApiService {
     final _data = <String, dynamic>{};
     _data.addAll(editProfileRequestBody.toJson());
     final _options = _setStreamType<EditProfileResponse>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+      Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '',
+            'api/mobile/profile/update',
             queryParameters: queryParameters,
             data: _data,
           )

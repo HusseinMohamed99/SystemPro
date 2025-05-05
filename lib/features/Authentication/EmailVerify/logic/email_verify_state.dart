@@ -11,4 +11,9 @@ class EmailVerifyState<T> with _$EmailVerifyState<T> {
       EmailVerifySuccess<T>;
   const factory EmailVerifyState.emailVerifyError({required String error}) =
       EmailVerifyError;
+
+  const factory EmailVerifyState.resendOtpLoading() = ResendOtpLoading;
+  const factory EmailVerifyState.resendOtpSuccess(T data) = ResendOtpSuccess<T>;
+  const factory EmailVerifyState.resendOtpError({required String error}) =
+      ResendOtpError;
 }
