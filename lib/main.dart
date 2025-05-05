@@ -5,10 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/bloc_observer.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,22 +50,19 @@ class AppBootstrap extends StatelessWidget {
       context: context,
     ); // هنا يكون عندنا context بعد build
 
+    checkIfLoggedInUser();
+
     return SystemProApp(appRouter: AppRouters());
   }
 }
 
-
-// checkIfLoggedInUser() async {
-//   final String userToken = await CachingHelper.getSecuredString(
-//     SharedPrefKeys.userToken,
-//   );
-//   final isLoggedIn = FirebaseAuthServices().isLoggedIn();
-//   if (!userToken.isNullOrEmpty() && isLoggedIn) {
-//     isLoggedInUser = true;
-//   } else {
-//     isLoggedInUser = false;
-//   }
-// }
-
-
-
+checkIfLoggedInUser() async {
+  final String userToken = await CachingHelper.getSecuredString(
+    SharedPrefKeys.userToken,
+  );
+  if (!userToken.isNullOrEmpty()) {
+    isLoggedInUser = true;
+  } else {
+    isLoggedInUser = false;
+  }
+}

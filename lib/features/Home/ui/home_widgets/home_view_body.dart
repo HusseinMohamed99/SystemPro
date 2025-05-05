@@ -5,7 +5,6 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
-import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
@@ -24,43 +23,49 @@ class HomeViewBody extends StatelessWidget {
           initial: () => const Center(child: CircularProgressIndicator()),
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error) => CustomErrorWidget(errorMessage: error),
-          success:
-              (listings) => Column(
-                children: [
-                  const CustomSearchTextField().onlyPadding(
-                    leftPadding: kPaddingDefaultHorizontal,
-                    rightPadding: kPaddingDefaultHorizontal,
-                    bottomPadding: kPaddingVertical,
-                    topPadding: kPaddingDefaultVertical,
-                  ),
-                  const PropertyFiltersRow().onlyPadding(
-                    leftPadding: kPaddingDefaultHorizontal,
-                    rightPadding: kPaddingDefaultHorizontal,
-                    bottomPadding: kPaddingVertical,
-                  ),
-                  Divider(
-                    color: ColorManager.borderGrey,
-                    thickness: 1,
-                    height: 1.h,
-                  ),
-                  ResultsCountAndSortButton(
-                    propertyLength: listings.length.toString(),
-                  ).onlyPadding(
-                    leftPadding: kPaddingDefaultHorizontal,
-                    rightPadding: kPaddingDefaultHorizontal,
-                    topPadding: kPaddingDefaultVertical,
-                  ),
-                  Expanded(
-                    child: CustomScrollView(
-                      slivers: [RealEstateSliverList(listings: listings)],
-                    ).onlyPadding(
-                      leftPadding: kPaddingDefaultHorizontal,
-                      rightPadding: kPaddingDefaultHorizontal,
-                      topPadding: kPaddingDefaultVertical,
-                    ),
-                  ),
-                ],
-              ),
+          success: (listings) {
+            return Column(
+              children: [
+                const CustomSearchTextField().onlyPadding(
+                  leftPadding: kPaddingDefaultHorizontal,
+                  rightPadding: kPaddingDefaultHorizontal,
+                  bottomPadding: kPaddingVertical,
+                  topPadding: kPaddingDefaultVertical,
+                ),
+                const PropertyFiltersRow().onlyPadding(
+                  leftPadding: kPaddingDefaultHorizontal,
+                  rightPadding: kPaddingDefaultHorizontal,
+                  bottomPadding: kPaddingVertical,
+                ),
+                Divider(
+                  color: ColorManager.borderGrey,
+                  thickness: 1,
+                  height: 1.h,
+                ),
+                ResultsCountAndSortButton(
+                  propertyLength: listings.length.toString(),
+                ).onlyPadding(
+                  leftPadding: kPaddingDefaultHorizontal,
+                  rightPadding: kPaddingDefaultHorizontal,
+                  topPadding: kPaddingDefaultVertical,
+                ),
+                Expanded(
+                  child:
+                      listings.isEmpty
+                          ? const Center(
+                            child: Text('لا توجد عقارات متاحة حالياً'),
+                          )
+                          : CustomScrollView(
+                            slivers: [RealEstateSliverList(listings: listings)],
+                          ).onlyPadding(
+                            leftPadding: kPaddingDefaultHorizontal,
+                            rightPadding: kPaddingDefaultHorizontal,
+                            topPadding: kPaddingDefaultVertical,
+                          ),
+                ),
+              ],
+            );
+          },
         );
       },
     );
