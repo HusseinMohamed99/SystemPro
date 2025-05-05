@@ -4,10 +4,10 @@ part 'check_otp_request_body.g.dart';
 
 @JsonSerializable()
 class CheckOtpRequestBody {
-  final String email;
-  final String otp;
 
   CheckOtpRequestBody({required this.email, required this.otp});
+  final String email;
+  final String otp;
 
   Map<String, dynamic> toJson() => _$CheckOtpRequestBodyToJson(this);
 }

@@ -9,13 +9,13 @@ part of 'change_password_request_body.dart';
 ChangePasswordRequestBody _$ChangePasswordRequestBodyFromJson(
   Map<String, dynamic> json,
 ) => ChangePasswordRequestBody(
-  newPassword: json['new_password'] as String,
-  confirmPassword: json['confirm_password'] as String,
+  newPassword: json['password'] as String,
+  confirmPassword: json['password_confirmation'] as String,
 );
 
 Map<String, dynamic> _$ChangePasswordRequestBodyToJson(
   ChangePasswordRequestBody instance,
 ) => <String, dynamic>{
-  'new_password': instance.newPassword,
-  'confirm_password': instance.confirmPassword,
+  'password': instance.newPassword,
+  'password_confirmation': instance.confirmPassword,
 };

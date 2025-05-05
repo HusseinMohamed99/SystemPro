@@ -8,9 +8,9 @@ class ChangePasswordRequestBody {
     required this.newPassword,
     required this.confirmPassword,
   });
-  @JsonKey(name: 'new_password')
+  @JsonKey(name: 'password')
   final String newPassword;
-  @JsonKey(name: 'confirm_password')
+  @JsonKey(name: 'password_confirmation')
   final String confirmPassword;
 
   Map<String, dynamic> toJson() => _$ChangePasswordRequestBodyToJson(this);

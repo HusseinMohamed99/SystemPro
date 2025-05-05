@@ -23,6 +23,10 @@ class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
           context.showSnackBar(
             context.localization.send_code,
           );
+          context.pushReplacementNamed(
+            Routes.resetPasswordView,
+           
+          );
        
         }
         if (state is OtpError) {

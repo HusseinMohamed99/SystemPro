@@ -7,9 +7,8 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_response.dart';
 
 class OtpRepo {
-  final ApiService _apiService;
-
   OtpRepo(this._apiService);
+  final ApiService _apiService;
 
   Future<ApiResult<ResendOtpResponse>> resendOtp(
     ResendOtpRequestBody resendOtpRequestBody,

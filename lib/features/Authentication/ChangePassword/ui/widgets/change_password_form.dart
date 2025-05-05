@@ -77,8 +77,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           CustomButton(
             text: context.localization.reset_password,
             onPressed: () {
-                 context.pushReplacementNamed(Routes.passwordChangedView);
-              // validateThenDoChangePassword(context);
+               validateThenDoChangePassword(context);
             },
           ),
         ],

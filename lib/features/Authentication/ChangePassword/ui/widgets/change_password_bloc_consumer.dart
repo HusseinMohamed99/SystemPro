@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
@@ -17,8 +18,7 @@ class ChangePasswordBlocConsumer extends StatelessWidget {
     return BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ChangePasswordSuccess) {
-    
-          context.pushReplacementNamed(Routes.passwordChangedView);
+          context.pushReplacementNamed(Routes.loginView);
         }
         if (state is ChangePasswordError) {
           context.showSnackBar(state.error);
@@ -27,7 +27,10 @@ class ChangePasswordBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return LoadingIndicator(
           isLoading: state is ChangePasswordLoading ? true : false,
-          child:  const ChangePasswordViewBody(),
+          child: const ChangePasswordViewBody().allPadding(
+            vPadding: kPaddingLargeVertical,
+            hPadding: kPaddingDefaultHorizontal,
+          ),
         );
       },
     );

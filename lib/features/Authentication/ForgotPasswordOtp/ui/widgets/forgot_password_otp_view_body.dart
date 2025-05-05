@@ -27,7 +27,7 @@ class ForgotPasswordOtpViewBody extends StatefulWidget {
 
 class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
   Timer? _timer;
-  int _start = 20;
+  int _start = 59;
   bool _canResend = false;
 
   @override
@@ -164,7 +164,7 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
   void validateThenDoResendOtp(BuildContext context) {
     if (widget.email.isNotEmpty) {
       context.read<OtpCubit>().emitResendOtpStates(
-        ResendOtpRequestBody(email: widget.email),
+        ResendOtpRequestBody(email: widget.email,type: 'register'),
       );
     }
   }
