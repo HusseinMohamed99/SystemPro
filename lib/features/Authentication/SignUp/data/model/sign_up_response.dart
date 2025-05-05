@@ -11,32 +11,18 @@ class SignupResponse {
   String? message;
   @JsonKey(name: 'data')
   SignupUserData? userData;
-  bool? status;
+  String? status;
 }
 
 @JsonSerializable()
 class SignupUserData {
   SignupUserData({
-    // this.token,
-    // this.userName,
     this.email,
     this.otp,
-    // this.userImage,
-    // this.uId,
-    // this.iD,
   });
 
   factory SignupUserData.fromJson(Map<String, dynamic> json) =>
       _$SignupUserDataFromJson(json);
-  // @JsonKey(name: 'id')
-  // int? iD;
-  // @JsonKey(name: 'uuid')
-  // String? uId;
-  // String? token;
-  // @JsonKey(name: 'name')
-  // String? userName;
   String? email;
   String? otp;
-  // @JsonKey(name: 'image')
-  // String? userImage;
 }

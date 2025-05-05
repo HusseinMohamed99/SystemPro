@@ -25,9 +25,9 @@ class SignupViewBlocConsumer extends StatelessWidget {
           );
           context.pushReplacementNamed(
             Routes.emailVerifyView,
-            arguments: state.data.email,
+            arguments: state.data.userData?.email,
           );
-          AppLogs.closeLog(state.data.email);
+          AppLogs.closeLog(state.data.userData?.email);
         }
         if (state is SignupError) {
           context.showSnackBar(state.error);

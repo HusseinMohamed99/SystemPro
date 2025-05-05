@@ -13,7 +13,7 @@ SignupResponse _$SignupResponseFromJson(Map<String, dynamic> json) =>
           json['data'] == null
               ? null
               : SignupUserData.fromJson(json['data'] as Map<String, dynamic>),
-      status: json['status'] as bool?,
+      status: json['status'] as String?,
     );
 
 Map<String, dynamic> _$SignupResponseToJson(SignupResponse instance) =>
