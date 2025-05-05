@@ -9,8 +9,7 @@ part of 'edit_profile_response.dart';
 EditProfileResponse _$EditProfileResponseFromJson(Map<String, dynamic> json) =>
     EditProfileResponse(
       message: json['message'] as String?,
-      status: json['status'] as bool?,
-      code: (json['code'] as num?)?.toInt(),
+      status: json['status'] as String?,
       userData:
           json['data'] == null
               ? null
@@ -22,12 +21,14 @@ Map<String, dynamic> _$EditProfileResponseToJson(
 ) => <String, dynamic>{
   'message': instance.message,
   'status': instance.status,
-  'code': instance.code,
   'data': instance.userData,
 };
 
 UserProfileData _$UserProfileDataFromJson(Map<String, dynamic> json) =>
-    UserProfileData(userName: json['name'] as String?);
+    UserProfileData(
+      userName: json['name'] as String?,
+      email: json['email'] as String?,
+    );
 
 Map<String, dynamic> _$UserProfileDataToJson(UserProfileData instance) =>
-    <String, dynamic>{'name': instance.userName};
+    <String, dynamic>{'name': instance.userName, 'email': instance.email};

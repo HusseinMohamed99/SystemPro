@@ -19,13 +19,4 @@ class EditProfileRepo {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
-
-  Future<ApiResult<EditProfileResponse>> getUserData() async {
-    try {
-      final response = await _apiService.getUserData();
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
-  }
 }

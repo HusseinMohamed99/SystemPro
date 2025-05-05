@@ -19,6 +19,7 @@ import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_res
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_response.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
+import 'package:system_pro/features/Home/data/model/user/user_data_response.dart';
 
 part 'api_service.g.dart';
 
@@ -57,8 +58,9 @@ abstract class ApiService {
   // Future<PrivacySettingsResponse> deleteAccount();
 
   @GET(ApiConstants.getUserData)
-  Future<EditProfileResponse> getUserData();
-    @POST(ApiConstants.editProfile)
+  Future<UserDataResponse> getUserData();
+
+    @PUT(ApiConstants.editProfile)
   Future<EditProfileResponse> editProfile(
     @Body() EditProfileRequestBody editProfileRequestBody,
   );

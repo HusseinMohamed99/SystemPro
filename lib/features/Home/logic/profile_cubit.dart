@@ -13,7 +13,7 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     emit(const ProfileDataState.profileDataLoading());
     final response = await _profileRepo.logout();
 
-  await  response.when(
+    await response.when(
       success: (profileDataResponse) async {
         await context.pushNamedAndRemoveUntil(
           Routes.loginView,
@@ -26,6 +26,23 @@ class ProfileCubit extends Cubit<ProfileDataState> {
       failure: (error) {
         emit(
           ProfileDataState.profileDataError(
+            error: error.apiErrorModel.message ?? '',
+          ),
+        );
+      },
+    );
+  }
+
+  void emitGetProfileStates() async {
+    emit(const ProfileDataState.userDataLoading());
+    final response = await _profileRepo.getSeekerProfile();
+    response.when(
+      success: (userDataResponse) {
+        emit(ProfileDataState.userDataSuccess(userDataResponse));
+      },
+      failure: (error) {
+        emit(
+          ProfileDataState.userDataError(
             error: error.apiErrorModel.message ?? '',
           ),
         );
