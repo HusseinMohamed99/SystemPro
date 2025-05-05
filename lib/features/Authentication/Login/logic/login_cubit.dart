@@ -26,10 +26,10 @@ class LoginCubit extends Cubit<LoginState> {
         password: passwordController.text,
       ),
     );
-    response.when(
+    await response.when(
       success: (loginResponse) async {
-        await saveUserToken(loginResponse.data?.token ?? '');
-        await savedUsersData(loginResponse);
+        // await saveUserToken(loginResponse.data?.token ?? '');
+        // await savedUsersData(loginResponse);
         emit(LoginState.loginSuccess(loginResponse));
       },
       failure: (error) {
@@ -41,7 +41,7 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> savedUsersData(LoginResponse loginResponse) async {
     await CachingHelper.setData(
       SharedPrefKeys.userToken,
-      loginResponse.data?.token?? '',
+      loginResponse.data?.token ?? '',
     );
   }
 

@@ -1,7 +1,7 @@
 class ApiConstants {
   static const String apiBaseUrl =
       'https://sienna-woodpecker-844567.hostingersite.com/';
-  static const String login = '';
+  static const String login = 'api/mobile/login';
   static const String signup = 'api/mobile/register';
   static const String forgotPassword = 'api/mobile/forgot-password';
   static const String emailVerify = 'api/mobile/verify-registration';

@@ -77,8 +77,7 @@ class _LoginFormState extends State<LoginForm> {
           CustomButton(
             text: context.localization.login,
             onPressed: () {
-              context.pushNamed(Routes.mainView);
-              // validateThenDoLogin(context);
+             validateThenDoLogin(context);
             },
           ),
           const Spacer(),

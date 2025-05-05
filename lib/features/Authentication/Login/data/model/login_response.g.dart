@@ -13,8 +13,7 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
           json['data'] == null
               ? null
               : Data.fromJson(json['data'] as Map<String, dynamic>),
-      status: json['status'] as bool?,
-      code: (json['code'] as num?)?.toInt(),
+      status: json['status'] as String?,
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
@@ -22,7 +21,6 @@ Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
       'message': instance.message,
       'data': instance.data,
       'status': instance.status,
-      'code': instance.code,
     };
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
@@ -41,7 +39,7 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
   userName: json['name'] as String?,
   email: json['email'] as String?,
-  emailVerified: json['email_verified_at'] as bool?,
+  emailVerified: json['email_verified_at'] as String?,
 );
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
