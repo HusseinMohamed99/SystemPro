@@ -21,6 +21,8 @@ class AboutRealEstate extends StatelessWidget {
     required this.bedrooms,
     required this.bathrooms,
     required this.area,
+    required this.subcategory,
+
   });
   final String price,
       downPayment,
@@ -29,7 +31,7 @@ class AboutRealEstate extends StatelessWidget {
       date,
       bedrooms,
       bathrooms,
-      area;
+      area,subcategory;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +113,7 @@ class AboutRealEstate extends StatelessWidget {
               Assets.images.bathroom,
               Assets.images.area,
             ];
-            final values = ['Apartment', bedrooms, bathrooms, '$area sqm'];
+            final values = [subcategory, bedrooms, bathrooms, '$area sqm'];
 
             return Row(
               mainAxisSize: MainAxisSize.min, // مهم لتجنب أخذ كل العرض

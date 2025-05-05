@@ -15,6 +15,7 @@ import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_slive
 
 class CompanyProfileView extends StatelessWidget {
   const CompanyProfileView({super.key, required this.arguments});
+
   final Company arguments;
   @override
   Widget build(BuildContext context) {
@@ -197,6 +198,7 @@ class AboutRealEstateWidget extends StatelessWidget {
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({super.key, required this.location});
+
   final String location;
   @override
   Widget build(BuildContext context) {

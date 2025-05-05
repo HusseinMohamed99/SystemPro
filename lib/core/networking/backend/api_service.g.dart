@@ -58,7 +58,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '',
+            'api/mobile/register',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -88,7 +88,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '',
+            'api/mobile/forgot-password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -98,6 +98,36 @@ class _ApiService implements ApiService {
     late ForgotPasswordResponse _value;
     try {
       _value = ForgotPasswordResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<EmailVerifyResponse> emailVerify(
+    EmailVerifyRequestBody emailVerifyRequestBody,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(emailVerifyRequestBody.toJson());
+    final _options = _setStreamType<EmailVerifyResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'api/mobile/verify-registration',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late EmailVerifyResponse _value;
+    try {
+      _value = EmailVerifyResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -118,7 +148,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '',
+            'api/mobile/verify-reset-password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -148,7 +178,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '',
+            'api/mobile/resend-otp',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -178,7 +208,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '',
+            'api/mobile/reset-password',
             queryParameters: queryParameters,
             data: _data,
           )

@@ -4,25 +4,17 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/features/Home/data/model/amenities.dart';
 
 class AmenitiesWidget extends StatefulWidget {
-  const AmenitiesWidget({super.key});
-
+  const AmenitiesWidget({super.key, required this.amenities});
+final List<Amenities>amenities;
   @override
   State<AmenitiesWidget> createState() => AmenitiesWidgetState();
 }
 
 class AmenitiesWidgetState extends State<AmenitiesWidget> {
-  final List<String> allAmenities = [
-    'Central A/C',
-    'Balcony',
-    'Maids room',
-    'Pets allowed',
-    'Private pool',
-    'Gym',
-    'Elevator',
-    'Parking',
-  ];
+  
   final Set<String> selectedAmenities = {};
   bool showAll = false;
   void clearSelection() {
@@ -31,8 +23,7 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final amenitiesToShow =
-        showAll ? allAmenities : allAmenities.take(5).toList();
+    final allAmenities = widget.amenities;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,12 +39,12 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
         Wrap(
           spacing: 8,
           children:
-              amenitiesToShow.map((amenity) {
-                final isSelected = selectedAmenities.contains(amenity);
+              allAmenities.map((amenity) {
+                final isSelected = selectedAmenities.contains(amenity.name);
                 return FilterChip(
                   showCheckmark: false,
                   label: Text(
-                    amenity,
+                    amenity.name??'',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
                       color:
@@ -68,13 +59,13 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                       isSelected
                           ? BorderSide.none
                           : const BorderSide(color: ColorManager.borderGrey),
-                  selected: selectedAmenities.contains(amenity),
+                  selected: selectedAmenities.contains(amenity.name),
                   onSelected: (selected) {
                     setState(() {
                       if (selected) {
-                        selectedAmenities.add(amenity);
+                        selectedAmenities.add(amenity.name ?? '');
                       } else {
-                        selectedAmenities.remove(amenity);
+                        selectedAmenities.remove(amenity.name ?? '');
                       }
                     });
                   },

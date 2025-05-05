@@ -2,6 +2,7 @@ class Routes {
   // static const String testingView = '/mainView';
   static const String loginView = '/loginView';
   static const String signupView = '/signupView';
+  static const String emailVerifyView = '/emailVerifyView';
   static const String forgotPasswordView = '/forgotPasswordView';
   static const String forgotPasswordOtpView = '/forgotPasswordOtpView';
   static const String resetPasswordView = '/resetPasswordView';

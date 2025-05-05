@@ -4,40 +4,39 @@ part 'sign_up_response.g.dart';
 
 @JsonSerializable()
 class SignupResponse {
+  SignupResponse({this.message, this.userData, this.status});
+
+  factory SignupResponse.fromJson(Map<String, dynamic> json) =>
+      _$SignupResponseFromJson(json);
   String? message;
   @JsonKey(name: 'data')
   SignupUserData? userData;
   bool? status;
-  int? code;
-
-  SignupResponse({this.message, this.userData, this.status, this.code});
-
-  factory SignupResponse.fromJson(Map<String, dynamic> json) =>
-      _$SignupResponseFromJson(json);
 }
 
 @JsonSerializable()
 class SignupUserData {
-  @JsonKey(name: 'id')
-  int? iD;
-  @JsonKey(name: 'uuid')
-  String? uId;
-  String? token;
-  @JsonKey(name: 'name')
-  String? userName;
-  String? email;
-  @JsonKey(name: 'image')
-  String? userImage;
-
   SignupUserData({
-    this.token,
-    this.userName,
+    // this.token,
+    // this.userName,
     this.email,
-    this.userImage,
-    this.uId,
-    this.iD,
+    this.otp,
+    // this.userImage,
+    // this.uId,
+    // this.iD,
   });
 
   factory SignupUserData.fromJson(Map<String, dynamic> json) =>
       _$SignupUserDataFromJson(json);
+  // @JsonKey(name: 'id')
+  // int? iD;
+  // @JsonKey(name: 'uuid')
+  // String? uId;
+  // String? token;
+  // @JsonKey(name: 'name')
+  // String? userName;
+  String? email;
+  String? otp;
+  // @JsonKey(name: 'image')
+  // String? userImage;
 }

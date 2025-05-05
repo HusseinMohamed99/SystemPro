@@ -105,7 +105,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
                 const SliverToBoxAdapter(child: PropertySizeWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey)),
+                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey, amenities: [],)),
               ],
               if (selectedCategory == context.localization.commercial) ...[
                 SliverToBoxAdapter(
@@ -120,7 +120,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 // لا يوجد BedroomsWidget و BathroomsWidget في الحالة التجارية
                 const SliverToBoxAdapter(child: PropertySizeWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey)),
+                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey, amenities: [],)),
               ],
               SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
             ],

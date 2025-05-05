@@ -2,11 +2,12 @@ class ApiConstants {
   static const String apiBaseUrl =
       'https://sienna-woodpecker-844567.hostingersite.com/';
   static const String login = '';
-  static const String signup = '';
-  static const String forgotPassword = '';
-  static const String checkOtp = '';
-  static const String resendOtp = '';
-  static const String changePassword = '';
+  static const String signup = 'api/mobile/register';
+  static const String forgotPassword = 'api/mobile/forgot-password';
+  static const String emailVerify = 'api/mobile/verify-registration';
+  static const String checkOtp = 'api/mobile/verify-reset-password';
+  static const String resendOtp = 'api/mobile/resend-otp';
+  static const String changePassword = 'api/mobile/reset-password';
   static const String getUserData = '';
   static const String editProfile = '';
   static const String getMarketplaceListings = 'api/marketplace/listings';

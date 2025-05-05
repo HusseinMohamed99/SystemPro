@@ -36,7 +36,7 @@ class SignupCubit extends Cubit<SignupState> {
         confirmPasswordController.clear();
       },
       failure: (error) {
-        emit(SignupState.signupError(error: error.apiErrorModel.message ?? ''));
+        emit(SignupState.signupError(error: error.toString()));
       },
     );
   }

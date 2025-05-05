@@ -3,6 +3,8 @@ import 'package:retrofit/retrofit.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_response.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/data/model/email_verify_request_body.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/data/model/email_verify_response.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_response.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/check_otp_request_body.dart';
@@ -31,6 +33,10 @@ abstract class ApiService {
   @POST(ApiConstants.forgotPassword)
   Future<ForgotPasswordResponse> forgotPassword(
     @Body() ForgotPasswordRequestBody forgotPasswordRequestBody,
+  );
+    @POST(ApiConstants.emailVerify)
+  Future<EmailVerifyResponse> emailVerify(
+    @Body() EmailVerifyRequestBody emailVerifyRequestBody,
   );
     @POST(ApiConstants.checkOtp)
   Future<CheckOtpResponse> checkOtp(

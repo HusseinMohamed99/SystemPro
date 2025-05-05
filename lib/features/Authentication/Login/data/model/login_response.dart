@@ -5,40 +5,47 @@ part 'login_response.g.dart';
 @JsonSerializable()
 class LoginResponse {
 
-  LoginResponse({this.message, this.userData, this.status, this.code});
+  LoginResponse({this.message, this.data, this.status, this.code});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);
   String? message;
   @JsonKey(name: 'data')
-  UserData? userData;
+  Data? data;
   bool? status;
   int? code;
 }
 
+
+@JsonSerializable()
+class Data {
+  Data({
+    this.user,
+    this.token,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) =>
+      _$DataFromJson(json);
+
+  UserData? user;
+  String? token;
+
+}
 @JsonSerializable()
 class UserData {
-
-
   UserData({
-    this.token,
     this.userName,
     this.email,
-    this.userImage,
-    this.uId,
     this.emailVerified,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) =>
       _$UserDataFromJson(json);
-  @JsonKey(name: 'uuid')
-  String? uId;
-  @JsonKey(name: 'email_verified')
+
+  @JsonKey(name: 'email_verified_at')
   bool? emailVerified;
-  String? token;
   @JsonKey(name: 'name')
   String? userName;
   String? email;
-  @JsonKey(name: 'image')
-  String? userImage;
+
 }

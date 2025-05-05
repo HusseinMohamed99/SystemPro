@@ -5,6 +5,9 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/ui/change_password_view.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/change_password_successfully.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_cubit.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/ui/email_verify_view.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/ui/widgets/email_verify_view_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/forgot_password_view.dart';
@@ -101,13 +104,22 @@ class AppRouters {
                   FilterView(locationArgument: arguments as LocationArgument),
         );
       case Routes.companyProfileView:
-        return MaterialPageRoute(builder: (_) =>  CompanyProfileView(
-          arguments: arguments as Company
-        ));
+        return MaterialPageRoute(
+          builder: (_) => CompanyProfileView(arguments: arguments as Company),
+        );
       case Routes.realEstateDetailsView:
-        return MaterialPageRoute(builder: (_) =>  RealEstateDetailsView(
-          listing: arguments as Listing,
-        ));
+        return MaterialPageRoute(
+          builder: (_) => RealEstateDetailsView(listing: arguments as Listing),
+        );
+
+      case Routes.emailVerifyView:
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => getIt<EmailVerifyCubit>(),
+                child: EmailVerifyView(email: arguments as String),
+              ),
+        );
 
       //    case Routes.productDetailsView:
       //   return MaterialPageRoute(

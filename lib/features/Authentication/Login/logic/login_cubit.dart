@@ -28,7 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
     );
     response.when(
       success: (loginResponse) async {
-        await saveUserToken(loginResponse.userData?.token ?? '');
+        await saveUserToken(loginResponse.data?.token ?? '');
         await savedUsersData(loginResponse);
         emit(LoginState.loginSuccess(loginResponse));
       },
@@ -41,7 +41,7 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> savedUsersData(LoginResponse loginResponse) async {
     await CachingHelper.setData(
       SharedPrefKeys.userToken,
-      loginResponse.userData?.uId ?? '',
+      loginResponse.data?.token?? '',
     );
   }
 

@@ -42,6 +42,14 @@ Listing _$ListingFromJson(Map<String, dynamic> json) => Listing(
       (json['images'] as List<dynamic>?)
           ?.map((e) => ListingImage.fromJson(e as Map<String, dynamic>))
           .toList(),
+  amenities:
+      (json['amenities'] as List<dynamic>?)
+          ?.map((e) => Amenities.fromJson(e as Map<String, dynamic>))
+          .toList(),
+  subcategory:
+      json['subcategory'] == null
+          ? null
+          : Subcategory.fromJson(json['subcategory'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{
@@ -70,5 +78,7 @@ Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{
   'release_date': instance.releaseDate,
   'employee': instance.employee,
   'company': instance.company,
+  'subcategory': instance.subcategory,
+  'amenities': instance.amenities,
   'images': instance.images,
 };

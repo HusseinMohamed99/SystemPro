@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
@@ -14,6 +18,7 @@ import 'package:system_pro/features/Home/ui/real_estate_details/purpose_real_est
 import 'package:system_pro/features/Home/ui/real_estate_details/real_estate_details_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/features/Search/ui/widgets/amenities_widget.dart';
+import 'package:system_pro/gen/assets.gen.dart';
 
 class RealEstateDetailsView extends StatelessWidget {
   const RealEstateDetailsView({super.key, required this.listing});
@@ -37,6 +42,7 @@ class RealEstateDetailsView extends StatelessWidget {
                     area: listing.area.toString(),
                     date: listing.createdAt ?? '',
                     downPayment: listing.downPayment.toString(),
+                    subcategory: listing.subcategory?.name ?? '',
                   ),
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
@@ -50,14 +56,16 @@ class RealEstateDetailsView extends StatelessWidget {
                 const SliverToBoxAdapter(child: PurposeWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                 //TODO: لسه مش موجوده
-                const SliverToBoxAdapter(child: AmenitiesWidget()),
+                 SliverToBoxAdapter(child: AmenitiesWidget(
+                  amenities: listing.amenities ?? [],
+                 )),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                 SliverToBoxAdapter(
                   child: ListedByWidget(company: listing.company ?? Company()),
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                 SliverToBoxAdapter(
-                  child: LocationWidget(location: listing.location ?? ''),
+                  child: LocationRealEstate(location: listing.location ?? ''),
                 ),
               ],
             ).allPadding(
@@ -72,6 +80,58 @@ class RealEstateDetailsView extends StatelessWidget {
           const CustomConnectionButton().hPadding(kPaddingDefaultHorizontal),
         ],
       ),
+    );
+  }
+}
+
+
+class LocationRealEstate extends StatelessWidget {
+  const LocationRealEstate({super.key, required this.location});
+
+final String location;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.localization.location,
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+        ),
+        verticalSpacing(kSpacingSmall),
+        Row(
+          children: [
+            Icon(
+              Icons.place_outlined,
+              color: ColorManager.pureBlack,
+              size: kIconSizeDefault.sp,
+            ),
+            Text(
+              location,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeightHelper.regular,
+              ),
+            ),
+          ],
+        ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(Assets.images.map.path, height: 200.h, width: 320.w),
+            Positioned(
+              child: CustomButton(
+                width: context.width * 0.4,
+                backgroundColor: ColorManager.pureWhite,
+                textStyleColor: ColorManager.pureBlack,
+                text: context.localization.see_location,
+                onPressed: () {},
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

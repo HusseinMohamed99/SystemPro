@@ -10,6 +10,8 @@ import 'package:system_pro/core/theming/themingManager/dark_theming.dart';
 import 'package:system_pro/core/theming/themingManager/light_theming.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/repo/change_password_repo.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/data/repo/email_verify_repo.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forgot_password_repo.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/repo/otp_repo.dart';
@@ -70,6 +72,13 @@ void setupGetIt({
     getIt.registerLazySingleton<SignupRepo>(() => SignupRepo(getIt()));
     getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
   }
+  if (!getIt.isRegistered<EmailVerifyCubit>()) {
+    getIt.registerLazySingleton<EmailVerifyRepo>(
+      () => EmailVerifyRepo(getIt()),
+    );
+    getIt.registerFactory<EmailVerifyCubit>(() => EmailVerifyCubit(getIt()));
+  }
+
   // FORGOT PASSWORD
   if (!getIt.isRegistered<ForgotPasswordCubit>()) {
     getIt.registerLazySingleton<ForgotPasswordRepo>(

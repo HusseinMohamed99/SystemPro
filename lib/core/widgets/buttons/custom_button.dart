@@ -11,16 +11,18 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.textStyle,
     this.backgroundColor, this.textStyleColor,
+    this.width,
   });
   final String text;
   final VoidCallback onPressed;
   final TextStyle? textStyle;
   final Color? backgroundColor;
   final Color? textStyleColor;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: context.width,
+      width:width?? context.width,
       height: kButtonHeightPrimary.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

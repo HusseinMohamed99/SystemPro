@@ -1,7 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:system_pro/features/Home/data/model/amenities.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/employee.dart';
 import 'package:system_pro/features/Home/data/model/listing_image.dart';
+import 'package:system_pro/features/Home/data/model/subcategory.dart';
 
 part 'listing.g.dart';
 
@@ -34,6 +36,8 @@ class Listing {
     this.employee,
     this.company,
     this.images,
+    this.amenities,
+    this.subcategory,
   });
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
@@ -76,5 +80,7 @@ class Listing {
 
   final Employee? employee;
   final Company? company;
+  final Subcategory? subcategory;
+  final List<Amenities>? amenities;
   final List<ListingImage>? images;
 }
