@@ -46,6 +46,11 @@ class HomeViewBody extends StatelessWidget {
                     slivers: [RealEstateSliverList(listings: listings)],
                   );
                 },
+                filtered: (filteredListings) {
+                  return CustomScrollView(
+                    slivers: [RealEstateSliverList(listings: filteredListings)],
+                  );
+                },
                 error: (message) => Center(child: Text('Error: $message')),
               );
             },

@@ -22,6 +22,7 @@ mixin _$MarketplaceState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,6 +30,7 @@ mixin _$MarketplaceState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +38,7 @@ mixin _$MarketplaceState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -44,6 +47,7 @@ mixin _$MarketplaceState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +55,7 @@ mixin _$MarketplaceState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +63,7 @@ mixin _$MarketplaceState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -131,6 +137,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
     return initial();
@@ -142,6 +149,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
     return initial?.call();
@@ -153,6 +161,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -168,6 +177,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -179,6 +189,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -190,6 +201,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -250,6 +262,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -261,6 +274,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -272,6 +286,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -287,6 +302,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -298,6 +314,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -309,6 +326,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -402,6 +420,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
     return success(listings);
@@ -413,6 +432,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
     return success?.call(listings);
@@ -424,6 +444,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -439,6 +460,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
     return success(this);
@@ -450,6 +472,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
@@ -461,6 +484,7 @@ class _$SuccessImpl implements _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -480,6 +504,180 @@ abstract class _Success implements MarketplaceState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FilteredImplCopyWith<$Res> {
+  factory _$$FilteredImplCopyWith(
+    _$FilteredImpl value,
+    $Res Function(_$FilteredImpl) then,
+  ) = __$$FilteredImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Listing> filteredListings});
+}
+
+/// @nodoc
+class __$$FilteredImplCopyWithImpl<$Res>
+    extends _$MarketplaceStateCopyWithImpl<$Res, _$FilteredImpl>
+    implements _$$FilteredImplCopyWith<$Res> {
+  __$$FilteredImplCopyWithImpl(
+    _$FilteredImpl _value,
+    $Res Function(_$FilteredImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MarketplaceState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? filteredListings = null}) {
+    return _then(
+      _$FilteredImpl(
+        null == filteredListings
+            ? _value._filteredListings
+            : filteredListings // ignore: cast_nullable_to_non_nullable
+                as List<Listing>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$FilteredImpl implements _Filtered {
+  const _$FilteredImpl(final List<Listing> filteredListings)
+    : _filteredListings = filteredListings;
+
+  final List<Listing> _filteredListings;
+  @override
+  List<Listing> get filteredListings {
+    if (_filteredListings is EqualUnmodifiableListView)
+      return _filteredListings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteredListings);
+  }
+
+  @override
+  String toString() {
+    return 'MarketplaceState.filtered(filteredListings: $filteredListings)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FilteredImpl &&
+            const DeepCollectionEquality().equals(
+              other._filteredListings,
+              _filteredListings,
+            ));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_filteredListings),
+  );
+
+  /// Create a copy of MarketplaceState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FilteredImplCopyWith<_$FilteredImpl> get copyWith =>
+      __$$FilteredImplCopyWithImpl<_$FilteredImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
+    required TResult Function(String error) error,
+  }) {
+    return filtered(filteredListings);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
+    TResult? Function(String error)? error,
+  }) {
+    return filtered?.call(filteredListings);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
+    TResult Function(String error)? error,
+    required TResult orElse(),
+  }) {
+    if (filtered != null) {
+      return filtered(filteredListings);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
+    required TResult Function(_Error value) error,
+  }) {
+    return filtered(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
+    TResult? Function(_Error value)? error,
+  }) {
+    return filtered?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (filtered != null) {
+      return filtered(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Filtered implements MarketplaceState {
+  const factory _Filtered(final List<Listing> filteredListings) =
+      _$FilteredImpl;
+
+  List<Listing> get filteredListings;
+
+  /// Create a copy of MarketplaceState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FilteredImplCopyWith<_$FilteredImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -556,6 +754,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
+    required TResult Function(List<Listing> filteredListings) filtered,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -567,6 +766,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
+    TResult? Function(List<Listing> filteredListings)? filtered,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -578,6 +778,7 @@ class _$ErrorImpl implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
+    TResult Function(List<Listing> filteredListings)? filtered,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -593,6 +794,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_Filtered value) filtered,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -604,6 +806,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Filtered value)? filtered,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -615,6 +818,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_Filtered value)? filtered,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {

@@ -19,4 +19,29 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
               emit(MarketplaceState.error(error.apiErrorModel.message ?? '')),
     );
   }
+  void getFilteredListings() async {
+    emit(const MarketplaceState.loading());
+    final response = await _marketplaceRepo.getMarketplaceListings();
+
+    response.when(
+      success: (data) {
+        final listings = data.data?.listings ?? [];
+
+        // الحالة العادية
+        emit(MarketplaceState.success(listings));
+
+        // الحالة الجديدة: تصفية العناصر التي تحقق الشرط
+        final filtered =
+            listings
+                .where((listing) => listing.companyId == listing.company?.id)
+                .toList();
+
+        emit(MarketplaceState.filtered(filtered));
+      },
+      failure: (error) {
+        emit(MarketplaceState.error(error.apiErrorModel.message ?? ''));
+      },
+    );
+  }
+
 }
