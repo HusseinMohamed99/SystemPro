@@ -10,14 +10,9 @@ ForgotPasswordResponse _$ForgotPasswordResponseFromJson(
   Map<String, dynamic> json,
 ) => ForgotPasswordResponse(
   message: json['message'] as String?,
-  status: json['status'] as bool?,
-  code: (json['code'] as num?)?.toInt(),
+  status: json['status'] as String?,
 );
 
 Map<String, dynamic> _$ForgotPasswordResponseToJson(
   ForgotPasswordResponse instance,
-) => <String, dynamic>{
-  'message': instance.message,
-  'status': instance.status,
-  'code': instance.code,
-};
+) => <String, dynamic>{'message': instance.message, 'status': instance.status};

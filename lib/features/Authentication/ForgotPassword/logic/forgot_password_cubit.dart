@@ -5,9 +5,9 @@ import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forg
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_state.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
-  final ForgotPasswordRepo _forgotPasswordRepo;
   ForgotPasswordCubit(this._forgotPasswordRepo)
     : super(const ForgotPasswordState.initial());
+  final ForgotPasswordRepo _forgotPasswordRepo;
 
   TextEditingController emailController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
