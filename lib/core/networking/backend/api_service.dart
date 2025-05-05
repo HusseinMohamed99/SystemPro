@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
+import 'package:system_pro/core/networking/backend/api_success_model.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_response.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/data/model/email_verify_request_body.dart';
@@ -50,8 +51,8 @@ abstract class ApiService {
   Future<ChangePasswordResponse> changePassword(
     @Body() ChangePasswordRequestBody changePasswordRequestBody,
   );
-  // @POST(ApiConstants.logout)
-  // Future<ApiSuccessModel> logout();
+   @POST(ApiConstants.logout)
+ Future<ApiSuccessModel> logout();
   //   @POST(ApiConstants.deleteAccount)
   // Future<PrivacySettingsResponse> deleteAccount();
 

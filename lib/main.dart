@@ -16,6 +16,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
 
   await CachingHelper.init();
+  await checkIfLoggedInUser();
   final savedLocale =
       CachingHelper.getString(SharedPrefKeys.selectedLanguage) ?? 'en';
   final isDarkMode = await CachingHelper.getBool(SharedPrefKeys.isDarkMode);
@@ -50,7 +51,6 @@ class AppBootstrap extends StatelessWidget {
       context: context,
     ); // هنا يكون عندنا context بعد build
 
-    checkIfLoggedInUser();
 
     return SystemProApp(appRouter: AppRouters());
   }

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:system_pro/core/networking/cache/caching_helper.dart';
 
 class DioFactory {
   /// private constructor as I don't want to allow creating an instance of this class
@@ -15,7 +17,7 @@ class DioFactory {
       dio!
         ..options.connectTimeout = timeOut
         ..options.receiveTimeout = timeOut;
-    addDioHeaders();
+      addDioHeaders();
       addDioInterceptor();
       return dio!;
     } else {
@@ -24,10 +26,10 @@ class DioFactory {
   }
 
   static void addDioHeaders() {
-  dio?.options.headers = {
-     'Accept': 'application/json',
-      // 'Authorization':
-      //     'Bearer ${await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken)}',
+    dio?.options.headers = {
+      'Accept': 'application/json',
+      'Authorization':
+          'Bearer ${CachingHelper.getSecuredString(SharedPrefKeys.userToken)}',
     };
   }
 

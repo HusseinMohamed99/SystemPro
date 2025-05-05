@@ -19,6 +19,4 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
               emit(MarketplaceState.error(error.apiErrorModel.message ?? '')),
     );
   }
-
-
 }

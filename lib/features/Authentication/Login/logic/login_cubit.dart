@@ -40,9 +40,17 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> savedUsersData(LoginResponse loginResponse) async {
-    await CachingHelper.setData(
+    await CachingHelper.setSecuredString(
       SharedPrefKeys.userToken,
       loginResponse.data?.token ?? '',
+    );
+    await CachingHelper.setData(
+      SharedPrefKeys.name,
+      loginResponse.data?.user?.userName?? '',
+    );
+    await CachingHelper.setData(
+      SharedPrefKeys.email,
+      loginResponse.data?.user?.email?? '',
     );
   }
 

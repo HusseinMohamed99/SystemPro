@@ -87,10 +87,7 @@ class AppRouters {
       case Routes.mainView:
         return MaterialPageRoute(
           builder:
-              (_) => BlocProvider(
-                create: (context) => getIt<MarketplaceCubit>()..getListings(),
-                child: const MainView(),
-              ),
+              (_) => const MainView(),
         );
 
       case Routes.editProfileView:

@@ -8,6 +8,7 @@ class ApiConstants {
   static const String checkOtp = 'api/mobile/verify-reset-password';
   static const String resendOtp = 'api/mobile/resend-otp';
   static const String changePassword = 'api/mobile/reset-password';
+  static const String logout = 'api/mobile/logout';
   static const String getUserData = '';
   static const String editProfile = '';
   static const String getMarketplaceListings = 'api/marketplace/listings';
