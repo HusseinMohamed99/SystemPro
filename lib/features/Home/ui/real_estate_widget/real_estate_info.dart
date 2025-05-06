@@ -70,7 +70,10 @@ class RealEstateInfo extends StatelessWidget {
           color: ColorManager.borderGrey,
           height: 1.h,
         ).vPadding(kSpacingSmall),
-        const CustomConnectionButton(),
+         CustomConnectionButton(
+          whatsAppURL: company.phone??  '',
+          phoneURL: company.phone?? '',
+         ),
       ],
     ).onlyPadding(
       leftPadding: kPaddingHorizontal,

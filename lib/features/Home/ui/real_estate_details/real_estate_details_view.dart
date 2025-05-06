@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
@@ -8,7 +9,6 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
-import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/about_real_estate.dart';
@@ -56,9 +56,9 @@ class RealEstateDetailsView extends StatelessWidget {
                 const SliverToBoxAdapter(child: PurposeWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                 //TODO: لسه مش موجوده
-                 SliverToBoxAdapter(child: AmenitiesWidget(
-                  amenities: listing.amenities ?? [],
-                 )),
+                SliverToBoxAdapter(
+                  child: AmenitiesWidget(amenities: listing.amenities ?? []),
+                ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                 SliverToBoxAdapter(
                   child: ListedByWidget(company: listing.company ?? Company()),
@@ -77,18 +77,22 @@ class RealEstateDetailsView extends StatelessWidget {
             color: ColorManager.borderGrey,
             height: 1.h,
           ).vPadding(kSpacingSmall),
-          const CustomConnectionButton().hPadding(kPaddingDefaultHorizontal),
+          CustomConnectionButton(
+            whatsAppURL: listing.company?.phone ?? '',
+            phoneURL: listing.company?.phone ?? '',
+          ).hPadding(kPaddingDefaultHorizontal),
         ],
+      ).onlyPadding(
+        bottomPadding: kPaddingVertical,
       ),
     );
   }
 }
 
-
 class LocationRealEstate extends StatelessWidget {
   const LocationRealEstate({super.key, required this.location});
 
-final String location;
+  final String location;
   @override
   Widget build(BuildContext context) {
     return Column(

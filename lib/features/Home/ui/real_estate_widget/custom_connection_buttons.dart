@@ -1,17 +1,22 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/helpers/functions/make_call.dart';
+import 'package:system_pro/core/helpers/functions/url_launcher.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
-class CustomConnectionButton extends StatelessWidget {
-  const CustomConnectionButton({super.key});
 
+class CustomConnectionButton extends StatelessWidget {
+  const CustomConnectionButton({
+    super.key,
+    required this.whatsAppURL,
+    required this.phoneURL,
+  });
+
+  final String whatsAppURL, phoneURL;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -27,7 +32,9 @@ class CustomConnectionButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () {},
+            onPressed: () async {
+              await urlLauncher(context, 'https://wa.me/+$whatsAppURL');
+            },
             icon: SvgPicture.asset(Assets.images.whatsapp),
             label: Text(
               context.localization.whatsApp,
@@ -48,7 +55,9 @@ class CustomConnectionButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              makePhoneCall(context, '+$phoneURL');
+            },
             icon: SvgPicture.asset(Assets.images.phone),
             label: Text(
               context.localization.call,
