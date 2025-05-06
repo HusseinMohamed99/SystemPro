@@ -126,9 +126,8 @@ class LocationRealEstate extends StatelessWidget {
                 onTap: () {
                   urlLauncher(
                     context,
-                    'https://www.google.com/maps/search/?api=1&query=$location',
+                    'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(location)}',
                   );
-                  // print('URL_ADDRESS.app.goo.gl/$location');
                 },
                 child: Container(
                   width: context.width * 0.4,
