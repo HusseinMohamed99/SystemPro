@@ -35,17 +35,16 @@ Future<void> setupGetIt({
   required bool isDarkMode,
 }) async {
   // Dio & ApiService
-  // Dio & ApiService
   if (!getIt.isRegistered<Dio>()) {
-    final Dio dio = await DioFactory.getDio(); // <-- استخدم await هنا
+    final Dio dio = await DioFactory.getDio();
+    getIt.registerSingleton<Dio>(dio);
+  }
 
-    if (!getIt.isRegistered<ApiService>()) {
-      getIt.registerSingleton<ApiService>(ApiService(dio));
-    }
+  if (!getIt.isRegistered<ApiService>()) {
+    getIt.registerSingleton<ApiService>(ApiService(getIt<Dio>()));
   }
 
   // THEME
-  // تأجيل التسجيل إلى وقت يكون فيه context متاحًا
   final lightText = AppTextStyleManager.lightTextTheme(context);
   final darkText = AppTextStyleManager.darkTextTheme(context);
 
@@ -69,16 +68,20 @@ Future<void> setupGetIt({
     localizationCubit.changeLocalization(initialLocale);
     getIt.registerSingleton<ChangeLocalizationCubit>(localizationCubit);
   }
+
   // LOGIN
   if (!getIt.isRegistered<LoginCubit>()) {
     getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt()));
     getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt()));
   }
+
   // SIGNUP
   if (!getIt.isRegistered<SignupCubit>()) {
     getIt.registerLazySingleton<SignupRepo>(() => SignupRepo(getIt()));
     getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
   }
+
+  // EMAIL VERIFY
   if (!getIt.isRegistered<EmailVerifyCubit>()) {
     getIt.registerLazySingleton<EmailVerifyRepo>(
       () => EmailVerifyRepo(getIt()),
@@ -95,13 +98,14 @@ Future<void> setupGetIt({
       () => ForgotPasswordCubit(getIt()),
     );
   }
-  // Send OTP
+
+  // OTP
   if (!getIt.isRegistered<OtpCubit>()) {
     getIt.registerLazySingleton<OtpRepo>(() => OtpRepo(getIt()));
     getIt.registerFactory<OtpCubit>(() => OtpCubit(getIt()));
   }
 
-  // Change Password
+  // CHANGE PASSWORD
   if (!getIt.isRegistered<ChangePasswordCubit>()) {
     getIt.registerLazySingleton<ChangePasswordRepo>(
       () => ChangePasswordRepo(getIt()),
@@ -110,16 +114,22 @@ Future<void> setupGetIt({
       () => ChangePasswordCubit(getIt()),
     );
   }
+
+  // MARKETPLACE
   if (!getIt.isRegistered<MarketplaceCubit>()) {
     getIt.registerFactory<MarketplaceCubit>(() => MarketplaceCubit(getIt()));
     getIt.registerLazySingleton<MarketplaceRepo>(
       () => MarketplaceRepo(getIt()),
     );
   }
+
+  // PROFILE
   if (!getIt.isRegistered<ProfileCubit>()) {
     getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt()));
     getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepo(getIt()));
   }
+
+  // EDIT PROFILE
   if (!getIt.isRegistered<EditProfileCubit>()) {
     getIt.registerFactory<EditProfileCubit>(() => EditProfileCubit(getIt()));
     getIt.registerLazySingleton<EditProfileRepo>(

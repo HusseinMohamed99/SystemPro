@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -32,7 +33,8 @@ class EditProfileView extends StatelessWidget {
             ); // لازم تكون عامل extension زي ما اتفقنا
           } else if (state is EditProfileSuccess) {
             context.showSnackBar('تم تحديث البيانات بنجاح');
-            Navigator.pop(context); // أو أي action تاني
+           context.pop(); // أو أي action تاني
+           
           }
         },
         builder: (context, state) {
