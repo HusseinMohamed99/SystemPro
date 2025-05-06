@@ -9,3 +9,6 @@ class SharedPrefKeys {
 }
 
 bool isLoggedInUser = false;
+class AppConfig {
+  static String? userToken;
+}

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
@@ -16,12 +15,14 @@ import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forg
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/repo/otp_repo.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_cubit.dart';
+// Auth Features
 import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/EditProfile/data/repo/edit_profile_repo.dart';
 import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
+// Other Features
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
@@ -29,111 +30,82 @@ import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> setupGetIt({
+/// Helper for lazy singleton registration
+void _registerLazySingleton<T extends Object>(T Function() factory) {
+  if (!getIt.isRegistered<T>()) {
+    getIt.registerLazySingleton<T>(factory);
+  }
+}
+
+/// Helper for factory registration
+void _registerFactory<T extends Object>(T Function() factory) {
+  if (!getIt.isRegistered<T>()) {
+    getIt.registerFactory<T>(factory);
+  }
+}
+
+void setupGetIt({
   required BuildContext context,
   required String initialLocale,
   required bool isDarkMode,
-}) async {
-  // Dio & ApiService
-  if (!getIt.isRegistered<Dio>()) {
-    final Dio dio = await DioFactory.getDio();
-    getIt.registerSingleton<Dio>(dio);
-  }
-
+}) {
+  // ────────────────────── CORE SERVICES ──────────────────────
   if (!getIt.isRegistered<ApiService>()) {
-    getIt.registerSingleton<ApiService>(ApiService(getIt<Dio>()));
+    final dio = DioFactory.getDio();
+    getIt.registerSingleton<ApiService>(ApiService(dio));
   }
 
-  // THEME
-  final lightText = AppTextStyleManager.lightTextTheme(context);
-  final darkText = AppTextStyleManager.darkTextTheme(context);
+  // ────────────────────── THEME SETUP ──────────────────────
+  final lightTextTheme = AppTextStyleManager.lightTextTheme(context);
+  final darkTextTheme = AppTextStyleManager.darkTextTheme(context);
 
   if (!getIt.isRegistered<ChangeThemingCubit>()) {
     getIt.registerSingleton<ChangeThemingCubit>(
       ChangeThemingCubit(
         initialTheme:
             isDarkMode
-                ? buildDarkTheming(textTheme: darkText)
-                : buildLightTheming(textTheme: lightText),
-        lightTextTheme: lightText,
-        darkTextTheme: darkText,
+                ? buildDarkTheming(textTheme: darkTextTheme)
+                : buildLightTheming(textTheme: lightTextTheme),
+        lightTextTheme: lightTextTheme,
+        darkTextTheme: darkTextTheme,
         isDark: isDarkMode,
       ),
     );
   }
 
-  // LOCALIZATION
+  // ────────────────────── LOCALIZATION ──────────────────────
   if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
     final localizationCubit = ChangeLocalizationCubit();
     localizationCubit.changeLocalization(initialLocale);
     getIt.registerSingleton<ChangeLocalizationCubit>(localizationCubit);
   }
 
-  // LOGIN
-  if (!getIt.isRegistered<LoginCubit>()) {
-    getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt()));
-    getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt()));
-  }
+  // ────────────────────── AUTH ──────────────────────
+  _registerLazySingleton(() => LoginRepo(getIt()));
+  _registerFactory(() => LoginCubit(getIt()));
 
-  // SIGNUP
-  if (!getIt.isRegistered<SignupCubit>()) {
-    getIt.registerLazySingleton<SignupRepo>(() => SignupRepo(getIt()));
-    getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
-  }
+  _registerLazySingleton(() => SignupRepo(getIt()));
+  _registerFactory(() => SignupCubit(getIt()));
 
-  // EMAIL VERIFY
-  if (!getIt.isRegistered<EmailVerifyCubit>()) {
-    getIt.registerLazySingleton<EmailVerifyRepo>(
-      () => EmailVerifyRepo(getIt()),
-    );
-    getIt.registerFactory<EmailVerifyCubit>(() => EmailVerifyCubit(getIt()));
-  }
+  _registerLazySingleton(() => EmailVerifyRepo(getIt()));
+  _registerFactory(() => EmailVerifyCubit(getIt()));
 
-  // FORGOT PASSWORD
-  if (!getIt.isRegistered<ForgotPasswordCubit>()) {
-    getIt.registerLazySingleton<ForgotPasswordRepo>(
-      () => ForgotPasswordRepo(getIt()),
-    );
-    getIt.registerFactory<ForgotPasswordCubit>(
-      () => ForgotPasswordCubit(getIt()),
-    );
-  }
+  _registerLazySingleton(() => ForgotPasswordRepo(getIt()));
+  _registerFactory(() => ForgotPasswordCubit(getIt()));
 
-  // OTP
-  if (!getIt.isRegistered<OtpCubit>()) {
-    getIt.registerLazySingleton<OtpRepo>(() => OtpRepo(getIt()));
-    getIt.registerFactory<OtpCubit>(() => OtpCubit(getIt()));
-  }
+  _registerLazySingleton(() => OtpRepo(getIt()));
+  _registerFactory(() => OtpCubit(getIt()));
 
-  // CHANGE PASSWORD
-  if (!getIt.isRegistered<ChangePasswordCubit>()) {
-    getIt.registerLazySingleton<ChangePasswordRepo>(
-      () => ChangePasswordRepo(getIt()),
-    );
-    getIt.registerFactory<ChangePasswordCubit>(
-      () => ChangePasswordCubit(getIt()),
-    );
-  }
+  _registerLazySingleton(() => ChangePasswordRepo(getIt()));
+  _registerFactory(() => ChangePasswordCubit(getIt()));
 
-  // MARKETPLACE
-  if (!getIt.isRegistered<MarketplaceCubit>()) {
-    getIt.registerFactory<MarketplaceCubit>(() => MarketplaceCubit(getIt()));
-    getIt.registerLazySingleton<MarketplaceRepo>(
-      () => MarketplaceRepo(getIt()),
-    );
-  }
+  // ────────────────────── PROFILE & HOME ──────────────────────
+  _registerLazySingleton(() => ProfileRepo(getIt()));
+  _registerFactory(() => ProfileCubit(getIt()));
 
-  // PROFILE
-  if (!getIt.isRegistered<ProfileCubit>()) {
-    getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt()));
-    getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepo(getIt()));
-  }
+  _registerLazySingleton(() => MarketplaceRepo(getIt()));
+  _registerFactory(() => MarketplaceCubit(getIt()));
 
-  // EDIT PROFILE
-  if (!getIt.isRegistered<EditProfileCubit>()) {
-    getIt.registerFactory<EditProfileCubit>(() => EditProfileCubit(getIt()));
-    getIt.registerLazySingleton<EditProfileRepo>(
-      () => EditProfileRepo(getIt()),
-    );
-  }
+  _registerLazySingleton(() => EditProfileRepo(getIt()));
+  _registerFactory(() => EditProfileCubit(getIt()));
 }
