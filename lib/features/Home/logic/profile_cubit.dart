@@ -12,7 +12,6 @@ class ProfileCubit extends Cubit<ProfileDataState> {
   void emitLogoutStates({required BuildContext context}) async {
     emit(const ProfileDataState.profileDataLoading());
     final response = await _profileRepo.logout();
-
     await response.when(
       success: (profileDataResponse) async {
         await context.pushNamedAndRemoveUntil(

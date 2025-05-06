@@ -44,14 +44,6 @@ class LoginCubit extends Cubit<LoginState> {
       SharedPrefKeys.userToken,
       loginResponse.data?.token ?? '',
     );
-    await CachingHelper.setData(
-      SharedPrefKeys.name,
-      loginResponse.data?.user?.userName?? '',
-    );
-    await CachingHelper.setData(
-      SharedPrefKeys.email,
-      loginResponse.data?.user?.email?? '',
-    );
   }
 
   Future<void> saveUserToken(String token) async {
