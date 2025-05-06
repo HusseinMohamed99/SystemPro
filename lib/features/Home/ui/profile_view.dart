@@ -18,58 +18,71 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileCubit, ProfileDataState>(
       listener: (context, state) {
-        if (state is ProfileDataError) {
+        if (state is UserDataError) {
           context.showSnackBar(state.error);
         }
-        if (state is ProfileDataSuccess) {
+        if (state is UserDataSuccess) {
           context.showSnackBar('Profile data loaded successfully');
         }
       },
       builder: (context, state) {
-        return Column(
-          children: [
-            Center(
-              child: Text(
-                context.localization.profile,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: ColorManager.primaryBlue,
+        if (state is UserDataSuccess) {
+             final user = state.data.userData;
+          return Column(
+            children: [
+              Center(
+                child: Text(
+                  context.localization.profile,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: ColorManager.primaryBlue,
+                  ),
                 ),
               ),
-            ),
-            verticalSpacing(kSpacingXLarge),
-            const CustomProfileInfo(),
-            verticalSpacing(kSpacingDefault),
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  const CsutomProfileCardList(),
-                  SliverToBoxAdapter(
-                    child: Align(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      child: TextButton(
-                        onPressed: () {
-                          context.read<ProfileCubit>().emitLogoutStates(
-                            context: context,
-                          );
-                        },
-                        child: Text(
-                          context.localization.logout,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeightHelper.medium,
-                            color: ColorManager.primaryBlue,
+              verticalSpacing(kSpacingXLarge),
+               CustomProfileInfo(
+                  userName: user?.userName,
+                email: user?.email,
+              ),
+              verticalSpacing(kSpacingDefault),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                     CsutomProfileCardList(
+                      userName: user?.userName,
+                     ),
+                    SliverToBoxAdapter(
+                      child: Align(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        child: TextButton(
+                          onPressed: () {
+                            context.read<ProfileCubit>().emitLogoutStates(
+                              context: context,
+                            );
+                          },
+                          child: Text(
+                            context.localization.logout,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeightHelper.medium,
+                              color: ColorManager.primaryBlue,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        );
+            ],
+          );
+        }
+        if (state is UserDataLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return const SizedBox.shrink(); // أو حالة fallback
       },
     );
   }

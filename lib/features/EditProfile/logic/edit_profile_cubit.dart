@@ -12,14 +12,16 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final TextEditingController userNameController = TextEditingController();
   final FocusNode userNameFocusNode = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  
 
-Future<void> updateUserProfile() async {
+  Future<void> updateUserProfile() async {
     emit(const EditProfileState.editProfileLoading());
 
     try {
       final requestBody = EditProfileRequestBody(
         userName: userNameController.text,
       );
+      
 
       final response = await _editProfileRepo.editProfile(requestBody);
 
@@ -39,6 +41,15 @@ Future<void> updateUserProfile() async {
       emit(EditProfileState.editProfileError(error: e.toString()));
     }
   }
+void initializeUserName(String userName) {
+    if (userNameController.text.trim().isEmpty) {
+      userNameController.text = userName;
+      userNameController.selection = TextSelection.fromPosition(
+        TextPosition(offset: userNameController.text.length),
+      );
+    }
+  }
+
   @override
   Future<void> close() {
     userNameController.dispose();

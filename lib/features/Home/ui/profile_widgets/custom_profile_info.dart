@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class CustomProfileInfo extends StatelessWidget {
-  const CustomProfileInfo({super.key});
-
+  const CustomProfileInfo({super.key, this.userName, this.email});
+  final String? userName;
+  final String? email;
   @override
   Widget build(BuildContext context) {
-    final userName = CachingHelper.getData<String>(SharedPrefKeys.name) ?? '';
-    final userEmail = CachingHelper.getData<String>(SharedPrefKeys.email) ?? '';
-
     return Row(
       children: [
         Container(
@@ -25,8 +21,8 @@ class CustomProfileInfo extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              userName.isNotEmpty
-                  ? userName.substring(0, 1).toUpperCase()
+              userName != null && userName!.isNotEmpty
+                  ? userName![0].substring(0, 1).toUpperCase()
                   : '?',
               style: Theme.of(context).textTheme.displaySmall,
             ),
@@ -38,13 +34,13 @@ class CustomProfileInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                userName,
+                userName ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               Text(
-                userEmail,
+                email ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(

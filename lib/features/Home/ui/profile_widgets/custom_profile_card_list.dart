@@ -15,8 +15,8 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
 
 class CsutomProfileCardList extends StatelessWidget {
-  const CsutomProfileCardList({super.key});
-
+  const CsutomProfileCardList({super.key, required this.userName});
+  final String userName;
   @override
   Widget build(BuildContext context) {
     return SliverList.separated(
@@ -46,7 +46,7 @@ class CsutomProfileCardList extends StatelessWidget {
         return CsutomProfileCard(
           onTap: () {
             if (index == 0) {
-              context.pushNamed(Routes.editProfileView);
+              context.pushNamed(Routes.editProfileView, arguments: userName);
             } else if (index == 1) {
               customBottomSheet(
                 context: context,

@@ -10,11 +10,12 @@ class NameFormField extends StatelessWidget {
   const NameFormField({
     super.key,
     required this.nameController,
-    required this.focusNode,
+    required this.focusNode, this.fullName,
   });
 
   final TextEditingController nameController;
   final FocusNode focusNode;
+  final String? fullName;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class NameFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.localization.full_name,
+         context.localization.full_name,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         CustomTextFormField(
@@ -35,10 +36,10 @@ class NameFormField extends StatelessWidget {
           },
           textInputType: TextInputType.name,
 
-          hintText: context.localization.full_name,
-          onChanged: (value) {
-            onTextChanged(controller: nameController, value: value);
-          },
+          hintText: fullName ?? context.localization.full_name,
+          // onChanged: (value) {
+          //   onTextChanged(controller: nameController, value: value);
+          // },
         ),
       ],
     );

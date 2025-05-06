@@ -20,6 +20,8 @@ import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.da
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
+import 'package:system_pro/features/EditProfile/data/repo/edit_profile_repo.dart';
+import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
@@ -111,9 +113,14 @@ void setupGetIt({
       () => MarketplaceRepo(getIt()),
     );
   }
-  if(!getIt.isRegistered<ProfileCubit>()){
+  if (!getIt.isRegistered<ProfileCubit>()) {
     getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt()));
     getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepo(getIt()));
-    
+  }
+  if (!getIt.isRegistered<EditProfileCubit>()) {
+    getIt.registerFactory<EditProfileCubit>(() => EditProfileCubit(getIt()));
+    getIt.registerLazySingleton<EditProfileRepo>(
+      () => EditProfileRepo(getIt()),
+    );
   }
 }
