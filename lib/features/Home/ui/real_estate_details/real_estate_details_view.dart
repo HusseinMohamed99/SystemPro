@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/url_launcher.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/about_real_estate.dart';
@@ -82,9 +81,7 @@ class RealEstateDetailsView extends StatelessWidget {
             phoneURL: listing.company?.phone ?? '',
           ).hPadding(kPaddingDefaultHorizontal),
         ],
-      ).onlyPadding(
-        bottomPadding: kPaddingVertical,
-      ),
+      ).onlyPadding(bottomPadding: kPaddingVertical),
     );
   }
 }
@@ -125,12 +122,40 @@ class LocationRealEstate extends StatelessWidget {
           children: [
             Image.asset(Assets.images.map.path, height: 200.h, width: 320.w),
             Positioned(
-              child: CustomButton(
-                width: context.width * 0.4,
-                backgroundColor: ColorManager.pureWhite,
-                textStyleColor: ColorManager.pureBlack,
-                text: context.localization.see_location,
-                onPressed: () {},
+              child: GestureDetector(
+                onTap: () {
+                  urlLauncher(
+                    context,
+                    'https://www.google.com/maps/search/?api=1&query=$location',
+                  );
+                  // print('URL_ADDRESS.app.goo.gl/$location');
+                },
+                child: Container(
+                  width: context.width * 0.4,
+                  height: kButtonHeightPrimary.h,
+                  alignment: Alignment.center,
+
+                  decoration: const BoxDecoration(
+                    color: ColorManager.pureWhite,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.place_outlined,
+                        color: ColorManager.softGray,
+                        size: kIconSizeDefault.sp,
+                      ),
+                      Text(
+                        context.localization.see_location,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeightHelper.medium),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

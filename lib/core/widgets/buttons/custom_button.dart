@@ -10,7 +10,8 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.textStyle,
-    this.backgroundColor, this.textStyleColor,
+    this.backgroundColor,
+    this.textStyleColor,
     this.width,
   });
   final String text;
@@ -22,7 +23,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width:width?? context.width,
+      width: width ?? context.width,
       height: kButtonHeightPrimary.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -37,9 +38,9 @@ class CustomButton extends StatelessWidget {
           textAlign: TextAlign.center,
           style:
               textStyle ??
-              Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(color:textStyleColor?? ColorManager.pureWhite),
+              Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: textStyleColor ?? ColorManager.pureWhite,
+              ),
         ),
       ),
     );
