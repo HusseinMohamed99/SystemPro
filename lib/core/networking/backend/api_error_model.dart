@@ -10,7 +10,7 @@ class ApiErrorModel {
       _$ApiErrorModelFromJson(json);
   final String? message;
   final int? code;
-  final bool? status;
+  final String? status;
 
   Map<String, dynamic> toJson() => _$ApiErrorModelToJson(this);
 }
