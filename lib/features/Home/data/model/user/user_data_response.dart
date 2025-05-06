@@ -4,11 +4,10 @@ part 'user_data_response.g.dart';
 
 @JsonSerializable()
 class UserDataResponse {
-  UserDataResponse({this.message, this.status, this.userData});
+  UserDataResponse({this.status, this.userData});
 
   factory UserDataResponse.fromJson(Map<String, dynamic> json) =>
       _$UserDataResponseFromJson(json);
-  String? message;
   String? status;
   @JsonKey(name: 'data')
   ProfileUserData? userData;

@@ -4,12 +4,11 @@ import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 
 class DioFactory {
-  /// private constructor as I don't want to allow creating an instance of this class
   DioFactory._();
 
   static Dio? dio;
 
-  static Dio getDio() {
+  static Future<Dio> getDio() async {
     const Duration timeOut = Duration(minutes: 1);
 
     if (dio == null) {
@@ -17,24 +16,24 @@ class DioFactory {
       dio!
         ..options.connectTimeout = timeOut
         ..options.receiveTimeout = timeOut;
-      addDioHeaders();
-      addDioInterceptor();
-      return dio!;
-    } else {
-      return dio!;
-    }
-  }
 
-  static void addDioHeaders() async {
-    dio?.options.headers = {
-      'Accept': 'application/json',
-      'Authorization':
-          'Bearer ${await CachingHelper.getSecuredString(SharedPrefKeys.userToken)}',
-    };
+      // احصل على التوكن قبل تعيين الـ headers
+      final token = await CachingHelper.getSecuredString(
+        SharedPrefKeys.userToken,
+      );
+      dio!.options.headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      addDioInterceptor();
+    }
+
+    return dio!;
   }
 
   static void setTokenIntoHeaderAfterLogin(String token) {
-    dio?.options.headers = {'Authorization': 'Bearer $token'};
+    dio?.options.headers.addAll({'Authorization': 'Bearer $token'});
   }
 
   static void addDioInterceptor() {

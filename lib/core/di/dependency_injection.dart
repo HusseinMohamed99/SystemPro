@@ -29,18 +29,21 @@ import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 
 final getIt = GetIt.instance;
 
-void setupGetIt({
+Future<void> setupGetIt({
   required BuildContext context,
   required String initialLocale,
   required bool isDarkMode,
-}) {
+}) async {
+  // Dio & ApiService
   // Dio & ApiService
   if (!getIt.isRegistered<Dio>()) {
-    final Dio dio = DioFactory.getDio();
+    final Dio dio = await DioFactory.getDio(); // <-- استخدم await هنا
+
     if (!getIt.isRegistered<ApiService>()) {
       getIt.registerSingleton<ApiService>(ApiService(dio));
     }
   }
+
   // THEME
   // تأجيل التسجيل إلى وقت يكون فيه context متاحًا
   final lightText = AppTextStyleManager.lightTextTheme(context);

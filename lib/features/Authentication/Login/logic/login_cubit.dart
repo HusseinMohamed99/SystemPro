@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_request_body.dart';
@@ -30,6 +31,7 @@ class LoginCubit extends Cubit<LoginState> {
       success: (loginResponse) async {
         await saveUserToken(loginResponse.data?.token ?? '');
         await savedUsersData(loginResponse);
+        AppLogs.infoLog(loginResponse.data?.token ?? '');
 
         emit(LoginState.loginSuccess(loginResponse));
       },

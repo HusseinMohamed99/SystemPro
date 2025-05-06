@@ -19,7 +19,8 @@ void main() async {
   await checkIfLoggedInUser();
   final savedLocale =
       CachingHelper.getString(SharedPrefKeys.selectedLanguage) ?? 'en';
-  final isDarkMode = await CachingHelper.getBool(SharedPrefKeys.isDarkMode);
+  final isDarkMode =
+      (await CachingHelper.getBool(SharedPrefKeys.isDarkMode)) ?? false;
 
   runApp(
     ScreenUtilInit(
@@ -45,14 +46,22 @@ class AppBootstrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    setupGetIt(
-      initialLocale: initialLocale,
-      isDarkMode: isDarkMode,
-      context: context,
-    ); // هنا يكون عندنا context بعد build
-
-
-    return SystemProApp(appRouter: AppRouters());
+    return FutureBuilder(
+      future: setupGetIt(
+        context: context,
+        initialLocale: initialLocale,
+        isDarkMode: isDarkMode,
+      ),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const MaterialApp(
+            home: Scaffold(body: Center(child: CircularProgressIndicator())),
+          );
+        } else {
+          return SystemProApp(appRouter: AppRouters());
+        }
+      },
+    );
   }
 }
 
@@ -60,9 +69,5 @@ checkIfLoggedInUser() async {
   final String userToken = await CachingHelper.getSecuredString(
     SharedPrefKeys.userToken,
   );
-  if (!userToken.isNullOrEmpty()) {
-    isLoggedInUser = true;
-  } else {
-    isLoggedInUser = false;
-  }
+  isLoggedInUser = !userToken.isNullOrEmpty();
 }

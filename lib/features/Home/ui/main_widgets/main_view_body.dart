@@ -25,7 +25,7 @@ class MainViewBody extends StatelessWidget {
         ),
         const FavoritesView(),
         BlocProvider(
-        create: (context) => getIt<ProfileCubit>(),
+        create: (context) => getIt<ProfileCubit>()..emitGetProfileStates(),
           child: const ProfileView(),
         ).allPadding(
           vPadding: kPaddingDefaultVertical,

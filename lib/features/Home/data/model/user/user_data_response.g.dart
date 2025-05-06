@@ -8,7 +8,6 @@ part of 'user_data_response.dart';
 
 UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) =>
     UserDataResponse(
-      message: json['message'] as String?,
       status: json['status'] as String?,
       userData:
           json['data'] == null
@@ -17,11 +16,7 @@ UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$UserDataResponseToJson(UserDataResponse instance) =>
-    <String, dynamic>{
-      'message': instance.message,
-      'status': instance.status,
-      'data': instance.userData,
-    };
+    <String, dynamic>{'status': instance.status, 'data': instance.userData};
 
 ProfileUserData _$ProfileUserDataFromJson(Map<String, dynamic> json) =>
     ProfileUserData(

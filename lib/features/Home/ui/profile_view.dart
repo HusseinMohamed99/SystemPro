@@ -24,10 +24,13 @@ class ProfileView extends StatelessWidget {
         if (state is UserDataSuccess) {
           context.showSnackBar('Profile data loaded successfully');
         }
+        if(state is ProfileDataSuccess){
+          context.showSnackBar('Logged out successfully');
+        }
       },
       builder: (context, state) {
         if (state is UserDataSuccess) {
-             final user = state.data.userData;
+          final user = state.data.userData;
           return Column(
             children: [
               Center(
@@ -40,17 +43,12 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
               verticalSpacing(kSpacingXLarge),
-               CustomProfileInfo(
-                  userName: user?.userName,
-                email: user?.email,
-              ),
+              CustomProfileInfo(userName: user?.userName, email: user?.email),
               verticalSpacing(kSpacingDefault),
               Expanded(
                 child: CustomScrollView(
                   slivers: [
-                     CsutomProfileCardList(
-                      userName: user?.userName,
-                     ),
+                    CsutomProfileCardList(userName: user?.userName),
                     SliverToBoxAdapter(
                       child: Align(
                         alignment: AlignmentDirectional.bottomEnd,
