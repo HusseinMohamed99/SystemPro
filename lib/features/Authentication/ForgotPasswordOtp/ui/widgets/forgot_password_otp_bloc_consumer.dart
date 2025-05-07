@@ -25,6 +25,7 @@ class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
           );
           context.pushReplacementNamed(
             Routes.resetPasswordView,
+            arguments: email,
            
           );
        

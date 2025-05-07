@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
@@ -26,14 +28,16 @@ class ProfileView extends StatelessWidget {
         }
         if (state is LogoutSuccess) {
           context.showSnackBar('Logged out successfully');
+          context.pushNamedAndRemoveUntil(
+            Routes.loginView,
+            predicate: (Route<dynamic> route) => false,
+          );
         }
       },
       builder: (context, state) {
         if (state is UserDataSuccess) {
           final user = state.data.userData;
-          print(
-            'Updated user: ${user?.userName}',
-          ); // سجل اسم المستخدم بعد التعديل
+
           return Column(
             children: [
               Center(
@@ -57,9 +61,7 @@ class ProfileView extends StatelessWidget {
                         alignment: AlignmentDirectional.bottomEnd,
                         child: TextButton(
                           onPressed: () {
-                            context.read<ProfileCubit>().emitLogoutStates(
-                              context: context,
-                            );
+                            context.read<ProfileCubit>().emitLogoutStates();
                           },
                           child: Text(
                             context.localization.logout,

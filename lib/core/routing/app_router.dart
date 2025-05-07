@@ -75,7 +75,9 @@ class AppRouters {
           builder:
               (_) => BlocProvider(
                 create: (context) => getIt<ChangePasswordCubit>(),
-                child: const ChangePasswordView(),
+                child:  ChangePasswordView(
+email: arguments as String,
+                ),
               ),
         );
       case Routes.passwordChangedView:

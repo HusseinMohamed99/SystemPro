@@ -12,7 +12,8 @@ import 'package:system_pro/core/widgets/textFields/password_form_field_widget.da
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
 
 class ChangePasswordForm extends StatefulWidget {
-  const ChangePasswordForm({super.key});
+  const ChangePasswordForm({super.key, required this.email});
+  final String email;
 
   @override
   State<ChangePasswordForm> createState() => _ChangePasswordFormState();
@@ -87,7 +88,9 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
   void validateThenDoChangePassword(BuildContext context) {
     if (context.read<ChangePasswordCubit>().formKey.currentState!.validate()) {
-      context.read<ChangePasswordCubit>().emitChangePasswordStates();
+      context.read<ChangePasswordCubit>().emitChangePasswordStates(
+        email: widget.email,
+      );
     }
   }
 }

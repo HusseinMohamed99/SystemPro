@@ -18,12 +18,13 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   /// Change Password
-  void emitChangePasswordStates() async {
+  void emitChangePasswordStates({required String  email}) async {
     emit(const ChangePasswordState.changePasswordLoading());
     final response = await _changePasswordRepo.changePassword(
       ChangePasswordRequestBody(
         confirmPassword: confirmNewPasswordController.text,
         newPassword: newPasswordController.text,
+        email: email,
       ),
     );
     response.when(

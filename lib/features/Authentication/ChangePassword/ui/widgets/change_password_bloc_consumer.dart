@@ -11,14 +11,14 @@ import 'package:system_pro/features/Authentication/ChangePassword/logic/change_p
 import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/change_password_view_body.dart';
 
 class ChangePasswordBlocConsumer extends StatelessWidget {
-  const ChangePasswordBlocConsumer({super.key});
-
+  const ChangePasswordBlocConsumer({super.key, required this.email});
+  final String email;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ChangePasswordSuccess) {
-          context.pushReplacementNamed(Routes.loginView);
+          context.pushReplacementNamed(Routes.passwordChangedView);
         }
         if (state is ChangePasswordError) {
           context.showSnackBar(state.error);
@@ -27,7 +27,7 @@ class ChangePasswordBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return LoadingIndicator(
           isLoading: state is ChangePasswordLoading ? true : false,
-          child: const ChangePasswordViewBody().allPadding(
+          child: ChangePasswordViewBody(email: email).allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),

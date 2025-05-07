@@ -11,7 +11,7 @@ class ProfileCubit extends Cubit<ProfileDataState> {
   ProfileCubit(this._profileRepo) : super(const ProfileDataState.initial());
   final ProfileRepo _profileRepo;
 
-  void emitLogoutStates({required BuildContext context}) async {
+  void emitLogoutStates() async {
     // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
     if (isClosed) return;
 
@@ -19,10 +19,7 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     final response = await _profileRepo.logout();
     await response.when(
       success: (profileDataResponse) async {
-        await context.pushNamedAndRemoveUntil(
-          Routes.loginView,
-          predicate: (Route<dynamic> route) => false,
-        );
+      
         await CachingHelper.clearAllSecuredData();
         await CachingHelper.clearAllData();
 

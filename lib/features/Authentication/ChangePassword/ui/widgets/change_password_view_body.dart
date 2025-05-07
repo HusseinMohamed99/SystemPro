@@ -6,8 +6,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/change_password_form.dart';
 
 class ChangePasswordViewBody extends StatelessWidget {
-  const ChangePasswordViewBody({super.key});
-
+  const ChangePasswordViewBody({super.key, required this.email});
+  final String email;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -29,9 +29,9 @@ class ChangePasswordViewBody extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-        const SliverFillRemaining(
+        SliverFillRemaining(
           hasScrollBody: false,
-          child: ChangePasswordForm(),
+          child: ChangePasswordForm(email: email),
         ),
       ],
     );
