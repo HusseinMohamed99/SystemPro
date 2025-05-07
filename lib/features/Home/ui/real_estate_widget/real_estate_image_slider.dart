@@ -39,7 +39,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             width: context.width,
             child: PageView.builder(
               controller: _pageController,
-              itemCount: 3,
+              itemCount: widget.images?.length,
               onPageChanged: (index) {
                 setState(() {
                   _currentIndex = index;
@@ -47,7 +47,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
               },
               itemBuilder: (context, index) {
                 return CustomCachedNetworkImageWidget(
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   width: context.width,
                   height: 150.h,
                   imageURL: widget.images?[index].imageUrl??'',

@@ -49,14 +49,26 @@ class HomeViewBody extends StatelessWidget {
                   rightPadding: kPaddingDefaultHorizontal,
                   topPadding: kPaddingDefaultVertical,
                 ),
+                // داخل build عند success
                 Expanded(
                   child:
                       listings.isEmpty
                           ? const Center(
                             child: Text('لا توجد عقارات متاحة حالياً'),
                           )
-                          : CustomScrollView(
-                            slivers: [RealEstateSliverList(listings: listings)],
+                          : NotificationListener<ScrollNotification>(
+                            onNotification: (scrollInfo) {
+                              if (scrollInfo.metrics.pixels >=
+                                  scrollInfo.metrics.maxScrollExtent - 200) {
+                                context.read<MarketplaceCubit>().loadMore();
+                              }
+                              return false;
+                            },
+                            child: CustomScrollView(
+                              slivers: [
+                                RealEstateSliverList(listings: listings),
+                              ],
+                            ),
                           ).onlyPadding(
                             leftPadding: kPaddingDefaultHorizontal,
                             rightPadding: kPaddingDefaultHorizontal,

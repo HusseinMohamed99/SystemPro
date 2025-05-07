@@ -10,16 +10,15 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     : super(const MarketplaceState.initial());
 
   final MarketplaceRepo _marketplaceRepo;
+
   final List<Listing> _allListings = [];
-  List<Listing> _filteredListings = [];
+  final List<Listing> _visibleListings = [];
+
+  String _currentFilter = '';
   int _loadedCount = 0;
   final int _pageSize = 10;
 
-  // دالة لتحميل العناصر
-  void getListings({String filter = ''}) async {
-    // إذا تم تحميل جميع العناصر مسبقًا، لا حاجة لإعادة تحميلها
-    if (_loadedCount > 0 && _loadedCount >= _allListings.length) return;
-
+  Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
 
     try {
@@ -27,24 +26,17 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
       result.when(
         success: (MarketplaceResponse response) {
-          final newListings = response.data?.listings ?? [];
+          _allListings.clear();
+          _visibleListings.clear();
+          _loadedCount = 0;
+          _currentFilter = filter;
 
-          if (newListings.isEmpty) {
-            // إذا كانت القائمة فارغة، نعرض القائمة المفلترة الحالية
-            emit(MarketplaceState.success(_filteredListings));
-          } else {
-            _allListings.addAll(
-              newListings,
-            ); // إضافة العناصر الجديدة للقائمة الكاملة
-            _loadedCount = _allListings.length; // تحديث عدد العناصر المحملة
-            _applyFilter(filter); // تطبيق الفلتر المحدد
-            emit(
-              MarketplaceState.success(_filteredListings),
-            ); // إظهار العناصر بعد الفلترة
-          }
+          final all = response.data?.listings ?? [];
+          _allListings.addAll(all);
+          _applyFilter(filter);
+          _loadMoreInternal();
         },
         failure: (ErrorHandler errorHandler) {
-          // في حال حدوث خطأ في تحميل البيانات
           emit(
             MarketplaceState.error(
               'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
@@ -53,66 +45,95 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         },
       );
     } catch (error) {
-      // في حال حدوث استثناء غير متوقع
       emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
   }
 
-  // دالة لتطبيق الفلتر
   void _applyFilter(String filter) {
+    _currentFilter = filter;
+    _loadedCount = 0;
+    _visibleListings.clear();
+
+    List<Listing> filteredData = [];
+
     if (filter.isEmpty) {
-      _filteredListings = List.from(
-        _allListings,
-      ); // إذا كان الفلتر فارغًا، إظهار كل العناصر
+      filteredData = List.from(_allListings);
     } else {
-      // تطبيق الفلتر حسب نوع الإعلان
-      _filteredListings =
-          _allListings.where((listing) {
-            return listing.listingType?.toLowerCase() == filter.toLowerCase();
-          }).toList();
+      filteredData =
+          _allListings
+              .where(
+                (listing) =>
+                    listing.listingType?.toLowerCase() == filter.toLowerCase(),
+              )
+              .toList();
     }
+
+    final nextItems = filteredData.skip(_loadedCount).take(_pageSize).toList();
+    _visibleListings.addAll(nextItems);
+    _loadedCount = _visibleListings.length;
+
+    emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-  // دالة للتصفية عند اختيار Buy أو Rent
   void filterListings(String filter) {
-    _applyFilter(filter); // تطبيق الفلتر
-    emit(MarketplaceState.success(_filteredListings)); // تحديث واجهة المستخدم
+    _applyFilter(filter);
+    _loadMoreInternal();
   }
 
-  void sortListings(String sortType) {
-    switch (sortType) {
-      case 'newest':
-        // ترتيب العناصر حسب التاريخ (الأحدث أولاً)
-        _filteredListings.sort((a, b) {
-          final timestampA =
-              DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
-          final timestampB =
-              DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
-          return timestampB.compareTo(timestampA); // ترتيب تنازلي حسب الوقت
-        });
-        break;
-      case 'price_low':
+  void _loadMoreInternal() {
+    final allFiltered =
+        _currentFilter.isEmpty
+            ? _allListings
+            : _allListings
+                .where(
+                  (listing) =>
+                      listing.listingType?.toLowerCase() ==
+                      _currentFilter.toLowerCase(),
+                )
+                .toList();
 
-        // ترتيب العناصر حسب السعر (من الأقل إلى الأعلى)
-        _filteredListings.sort((a, b) {
-          final priceA = double.tryParse(a.price ?? '0.0') ?? 0.0;
-          final priceB = double.tryParse(b.price ?? '0.0') ?? 0.0;
-          return priceA.compareTo(priceB); // ترتيب تصاعدي حسب السعر
-        });
-        break;
-      case 'price_high':
-        // ترتيب العناصر حسب السعر (من الأعلى إلى الأقل)
-        _filteredListings.sort((a, b) {
-          final priceA = double.tryParse(a.price ?? '0.0') ?? 0.0;
-          final priceB = double.tryParse(b.price ?? '0.0') ?? 0.0;
-          return priceB.compareTo(priceA); // ترتيب تنازلي حسب السعر
-        });
-        break;
-      default:
-        break; // إذا لم يتم تحديد نوع الترتيب، لا يتم التعديل
+    final nextItems = allFiltered.skip(_loadedCount).take(_pageSize).toList();
+    _visibleListings.addAll(nextItems);
+    _loadedCount = _visibleListings.length;
+    emit(MarketplaceState.success(List.from(_visibleListings)));
+  }
+
+  void loadMore() {
+    if (_loadedCount < _allListings.length) {
+      _loadMoreInternal();
+    }
+  }
+
+  void sortListings({
+    required String newest,
+    required String priceLow,
+    required String priceHigh,
+    required String sortType,
+  }) {
+    if (_visibleListings.isEmpty) return;
+
+    if (sortType == newest) {
+      _visibleListings.sort((a, b) {
+        final aTime = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
+        final bTime = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
+        return bTime.compareTo(aTime);
+      });
+    } else if (sortType == priceLow) {
+      _visibleListings.sort((a, b) {
+        final aPrice = double.tryParse(a.price ?? '0.0') ?? 0.0;
+        final bPrice = double.tryParse(b.price ?? '0.0') ?? 0.0;
+        return aPrice.compareTo(bPrice);
+      });
+    } else if (sortType == priceHigh) {
+      _visibleListings.sort((a, b) {
+        final aPrice = double.tryParse(a.price ?? '0.0') ?? 0.0;
+        final bPrice = double.tryParse(b.price ?? '0.0') ?? 0.0;
+        return bPrice.compareTo(aPrice);
+      });
     }
 
-    // تحديث واجهة المستخدم بعد ترتيب العناصر
-    emit(MarketplaceState.success(_filteredListings));
+    emit(MarketplaceState.success(List.from(_visibleListings)));
   }
+
+
 }

@@ -27,14 +27,19 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
   ];
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    selectedSort = context.localization.newest;
+  void initState() {
+    super.initState();
+    selectedSort = ''; // ستُحدد لاحقاً في build لو فارغة
   }
 
   @override
   Widget build(BuildContext context) {
     final allsortOptions = sortOptions(context);
+
+    // في حالة عدم تحديد القيمة في البداية، يتم تعيين القيمة الافتراضية
+    if (selectedSort.isEmpty) {
+      selectedSort = context.localization.newest;
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,9 +65,26 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
               setState(() {
                 selectedSort = value;
               });
+
               // إرسال القيمة المختارة إلى cubit لترتيب البيانات
-              context.read<MarketplaceCubit>().sortListings(value);
+              String sortType = '';
+              if (value == context.localization.newest) {
+                sortType = context.localization.newest;
+              } else if (value == context.localization.price_low) {
+                sortType = context.localization.price_low;
+              } else if (value == context.localization.price_high) {
+                sortType = context.localization.price_high;
+              }
+
+              // إرسال القيمة المختارة إلى cubit لترتيب البيانات مع القيم المترجمة
+              context.read<MarketplaceCubit>().sortListings(
+                sortType: value,
+                newest: context.localization.newest,
+                priceLow: context.localization.price_low,
+                priceHigh: context.localization.price_high,
+              );
             },
+
             itemBuilder: (context) {
               return allsortOptions.map((option) {
                 return PopupMenuItem<String>(
