@@ -20,6 +20,7 @@ import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.da
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
+import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
 import 'package:system_pro/features/EditProfile/data/repo/edit_profile_repo.dart';
 import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
 // Other Features
@@ -108,4 +109,6 @@ void setupGetIt({
 
   _registerLazySingleton(() => EditProfileRepo(getIt()));
   _registerFactory(() => EditProfileCubit(getIt()));
+
+  _registerFactory(() => RealEstateCubit(getIt()));
 }

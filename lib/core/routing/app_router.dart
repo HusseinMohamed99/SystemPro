@@ -16,6 +16,7 @@ import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart'
 import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
+import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
 import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
@@ -75,9 +76,7 @@ class AppRouters {
           builder:
               (_) => BlocProvider(
                 create: (context) => getIt<ChangePasswordCubit>(),
-                child:  ChangePasswordView(
-email: arguments as String,
-                ),
+                child: ChangePasswordView(email: arguments as String),
               ),
         );
       case Routes.passwordChangedView:
@@ -106,7 +105,14 @@ email: arguments as String,
         );
       case Routes.companyProfileView:
         return MaterialPageRoute(
-          builder: (_) => CompanyProfileView(arguments: arguments as Company),
+          builder:
+              (_) => BlocProvider(
+                create:
+                    (context) =>
+                        getIt<RealEstateCubit>()..getFilteredListings(),
+
+                child: CompanyProfileView(),
+              ),
         );
       case Routes.realEstateDetailsView:
         return MaterialPageRoute(

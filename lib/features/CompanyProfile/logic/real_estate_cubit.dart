@@ -8,21 +8,44 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     : super(const RealEstateState.initial());
   final MarketplaceRepo _marketplaceRepo;
 
- 
-  void getFilteredListings() async {
+  void getMarketplaceListings() async {
     emit(const RealEstateState.loading());
+
+    // الحصول على البيانات من الريبو
     final response = await _marketplaceRepo.getMarketplaceListings();
 
     response.when(
       success: (data) {
         final listings = data.data?.listings ?? [];
-        // الحالة الجديدة: تصفية العناصر التي تحقق الشرط
+
+        // إذا كان لديك تصفية، يمكن تطبيقها هنا
+        emit(RealEstateState.filtered(listings)); // حالة النجاح
+      },
+      failure: (error) {
+        emit(
+          RealEstateState.error(error.apiErrorModel.message ?? ''),
+        ); // حالة الخطأ
+      },
+    );
+  }
+
+  // دالة إضافية لتصفية البيانات بناءً على شروط معينة
+  void getFilteredListings() async {
+    emit(const RealEstateState.loading());
+
+    final response = await _marketplaceRepo.getMarketplaceListings();
+
+    response.when(
+      success: (data) {
+        final listings = data.data?.listings ?? [];
+
+        // تصفية العناصر حسب الشروط
         final filtered =
             listings
                 .where((listing) => listing.companyId == listing.company?.id)
                 .toList();
 
-        emit(RealEstateState.filtered(filtered));
+        emit(RealEstateState.filtered(filtered)); // حالة التصفية
       },
       failure: (error) {
         emit(RealEstateState.error(error.apiErrorModel.message ?? ''));

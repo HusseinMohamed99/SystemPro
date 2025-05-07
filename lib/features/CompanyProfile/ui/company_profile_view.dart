@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
@@ -9,108 +10,135 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
-import 'package:system_pro/features/Home/data/model/company.dart';
-import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_button.dart';
+import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
+import 'package:system_pro/features/CompanyProfile/logic/real_estate_state.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
 class CompanyProfileView extends StatelessWidget {
-  const CompanyProfileView({super.key, required this.arguments});
+  const CompanyProfileView({super.key});
 
-  final Company arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: basicAppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          customAppBarBack(context),
-          Center(
-            child: Column(
+      body: BlocBuilder<RealEstateCubit, RealEstateState>(
+        builder: (context, state) {
+          if (state is FilteredListingsLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is FilteredListingsError) {
+            return Center(child: Text(state.error));
+          } else if (state is FilteredListingsSuccess) {
+            final listings = state.filteredListings;
+
+            if (listings.isEmpty || listings.first.company == null) {
+              return const Center(child: Text('No company data found.'));
+            }
+
+            final company = listings.first.company!;
+            final companyListings =
+                listings.where((l) => l.company?.id == company.id).toList();
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 100.w,
-                  height: 100.h,
-                  decoration: BoxDecoration(
-                    color: ColorManager.pureBlack,
+                customAppBarBack(context),
+                Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 100.w,
+                        height: 100.h,
+                        decoration: BoxDecoration(
+                          color: ColorManager.pureBlack,
+                          borderRadius: BorderRadius.circular(320),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(320),
+                          child: CustomCachedNetworkImageWidget(
+                            imageURL: company.picture ?? '',
+                            height: 32.h,
+                            width: 100.w,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                      verticalSpacing(kSpacingDefault),
+                      Text(
+                        company.name ?? '',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeightHelper.medium,
+                        ),
+                      ),
+                      verticalSpacing(kSpacingSmall),
+                      Text(
+                        '${companyListings.length} ${context.localization.properties}',
 
-                    borderRadius: BorderRadius.circular(320),
-                  ),
-
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(320),
-                    child: CustomCachedNetworkImageWidget(
-                      imageURL: arguments.picture,
-                      height: 32.h,
-                      width: 100.w,
-
-                      fit: BoxFit.fitWidth,
-                    ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeightHelper.regular,
+                          color: ColorManager.softGray,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-
-                verticalSpacing(kSpacingDefault),
-                Text(
-                  arguments.name ?? '',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeightHelper.medium,
-                  ),
-                ),
-                verticalSpacing(kSpacingSmall),
-                Text(
-                  '26 ${context.localization.properties}',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeightHelper.regular,
-                    color: ColorManager.softGray,
+                verticalSpacing(kSpacingXLarge),
+                Expanded(
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: LocationWidget(location: company.address ?? ''),
+                      ),
+                      SliverToBoxAdapter(
+                        child: verticalSpacing(kSpacingDefault),
+                      ),
+                      SliverToBoxAdapter(
+                        child: AboutRealEstateWidget(
+                          description: company.bio ?? '',
+                        ),
+                      ),
+                      SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
+                      SliverToBoxAdapter(
+                        child: Divider(
+                          color: ColorManager.borderGrey,
+                          thickness: 1,
+                          height: 1.h,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: verticalSpacing(kSpacingDefault),
+                      ),
+                      SliverToBoxAdapter(
+                        child: PropertiesWidget(
+                          propertyLength: companyListings.length.toString(),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: verticalSpacing(kSpacingDefault),
+                      ),
+                      RealEstateSliverList(listings: companyListings),
+                    ],
                   ),
                 ),
               ],
-            ),
-          ),
-          verticalSpacing(kSpacingXLarge),
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: LocationWidget(location: arguments.address ?? ''),
-                ),
+            ).hPadding(kPaddingDefaultHorizontal);
+          }
 
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-                SliverToBoxAdapter(
-                  child: AboutRealEstateWidget(
-                    description: arguments.bio ?? '',
-                  ),
-                ),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
-                SliverToBoxAdapter(
-                  child: Divider(
-                    color: ColorManager.borderGrey,
-                    thickness: 1,
-                    height: 1.h,
-                  ),
-                ),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-
-                //TODO: NEW END POINT
-                const SliverToBoxAdapter(child: PropertiesWidget()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-                const RealEstateSliverList(listings: []),
-              ],
-            ),
-          ),
-        ],
-      ).hPadding(kPaddingDefaultHorizontal),
+          return const SizedBox(); // fallback if not matched
+        },
+      ),
     );
   }
 }
 
 class PropertiesWidget extends StatelessWidget {
-  const PropertiesWidget({super.key});
-
+  const PropertiesWidget({super.key, required this.propertyLength});
+  final String propertyLength;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           context.localization.properties,
@@ -119,9 +147,13 @@ class PropertiesWidget extends StatelessWidget {
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
         ),
         verticalSpacing(kSpacingLarge),
-         ResultsCountAndSortButton(
-          propertyLength: '0',
-         ),
+        Text(
+          '$propertyLength ${context.localization.properties}',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: ColorManager.softGray,
+            fontWeight: FontWeightHelper.medium,
+          ),
+        ),
       ],
     );
   }

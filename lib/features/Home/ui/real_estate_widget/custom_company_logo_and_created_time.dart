@@ -34,7 +34,6 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
           onTap: () {
             context.pushNamed(
               Routes.companyProfileView,
-              arguments: company,
             );
           },
           child: CustomCachedNetworkImageWidget(

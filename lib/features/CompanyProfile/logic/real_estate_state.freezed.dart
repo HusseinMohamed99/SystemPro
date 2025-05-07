@@ -42,23 +42,23 @@ mixin _$RealEstateState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Filtered value) filtered,
-    required TResult Function(_Error value) error,
+    required TResult Function(FilteredListingsLoading value) loading,
+    required TResult Function(FilteredListingsSuccess value) filtered,
+    required TResult Function(FilteredListingsError value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Filtered value)? filtered,
-    TResult? Function(_Error value)? error,
+    TResult? Function(FilteredListingsLoading value)? loading,
+    TResult? Function(FilteredListingsSuccess value)? filtered,
+    TResult? Function(FilteredListingsError value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Filtered value)? filtered,
-    TResult Function(_Error value)? error,
+    TResult Function(FilteredListingsLoading value)? loading,
+    TResult Function(FilteredListingsSuccess value)? filtered,
+    TResult Function(FilteredListingsError value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -166,9 +166,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Filtered value) filtered,
-    required TResult Function(_Error value) error,
+    required TResult Function(FilteredListingsLoading value) loading,
+    required TResult Function(FilteredListingsSuccess value) filtered,
+    required TResult Function(FilteredListingsError value) error,
   }) {
     return initial(this);
   }
@@ -177,9 +177,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Filtered value)? filtered,
-    TResult? Function(_Error value)? error,
+    TResult? Function(FilteredListingsLoading value)? loading,
+    TResult? Function(FilteredListingsSuccess value)? filtered,
+    TResult? Function(FilteredListingsError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -188,9 +188,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Filtered value)? filtered,
-    TResult Function(_Error value)? error,
+    TResult Function(FilteredListingsLoading value)? loading,
+    TResult Function(FilteredListingsSuccess value)? filtered,
+    TResult Function(FilteredListingsError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -205,20 +205,20 @@ abstract class _Initial implements RealEstateState {
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
+abstract class _$$FilteredListingsLoadingImplCopyWith<$Res> {
+  factory _$$FilteredListingsLoadingImplCopyWith(
+    _$FilteredListingsLoadingImpl value,
+    $Res Function(_$FilteredListingsLoadingImpl) then,
+  ) = __$$FilteredListingsLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$RealEstateStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
+class __$$FilteredListingsLoadingImplCopyWithImpl<$Res>
+    extends _$RealEstateStateCopyWithImpl<$Res, _$FilteredListingsLoadingImpl>
+    implements _$$FilteredListingsLoadingImplCopyWith<$Res> {
+  __$$FilteredListingsLoadingImplCopyWithImpl(
+    _$FilteredListingsLoadingImpl _value,
+    $Res Function(_$FilteredListingsLoadingImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of RealEstateState
@@ -227,8 +227,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
+class _$FilteredListingsLoadingImpl implements FilteredListingsLoading {
+  const _$FilteredListingsLoadingImpl();
 
   @override
   String toString() {
@@ -238,7 +238,8 @@ class _$LoadingImpl implements _Loading {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$FilteredListingsLoadingImpl);
   }
 
   @override
@@ -285,9 +286,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Filtered value) filtered,
-    required TResult Function(_Error value) error,
+    required TResult Function(FilteredListingsLoading value) loading,
+    required TResult Function(FilteredListingsSuccess value) filtered,
+    required TResult Function(FilteredListingsError value) error,
   }) {
     return loading(this);
   }
@@ -296,9 +297,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Filtered value)? filtered,
-    TResult? Function(_Error value)? error,
+    TResult? Function(FilteredListingsLoading value)? loading,
+    TResult? Function(FilteredListingsSuccess value)? filtered,
+    TResult? Function(FilteredListingsError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -307,9 +308,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Filtered value)? filtered,
-    TResult Function(_Error value)? error,
+    TResult Function(FilteredListingsLoading value)? loading,
+    TResult Function(FilteredListingsSuccess value)? filtered,
+    TResult Function(FilteredListingsError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -319,27 +320,27 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements RealEstateState {
-  const factory _Loading() = _$LoadingImpl;
+abstract class FilteredListingsLoading implements RealEstateState {
+  const factory FilteredListingsLoading() = _$FilteredListingsLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$FilteredImplCopyWith<$Res> {
-  factory _$$FilteredImplCopyWith(
-    _$FilteredImpl value,
-    $Res Function(_$FilteredImpl) then,
-  ) = __$$FilteredImplCopyWithImpl<$Res>;
+abstract class _$$FilteredListingsSuccessImplCopyWith<$Res> {
+  factory _$$FilteredListingsSuccessImplCopyWith(
+    _$FilteredListingsSuccessImpl value,
+    $Res Function(_$FilteredListingsSuccessImpl) then,
+  ) = __$$FilteredListingsSuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Listing> filteredListings});
 }
 
 /// @nodoc
-class __$$FilteredImplCopyWithImpl<$Res>
-    extends _$RealEstateStateCopyWithImpl<$Res, _$FilteredImpl>
-    implements _$$FilteredImplCopyWith<$Res> {
-  __$$FilteredImplCopyWithImpl(
-    _$FilteredImpl _value,
-    $Res Function(_$FilteredImpl) _then,
+class __$$FilteredListingsSuccessImplCopyWithImpl<$Res>
+    extends _$RealEstateStateCopyWithImpl<$Res, _$FilteredListingsSuccessImpl>
+    implements _$$FilteredListingsSuccessImplCopyWith<$Res> {
+  __$$FilteredListingsSuccessImplCopyWithImpl(
+    _$FilteredListingsSuccessImpl _value,
+    $Res Function(_$FilteredListingsSuccessImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of RealEstateState
@@ -348,7 +349,7 @@ class __$$FilteredImplCopyWithImpl<$Res>
   @override
   $Res call({Object? filteredListings = null}) {
     return _then(
-      _$FilteredImpl(
+      _$FilteredListingsSuccessImpl(
         null == filteredListings
             ? _value._filteredListings
             : filteredListings // ignore: cast_nullable_to_non_nullable
@@ -360,8 +361,8 @@ class __$$FilteredImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FilteredImpl implements _Filtered {
-  const _$FilteredImpl(final List<Listing> filteredListings)
+class _$FilteredListingsSuccessImpl implements FilteredListingsSuccess {
+  const _$FilteredListingsSuccessImpl(final List<Listing> filteredListings)
     : _filteredListings = filteredListings;
 
   final List<Listing> _filteredListings;
@@ -382,7 +383,7 @@ class _$FilteredImpl implements _Filtered {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FilteredImpl &&
+            other is _$FilteredListingsSuccessImpl &&
             const DeepCollectionEquality().equals(
               other._filteredListings,
               _filteredListings,
@@ -400,8 +401,10 @@ class _$FilteredImpl implements _Filtered {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FilteredImplCopyWith<_$FilteredImpl> get copyWith =>
-      __$$FilteredImplCopyWithImpl<_$FilteredImpl>(this, _$identity);
+  _$$FilteredListingsSuccessImplCopyWith<_$FilteredListingsSuccessImpl>
+  get copyWith => __$$FilteredListingsSuccessImplCopyWithImpl<
+    _$FilteredListingsSuccessImpl
+  >(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -444,9 +447,9 @@ class _$FilteredImpl implements _Filtered {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Filtered value) filtered,
-    required TResult Function(_Error value) error,
+    required TResult Function(FilteredListingsLoading value) loading,
+    required TResult Function(FilteredListingsSuccess value) filtered,
+    required TResult Function(FilteredListingsError value) error,
   }) {
     return filtered(this);
   }
@@ -455,9 +458,9 @@ class _$FilteredImpl implements _Filtered {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Filtered value)? filtered,
-    TResult? Function(_Error value)? error,
+    TResult? Function(FilteredListingsLoading value)? loading,
+    TResult? Function(FilteredListingsSuccess value)? filtered,
+    TResult? Function(FilteredListingsError value)? error,
   }) {
     return filtered?.call(this);
   }
@@ -466,9 +469,9 @@ class _$FilteredImpl implements _Filtered {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Filtered value)? filtered,
-    TResult Function(_Error value)? error,
+    TResult Function(FilteredListingsLoading value)? loading,
+    TResult Function(FilteredListingsSuccess value)? filtered,
+    TResult Function(FilteredListingsError value)? error,
     required TResult orElse(),
   }) {
     if (filtered != null) {
@@ -478,36 +481,36 @@ class _$FilteredImpl implements _Filtered {
   }
 }
 
-abstract class _Filtered implements RealEstateState {
-  const factory _Filtered(final List<Listing> filteredListings) =
-      _$FilteredImpl;
+abstract class FilteredListingsSuccess implements RealEstateState {
+  const factory FilteredListingsSuccess(final List<Listing> filteredListings) =
+      _$FilteredListingsSuccessImpl;
 
   List<Listing> get filteredListings;
 
   /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FilteredImplCopyWith<_$FilteredImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FilteredListingsSuccessImplCopyWith<_$FilteredListingsSuccessImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-    _$ErrorImpl value,
-    $Res Function(_$ErrorImpl) then,
-  ) = __$$ErrorImplCopyWithImpl<$Res>;
+abstract class _$$FilteredListingsErrorImplCopyWith<$Res> {
+  factory _$$FilteredListingsErrorImplCopyWith(
+    _$FilteredListingsErrorImpl value,
+    $Res Function(_$FilteredListingsErrorImpl) then,
+  ) = __$$FilteredListingsErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$RealEstateStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl _value,
-    $Res Function(_$ErrorImpl) _then,
+class __$$FilteredListingsErrorImplCopyWithImpl<$Res>
+    extends _$RealEstateStateCopyWithImpl<$Res, _$FilteredListingsErrorImpl>
+    implements _$$FilteredListingsErrorImplCopyWith<$Res> {
+  __$$FilteredListingsErrorImplCopyWithImpl(
+    _$FilteredListingsErrorImpl _value,
+    $Res Function(_$FilteredListingsErrorImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of RealEstateState
@@ -516,7 +519,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   $Res call({Object? error = null}) {
     return _then(
-      _$ErrorImpl(
+      _$FilteredListingsErrorImpl(
         null == error
             ? _value.error
             : error // ignore: cast_nullable_to_non_nullable
@@ -528,8 +531,8 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(this.error);
+class _$FilteredListingsErrorImpl implements FilteredListingsError {
+  const _$FilteredListingsErrorImpl(this.error);
 
   @override
   final String error;
@@ -543,7 +546,7 @@ class _$ErrorImpl implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _$FilteredListingsErrorImpl &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -555,8 +558,12 @@ class _$ErrorImpl implements _Error {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+  _$$FilteredListingsErrorImplCopyWith<_$FilteredListingsErrorImpl>
+  get copyWith =>
+      __$$FilteredListingsErrorImplCopyWithImpl<_$FilteredListingsErrorImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -599,9 +606,9 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Filtered value) filtered,
-    required TResult Function(_Error value) error,
+    required TResult Function(FilteredListingsLoading value) loading,
+    required TResult Function(FilteredListingsSuccess value) filtered,
+    required TResult Function(FilteredListingsError value) error,
   }) {
     return error(this);
   }
@@ -610,9 +617,9 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Filtered value)? filtered,
-    TResult? Function(_Error value)? error,
+    TResult? Function(FilteredListingsLoading value)? loading,
+    TResult? Function(FilteredListingsSuccess value)? filtered,
+    TResult? Function(FilteredListingsError value)? error,
   }) {
     return error?.call(this);
   }
@@ -621,9 +628,9 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Filtered value)? filtered,
-    TResult Function(_Error value)? error,
+    TResult Function(FilteredListingsLoading value)? loading,
+    TResult Function(FilteredListingsSuccess value)? filtered,
+    TResult Function(FilteredListingsError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -633,14 +640,15 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements RealEstateState {
-  const factory _Error(final String error) = _$ErrorImpl;
+abstract class FilteredListingsError implements RealEstateState {
+  const factory FilteredListingsError(final String error) =
+      _$FilteredListingsErrorImpl;
 
   String get error;
 
   /// Create a copy of RealEstateState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FilteredListingsErrorImplCopyWith<_$FilteredListingsErrorImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,9 +6,9 @@ part 'real_estate_state.freezed.dart';
 @freezed
 class RealEstateState with _$RealEstateState {
   const factory RealEstateState.initial() = _Initial;
-  const factory RealEstateState.loading() = _Loading;
+  const factory RealEstateState.loading() = FilteredListingsLoading;
   const factory RealEstateState.filtered(List<Listing> filteredListings) =
-      _Filtered;
+      FilteredListingsSuccess;
 
-  const factory RealEstateState.error(String error) = _Error;
+  const factory RealEstateState.error(String error) = FilteredListingsError;
 }
