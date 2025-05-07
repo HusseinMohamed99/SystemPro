@@ -291,7 +291,9 @@
       "view_profile":"عرض الملف الشخصي",
       "@view_profile":{},
       "see_location":"عرض الموقع",
-      "@see_location":{}
+      "@see_location":{},
+      "deleting_account":"جاري حذف الحساب...",
+      "@deleting_account":{}
       
 
     

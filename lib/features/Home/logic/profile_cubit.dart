@@ -40,6 +40,35 @@ class ProfileCubit extends Cubit<ProfileDataState> {
       },
     );
   }
+  void emitDeleteAccountStates() async {
+    // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+    if (isClosed) return;
+
+    emit(const ProfileDataState.deleteAccountLoading());
+    final response = await _profileRepo.deleteAccount();
+    await response.when(
+      success: (profileDataResponse) async {
+      
+        await CachingHelper.clearAllSecuredData();
+        await CachingHelper.clearAllData();
+
+        // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+        if (!isClosed) {
+          emit(ProfileDataState.deleteAccountSuccess(profileDataResponse));
+        }
+      },
+      failure: (error) {
+        // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+        if (!isClosed) {
+          emit(
+            ProfileDataState.deleteAccountError(
+              error: error.apiErrorModel.message ?? '',
+            ),
+          );
+        }
+      },
+    );
+  }
 
   void emitGetProfileStates() async {
     // التحقق من أن الـ Cubit لم يتم إغلاقه بعد

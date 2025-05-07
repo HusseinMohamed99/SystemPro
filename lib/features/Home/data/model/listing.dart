@@ -38,6 +38,7 @@ class Listing {
     this.images,
     this.amenities,
     this.subcategory,
+    this.listingType,
   });
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
@@ -71,7 +72,9 @@ class Listing {
   @JsonKey(name: 'created_at')
   final String? createdAt;
   @JsonKey(name: 'updated_at')
-  final String? updatedAt;
+  final String? updatedAt; 
+   @JsonKey(name: 'listing_type')
+  final String? listingType;
 
   @JsonKey(name: 'rejection_reason')
   final String? rejectionReason; // إضافة الحقل

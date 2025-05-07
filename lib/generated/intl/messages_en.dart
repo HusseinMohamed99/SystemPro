@@ -63,6 +63,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "delete_my_account": MessageLookupByLibrary.simpleMessage(
       "Delete My Account",
     ),
+    "deleting_account": MessageLookupByLibrary.simpleMessage(
+      "Deleting Account",
+    ),
     "description": MessageLookupByLibrary.simpleMessage("Description"),
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account?",

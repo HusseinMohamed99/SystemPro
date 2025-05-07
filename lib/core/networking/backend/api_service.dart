@@ -36,11 +36,11 @@ abstract class ApiService {
   Future<ForgotPasswordResponse> forgotPassword(
     @Body() ForgotPasswordRequestBody forgotPasswordRequestBody,
   );
-    @POST(ApiConstants.emailVerify)
+  @POST(ApiConstants.emailVerify)
   Future<EmailVerifyResponse> emailVerify(
     @Body() EmailVerifyRequestBody emailVerifyRequestBody,
   );
-    @POST(ApiConstants.checkOtp)
+  @POST(ApiConstants.checkOtp)
   Future<CheckOtpResponse> checkOtp(
     @Body() CheckOtpRequestBody checkOtpRequestBody,
   );
@@ -52,15 +52,15 @@ abstract class ApiService {
   Future<ChangePasswordResponse> changePassword(
     @Body() ChangePasswordRequestBody changePasswordRequestBody,
   );
-   @POST(ApiConstants.logout)
- Future<ApiSuccessModel> logout();
-  //   @POST(ApiConstants.deleteAccount)
-  // Future<PrivacySettingsResponse> deleteAccount();
+  @POST(ApiConstants.logout)
+  Future<ApiSuccessModel> logout();
+  @POST(ApiConstants.deleteAccount)
+  Future<ApiSuccessModel> deleteAccount();
 
   @GET(ApiConstants.getUserData)
   Future<UserDataResponse> getUserData();
 
-    @PUT(ApiConstants.editProfile)
+  @PUT(ApiConstants.editProfile)
   Future<EditProfileResponse> editProfile(
     @Body() EditProfileRequestBody editProfileRequestBody,
   );

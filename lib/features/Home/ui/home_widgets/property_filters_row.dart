@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 
 class PropertyFiltersRow extends StatefulWidget {
   const PropertyFiltersRow({super.key});
@@ -22,7 +24,7 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedFilter = context.localization.buy; // ✅ استخدم context هنا بأمان
+    selectedFilter = context.localization.buy; // تعيين الفلتر الافتراضي
   }
 
   @override
@@ -45,10 +47,6 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
                           : 0,
                 ),
                 child: ChoiceChip(
-                   side:isSelected ?  BorderSide.none: BorderSide(
-                            color: ColorManager.borderGrey,
-                            width: 1.5.w,
-                          ),
                   labelPadding: EdgeInsets.symmetric(vertical: 2.h),
                   label: SizedBox(
                     width: double.infinity,
@@ -69,6 +67,10 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
                     setState(() {
                       selectedFilter = filter;
                     });
+                    // إرسال الفلتر إلى Cubit لتصفية العناصر
+                    context.read<MarketplaceCubit>().filterListings(
+                      filter.toLowerCase(), // تطبيق الفلتر بحروف صغيرة
+                    );
                   },
                   selectedColor: ColorManager.shadowBlue,
                   backgroundColor: ColorManager.pureWhite,

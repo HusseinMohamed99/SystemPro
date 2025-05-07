@@ -63,6 +63,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("غامق"),
     "delete_my_account": MessageLookupByLibrary.simpleMessage("حذف حسابي"),
+    "deleting_account": MessageLookupByLibrary.simpleMessage(
+      "جاري حذف الحساب...",
+    ),
     "description": MessageLookupByLibrary.simpleMessage("الوصف"),
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
       "لا تملك حساب؟",

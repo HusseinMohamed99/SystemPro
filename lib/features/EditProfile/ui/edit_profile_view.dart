@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
-import 'package:system_pro/core/widgets/buttons/custom_button.dart';
-import 'package:system_pro/core/widgets/textFields/name_form_field_widget.dart';
+import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
+import 'package:system_pro/features/EditProfile/ui/widgets/edit_profile_form.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/logic/profile_state.dart';
 
@@ -27,60 +27,36 @@ class EditProfileView extends StatelessWidget {
       body: BlocConsumer<ProfileCubit, ProfileDataState>(
         listener: (context, state) {
           if (state is EditProfileError) {
-            context.showSnackBar(
-              state.error,
-            ); // لازم تكون عامل extension زي ما اتفقنا
-          } else if (state is EditProfileLoading) {
+            context.showSnackBar(state.error);
+          } else if (state is EditProfileSuccess) {
             context.showSnackBar('تم تحديث البيانات بنجاح');
-            Navigator.pop(context, true);           }
+            Navigator.pop(context, true);
+          } else if (state is DeleteAccountSuccess) {
+            context.showSnackBar('تم حذف الحساب بنجاح');
+            context.pushNamedAndRemoveUntil(
+              Routes.loginView,
+              predicate: (route) => false,
+            );
+          }
         },
         builder: (context, state) {
           final cubit = context.read<ProfileCubit>();
+
           if (cubit.userNameController.text.trim().isEmpty) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               cubit.initializeUserName(userName);
             });
           }
 
-          return Form(
-            key: cubit.formKey,
-            child: Column(
-              spacing: kSpacingXXXLarge.h,
-              children: [
-                NameFormField(
-                  fullName: userName,
-                  nameController: cubit.userNameController,
-                  focusNode: cubit.userNameFocusNode,
-                ),
-                state is EditProfileLoading
-                    ? const CircularProgressIndicator()
-                    : CustomButton(
-                      text: context.localization.save_changes,
-                      onPressed: () {
-                        if (cubit.formKey.currentState!.validate()) {
-                          cubit.updateUserProfile();
-                        }
-                      },
-                    ),
-
-                const Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    context.localization.delete_my_account,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeightHelper.medium,
-                      color: ColorManager.primaryBlue,
-                    ),
-                  ),
-                ),
-              ],
+          return LoadingIndicator(
+            isLoading:
+                state is EditProfileLoading || state is DeleteAccountLoading,
+            child: EditProfileForm(userName: userName, cubit: cubit).allPadding(
+              vPadding: kPaddingLargeVertical,
+              hPadding: kPaddingDefaultHorizontal,
             ),
           );
         },
-      ).allPadding(
-        vPadding: kPaddingLargeVertical,
-        hPadding: kPaddingDefaultHorizontal,
       ),
     );
   }

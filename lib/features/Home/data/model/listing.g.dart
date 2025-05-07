@@ -50,6 +50,7 @@ Listing _$ListingFromJson(Map<String, dynamic> json) => Listing(
       json['subcategory'] == null
           ? null
           : Subcategory.fromJson(json['subcategory'] as Map<String, dynamic>),
+  listingType: json['listing_type'] as String?,
 );
 
 Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{
@@ -74,6 +75,7 @@ Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{
   'status': instance.status,
   'created_at': instance.createdAt,
   'updated_at': instance.updatedAt,
+  'listing_type': instance.listingType,
   'rejection_reason': instance.rejectionReason,
   'release_date': instance.releaseDate,
   'employee': instance.employee,

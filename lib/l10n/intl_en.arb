@@ -291,6 +291,8 @@
       "view_profile":"View Profile",
       "@view_profile":{},
       "see_location":"See Location",
-      "@see_location":{}
+      "@see_location":{},
+      "deleting_account":"Deleting Account",
+      "@deleting_account":{}
 
 }

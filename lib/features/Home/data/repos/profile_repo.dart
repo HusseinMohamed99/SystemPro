@@ -18,6 +18,13 @@ class ProfileRepo {
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
+  }  Future<ApiResult<ApiSuccessModel>> deleteAccount() async {
+    try {
+      final response = await _apiService.deleteAccount();
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
   }
   Future<ApiResult<UserDataResponse>> getSeekerProfile() async {
     try {
