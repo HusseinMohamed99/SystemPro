@@ -4,6 +4,7 @@ import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/favorites_view.dart';
 import 'package:system_pro/features/Home/ui/home_view.dart';
 import 'package:system_pro/features/Home/ui/profile_view.dart';
@@ -18,12 +19,8 @@ class MainViewBody extends StatelessWidget {
     return IndexedStack(
       index: currentViewIndex,
       children: [
-        BlocProvider(
-          create: (context) => getIt<MarketplaceCubit>()..getListings(),
-          child: const HomeView(),
-        ),
+        const HomeView(),
         const FavoritesView(),
-
         const ProfileView().allPadding(
           vPadding: kPaddingDefaultVertical,
           hPadding: kPaddingDefaultHorizontal,

@@ -17,75 +17,77 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ProfileCubit>()..emitGetProfileStates(),
-      child: BlocConsumer<ProfileCubit, ProfileDataState>(
-        listener: (context, state) {
-          if (state is UserDataError) {
-            context.showSnackBar(state.error);
-          }
-          if (state is UserDataSuccess) {
-            context.showSnackBar('Profile data loaded successfully');
-          }
-          if (state is ProfileDataSuccess) {
-            context.showSnackBar('Logged out successfully');
-          }
-        },
-        builder: (context, state) {
-          if (state is UserDataSuccess) {
-            final user = state.data.userData;
-            return Column(
-              children: [
-                Center(
-                  child: Text(
-                    context.localization.profile,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: ColorManager.primaryBlue,
-                    ),
+    return BlocConsumer<ProfileCubit, ProfileDataState>(
+      listener: (context, state) {
+        if (state is UserDataError) {
+          context.showSnackBar(state.error);
+        }
+        if (state is UserDataSuccess) {
+          context.showSnackBar('Profile data loaded successfully');
+        }
+        if (state is LogoutSuccess) {
+          context.showSnackBar('Logged out successfully');
+        }
+      },
+      builder: (context, state) {
+      if (state is UserDataSuccess) {
+          final user = state.data.userData;
+          print(
+            "Updated user: ${user?.userName}",
+          ); // سجل اسم المستخدم بعد التعديل
+          return Column(
+            children: [
+              Center(
+                child: Text(
+                  context.localization.profile,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: ColorManager.primaryBlue,
                   ),
                 ),
-                verticalSpacing(kSpacingXLarge),
-                CustomProfileInfo(userName: user?.userName, email: user?.email),
-                verticalSpacing(kSpacingDefault),
-                Expanded(
-                  child: CustomScrollView(
-                    slivers: [
-                      CsutomProfileCardList(userName: user?.userName),
-                      SliverToBoxAdapter(
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomEnd,
-                          child: TextButton(
-                            onPressed: () {
-                              context.read<ProfileCubit>().emitLogoutStates(
-                                context: context,
-                              );
-                            },
-                            child: Text(
-                              context.localization.logout,
-                              style: Theme.of(
-                                context,
-                              ).textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeightHelper.medium,
-                                color: ColorManager.primaryBlue,
-                              ),
+              ),
+              verticalSpacing(kSpacingXLarge),
+              CustomProfileInfo(userName: user?.userName, email: user?.email),
+              verticalSpacing(kSpacingDefault),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    CsutomProfileCardList(userName: user?.userName),
+                    SliverToBoxAdapter(
+                      child: Align(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        child: TextButton(
+                          onPressed: () {
+                            context.read<ProfileCubit>().emitLogoutStates(
+                              context: context,
+                            );
+                          },
+                          child: Text(
+                            context.localization.logout,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeightHelper.medium,
+                              color: ColorManager.primaryBlue,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          }
-          if (state is UserDataLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          return const SizedBox.shrink(); // أو حالة fallback
-        },
-      ),
+              ),
+            ],
+          );
+        }
+    
+    
+        if (state is UserDataLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+    
+        return const SizedBox.shrink(); // أو حالة fallback
+      },
     );
   }
 }

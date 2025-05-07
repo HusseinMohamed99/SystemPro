@@ -12,6 +12,7 @@ import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
 
 class CsutomProfileCardList extends StatelessWidget {
@@ -44,11 +45,18 @@ class CsutomProfileCardList extends StatelessWidget {
                 : context.localization.light_mode;
 
         return CsutomProfileCard(
-          onTap: () {
+          onTap: () async {
             if (index == 0) {
-              context.pushNamed(Routes.editProfileView, arguments: userName);
+              final result = await context.pushNamed(
+                Routes.editProfileView,
+                arguments: userName,
+              );
+
+              if (result == true) {
+                context.read<ProfileCubit>().emitGetProfileStates();
+              }
             } else if (index == 1) {
-              customBottomSheet(
+              await customBottomSheet(
                 context: context,
                 title: context.localization.language,
                 firstTitle: context.localization.english,
@@ -75,7 +83,7 @@ class CsutomProfileCardList extends StatelessWidget {
                 },
               );
             } else if (index == 2) {
-              customBottomSheet(
+              await customBottomSheet(
                 context: context,
                 title: context.localization.theme_mode,
                 firstTitle: context.localization.light_mode,

@@ -6,13 +6,17 @@ part 'profile_state.freezed.dart';
 class ProfileDataState<T> with _$ProfileDataState<T> {
   const factory ProfileDataState.initial() = _Initial;
 
-  const factory ProfileDataState.profileDataLoading() = ProfileDataLoading;
-  const factory ProfileDataState.profileDataSuccess(T data) =
-      ProfileDataSuccess<T>;
-  const factory ProfileDataState.profileDataError({required String error}) =
-      ProfileDataError;
+  const factory ProfileDataState.logoutLoading() = LogoutLoading;
+  const factory ProfileDataState.logoutSuccess(T data) = LogoutSuccess<T>;
+  const factory ProfileDataState.logoutError({required String error}) =
+      LogoutError;
   const factory ProfileDataState.userDataLoading() = UserDataLoading;
   const factory ProfileDataState.userDataSuccess(T data) = UserDataSuccess<T>;
   const factory ProfileDataState.userDataError({required String error}) =
       UserDataError;
+  const factory ProfileDataState.editProfileLoading() = EditProfileLoading;
+  const factory ProfileDataState.editProfileSuccess(T data) =
+      EditProfileSuccess<T>;
+  const factory ProfileDataState.editProfileError({required String error}) =
+      EditProfileError;
 }

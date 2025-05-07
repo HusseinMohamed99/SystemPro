@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -11,8 +10,8 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/textFields/name_form_field_widget.dart';
-import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
-import 'package:system_pro/features/EditProfile/logic/edit_profile_state.dart';
+import 'package:system_pro/features/Home/logic/profile_cubit.dart';
+import 'package:system_pro/features/Home/logic/profile_state.dart';
 
 class EditProfileView extends StatelessWidget {
   const EditProfileView({super.key, required this.userName});
@@ -25,22 +24,22 @@ class EditProfileView extends StatelessWidget {
         context,
         title: context.localization.edit_profile,
       ),
-      body: BlocConsumer<EditProfileCubit, EditProfileState>(
+      body: BlocConsumer<ProfileCubit, ProfileDataState>(
         listener: (context, state) {
           if (state is EditProfileError) {
             context.showSnackBar(
               state.error,
             ); // لازم تكون عامل extension زي ما اتفقنا
-          } else if (state is EditProfileSuccess) {
+          } else if (state is EditProfileLoading) {
             context.showSnackBar('تم تحديث البيانات بنجاح');
-           context.pop(); // أو أي action تاني
-           
-          }
+            Navigator.pop(context, true);           }
         },
         builder: (context, state) {
-          final cubit = context.read<EditProfileCubit>();
+          final cubit = context.read<ProfileCubit>();
           if (cubit.userNameController.text.trim().isEmpty) {
-            cubit.initializeUserName(userName);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              cubit.initializeUserName(userName);
+            });
           }
 
           return Form(

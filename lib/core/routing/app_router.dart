@@ -17,10 +17,10 @@ import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
-import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
+import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_view.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/real_estate_details_view.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
@@ -90,10 +90,8 @@ class AppRouters {
         return MaterialPageRoute(
           builder:
               (_) => BlocProvider(
-                create: (context) => getIt<EditProfileCubit>(),
-                child:  EditProfileView(
-                  userName: arguments as String,
-                ),
+                create: (context) => getIt<ProfileCubit>(),
+                child: EditProfileView(userName: arguments as String),
               ),
         );
       case Routes.searchView:
