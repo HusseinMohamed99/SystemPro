@@ -47,7 +47,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
               },
               itemBuilder: (context, index) {
                 return CustomCachedNetworkImageWidget(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.fitWidth,
                   width: context.width,
                   height: 150.h,
                   imageURL: widget.images?[index].imageUrl??'',
@@ -105,7 +105,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   color:
                       isActive
                           ? ColorManager.primaryBlue
-                          : ColorManager.pureWhite,
+                        : ColorManager.softGray,
                   borderRadius: BorderRadius.circular(4),
                 ),
               );

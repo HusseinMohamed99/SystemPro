@@ -13,8 +13,8 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/gen/assets.gen.dart';
 class PurposeWidget extends StatelessWidget {
-  const PurposeWidget({super.key});
-
+  const PurposeWidget({super.key, required this.purpose});
+final String purpose ;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,7 +29,7 @@ class PurposeWidget extends StatelessWidget {
         ),
 
         Text(
-          'For ${context.localization.rent}',
+          'For $purpose',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
           ),

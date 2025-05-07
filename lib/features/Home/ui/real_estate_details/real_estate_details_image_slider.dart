@@ -49,7 +49,7 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
               itemBuilder: (context, index) {
                 return CustomCachedNetworkImageWidget(
                   imageURL: widget.images?[index].imageUrl ?? '',
-                  // fit: BoxFit.fill,
+                  fit: BoxFit.fitWidth,
                   height: 250.h,
                 );
               },
@@ -70,9 +70,10 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
                 horizontal: kPaddingSmallHorizontal.w,
                 vertical: kPaddingSmallVertical.h,
               ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: ColorManager.pureWhite,
+                border: Border.all(color: ColorManager.borderGrey, width: 1.5),
               ),
               child: Icon(Icons.arrow_back_ios_new, size: 16.sp),
             ),
@@ -96,7 +97,7 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
                   color:
                       isActive
                           ? ColorManager.primaryBlue
-                          : ColorManager.pureWhite,
+                          : ColorManager.softGray,
                   borderRadius: BorderRadius.circular(4),
                 ),
               );

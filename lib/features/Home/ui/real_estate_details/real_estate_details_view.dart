@@ -27,7 +27,7 @@ class RealEstateDetailsView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const RealEstateDetailsImage(),
+          RealEstateDetailsImage(images: listing.images ?? []),
           Expanded(
             child: CustomScrollView(
               slivers: [
@@ -51,10 +51,10 @@ class RealEstateDetailsView extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
-                //TODO: لسه مش موجوده
-                const SliverToBoxAdapter(child: PurposeWidget()),
+                SliverToBoxAdapter(
+                  child: PurposeWidget(purpose: listing.listingType ?? ''),
+                ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
-                //TODO: لسه مش موجوده
                 SliverToBoxAdapter(
                   child: AmenitiesWidget(amenities: listing.amenities ?? []),
                 ),
