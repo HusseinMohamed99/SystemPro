@@ -42,23 +42,23 @@ mixin _$MarketplaceState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
-    required TResult Function(_Error value) error,
+    required TResult Function(MarketPlaceLoading value) loading,
+    required TResult Function(MarketPlaceSuccess value) success,
+    required TResult Function(MarketPlaceError value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
-    TResult? Function(_Error value)? error,
+    TResult? Function(MarketPlaceLoading value)? loading,
+    TResult? Function(MarketPlaceSuccess value)? success,
+    TResult? Function(MarketPlaceError value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult Function(MarketPlaceLoading value)? loading,
+    TResult Function(MarketPlaceSuccess value)? success,
+    TResult Function(MarketPlaceError value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -166,9 +166,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
-    required TResult Function(_Error value) error,
+    required TResult Function(MarketPlaceLoading value) loading,
+    required TResult Function(MarketPlaceSuccess value) success,
+    required TResult Function(MarketPlaceError value) error,
   }) {
     return initial(this);
   }
@@ -177,9 +177,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
-    TResult? Function(_Error value)? error,
+    TResult? Function(MarketPlaceLoading value)? loading,
+    TResult? Function(MarketPlaceSuccess value)? success,
+    TResult? Function(MarketPlaceError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -188,9 +188,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult Function(MarketPlaceLoading value)? loading,
+    TResult Function(MarketPlaceSuccess value)? success,
+    TResult Function(MarketPlaceError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -205,20 +205,20 @@ abstract class _Initial implements MarketplaceState {
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
+abstract class _$$MarketPlaceLoadingImplCopyWith<$Res> {
+  factory _$$MarketPlaceLoadingImplCopyWith(
+    _$MarketPlaceLoadingImpl value,
+    $Res Function(_$MarketPlaceLoadingImpl) then,
+  ) = __$$MarketPlaceLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
+class __$$MarketPlaceLoadingImplCopyWithImpl<$Res>
+    extends _$MarketplaceStateCopyWithImpl<$Res, _$MarketPlaceLoadingImpl>
+    implements _$$MarketPlaceLoadingImplCopyWith<$Res> {
+  __$$MarketPlaceLoadingImplCopyWithImpl(
+    _$MarketPlaceLoadingImpl _value,
+    $Res Function(_$MarketPlaceLoadingImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of MarketplaceState
@@ -227,8 +227,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
+class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
+  const _$MarketPlaceLoadingImpl();
 
   @override
   String toString() {
@@ -238,7 +238,7 @@ class _$LoadingImpl implements _Loading {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+        (other.runtimeType == runtimeType && other is _$MarketPlaceLoadingImpl);
   }
 
   @override
@@ -285,9 +285,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
-    required TResult Function(_Error value) error,
+    required TResult Function(MarketPlaceLoading value) loading,
+    required TResult Function(MarketPlaceSuccess value) success,
+    required TResult Function(MarketPlaceError value) error,
   }) {
     return loading(this);
   }
@@ -296,9 +296,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
-    TResult? Function(_Error value)? error,
+    TResult? Function(MarketPlaceLoading value)? loading,
+    TResult? Function(MarketPlaceSuccess value)? success,
+    TResult? Function(MarketPlaceError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -307,9 +307,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult Function(MarketPlaceLoading value)? loading,
+    TResult Function(MarketPlaceSuccess value)? success,
+    TResult Function(MarketPlaceError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -319,27 +319,27 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements MarketplaceState {
-  const factory _Loading() = _$LoadingImpl;
+abstract class MarketPlaceLoading implements MarketplaceState {
+  const factory MarketPlaceLoading() = _$MarketPlaceLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-    _$SuccessImpl value,
-    $Res Function(_$SuccessImpl) then,
-  ) = __$$SuccessImplCopyWithImpl<$Res>;
+abstract class _$$MarketPlaceSuccessImplCopyWith<$Res> {
+  factory _$$MarketPlaceSuccessImplCopyWith(
+    _$MarketPlaceSuccessImpl value,
+    $Res Function(_$MarketPlaceSuccessImpl) then,
+  ) = __$$MarketPlaceSuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Listing> listings});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-    _$SuccessImpl _value,
-    $Res Function(_$SuccessImpl) _then,
+class __$$MarketPlaceSuccessImplCopyWithImpl<$Res>
+    extends _$MarketplaceStateCopyWithImpl<$Res, _$MarketPlaceSuccessImpl>
+    implements _$$MarketPlaceSuccessImplCopyWith<$Res> {
+  __$$MarketPlaceSuccessImplCopyWithImpl(
+    _$MarketPlaceSuccessImpl _value,
+    $Res Function(_$MarketPlaceSuccessImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of MarketplaceState
@@ -348,7 +348,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @override
   $Res call({Object? listings = null}) {
     return _then(
-      _$SuccessImpl(
+      _$MarketPlaceSuccessImpl(
         null == listings
             ? _value._listings
             : listings // ignore: cast_nullable_to_non_nullable
@@ -360,8 +360,9 @@ class __$$SuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<Listing> listings) : _listings = listings;
+class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
+  const _$MarketPlaceSuccessImpl(final List<Listing> listings)
+    : _listings = listings;
 
   final List<Listing> _listings;
   @override
@@ -380,7 +381,7 @@ class _$SuccessImpl implements _Success {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
+            other is _$MarketPlaceSuccessImpl &&
             const DeepCollectionEquality().equals(other._listings, _listings));
   }
 
@@ -393,8 +394,11 @@ class _$SuccessImpl implements _Success {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$MarketPlaceSuccessImplCopyWith<_$MarketPlaceSuccessImpl> get copyWith =>
+      __$$MarketPlaceSuccessImplCopyWithImpl<_$MarketPlaceSuccessImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -437,9 +441,9 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
-    required TResult Function(_Error value) error,
+    required TResult Function(MarketPlaceLoading value) loading,
+    required TResult Function(MarketPlaceSuccess value) success,
+    required TResult Function(MarketPlaceError value) error,
   }) {
     return success(this);
   }
@@ -448,9 +452,9 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
-    TResult? Function(_Error value)? error,
+    TResult? Function(MarketPlaceLoading value)? loading,
+    TResult? Function(MarketPlaceSuccess value)? success,
+    TResult? Function(MarketPlaceError value)? error,
   }) {
     return success?.call(this);
   }
@@ -459,9 +463,9 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult Function(MarketPlaceLoading value)? loading,
+    TResult Function(MarketPlaceSuccess value)? success,
+    TResult Function(MarketPlaceError value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -471,35 +475,36 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements MarketplaceState {
-  const factory _Success(final List<Listing> listings) = _$SuccessImpl;
+abstract class MarketPlaceSuccess implements MarketplaceState {
+  const factory MarketPlaceSuccess(final List<Listing> listings) =
+      _$MarketPlaceSuccessImpl;
 
   List<Listing> get listings;
 
   /// Create a copy of MarketplaceState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+  _$$MarketPlaceSuccessImplCopyWith<_$MarketPlaceSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-    _$ErrorImpl value,
-    $Res Function(_$ErrorImpl) then,
-  ) = __$$ErrorImplCopyWithImpl<$Res>;
+abstract class _$$MarketPlaceErrorImplCopyWith<$Res> {
+  factory _$$MarketPlaceErrorImplCopyWith(
+    _$MarketPlaceErrorImpl value,
+    $Res Function(_$MarketPlaceErrorImpl) then,
+  ) = __$$MarketPlaceErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl _value,
-    $Res Function(_$ErrorImpl) _then,
+class __$$MarketPlaceErrorImplCopyWithImpl<$Res>
+    extends _$MarketplaceStateCopyWithImpl<$Res, _$MarketPlaceErrorImpl>
+    implements _$$MarketPlaceErrorImplCopyWith<$Res> {
+  __$$MarketPlaceErrorImplCopyWithImpl(
+    _$MarketPlaceErrorImpl _value,
+    $Res Function(_$MarketPlaceErrorImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of MarketplaceState
@@ -508,7 +513,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   $Res call({Object? error = null}) {
     return _then(
-      _$ErrorImpl(
+      _$MarketPlaceErrorImpl(
         null == error
             ? _value.error
             : error // ignore: cast_nullable_to_non_nullable
@@ -520,8 +525,8 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(this.error);
+class _$MarketPlaceErrorImpl implements MarketPlaceError {
+  const _$MarketPlaceErrorImpl(this.error);
 
   @override
   final String error;
@@ -535,7 +540,7 @@ class _$ErrorImpl implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _$MarketPlaceErrorImpl &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -547,8 +552,11 @@ class _$ErrorImpl implements _Error {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+  _$$MarketPlaceErrorImplCopyWith<_$MarketPlaceErrorImpl> get copyWith =>
+      __$$MarketPlaceErrorImplCopyWithImpl<_$MarketPlaceErrorImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -591,9 +599,9 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
-    required TResult Function(_Error value) error,
+    required TResult Function(MarketPlaceLoading value) loading,
+    required TResult Function(MarketPlaceSuccess value) success,
+    required TResult Function(MarketPlaceError value) error,
   }) {
     return error(this);
   }
@@ -602,9 +610,9 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
-    TResult? Function(_Error value)? error,
+    TResult? Function(MarketPlaceLoading value)? loading,
+    TResult? Function(MarketPlaceSuccess value)? success,
+    TResult? Function(MarketPlaceError value)? error,
   }) {
     return error?.call(this);
   }
@@ -613,9 +621,9 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult Function(MarketPlaceLoading value)? loading,
+    TResult Function(MarketPlaceSuccess value)? success,
+    TResult Function(MarketPlaceError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -625,14 +633,14 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements MarketplaceState {
-  const factory _Error(final String error) = _$ErrorImpl;
+abstract class MarketPlaceError implements MarketplaceState {
+  const factory MarketPlaceError(final String error) = _$MarketPlaceErrorImpl;
 
   String get error;
 
   /// Create a copy of MarketplaceState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+  _$$MarketPlaceErrorImplCopyWith<_$MarketPlaceErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

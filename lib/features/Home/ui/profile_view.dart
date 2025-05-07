@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
@@ -30,10 +29,10 @@ class ProfileView extends StatelessWidget {
         }
       },
       builder: (context, state) {
-      if (state is UserDataSuccess) {
+        if (state is UserDataSuccess) {
           final user = state.data.userData;
           print(
-            "Updated user: ${user?.userName}",
+            'Updated user: ${user?.userName}',
           ); // سجل اسم المستخدم بعد التعديل
           return Column(
             children: [
@@ -52,7 +51,7 @@ class ProfileView extends StatelessWidget {
               Expanded(
                 child: CustomScrollView(
                   slivers: [
-                    CsutomProfileCardList(userName: user?.userName),
+                    CustomProfileCardList(userName: user?.userName),
                     SliverToBoxAdapter(
                       child: Align(
                         alignment: AlignmentDirectional.bottomEnd,
@@ -80,12 +79,11 @@ class ProfileView extends StatelessWidget {
             ],
           );
         }
-    
-    
+
         if (state is UserDataLoading) {
           return const Center(child: CircularProgressIndicator());
         }
-    
+
         return const SizedBox.shrink(); // أو حالة fallback
       },
     );

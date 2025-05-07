@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/marketplace_state.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
+import 'package:system_pro/features/Home/logic/profile_state.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/custom_bottom_navigation_bar.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/main_view_body.dart';
 
@@ -25,23 +27,44 @@ class _MainViewState extends State<MainView> {
     marketplaceCubit = getIt<MarketplaceCubit>();
     profileCubit = getIt<ProfileCubit>();
 
-    // أول شاشة (Home) مثلاً
-    _handleTabChange(currentViewIndex);
+    // التأكد من أن البيانات لا يتم تحميلها إذا كانت قد تم تحميلها بالفعل
+    if (marketplaceCubit.state is! MarketPlaceSuccess &&
+        marketplaceCubit.state is! MarketPlaceLoading) {
+      marketplaceCubit
+          .getListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+    }
+
+    if (profileCubit.state is! UserDataSuccess &&
+        profileCubit.state is! UserDataLoading) {
+      profileCubit
+          .emitGetProfileStates(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+    }
   }
 
   void _handleTabChange(int index) {
+    if (index == currentViewIndex) return;
+
     setState(() {
       currentViewIndex = index;
     });
 
     switch (index) {
       case 0: // Home
-        marketplaceCubit.getListings();
+        // التحقق أولًا من حالة الـ Cubit لتجنب التحميل غير الضروري
+        if (marketplaceCubit.state is! MarketPlaceSuccess &&
+            marketplaceCubit.state is! MarketPlaceLoading) {
+          marketplaceCubit
+              .getListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+        }
         break;
       case 2: // Profile
-        profileCubit.emitGetProfileStates();
+        // التحقق أولًا من حالة الـ Cubit لتجنب التحميل غير الضروري
+        if (profileCubit.state is! UserDataSuccess &&
+            profileCubit.state is! UserDataLoading) {
+          profileCubit
+              .emitGetProfileStates(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+        }
         break;
-      // case 2, 3... حسب الشاشات التانية
     }
   }
 
@@ -56,8 +79,8 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => marketplaceCubit),
-        BlocProvider(create: (_) => profileCubit),
+        BlocProvider.value(value: marketplaceCubit),
+        BlocProvider.value(value: profileCubit),
       ],
       child: Scaffold(
         body: SafeArea(child: MainViewBody(currentViewIndex: currentViewIndex)),
@@ -68,4 +91,3 @@ class _MainViewState extends State<MainView> {
     );
   }
 }
-

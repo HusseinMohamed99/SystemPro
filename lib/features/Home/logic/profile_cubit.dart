@@ -10,7 +10,11 @@ import 'package:system_pro/features/Home/logic/profile_state.dart';
 class ProfileCubit extends Cubit<ProfileDataState> {
   ProfileCubit(this._profileRepo) : super(const ProfileDataState.initial());
   final ProfileRepo _profileRepo;
+
   void emitLogoutStates({required BuildContext context}) async {
+    // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+    if (isClosed) return;
+
     emit(const ProfileDataState.logoutLoading());
     final response = await _profileRepo.logout();
     await response.when(
@@ -21,31 +25,47 @@ class ProfileCubit extends Cubit<ProfileDataState> {
         );
         await CachingHelper.clearAllSecuredData();
         await CachingHelper.clearAllData();
-        emit(ProfileDataState.logoutSuccess(profileDataResponse));
+
+        // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+        if (!isClosed) {
+          emit(ProfileDataState.logoutSuccess(profileDataResponse));
+        }
       },
       failure: (error) {
-        emit(
-          ProfileDataState.logoutError(
-            error: error.apiErrorModel.message ?? '',
-          ),
-        );
+        // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+        if (!isClosed) {
+          emit(
+            ProfileDataState.logoutError(
+              error: error.apiErrorModel.message ?? '',
+            ),
+          );
+        }
       },
     );
   }
 
   void emitGetProfileStates() async {
+    // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+    if (isClosed) return;
+
     emit(const ProfileDataState.userDataLoading());
     final response = await _profileRepo.getSeekerProfile();
     response.when(
       success: (userDataResponse) {
-        emit(ProfileDataState.userDataSuccess(userDataResponse));
+        // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+        if (!isClosed) {
+          emit(ProfileDataState.userDataSuccess(userDataResponse));
+        }
       },
       failure: (error) {
-        emit(
-          ProfileDataState.userDataError(
-            error: error.apiErrorModel.message ?? '',
-          ),
-        );
+        // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+        if (!isClosed) {
+          emit(
+            ProfileDataState.userDataError(
+              error: error.apiErrorModel.message ?? '',
+            ),
+          );
+        }
       },
     );
   }
@@ -55,6 +75,9 @@ class ProfileCubit extends Cubit<ProfileDataState> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Future<void> updateUserProfile() async {
+    // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
+    if (isClosed) return;
+
     emit(const ProfileDataState.editProfileLoading());
     try {
       final requestBody = EditProfileRequestBody(
@@ -72,6 +95,7 @@ class ProfileCubit extends Cubit<ProfileDataState> {
           }
         },
         failure: (error) {
+          // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
           if (!isClosed) {
             emit(
               ProfileDataState.editProfileError(
@@ -82,6 +106,7 @@ class ProfileCubit extends Cubit<ProfileDataState> {
         },
       );
     } catch (e) {
+      // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
       if (!isClosed) {
         emit(ProfileDataState.editProfileError(error: e.toString()));
       }

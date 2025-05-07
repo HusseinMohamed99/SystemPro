@@ -15,8 +15,8 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
 
-class CsutomProfileCardList extends StatelessWidget {
-  const CsutomProfileCardList({super.key, required this.userName});
+class CustomProfileCardList extends StatelessWidget {
+  const CustomProfileCardList({super.key, required this.userName});
   final String userName;
   @override
   Widget build(BuildContext context) {
