@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
+import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/listing_image.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 
@@ -14,10 +15,12 @@ class RealEstateImageSlider extends StatefulWidget {
     required this.images,
     required this.isFavorite,
     required this.listingId,
+    required this.listing,
   });
   final List<ListingImage>? images;
   final bool isFavorite;
   final int listingId;
+  final Listing? listing;
 
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
@@ -59,7 +62,10 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   fit: BoxFit.fitWidth,
                   width: context.width,
                   height: 150.h,
-                  imageURL: widget.images?[index].imageUrl ?? '',
+                  imageURL:
+                      widget.images?[index].imageUrl ??
+                      widget.listing?.pictureUrl ??
+                      '',
                 );
               },
             ),
@@ -72,7 +78,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           right: 16.w,
           child: GestureDetector(
             onTap: () {
-              context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
+              // context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
             },
             child: Container(
               padding: EdgeInsets.symmetric(

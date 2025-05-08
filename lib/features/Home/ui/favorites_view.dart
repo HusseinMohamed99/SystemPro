@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
@@ -34,16 +33,14 @@ class FavoritesView extends StatelessWidget {
         Expanded(
           child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
             builder: (context, state) {
-              if (state is GetFavoriteLoading) {
+              if (state is MarketPlaceLoading) {
                 return const Center(child: CircularProgressIndicator());
-              } else if (state is GetFavoriteSuccess) {
+              } else if (state is MarketPlaceSuccess) {
                 final listings = state.listings;
-                AppLogs.infoLog(listings[0].images?[0].imageUrl ?? '');
 
                 if (listings.isEmpty) {
                   return const Center(child: Text('لا يوجد عقارات مفضلة'));
                 }
-
                 return FavoritesViewBody(listings: listings);
               } else if (state is GetFavoriteError) {
                 return CustomErrorWidget(errorMessage: state.error);

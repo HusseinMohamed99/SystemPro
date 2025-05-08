@@ -19,7 +19,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   int _loadedCount = 0;
   final int _pageSize = 10;
 
-  final Map<int, bool> favoritesCache = {}; // ✅ كاش للمفضلات
 
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
@@ -38,9 +37,8 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           _allListings.addAll(all);
           _applyFilter(filter);
           _loadMoreInternal();
-
-          await loadFavorites(); // ✅ تحميل المفضلات بعد عرض الداتا
         },
+
         failure: (ErrorHandler errorHandler) {
           emit(
             MarketplaceState.error(
@@ -141,66 +139,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-  // كاش للمفضلات
-  Future<void> toggleFavorite(int listingId) async {
-    final currentState = state;
-    if (currentState is MarketPlaceSuccess) {
-      try {
-        emit(const MarketplaceState.loading());
 
-        final result = await _marketplaceRepo.toggleFavorite(listingId);
-
-        result.when(
-          success: (response) {
-            final updatedListings = List<Listing>.from(currentState.listings);
-            final listingIndex = updatedListings.indexWhere(
-              (l) => l.id == listingId,
-            );
-
-            if (listingIndex != -1) {
-              final updatedListing = updatedListings[listingIndex];
-              updatedListing.isFavorited = !updatedListing.isFavorited;
-
-              // تحديث الكاش
-              CachingHelper.setData(
-                'favorite_$listingId',
-                updatedListing.isFavorited,
-              );
-
-              emit(MarketplaceState.success(updatedListings));
-              
-            }
-            
-          },
-          failure: (error) {
-            emit(MarketplaceState.error(error.apiErrorModel.message ?? ''));
-          },
-        );
-      } catch (e) {
-        emit(const MarketplaceState.error('حدث خطأ غير متوقع'));
-      }
-    }
-  }
-
-  Future<void> loadFavorites() async {
-    final currentState = state;
-    if (currentState is MarketPlaceSuccess) {
-      final updatedListings = List<Listing>.from(currentState.listings);
-
-      // قراءة المفضلة من الكاش مرة واحدة
-      for (var listing in updatedListings) {
-        final isFavorited = await CachingHelper.getBool(
-          'favorite_${listing.id}',
-        );
-        listing.isFavorited = isFavorited;
-      }
-
-      emit(MarketplaceState.success(updatedListings));
-    }
-  }
 
   Future<void> getFavoriteListings() async {
-    emit(const MarketplaceState.getFavoriteLoading());
+    emit(const MarketplaceState.loading());
 
     try {
       final result = await _marketplaceRepo.getFavoriteListings();
@@ -210,7 +152,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           final favoriteListings = response.data ?? [];
 
           if (favoriteListings.isEmpty) {
-            emit(const MarketplaceState.getFavoriteSuccess([]));
+            emit(const MarketplaceState.success([]));
             return;
           }
 
@@ -223,20 +165,18 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
           _loadedCount = _visibleListings.length;
 
-          emit(
-            MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)),
-          );
+          emit(MarketplaceState.success(List.from(_visibleListings)));
         },
         failure: (errorHandler) {
           emit(
-            MarketplaceState.getFavoriteError(
+            MarketplaceState.error(
               'فشل في جلب المفضلات: ${errorHandler.apiErrorModel.message}',
             ),
           );
         },
       );
     } catch (error) {
-      emit(MarketplaceState.getFavoriteError('حدث خطأ غير متوقع: $error'));
+      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
   }
 }

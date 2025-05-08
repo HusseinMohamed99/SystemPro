@@ -34,6 +34,7 @@ class RealEstateItem extends StatelessWidget {
               images: listing.images,
               isFavorite: isFavorite,
               listingId: listing.id ?? 0,
+              listing: listing,
             ),
             verticalSpacing(kSpacingSmall),
             RealEstateInfo(
