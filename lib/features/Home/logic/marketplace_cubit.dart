@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/networking/backend/api_error_handler.dart';
+import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
@@ -18,23 +19,27 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   int _loadedCount = 0;
   final int _pageSize = 10;
 
+  final Map<int, bool> favoritesCache = {}; // ✅ كاش للمفضلات
+
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
 
     try {
       final result = await _marketplaceRepo.getMarketplaceListings();
 
-      result.when(
-        success: (MarketplaceResponse response) {
+      await result.when(
+        success: (MarketplaceResponse response) async {
+          final all = response.data?.listings ?? [];
           _allListings.clear();
           _visibleListings.clear();
           _loadedCount = 0;
           _currentFilter = filter;
 
-          final all = response.data?.listings ?? [];
           _allListings.addAll(all);
           _applyFilter(filter);
           _loadMoreInternal();
+
+          await loadFavorites(); // ✅ تحميل المفضلات بعد عرض الداتا
         },
         failure: (ErrorHandler errorHandler) {
           emit(
@@ -95,6 +100,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     final nextItems = allFiltered.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
+
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
@@ -135,5 +141,93 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
+  // كاش للمفضلات
+  Future<void> toggleFavorite(int listingId) async {
+    final currentState = state;
+    if (currentState is MarketPlaceSuccess) {
+      try {
+        emit(const MarketplaceState.loading());
 
+        final result = await _marketplaceRepo.toggleFavorite(listingId);
+
+        result.when(
+          success: (response) {
+            final updatedListings = List<Listing>.from(currentState.listings);
+            final listingIndex = updatedListings.indexWhere(
+              (l) => l.id == listingId,
+            );
+
+            if (listingIndex != -1) {
+              final updatedListing = updatedListings[listingIndex];
+              updatedListing.isFavorited = !updatedListing.isFavorited;
+
+              // تحديث الكاش
+              CachingHelper.setData(
+                'favorite_$listingId',
+                updatedListing.isFavorited,
+              );
+
+              emit(MarketplaceState.success(updatedListings));
+            }
+          },
+          failure: (error) {
+            emit(MarketplaceState.error(error.apiErrorModel.message ?? ''));
+          },
+        );
+      } catch (e) {
+        emit(const MarketplaceState.error('حدث خطأ غير متوقع'));
+      }
+    }
+  }
+
+  Future<void> loadFavorites() async {
+    final currentState = state;
+    if (currentState is MarketPlaceSuccess) {
+      final updatedListings = List<Listing>.from(currentState.listings);
+
+      // قراءة المفضلة من الكاش مرة واحدة
+      for (var listing in updatedListings) {
+        final isFavorited = await CachingHelper.getBool(
+          'favorite_${listing.id}',
+        );
+        listing.isFavorited = isFavorited;
+      }
+
+      emit(MarketplaceState.success(updatedListings));
+    }
+  }
+  Future<void> getFavoriteListings() async {
+    emit(const MarketplaceState.loading());
+
+    try {
+      final result = await _marketplaceRepo.getFavoriteListings();
+
+      result.when(
+        success: (response) {
+          final favoriteListings = response.data ?? [];
+
+          _allListings.clear();
+          _visibleListings.clear();
+          _allListings.addAll(favoriteListings);
+          _loadedCount = 0;
+          _currentFilter = '';
+
+          final nextItems = favoriteListings.take(_pageSize).toList();
+          _visibleListings.addAll(nextItems);
+          _loadedCount = _visibleListings.length;
+
+          emit(MarketplaceState.success(List.from(_visibleListings)));
+        },
+        failure: (errorHandler) {
+          emit(
+            MarketplaceState.error(
+              'فشل في جلب المفضلات: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (error) {
+      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+    }
+  }
 }

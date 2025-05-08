@@ -9,9 +9,15 @@ import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
 class RealEstateItem extends StatelessWidget {
-  const RealEstateItem({super.key, required this.listing, required this.index});
+  const RealEstateItem({
+    super.key,
+    required this.listing,
+    required this.index,
+    required this.isFavorite,
+  });
   final Listing listing;
   final int index;
+  final bool isFavorite;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,6 +32,8 @@ class RealEstateItem extends StatelessWidget {
           children: [
             RealEstateImageSlider(
               images: listing.images,
+              isFavorite: isFavorite,
+              listingId: listing.id ?? 0,
             ),
             verticalSpacing(kSpacingSmall),
             RealEstateInfo(
@@ -36,7 +44,7 @@ class RealEstateItem extends StatelessWidget {
               bathroomNum: listing.bathrooms.toString(),
               area: listing.area.toString(),
               dateTime: listing.createdAt.toString(),
-              company: listing.company??Company(),
+              company: listing.company ?? Company(),
             ),
           ],
         ),

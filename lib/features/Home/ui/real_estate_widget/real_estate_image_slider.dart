@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/listing_image.dart';
+import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 
 class RealEstateImageSlider extends StatefulWidget {
-  const RealEstateImageSlider({super.key, required this.images});
+  const RealEstateImageSlider({
+    super.key,
+    required this.images,
+    required this.isFavorite,
+    required this.listingId,
+  });
   final List<ListingImage>? images;
+  final bool isFavorite;
+  final int listingId;
+
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
 }
@@ -16,7 +27,6 @@ class RealEstateImageSlider extends StatefulWidget {
 class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-  bool isFavorite = false;
 
   @override
   void dispose() {
@@ -50,7 +60,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   fit: BoxFit.fitWidth,
                   width: context.width,
                   height: 150.h,
-                  imageURL: widget.images?[index].imageUrl??'',
+                  imageURL: widget.images?[index].imageUrl ?? '',
                 );
               },
             ),
@@ -63,9 +73,8 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           right: 16.w,
           child: GestureDetector(
             onTap: () {
-              setState(() {
-                isFavorite = !isFavorite;
-              });
+              AppLogs.debugLog(widget.listingId.toString());
+              context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
             },
             child: Container(
               padding: EdgeInsets.symmetric(
@@ -76,10 +85,11 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                 shape: BoxShape.circle,
                 color: ColorManager.pureWhite,
               ),
+
               child: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
+                widget.isFavorite ? Icons.favorite : Icons.favorite_border,
                 color:
-                    isFavorite
+                    widget.isFavorite
                         ? ColorManager.brightRed
                         : ColorManager.pureBlack,
                 size: kIconSizeDefault.sp,
@@ -94,7 +104,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           right: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(widget.images?.length??0, (index) {
+            children: List.generate(widget.images?.length ?? 0, (index) {
               final isActive = index == _currentIndex;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -105,7 +115,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   color:
                       isActive
                           ? ColorManager.primaryBlue
-                        : ColorManager.softGray,
+                          : ColorManager.softGray,
                   borderRadius: BorderRadius.circular(4),
                 ),
               );

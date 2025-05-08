@@ -11,4 +11,5 @@ class MarketplaceState with _$MarketplaceState {
       MarketPlaceSuccess;
 
   const factory MarketplaceState.error(String error) = MarketPlaceError;
+
 }

@@ -13,16 +13,26 @@ class RealEstateSliverList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList.separated(
-      itemBuilder:
-          (context, index) => GestureDetector(
-            onTap: () {
-              context.pushNamed(
-                Routes.realEstateDetailsView,
-                arguments: listings[index],
-              );
-            },
-            child: RealEstateItem(listing: listings[index], index: index),
+      itemBuilder: (context, index) {
+        final listing = listings[index];
+
+        // التحقق من حالة المفضلة لهذا العقار
+
+        return GestureDetector(
+          onTap: () {
+            context.pushNamed(
+              Routes.realEstateDetailsView,
+              arguments: listings[index],
+            );
+          },
+          child: RealEstateItem(
+            listing: listings[index],
+            index: index,
+            isFavorite: listing.isFavorited,
           ),
+        );
+      },
+
       separatorBuilder: (context, index) => verticalSpacing(kSpacingDefault),
       itemCount: listings.length,
     );

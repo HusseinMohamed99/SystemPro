@@ -39,10 +39,12 @@ class Listing {
     this.amenities,
     this.subcategory,
     this.listingType,
+    this.isFavorited = false, // الإضافة هنا لجعلها قابلة للتغيير
   });
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
       _$ListingFromJson(json);
+
   final int? id;
   @JsonKey(name: 'employee_id')
   final int? employeeId;
@@ -72,18 +74,19 @@ class Listing {
   @JsonKey(name: 'created_at')
   final String? createdAt;
   @JsonKey(name: 'updated_at')
-  final String? updatedAt; 
-   @JsonKey(name: 'listing_type')
+  final String? updatedAt;
+  @JsonKey(name: 'listing_type')
   final String? listingType;
-
   @JsonKey(name: 'rejection_reason')
-  final String? rejectionReason; // إضافة الحقل
+  final String? rejectionReason;
   @JsonKey(name: 'release_date')
-  final String? releaseDate; // إضافة الحقل
+  final String? releaseDate;
 
   final Employee? employee;
   final Company? company;
   final Subcategory? subcategory;
   final List<Amenities>? amenities;
   final List<ListingImage>? images;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool isFavorited;
 }

@@ -18,12 +18,15 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MarketplaceCubit, MarketplaceState>(
+      
       builder: (context, state) {
+     
         return state.when(
           initial: () => const Center(child: CircularProgressIndicator()),
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error) => CustomErrorWidget(errorMessage: error),
           success: (listings) {
+            
             return Column(
               children: [
                 const CustomSearchTextField().onlyPadding(
@@ -78,6 +81,7 @@ class HomeViewBody extends StatelessWidget {
               ],
             );
           },
+          
         );
       },
     );

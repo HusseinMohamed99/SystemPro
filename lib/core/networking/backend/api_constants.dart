@@ -13,6 +13,8 @@ class ApiConstants {
   static const String getUserData = 'api/mobile/profile';
   static const String editProfile = 'api/mobile/profile/update';
   static const String getMarketplaceListings = 'api/marketplace/listings';
+  static const String getFavoriteRealEstate = 'api/mobile/favorites';
+  static const String addFavoriteRealEstate = 'api/mobile/favorites';
 }
 
 class ApiErrors {

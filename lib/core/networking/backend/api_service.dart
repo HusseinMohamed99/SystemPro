@@ -18,6 +18,9 @@ import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_req
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_response.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_response.dart';
+import 'package:system_pro/features/Home/data/model/favorites/get_favorites_response.dart';
+import 'package:system_pro/features/Home/data/model/favorites/toggle_favorite_response.dart';
+import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/model/user/user_data_response.dart';
 
@@ -66,4 +69,13 @@ abstract class ApiService {
   );
   @GET(ApiConstants.getMarketplaceListings)
   Future<MarketplaceResponse> getMarketplaceListings();
+
+@POST('${ApiConstants.addFavoriteRealEstate}/{id}')
+Future<ToggleFavoriteResponse> toggleFavorite(@Path('id') int listingId);
+
+
+
+@GET(ApiConstants.getFavoriteRealEstate)
+Future<GetFavoritesResponse> getFavoriteListings();
+
 }
