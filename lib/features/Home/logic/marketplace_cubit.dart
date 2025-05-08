@@ -168,7 +168,9 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
               );
 
               emit(MarketplaceState.success(updatedListings));
+              
             }
+            
           },
           failure: (error) {
             emit(MarketplaceState.error(error.apiErrorModel.message ?? ''));
@@ -196,6 +198,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       emit(MarketplaceState.success(updatedListings));
     }
   }
+
   Future<void> getFavoriteListings() async {
     emit(const MarketplaceState.getFavoriteLoading());
 
@@ -206,17 +209,23 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         success: (response) {
           final favoriteListings = response.data ?? [];
 
-          _allListings.clear();
-          _visibleListings.clear();
-          _allListings.addAll(favoriteListings);
-          _loadedCount = 0;
-          _currentFilter = '';
+          if (favoriteListings.isEmpty) {
+            emit(const MarketplaceState.getFavoriteSuccess([]));
+            return;
+          }
 
-          final nextItems = favoriteListings.take(_pageSize).toList();
-          _visibleListings.addAll(nextItems);
+          _allListings
+            ..clear()
+            ..addAll(favoriteListings);
+          _visibleListings
+            ..clear()
+            ..addAll(favoriteListings.take(_pageSize));
+
           _loadedCount = _visibleListings.length;
 
-          emit(MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)));
+          emit(
+            MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)),
+          );
         },
         failure: (errorHandler) {
           emit(
@@ -227,7 +236,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         },
       );
     } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+      emit(MarketplaceState.getFavoriteError('حدث خطأ غير متوقع: $error'));
     }
   }
 }

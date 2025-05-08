@@ -33,7 +33,10 @@ class _MainViewState extends State<MainView> {
       marketplaceCubit
           .getListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
     }
-
+    if (marketplaceCubit.state is! GetFavoriteSuccess &&
+        marketplaceCubit.state is! GetFavoriteLoading) {
+      marketplaceCubit.getFavoriteListings();
+    }
     if (profileCubit.state is! UserDataSuccess &&
         profileCubit.state is! UserDataLoading) {
       profileCubit
@@ -58,8 +61,12 @@ class _MainViewState extends State<MainView> {
         }
         break;
       case 1: // Favorites
-        marketplaceCubit
-            .getFavoriteListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+
+        if (marketplaceCubit.state is! GetFavoriteSuccess &&
+            marketplaceCubit.state is! GetFavoriteLoading) {
+          marketplaceCubit.getFavoriteListings();
+        }
+        break;
 
       case 2: // Profile
         // التحقق أولًا من حالة الـ Cubit لتجنب التحميل غير الضروري
