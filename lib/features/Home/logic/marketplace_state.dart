@@ -12,4 +12,10 @@ class MarketplaceState with _$MarketplaceState {
 
   const factory MarketplaceState.error(String error) = MarketPlaceError;
 
+  const factory MarketplaceState.getFavoriteLoading() = GetFavoriteLoading;
+  const factory MarketplaceState.getFavoriteSuccess(List<Listing> listings) =
+      GetFavoriteSuccess;
+
+  const factory MarketplaceState.getFavoriteError(String error) =
+      GetFavoriteError;
 }

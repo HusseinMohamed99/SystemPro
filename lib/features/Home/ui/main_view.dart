@@ -57,6 +57,10 @@ class _MainViewState extends State<MainView> {
               .getListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
         }
         break;
+      case 1: // Favorites
+        marketplaceCubit
+            .getFavoriteListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+
       case 2: // Profile
         // التحقق أولًا من حالة الـ Cubit لتجنب التحميل غير الضروري
         if (profileCubit.state is! UserDataSuccess &&
@@ -64,6 +68,7 @@ class _MainViewState extends State<MainView> {
           profileCubit
               .emitGetProfileStates(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
         }
+
         break;
     }
   }

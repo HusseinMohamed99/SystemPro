@@ -19,7 +19,6 @@ import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
 import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
-import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_view.dart';
@@ -110,8 +109,7 @@ class AppRouters {
                 create:
                     (context) =>
                         getIt<RealEstateCubit>()..getFilteredListings(),
-
-                child: CompanyProfileView(),
+                child: const CompanyProfileView(),
               ),
         );
       case Routes.realEstateDetailsView:

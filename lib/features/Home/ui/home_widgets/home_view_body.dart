@@ -18,72 +18,69 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MarketplaceCubit, MarketplaceState>(
-      
       builder: (context, state) {
-     
-        return state.when(
-          initial: () => const Center(child: CircularProgressIndicator()),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error) => CustomErrorWidget(errorMessage: error),
-          success: (listings) {
-            
-            return Column(
-              children: [
-                const CustomSearchTextField().onlyPadding(
-                  leftPadding: kPaddingDefaultHorizontal,
-                  rightPadding: kPaddingDefaultHorizontal,
-                  bottomPadding: kPaddingVertical,
-                  topPadding: kPaddingDefaultVertical,
-                ),
-                const PropertyFiltersRow().onlyPadding(
-                  leftPadding: kPaddingDefaultHorizontal,
-                  rightPadding: kPaddingDefaultHorizontal,
-                  bottomPadding: kPaddingVertical,
-                ),
-                Divider(
-                  color: ColorManager.borderGrey,
-                  thickness: 1,
-                  height: 1.h,
-                ),
-                ResultsCountAndSortButton(
-                  propertyLength: listings.length.toString(),
-                ).onlyPadding(
-                  leftPadding: kPaddingDefaultHorizontal,
-                  rightPadding: kPaddingDefaultHorizontal,
-                  topPadding: kPaddingDefaultVertical,
-                ),
-                // داخل build عند success
-                Expanded(
-                  child:
-                      listings.isEmpty
-                          ? const Center(
-                            child: Text('لا توجد عقارات متاحة حالياً'),
-                          )
-                          : NotificationListener<ScrollNotification>(
-                            onNotification: (scrollInfo) {
-                              if (scrollInfo.metrics.pixels >=
-                                  scrollInfo.metrics.maxScrollExtent - 200) {
-                                context.read<MarketplaceCubit>().loadMore();
-                              }
-                              return false;
-                            },
-                            child: CustomScrollView(
-                              slivers: [
-                                RealEstateSliverList(listings: listings),
-                              ],
-                            ),
-                          ).onlyPadding(
-                            leftPadding: kPaddingDefaultHorizontal,
-                            rightPadding: kPaddingDefaultHorizontal,
-                            topPadding: kPaddingDefaultVertical,
+        if (state is MarketPlaceLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is MarketPlaceError) {
+          return CustomErrorWidget(errorMessage: state.error);
+        } else if (state is MarketPlaceSuccess) {
+          final listings = state.listings;
+
+          return Column(
+            children: [
+              const CustomSearchTextField().onlyPadding(
+                leftPadding: kPaddingDefaultHorizontal,
+                rightPadding: kPaddingDefaultHorizontal,
+                bottomPadding: kPaddingVertical,
+                topPadding: kPaddingDefaultVertical,
+              ),
+              const PropertyFiltersRow().onlyPadding(
+                leftPadding: kPaddingDefaultHorizontal,
+                rightPadding: kPaddingDefaultHorizontal,
+                bottomPadding: kPaddingVertical,
+              ),
+              Divider(
+                color: ColorManager.borderGrey,
+                thickness: 1,
+                height: 1.h,
+              ),
+              ResultsCountAndSortButton(
+                propertyLength: listings.length.toString(),
+              ).onlyPadding(
+                leftPadding: kPaddingDefaultHorizontal,
+                rightPadding: kPaddingDefaultHorizontal,
+                topPadding: kPaddingDefaultVertical,
+              ),
+              Expanded(
+                child:
+                    listings.isEmpty
+                        ? const Center(
+                          child: Text('لا توجد عقارات متاحة حالياً'),
+                        )
+                        : NotificationListener<ScrollNotification>(
+                          onNotification: (scrollInfo) {
+                            if (scrollInfo.metrics.pixels >=
+                                scrollInfo.metrics.maxScrollExtent - 200) {
+                              context.read<MarketplaceCubit>().loadMore();
+                            }
+                            return false;
+                          },
+                          child: CustomScrollView(
+                            slivers: [RealEstateSliverList(listings: listings)],
                           ),
-                ),
-              ],
-            );
-          },
-          
-        );
+                        ).onlyPadding(
+                          leftPadding: kPaddingDefaultHorizontal,
+                          rightPadding: kPaddingDefaultHorizontal,
+                          topPadding: kPaddingDefaultVertical,
+                        ),
+              ),
+            ],
+          );
+        } else {
+          return const SizedBox.shrink(); // fallback for unknown states
+        }
       },
     );
   }
 }
+
