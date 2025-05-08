@@ -23,9 +23,7 @@ class ProfileView extends StatelessWidget {
         if (state is UserDataError) {
           context.showSnackBar(state.error);
         }
-        if (state is UserDataSuccess) {
-          context.showSnackBar('Profile data loaded successfully');
-        }
+
         if (state is LogoutSuccess) {
           context.showSnackBar('Logged out successfully');
           context.pushNamedAndRemoveUntil(
