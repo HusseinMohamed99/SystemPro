@@ -34,7 +34,6 @@ void main() async {
     ),
   );
 }
-
 class AppBootstrap extends StatelessWidget {
   const AppBootstrap({
     super.key,
@@ -51,13 +50,10 @@ class AppBootstrap extends StatelessWidget {
       initialLocale: initialLocale,
       isDarkMode: isDarkMode,
       context: context,
-    ); // هنا يكون عندنا context بعد build
-
-
+    );
     return SystemProApp(appRouter: AppRouters());
   }
 }
-
 checkIfLoggedInUser() async {
   final String userToken = await CachingHelper.getSecuredString(
     SharedPrefKeys.userToken,
