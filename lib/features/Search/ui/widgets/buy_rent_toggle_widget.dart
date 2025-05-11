@@ -17,15 +17,16 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
   List<String> filters(BuildContext context) => [
     context.localization.buy,
     context.localization.rent,
+    context.localization.book,
   ];
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedFilter = context.localization.buy; // ✅ استخدم context هنا بأمان
+    selectedFilter = context.localization.buy;
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     final allFilters = filters(context);
     return Row(
@@ -34,24 +35,8 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
             final isSelected = selectedFilter == filter;
             return Expanded(
               child: Padding(
-                padding: EdgeInsets.only(
-                  right:
-                      selectedFilter == context.localization.buy && isSelected
-                          ? 8.w
-                          : 0,
-                  left:
-                      selectedFilter == context.localization.rent && isSelected
-                          ? 8.w
-                          : 0,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 4.w), // مسافة موحدة
                 child: ChoiceChip(
-                  side:
-                      isSelected
-                          ? BorderSide.none
-                          : BorderSide(
-                            color: ColorManager.borderGrey,
-                            width: 1.5.w,
-                          ),
                   labelPadding: EdgeInsets.symmetric(vertical: 2.h),
                   label: SizedBox(
                     width: double.infinity,
@@ -72,7 +57,7 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
                     setState(() {
                       selectedFilter = filter;
                     });
-                  },
+                                     },
                   selectedColor: ColorManager.shadowBlue,
                   backgroundColor: ColorManager.pureWhite,
                   shape: RoundedRectangleBorder(
@@ -86,4 +71,5 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
           }).toList(),
     );
   }
+
 }

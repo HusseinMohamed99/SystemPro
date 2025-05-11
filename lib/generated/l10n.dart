@@ -1249,6 +1249,11 @@ class S {
   String get book {
     return Intl.message('Book', name: 'book', desc: '', args: []);
   }
+
+  /// `Lands`
+  String get lands {
+    return Intl.message('Lands', name: 'lands', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

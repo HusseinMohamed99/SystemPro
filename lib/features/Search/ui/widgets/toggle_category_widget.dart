@@ -19,6 +19,7 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
   List<String> filters(BuildContext context) => [
     context.localization.residentail,
     context.localization.commercial,
+    context.localization.lands,
   ];
 
   @override

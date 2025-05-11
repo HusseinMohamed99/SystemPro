@@ -29,14 +29,12 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   final bathroomsKey = GlobalKey<BathroomsWidgetState>();
   final amenitiesKey = GlobalKey<AmenitiesWidgetState>();
   final propertyKey = GlobalKey<PropertyTypeWidgetState>();
-  // كرر للباقي حسب ما تحتاج
 
   void clearAll() {
     bedroomsKey.currentState?.clearSelection();
     bathroomsKey.currentState?.clearSelection();
     amenitiesKey.currentState?.clearSelection();
     propertyKey.currentState?.clearSelection();
-    // كرر للباقي
   }
 
   late String selectedCategory;

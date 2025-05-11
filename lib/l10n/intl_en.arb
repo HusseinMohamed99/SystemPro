@@ -299,5 +299,7 @@
       "see_more":"See More",
       "@see_more":{},
       "book":"Book",
-      "@book":{}
+      "@book":{},
+      "lands":"Lands",
+      "@lands":{}
 }

@@ -153,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_email_message": MessageLookupByLibrary.simpleMessage(
       "The email address is badly formatted.",
     ),
+    "lands": MessageLookupByLibrary.simpleMessage("Lands"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light"),
     "listed_by": MessageLookupByLibrary.simpleMessage("Listed by"),

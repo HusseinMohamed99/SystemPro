@@ -153,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_email_message": MessageLookupByLibrary.simpleMessage(
       "عنوان البريد الإلكتروني بتنسيق غير صحيح.",
     ),
+    "lands": MessageLookupByLibrary.simpleMessage("الأراضي"),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
     "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
     "listed_by": MessageLookupByLibrary.simpleMessage("تم نشره بواسطة"),
