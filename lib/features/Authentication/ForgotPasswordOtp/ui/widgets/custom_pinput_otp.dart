@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/validations/validation_manager.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
@@ -38,7 +39,7 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
       defaultPinTheme: PinTheme(
         width: 77.w,
         height: 77.h,
-        textStyle: Theme.of(context).textTheme.headlineLarge,
+        textStyle: context.headlineLarge,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(15),
@@ -48,7 +49,7 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
       errorPinTheme: PinTheme(
         width: 77.w,
         height: 77.h,
-        textStyle: Theme.of(context).textTheme.headlineLarge,
+        textStyle: context.headlineLarge,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(15),
@@ -58,7 +59,7 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
       focusedPinTheme: PinTheme(
         width: 77.w,
         height: 77.h,
-        textStyle: Theme.of(context).textTheme.headlineLarge,
+        textStyle: context.headlineLarge,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(15),

@@ -20,15 +20,11 @@ class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
     return BlocConsumer<OtpCubit, OtpState>(
       listener: (context, state) {
         if (state is OtpSuccess) {
-          context.showSnackBar(
-            context.localization.send_code,
-          );
+          context.showSnackBar(context.localization.send_code);
           context.pushReplacementNamed(
             Routes.resetPasswordView,
             arguments: email,
-           
           );
-       
         }
         if (state is OtpError) {
           context.showSnackBar(state.error);
@@ -37,7 +33,7 @@ class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return LoadingIndicator(
           isLoading: state is OtpLoading ? true : false,
-          child:  ForgotPasswordOtpViewBody(email: email,).allPadding(
+          child: ForgotPasswordOtpViewBody(email: email).allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),
