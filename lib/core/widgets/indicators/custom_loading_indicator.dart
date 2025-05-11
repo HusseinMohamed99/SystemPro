@@ -44,6 +44,16 @@ class AdaptiveIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator.adaptive());
+    return  Center(
+      child: CircularProgressIndicator.adaptive(
+        valueColor: AlwaysStoppedAnimation<Color>(
+          AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.primaryBlue,
+            darkColor: ColorManager.secondaryBlue,
+          ),
+        ),
+      ),
+    );
   }
 }

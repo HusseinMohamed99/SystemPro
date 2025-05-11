@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
+import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
@@ -20,7 +21,7 @@ class HomeViewBody extends StatelessWidget {
     return BlocBuilder<MarketplaceCubit, MarketplaceState>(
       builder: (context, state) {
         if (state is MarketPlaceLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const AdaptiveIndicator();
         } else if (state is MarketPlaceError) {
           return CustomErrorWidget(errorMessage: state.error);
         } else if (state is MarketPlaceSuccess) {
