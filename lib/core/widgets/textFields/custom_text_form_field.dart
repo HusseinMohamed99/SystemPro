@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -54,7 +55,7 @@ class CustomTextFormField extends StatelessWidget {
             }
             return null;
           },
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+      style: context.titleLarge?.copyWith(
         color: AdaptiveColor.adaptiveColor(
           context: context,
           lightColor: ColorManager.pureBlack,
@@ -69,9 +70,7 @@ class CustomTextFormField extends StatelessWidget {
           darkColor: ColorManager.tertiaryBlack,
         ),
         hintText: hintText,
-        hintStyle: Theme.of(
-          context,
-        ).textTheme.titleLarge?.copyWith(color: ColorManager.grey),
+        hintStyle: context.titleLarge?.copyWith(color: ColorManager.grey),
         contentPadding: EdgeInsets.symmetric(
           horizontal: kPaddingContentHorizontal.w,
           vertical: kPaddingContentVertical.h,
@@ -99,7 +98,7 @@ class CustomTextFormField extends StatelessWidget {
       borderRadius: BorderRadius.circular(kBorderRadiusLarge).r,
       borderSide: BorderSide(
         width: 1.w,
-        // color: color ?? ColorManager.borderGrey,
+         color: color ?? ColorManager.borderGrey,
       ),
     );
   }

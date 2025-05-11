@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
+import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/features/Search/ui/widgets/amenities_widget.dart';
 import 'package:system_pro/features/Search/ui/widgets/bathrooms_widget.dart';
@@ -103,9 +103,15 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
                 const SliverToBoxAdapter(child: PropertySizeWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey, amenities: [],)),
+                SliverToBoxAdapter(
+                  child: AmenitiesWidget(
+                    key: amenitiesKey,
+                    amenities: const [],
+                  ),
+                ),
               ],
-              if (selectedCategory == context.localization.commercial) ...[
+              if (selectedCategory == context.localization.commercial ||
+                  selectedCategory == context.localization.lands) ...[
                 SliverToBoxAdapter(
                   child: PropertyTypeWidget(
                     key: propertyKey,
@@ -115,20 +121,23 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
                 const SliverToBoxAdapter(child: PriceRangeWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                // لا يوجد BedroomsWidget و BathroomsWidget في الحالة التجارية
                 const SliverToBoxAdapter(child: PropertySizeWidget()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(child: AmenitiesWidget(key: amenitiesKey, amenities: [],)),
+                SliverToBoxAdapter(
+                  child: AmenitiesWidget(
+                    key: amenitiesKey,
+                    amenities: const [],
+                  ),
+                ),
               ],
               SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
             ],
           ),
         ),
 
-        Divider(
-          height: 1.h,
-          color: ColorManager.borderGrey,
-        ).onlyPadding(bottomPadding: kPaddingDefaultVertical),
+        const CustomDivider().onlyPadding(
+          bottomPadding: kPaddingDefaultVertical,
+        ),
         Row(
           children: [
             Expanded(

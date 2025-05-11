@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 class CustomButton extends StatelessWidget {
@@ -38,7 +39,7 @@ class CustomButton extends StatelessWidget {
           textAlign: TextAlign.center,
           style:
               textStyle ??
-              Theme.of(context).textTheme.titleLarge?.copyWith(
+              context.titleLarge?.copyWith(
                 color: textStyleColor ?? ColorManager.pureWhite,
               ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -58,13 +59,10 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     transitionBuilder: (child, animation) {
-                      // يمكن تعديل هذا التأثير هنا مثل الظهور أو التحول.
                       return ScaleTransition(scale: animation, child: child);
                     },
                     child: ChoiceChip(
-                      key: ValueKey(
-                        filter,
-                      ), // نضيف key فريد للتبديل بين الفئات.
+                      key: ValueKey(filter),
                       side: BorderSide.none,
                       labelPadding: EdgeInsets.symmetric(vertical: 2.h),
                       label: SizedBox(
@@ -72,9 +70,7 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                         child: Text(
                           filter,
                           textAlign: TextAlign.center,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleLarge?.copyWith(
+                          style: context.titleLarge?.copyWith(
                             color:
                                 isSelected
                                     ? ColorManager.pureWhite
@@ -87,11 +83,7 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                       onSelected: (_) {
                         setState(() {
                           selectedFilter = filter;
-                          widget.onCategoryChanged(
-                            filter == context.localization.residentail
-                                ? context.localization.residentail
-                                : context.localization.commercial,
-                          );
+                          widget.onCategoryChanged(selectedFilter);
                         });
                       },
                       selectedColor: ColorManager.primaryBlue,
@@ -110,4 +102,3 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
     );
   }
 }
-

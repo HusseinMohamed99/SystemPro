@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/data/model/amenities.dart';
@@ -31,11 +32,10 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
       children: [
         Text(
           context.localization.amenities,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-
         Wrap(
           spacing: 8,
           children:
@@ -45,7 +45,7 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                   showCheckmark: false,
                   label: Text(
                     amenity.name??'',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
                       color:
                           isSelected
@@ -85,7 +85,7 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                   ? context.localization.show_less
                   : context.localization.see_more_amenities,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
                 color: ColorManager.primaryBlue,
               ),

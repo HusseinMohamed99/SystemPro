@@ -8,6 +8,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
@@ -163,13 +164,13 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
             ),
             title: Text(
               location['district'] ?? '',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+              style: context.titleMedium!.copyWith(
                 fontWeight: FontWeightHelper.medium,
               ),
             ),
             subtitle: Text(
               location['city'] ?? '',
-              style: Theme.of(context).textTheme.titleSmall,
+              style: context.titleSmall,
             ),
             onTap: () => _handleLocationSelect(location),
           );
@@ -188,7 +189,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
         verticalSpacing(kSpacingXLarge),
         Text(
           isSearching ? context.localization.result : context.localization.recent_search,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+          style: context.titleMedium!.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),
         ),

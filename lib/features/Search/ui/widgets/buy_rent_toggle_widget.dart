@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -35,7 +36,7 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
             final isSelected = selectedFilter == filter;
             return Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.w), // مسافة موحدة
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: ChoiceChip(
                   labelPadding: EdgeInsets.symmetric(vertical: 2.h),
                   label: SizedBox(
@@ -43,7 +44,7 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
                     child: Text(
                       filter,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: context.titleLarge?.copyWith(
                         color:
                             isSelected
                                 ? ColorManager.primaryBlue

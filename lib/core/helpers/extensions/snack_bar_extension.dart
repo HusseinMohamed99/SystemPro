@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 extension SnackBarExtension on BuildContext {
@@ -10,9 +11,7 @@ extension SnackBarExtension on BuildContext {
         backgroundColor: ColorManager.shadowBlue,
         content: Text(
           message,
-          style: Theme.of(
-            this,
-          ).textTheme.titleMedium?.copyWith(color: ColorManager.errorRed),
+          style: titleMedium?.copyWith(color: ColorManager.primaryBlue),
         ),
       ),
     );
@@ -29,9 +28,7 @@ onTap(BuildContext context) {
       backgroundColor: ColorManager.shadowBlue,
       content: Text(
         'Tapped',
-        style: Theme.of(
-          context,
-        ).textTheme.titleMedium?.copyWith(color: ColorManager.errorRed),
+        style: context.titleMedium?.copyWith(color: ColorManager.errorRed),
       ),
     ),
   );
