@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 AppBar customSecondaryAppBar(
@@ -16,16 +19,14 @@ AppBar customSecondaryAppBar(
     leadingWidth: 100.w,
     leading: Row(
       children: [
-        SizedBox(width: 20.w),
+        horizontalSpacing(kSpacingLarge),
         customAppBarBack(context, onBackPress: onBackPress),
       ],
     ),
     title: Text(
       title ?? '',
       textAlign: TextAlign.center,
-      style: Theme.of(
-        context,
-      ).textTheme.headlineMedium?.copyWith(color:textColor ?? ColorManager.primaryBlue),
+      style: context.headlineMedium?.copyWith(color:textColor ?? ColorManager.primaryBlue),
     ),
   );
 }
@@ -40,7 +41,7 @@ IconButton customAppBarBack(BuildContext context, {VoidCallback? onBackPress}) {
     icon: Icon(
       Icons.arrow_back_ios_new,
       color: ColorManager.pureBlack,
-      size: 20.sp,
+      size: kIconSizeDefault.sp,
     ),
     onPressed:
         onBackPress ??

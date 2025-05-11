@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -66,7 +67,7 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
           SliverToBoxAdapter(
             child: Text(
               context.localization.check_email,
-              style: Theme.of(context).textTheme.headlineLarge,
+              style: context.headlineLarge,
             ),
           ),
           SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
@@ -77,23 +78,21 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
                   children: [
                     TextSpan(
                       text: context.localization.we_sent_code,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: context.titleLarge?.copyWith(
                         color: ColorManager.softGray,
                       ),
                     ),
                     if (widget.email.isNotEmpty)
                       TextSpan(
                         text: '  ${widget.email}',
-
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        style: context.titleLarge?.copyWith(
                           color: ColorManager.primaryBlue,
                         ),
                       )
                     else
                       TextSpan(
                         text: '  ${widget.email}',
-
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        style: context.titleLarge?.copyWith(
                           color: ColorManager.primaryBlue,
                         ),
                       ),
@@ -103,7 +102,6 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
             ),
           ),
           SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-
           // PinPut
           SliverToBoxAdapter(
             child: CustomPinputOtpCodeWidget(
@@ -112,7 +110,6 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
             ),
           ),
           SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-
           SliverToBoxAdapter(
             child: CustomButton(
               text: context.localization.verify,
@@ -127,7 +124,7 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
               textAlign: TextAlign.center,
               TextSpan(
                 text: '${context.localization.send_code_again}  ',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: context.titleLarge?.copyWith(
                   color:
                       _canResend
                           ? ColorManager.primaryBlue
@@ -144,7 +141,7 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
                 children: [
                   TextSpan(
                     text: '00:${_start.toString()}',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: context.titleLarge?.copyWith(
                       color: ColorManager.softGray,
                       fontWeight: FontWeightHelper.semiBold,
                     ),

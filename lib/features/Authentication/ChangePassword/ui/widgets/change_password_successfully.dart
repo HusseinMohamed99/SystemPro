@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
@@ -22,15 +23,13 @@ class ChangePasswordSuccessfully extends StatelessWidget {
       appBar: basicAppBar(),
       body: Center(
         child: Column(
-
-        
           mainAxisSize: MainAxisSize.min,
           children: [
             SvgPicture.asset(Assets.images.star),
             verticalSpacing(kSpacingXXLarge),
             Text(
               context.localization.password_changed,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+              style: context.headlineLarge?.copyWith(
                 color: ColorManager.pureBlack,
                 fontWeight: FontWeightHelper.semiBold,
               ),
@@ -39,7 +38,7 @@ class ChangePasswordSuccessfully extends StatelessWidget {
             Text(
               context.localization.password_changed_subtitle,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: context.titleLarge?.copyWith(
                 color: ColorManager.softGray,
                 fontWeight: FontWeightHelper.regular,
               ),
