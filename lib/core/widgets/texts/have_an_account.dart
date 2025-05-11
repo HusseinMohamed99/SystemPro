@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -20,10 +21,8 @@ class HaveAnAccountWidget extends StatelessWidget {
         children: [
           TextSpan(
             text: title1,
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(
-           color:   AdaptiveColor.adaptiveColor(
+            style: context.titleMedium?.copyWith(
+              color: AdaptiveColor.adaptiveColor(
                 context: context,
                 lightColor: ColorManager.softGray,
                 darkColor: ColorManager.pureWhite,
@@ -32,7 +31,7 @@ class HaveAnAccountWidget extends StatelessWidget {
           ),
           TextSpan(
             text: ' $title2',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: context.titleMedium?.copyWith(
               color: AdaptiveColor.adaptiveColor(
                 context: context,
                 lightColor: ColorManager.primaryBlue,

@@ -5,7 +5,6 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
@@ -27,7 +26,6 @@ class SignupViewBlocConsumer extends StatelessWidget {
             Routes.emailVerifyView,
             arguments: state.data.userData?.email,
           );
-          AppLogs.closeLog(state.data.userData?.email);
         }
         if (state is SignupError) {
           context.showSnackBar(state.error);
