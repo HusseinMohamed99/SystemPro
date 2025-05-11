@@ -1244,6 +1244,11 @@ class S {
   String get see_more {
     return Intl.message('See More', name: 'see_more', desc: '', args: []);
   }
+
+  /// `Book`
+  String get book {
+    return Intl.message('Book', name: 'book', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

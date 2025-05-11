@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "back_to_login": MessageLookupByLibrary.simpleMessage("رجوع لتسجيل الدخول"),
     "bathrooms": MessageLookupByLibrary.simpleMessage("الحمامات"),
     "bedrooms": MessageLookupByLibrary.simpleMessage("غرف النوم"),
+    "book": MessageLookupByLibrary.simpleMessage("احجز"),
     "buy": MessageLookupByLibrary.simpleMessage("شراء"),
     "call": MessageLookupByLibrary.simpleMessage("اتصال"),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(

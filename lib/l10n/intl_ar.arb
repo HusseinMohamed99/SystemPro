@@ -297,9 +297,7 @@
       "no_data_found":"لا يوجد بيانات",
       "@no_data_found":{},
       "see_more":"اظهار المزيد",
-      "@see_more":{}
-      
-
-    
-
+      "@see_more":{},
+      "book":"احجز",
+      "@book":{}
 }

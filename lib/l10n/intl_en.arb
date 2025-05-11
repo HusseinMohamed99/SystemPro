@@ -297,6 +297,7 @@
       "no_data_found":"No Data Found",
       "@no_data_found":{},
       "see_more":"See More",
-      "@see_more":{}
-
+      "@see_more":{},
+      "book":"Book",
+      "@book":{}
 }

@@ -15,9 +15,6 @@ class RealEstateSliverList extends StatelessWidget {
     return SliverList.separated(
       itemBuilder: (context, index) {
         final listing = listings[index];
-
-        // التحقق من حالة المفضلة لهذا العقار
-
         return GestureDetector(
           onTap: () {
             context.pushNamed(
@@ -32,7 +29,6 @@ class RealEstateSliverList extends StatelessWidget {
           ),
         );
       },
-
       separatorBuilder: (context, index) => verticalSpacing(kSpacingDefault),
       itemCount: listings.length,
     );
