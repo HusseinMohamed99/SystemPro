@@ -80,23 +80,23 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
                     TextSpan(
                       text: context.localization.we_sent_code,
                       style: context.titleLarge?.copyWith(
-                        color: ColorManager.softGray,
+                        color: AdaptiveColor.adaptiveColor(
+                          context: context,
+                          lightColor: ColorManager.softGray,
+                          darkColor: ColorManager.hintGrey,
+                        ),
                       ),
                     ),
-                    if (widget.email.isNotEmpty)
                       TextSpan(
                         text: '  ${widget.email}',
                         style: context.titleLarge?.copyWith(
-                          color: ColorManager.primaryBlue,
+                          color: AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.primaryBlue,
+                            darkColor: ColorManager.secondaryBlue,
+                          ),
                         ),
                       )
-                    else
-                      TextSpan(
-                        text: '  ${widget.email}',
-                        style: context.titleLarge?.copyWith(
-                          color: ColorManager.primaryBlue,
-                        ),
-                      ),
                   ],
                 ),
               ),
@@ -128,8 +128,16 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
                 style: context.titleLarge?.copyWith(
                   color:
                       _canResend
-                          ? ColorManager.primaryBlue
-                          : ColorManager.softGray,
+                          ? AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.primaryBlue,
+                            darkColor: ColorManager.secondaryBlue,
+                          )
+                          : AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.softGray,
+                            darkColor: ColorManager.hintGrey,
+                          ),
                   fontWeight: FontWeightHelper.semiBold,
                 ),
                 recognizer:
@@ -143,7 +151,11 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
                   TextSpan(
                     text: '00:${_start.toString()}',
                     style: context.titleLarge?.copyWith(
-                      color: ColorManager.softGray,
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.softGray,
+                        darkColor: ColorManager.hintGrey,
+                      ),
                       fontWeight: FontWeightHelper.semiBold,
                     ),
                   ),

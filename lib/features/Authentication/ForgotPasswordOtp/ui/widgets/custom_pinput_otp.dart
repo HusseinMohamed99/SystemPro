@@ -26,9 +26,19 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
           width: 30,
           margin: EdgeInsets.all(10.h),
           decoration: BoxDecoration(
-            color: ColorManager.pureBlack,
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.pureBlack,
+              darkColor: ColorManager.tertiaryBlack,
+            ),
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(),
+            border: Border.all(
+              color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.pureWhite,
+                darkColor: ColorManager.tertiaryBlack,
+              )
+            ),
           ),
         ),
       ),
@@ -41,9 +51,19 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
         height: 77.h,
         textStyle: context.headlineLarge,
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.pureWhite,
+            darkColor: ColorManager.tertiaryBlack,
+          ),
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: ColorManager.grey),
+          border: Border.all(color: 
+            AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.pureWhite,
+              darkColor: ColorManager.tertiaryBlack,
+            ),
+          ),
         ),
       ),
       errorPinTheme: PinTheme(
@@ -51,7 +71,11 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
         height: 77.h,
         textStyle: context.headlineLarge,
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.pureWhite,
+            darkColor: ColorManager.tertiaryBlack,
+          ),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: ColorManager.errorRed),
         ),
@@ -61,7 +85,11 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
         height: 77.h,
         textStyle: context.headlineLarge,
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.pureWhite,
+            darkColor: ColorManager.tertiaryBlack,
+          ),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(width: 1.5),
         ),

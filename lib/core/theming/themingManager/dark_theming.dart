@@ -14,8 +14,8 @@ ThemeData buildDarkTheming({required TextTheme textTheme}) {
       centerTitle: true,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: ColorManager.secondaryBlack,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
         systemNavigationBarColor: ColorManager.secondaryBlack,
       ),
     ),

@@ -13,7 +13,11 @@ AppBar customSecondaryAppBar(
   Color? textColor,
 }) {
   return AppBar(
-    backgroundColor: ColorManager.pureWhite,
+    backgroundColor: AdaptiveColor.adaptiveColor(
+      context: context,
+      lightColor: ColorManager.pureWhite,
+      darkColor: ColorManager.primaryBlack,
+    ),
     elevation: 0,
     centerTitle: true,
     leadingWidth: 100.w,
@@ -36,11 +40,24 @@ IconButton customAppBarBack(BuildContext context, {VoidCallback? onBackPress}) {
     style: IconButton.styleFrom(
       minimumSize: Size(40.w, 40.h),
       maximumSize: Size(40.w, 40.h),
-      side: BorderSide(color: ColorManager.borderGrey, width: 2.w),
+      backgroundColor: AdaptiveColor.adaptiveColor(
+      context: context,
+      lightColor: ColorManager.pureWhite,
+      darkColor: ColorManager.tertiaryBlack,
+    ),
+      side: BorderSide(color:AdaptiveColor.adaptiveColor(
+      context: context,
+      lightColor: ColorManager.borderGrey,
+      darkColor: ColorManager.tertiaryBlack,
+    ), width: 2.w),
     ),
     icon: Icon(
       Icons.arrow_back_ios_new,
-      color: ColorManager.pureBlack,
+      color: AdaptiveColor.adaptiveColor(
+        context: context,
+        lightColor: ColorManager.primaryBlack,
+        darkColor: ColorManager.pureWhite,
+      ),
       size: kIconSizeDefault.sp,
     ),
     onPressed:

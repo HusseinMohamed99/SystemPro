@@ -30,7 +30,11 @@ class ChangePasswordSuccessfully extends StatelessWidget {
             Text(
               context.localization.password_changed,
               style: context.headlineLarge?.copyWith(
-                color: ColorManager.pureBlack,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.pureBlack,
+                  darkColor: ColorManager.pureWhite,
+                ),
                 fontWeight: FontWeightHelper.semiBold,
               ),
             ),
@@ -39,7 +43,11 @@ class ChangePasswordSuccessfully extends StatelessWidget {
               context.localization.password_changed_subtitle,
               textAlign: TextAlign.center,
               style: context.titleLarge?.copyWith(
-                color: ColorManager.softGray,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.softGray,
+                  darkColor: ColorManager.hintGrey,
+                ),
                 fontWeight: FontWeightHelper.regular,
               ),
             ),

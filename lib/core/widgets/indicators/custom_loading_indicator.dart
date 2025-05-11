@@ -20,7 +20,11 @@ class LoadingIndicator extends StatelessWidget {
         child,
         if (isLoading)
           Container(
-            color: HexColorExtension('#80000000').toColor(),
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: HexColorExtension('#80000000').toColor(),
+              darkColor: HexColorExtension('#80FFFFFF').toColor(),
+            ),
             child: const Center(
               child: SpinKitWaveSpinner(
                 duration: Duration(seconds: 5),

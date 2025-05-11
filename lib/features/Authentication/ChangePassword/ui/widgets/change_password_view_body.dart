@@ -24,7 +24,12 @@ class ChangePasswordViewBody extends StatelessWidget {
         SliverToBoxAdapter(
           child: Text(
             context.localization.reset_password_subtitle,
-            style: context.titleLarge?.copyWith(color: ColorManager.softGray),
+            style: context.titleLarge?.copyWith(color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.softGray,
+                darkColor: ColorManager.hintGrey,
+              ),
+            ),
           ),
         ),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
