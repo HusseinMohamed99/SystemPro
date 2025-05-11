@@ -102,16 +102,20 @@ class AppRouters {
               (_) =>
                   FilterView(locationArgument: arguments as LocationArgument),
         );
-      case Routes.companyProfileView:
+     case Routes.companyProfileView:
+        final int companyId = arguments as int;
+
         return MaterialPageRoute(
           builder:
               (_) => BlocProvider(
                 create:
                     (context) =>
-                        getIt<RealEstateCubit>()..getFilteredListings(),
-                child: const CompanyProfileView(),
+                        getIt<RealEstateCubit>()
+                          ..getListingsByCompany(companyId),
+                child: CompanyProfileView(companyID: companyId),
               ),
         );
+
       case Routes.realEstateDetailsView:
         return MaterialPageRoute(
           builder: (_) => RealEstateDetailsView(listing: arguments as Listing),

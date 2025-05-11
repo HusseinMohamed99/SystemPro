@@ -1229,6 +1229,21 @@ class S {
       args: [],
     );
   }
+
+  /// `No Data Found`
+  String get no_data_found {
+    return Intl.message(
+      'No Data Found',
+      name: 'no_data_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See More`
+  String get see_more {
+    return Intl.message('See More', name: 'see_more', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -293,6 +293,10 @@
       "see_location":"See Location",
       "@see_location":{},
       "deleting_account":"Deleting Account",
-      "@deleting_account":{}
+      "@deleting_account":{},
+      "no_data_found":"No Data Found",
+      "@no_data_found":{},
+      "see_more":"See More",
+      "@see_more":{}
 
 }

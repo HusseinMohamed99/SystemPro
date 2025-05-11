@@ -5,7 +5,6 @@ import 'package:system_pro/core/theming/styleManager/font_family.dart';
 import 'package:system_pro/core/theming/styleManager/font_size.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
-
 class AppTextStyleManager {
   static const _fontFamily = FontFamilyHelper.standardFont;
 
@@ -45,7 +44,8 @@ class AppTextStyleManager {
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s14),
       fontWeight: FontWeightHelper.semiBold,
       fontFamily: _fontFamily,
-    ),    titleSmall: TextStyle(
+    ),
+    titleSmall: TextStyle(
       color: ColorManager.pureBlack,
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s12),
       fontWeight: FontWeightHelper.regular,
@@ -56,7 +56,7 @@ class AppTextStyleManager {
   );
 
   static TextTheme darkTextTheme(BuildContext context) => TextTheme(
-     displaySmall: TextStyle(
+    displaySmall: TextStyle(
       color: ColorManager.primaryBlue,
       fontSize: getResponsiveFontSize(context, fontSize: FontSizeHelper.s36),
       fontWeight: FontWeightHelper.semiBold,

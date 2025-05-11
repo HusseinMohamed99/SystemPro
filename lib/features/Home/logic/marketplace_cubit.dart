@@ -142,7 +142,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
 
   Future<void> getFavoriteListings() async {
-    emit(const MarketplaceState.loading());
+    emit(const MarketplaceState.getFavoriteLoading());
 
     try {
       final result = await _marketplaceRepo.getFavoriteListings();
@@ -152,7 +152,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           final favoriteListings = response.data ?? [];
 
           if (favoriteListings.isEmpty) {
-            emit(const MarketplaceState.success([]));
+            emit(const MarketplaceState.getFavoriteSuccess([]));
             return;
           }
 
@@ -165,18 +165,18 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
           _loadedCount = _visibleListings.length;
 
-          emit(MarketplaceState.success(List.from(_visibleListings)));
+          emit(MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)));
         },
         failure: (errorHandler) {
           emit(
-            MarketplaceState.error(
+            MarketplaceState.getFavoriteError(
               'فشل في جلب المفضلات: ${errorHandler.apiErrorModel.message}',
             ),
           );
         },
       );
     } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+      emit(MarketplaceState.getFavoriteError('حدث خطأ غير متوقع: $error'));
     }
   }
 }

@@ -167,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "new_account": MessageLookupByLibrary.simpleMessage("حساب جديد"),
     "new_password": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
     "newest": MessageLookupByLibrary.simpleMessage("الأحدث"),
+    "no_data_found": MessageLookupByLibrary.simpleMessage("لا يوجد بيانات"),
     "no_result": MessageLookupByLibrary.simpleMessage(
       "لم يتم العثور على نتائج",
     ),
@@ -255,6 +256,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("ابحث"),
     "see_location": MessageLookupByLibrary.simpleMessage("عرض الموقع"),
+    "see_more": MessageLookupByLibrary.simpleMessage("اظهار المزيد"),
     "see_more_amenities": MessageLookupByLibrary.simpleMessage(
       "عرض المزيد من الوسائل",
     ),

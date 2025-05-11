@@ -293,7 +293,11 @@
       "see_location":"عرض الموقع",
       "@see_location":{},
       "deleting_account":"جاري حذف الحساب...",
-      "@deleting_account":{}
+      "@deleting_account":{},
+      "no_data_found":"لا يوجد بيانات",
+      "@no_data_found":{},
+      "see_more":"اظهار المزيد",
+      "@see_more":{}
       
 
     
