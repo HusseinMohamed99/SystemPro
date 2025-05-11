@@ -18,33 +18,11 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   int currentViewIndex = 0;
 
-  late final MarketplaceCubit marketplaceCubit;
-  late final ProfileCubit profileCubit;
-
-  @override
-  void initState() {
-    super.initState();
-    marketplaceCubit = getIt<MarketplaceCubit>();
-    profileCubit = getIt<ProfileCubit>();
-
-    // التأكد من أن البيانات لا يتم تحميلها إذا كانت قد تم تحميلها بالفعل
-    if (marketplaceCubit.state is! MarketPlaceSuccess &&
-        marketplaceCubit.state is! MarketPlaceLoading) {
-      marketplaceCubit
-          .getListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
-    }
-    if (marketplaceCubit.state is! GetFavoriteSuccess &&
-        marketplaceCubit.state is! GetFavoriteLoading) {
-      marketplaceCubit.getFavoriteListings();
-    }
-    if (profileCubit.state is! UserDataSuccess &&
-        profileCubit.state is! UserDataLoading) {
-      profileCubit
-          .emitGetProfileStates(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
-    }
-  }
-
-  void _handleTabChange(int index) {
+  void _handleTabChange(
+    int index,
+    MarketplaceCubit marketplaceCubit,
+    ProfileCubit profileCubit,
+  ) {
     if (index == currentViewIndex) return;
 
     setState(() {
@@ -53,52 +31,57 @@ class _MainViewState extends State<MainView> {
 
     switch (index) {
       case 0: // Home
-        // التحقق أولًا من حالة الـ Cubit لتجنب التحميل غير الضروري
         if (marketplaceCubit.state is! MarketPlaceSuccess &&
             marketplaceCubit.state is! MarketPlaceLoading) {
-          marketplaceCubit
-              .getListings(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+          marketplaceCubit.getListings();
         }
         break;
       case 1: // Favorites
-
         if (marketplaceCubit.state is! GetFavoriteSuccess &&
             marketplaceCubit.state is! GetFavoriteLoading) {
           marketplaceCubit.getFavoriteListings();
         }
         break;
-
       case 2: // Profile
-        // التحقق أولًا من حالة الـ Cubit لتجنب التحميل غير الضروري
         if (profileCubit.state is! UserDataSuccess &&
             profileCubit.state is! UserDataLoading) {
-          profileCubit
-              .emitGetProfileStates(); // تحميل البيانات فقط إذا كانت غير موجودة أو إذا كانت في حالة Loading
+          profileCubit.emitGetProfileStates();
         }
-
         break;
     }
-  }
-
-  @override
-  void dispose() {
-    marketplaceCubit.close();
-    profileCubit.close();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: marketplaceCubit),
-        BlocProvider.value(value: profileCubit),
-      ],
-      child: Scaffold(
-        body: SafeArea(child: MainViewBody(currentViewIndex: currentViewIndex)),
-        bottomNavigationBar: CustomBottomNavigationBar(
-          onItemTapped: _handleTabChange,
+        BlocProvider(
+          create:
+              (_) =>
+                  getIt<MarketplaceCubit>()
+                    ..getListings()
+                    ..getFavoriteListings(),
         ),
+        BlocProvider(
+          create: (_) => getIt<ProfileCubit>()..emitGetProfileStates(),
+        ),
+      ],
+      child: Builder(
+        builder: (context) {
+          final marketplaceCubit = context.read<MarketplaceCubit>();
+          final profileCubit = context.read<ProfileCubit>();
+
+          return Scaffold(
+            body: SafeArea(
+              child: MainViewBody(currentViewIndex: currentViewIndex),
+            ),
+            bottomNavigationBar: CustomBottomNavigationBar(
+              onItemTapped:
+                  (index) =>
+                      _handleTabChange(index, marketplaceCubit, profileCubit),
+            ),
+          );
+        },
       ),
     );
   }
