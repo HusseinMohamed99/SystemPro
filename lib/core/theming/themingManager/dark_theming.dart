@@ -16,7 +16,7 @@ ThemeData buildDarkTheming({required TextTheme textTheme}) {
         statusBarColor: ColorManager.secondaryBlack,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: ColorManager.secondaryBlack,
+        systemNavigationBarColor: ColorManager.primaryBlack,
       ),
     ),
     colorScheme: ColorScheme.fromSeed(

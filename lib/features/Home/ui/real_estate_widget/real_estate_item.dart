@@ -21,11 +21,28 @@ class RealEstateItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: AdaptiveColor.adaptiveColor(
+        context: context,
+        lightColor: ColorManager.borderGrey,
+        darkColor: ColorManager.tertiaryBlack,
+      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: ColorManager.borderGrey, width: 1.5.w),
-          color: ColorManager.pureWhite,
+          border: Border.all(
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.borderGrey,
+              darkColor: ColorManager.tertiaryBlack,
+            ),
+            width: 1.5.w,
+          ),
+
+          color: AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.pureWhite,
+            darkColor: ColorManager.tertiaryBlack,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

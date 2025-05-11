@@ -301,5 +301,7 @@
       "book":"Book",
       "@book":{},
       "lands":"Lands",
-      "@lands":{}
+      "@lands":{},
+      "no_available_properties":"No Available Properties",
+      "@no_available_properties":{}
 }

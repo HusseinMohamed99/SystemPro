@@ -1254,6 +1254,16 @@ class S {
   String get lands {
     return Intl.message('Lands', name: 'lands', desc: '', args: []);
   }
+
+  /// `No Available Properties`
+  String get no_available_properties {
+    return Intl.message(
+      'No Available Properties',
+      name: 'no_available_properties',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

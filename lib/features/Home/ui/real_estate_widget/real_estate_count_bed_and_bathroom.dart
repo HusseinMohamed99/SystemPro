@@ -29,13 +29,28 @@ class RealEstateCountBedAndBathRoom extends StatelessWidget {
               final values = [bedroomNum, bathroomNum, '$area sqm'];
               return Row(
                 children: [
-                  SvgPicture.asset(images[index]),
+                  SvgPicture.asset(
+                    images[index],
+                    colorFilter: ColorFilter.mode(
+                      AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.softGray,
+                        darkColor: ColorManager.iconGrey,
+                      ),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+
                   horizontalSpacing(kSpacingSmall.w),
                   Text(
                     values[index],
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                      color: ColorManager.softGray,
+                      color:  AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.softGray,
+                        darkColor: ColorManager.iconGrey,
+                      ),
                     ),
                   ),
                 ],

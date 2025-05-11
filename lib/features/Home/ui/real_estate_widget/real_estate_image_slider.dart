@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
@@ -7,7 +6,6 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/listing_image.dart';
-import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({
@@ -40,7 +38,6 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Image slider
         ClipRRect(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(16),
@@ -71,8 +68,6 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             ),
           ),
         ),
-
-        // Favorite Icon (toggling)
         Positioned(
           top: 16.h,
           right: 16.w,
@@ -81,13 +76,17 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
               // context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
             },
             child: Container(
-              padding: EdgeInsets.symmetric(
+              padding: EdgeInsetsDirectional.symmetric(
                 horizontal: kPaddingSmallHorizontal.w,
                 vertical: kPaddingSmallVertical.h,
               ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: ColorManager.pureWhite,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.softWhite,
+                  darkColor: ColorManager.tertiaryBlack,
+                ),
               ),
 
               child: Icon(
@@ -95,13 +94,16 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                 color:
                     widget.isFavorite
                         ? ColorManager.brightRed
-                        : ColorManager.pureBlack,
+                        : AdaptiveColor.adaptiveColor(
+                          context: context,
+                          lightColor: ColorManager.tertiaryBlack,
+                          darkColor: ColorManager.hintGrey,
+                        ),
                 size: kIconSizeDefault.sp,
               ),
             ),
           ),
         ),
-        // Dots Indicator
         Positioned(
           bottom: 8.h,
           left: 0,
@@ -112,14 +114,22 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
               final isActive = index == _currentIndex;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                width: isActive ? 12 : 8,
+                margin: const EdgeInsetsDirectional.symmetric(horizontal: 4),
+                width: 8,
                 height: 8,
                 decoration: BoxDecoration(
                   color:
                       isActive
-                          ? ColorManager.primaryBlue
-                          : ColorManager.softGray,
+                          ? AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.primaryBlue,
+                            darkColor: ColorManager.secondaryBlue,
+                          )
+                          : AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.softWhite,
+                            darkColor: ColorManager.pureWhite,
+                          ),
                   borderRadius: BorderRadius.circular(4),
                 ),
               );

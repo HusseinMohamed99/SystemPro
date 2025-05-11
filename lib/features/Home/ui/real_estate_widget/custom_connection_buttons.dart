@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/make_call.dart';
 import 'package:system_pro/core/helpers/functions/url_launcher.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -25,8 +26,14 @@ class CustomConnectionButton extends StatelessWidget {
         Expanded(
           child: TextButton.icon(
             style: TextButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: kPaddingMediumVertical.h),
-              backgroundColor: ColorManager.shadowBlue,
+              padding: EdgeInsetsDirectional.symmetric(
+                vertical: kPaddingMediumVertical.h,
+              ),
+              backgroundColor: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.shadowBlue,
+                darkColor: ColorManager.fourthBlack,
+              ),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -35,10 +42,20 @@ class CustomConnectionButton extends StatelessWidget {
             onPressed: () async {
               await urlLauncher(context, 'https://wa.me/+$whatsAppURL');
             },
-            icon: SvgPicture.asset(Assets.images.whatsapp),
+            icon: SvgPicture.asset(
+              Assets.images.whatsapp,
+              colorFilter: ColorFilter.mode(
+                AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.primaryBlue,
+                  darkColor: ColorManager.secondaryBlue,
+                ),
+                BlendMode.srcIn,
+              ),
+            ),
             label: Text(
               context.localization.whatsApp,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
               ),
             ),
@@ -48,8 +65,14 @@ class CustomConnectionButton extends StatelessWidget {
         Expanded(
           child: TextButton.icon(
             style: TextButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: kPaddingMediumVertical.h),
-              backgroundColor: ColorManager.shadowBlue,
+              padding: EdgeInsetsDirectional.symmetric(
+                vertical: kPaddingMediumVertical.h,
+              ),
+              backgroundColor: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.shadowBlue,
+                darkColor: ColorManager.fourthBlack,
+              ),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -58,10 +81,20 @@ class CustomConnectionButton extends StatelessWidget {
             onPressed: () {
               makePhoneCall(context, '+$phoneURL');
             },
-            icon: SvgPicture.asset(Assets.images.phone),
+            icon: SvgPicture.asset(
+              Assets.images.phone,
+              colorFilter: ColorFilter.mode(
+                AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.primaryBlue,
+                  darkColor: ColorManager.secondaryBlue,
+                ),
+                BlendMode.srcIn,
+              ),
+            ),
             label: Text(
               context.localization.call,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
               ),
             ),

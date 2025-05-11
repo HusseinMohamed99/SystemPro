@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -32,7 +33,7 @@ class CustomSearchTextField extends StatelessWidget {
     return TextField(
       onTap: () {
         if (readOnly == true) {
-         context.pushNamed(Routes.searchView);
+          context.pushNamed(Routes.searchView);
         }
       },
       onChanged: onChanged,
@@ -43,27 +44,42 @@ class CustomSearchTextField extends StatelessWidget {
       onSubmitted: onSubmitted,
       decoration: InputDecoration(
         filled: true,
-        fillColor: ColorManager.softWhite,
+        fillColor: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.softWhite,
+          darkColor: ColorManager.tertiaryBlack,
+        ),
         hintText: context.localization.search,
-        hintStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: ColorManager.softGray,
+        hintStyle: context.titleMedium?.copyWith(
+          color: AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.softGray,
+            darkColor: ColorManager.hintGrey,
+          ),
           fontWeight: FontWeightHelper.regular,
         ),
         prefixIcon: CustomIconImage(image: Assets.images.search),
         contentPadding: EdgeInsets.symmetric(
           horizontal: kPaddingDefaultHorizontal.w,
         ),
-        border: buildOutlineBorder(),
-        enabledBorder: buildOutlineBorder(),
-        focusedBorder: buildOutlineBorder(),
+        border: buildOutlineBorder(context),
+        enabledBorder: buildOutlineBorder(context),
+        focusedBorder: buildOutlineBorder(context),
       ),
     );
   }
 
-  OutlineInputBorder buildOutlineBorder() {
+  OutlineInputBorder buildOutlineBorder(BuildContext context) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(kBorderRadiusMedium).r,
-      borderSide: BorderSide(width: 1.5.w, color: ColorManager.borderGrey),
+      borderSide: BorderSide(
+        width: 1.5.w,
+        color: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.borderGrey,
+          darkColor: ColorManager.tertiaryBlack,
+        ),
+      ),
     );
   }
 }
@@ -77,7 +93,19 @@ class CustomIconImage extends StatelessWidget {
     return SizedBox(
       width: kSizeSecondaryWidth.w,
       height: kSizeSecondaryHeight.h,
-      child: Center(child: SvgPicture.asset(image)),
+      child: Center(
+        child: SvgPicture.asset(
+          image,
+          colorFilter: ColorFilter.mode(
+            AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.softGray,
+              darkColor: ColorManager.softWhite,
+            ),
+            BlendMode.srcIn,
+          ),
+        ),
+      ),
     );
   }
 }

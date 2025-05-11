@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
@@ -39,11 +39,7 @@ class HomeViewBody extends StatelessWidget {
                 rightPadding: kPaddingDefaultHorizontal,
                 bottomPadding: kPaddingVertical,
               ),
-              Divider(
-                color: ColorManager.borderGrey,
-                thickness: 1,
-                height: 1.h,
-              ),
+              const CustomDivider(),
               ResultsCountAndSortButton(
                 propertyLength: listings.length.toString(),
               ).onlyPadding(
@@ -54,8 +50,9 @@ class HomeViewBody extends StatelessWidget {
               Expanded(
                 child:
                     listings.isEmpty
-                        ? const Center(
-                          child: Text('لا توجد عقارات متاحة حالياً'),
+                        ? CustomErrorWidget(
+                          errorMessage:
+                              context.localization.no_available_properties,
                         )
                         : NotificationListener<ScrollNotification>(
                           onNotification: (scrollInfo) {
@@ -77,10 +74,9 @@ class HomeViewBody extends StatelessWidget {
             ],
           );
         } else {
-          return const SizedBox.shrink(); // fallback for unknown states
+          return const SizedBox.shrink();
         }
       },
     );
   }
 }
-

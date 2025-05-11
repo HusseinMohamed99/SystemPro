@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 class InactiveNavigationItem extends StatelessWidget {
@@ -18,9 +19,12 @@ class InactiveNavigationItem extends StatelessWidget {
           SvgPicture.asset(icon),
           Text(
             title,
-            style: Theme.of(
-              context,
-            ).textTheme.titleSmall?.copyWith(color: ColorManager.softGray),
+            style:context.titleSmall?.copyWith(color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.softGray,
+                darkColor: ColorManager.hintGrey,
+              ),
+            ),
           ),
         ],
       ),

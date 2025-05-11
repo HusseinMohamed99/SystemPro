@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -64,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Text(
               context.localization.forgot_password,
               textAlign: TextAlign.right,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: context.titleMedium?.copyWith(
                 color: AdaptiveColor.adaptiveColor(
                   context: context,
                   lightColor:ColorManager.primaryBlue,

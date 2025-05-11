@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_company_logo_and_created_time.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
@@ -22,14 +24,7 @@ class RealEstateInfo extends StatelessWidget {
     required this.dateTime,
     required this.company,
   });
-  final String price,
-      title,
-      location,
-      bedroomNum,
-      bathroomNum,
-      area,
-      dateTime
-      ;
+  final String price, title, location, bedroomNum, bathroomNum, area, dateTime;
   final Company company;
 
   @override
@@ -40,14 +35,23 @@ class RealEstateInfo extends StatelessWidget {
       children: [
         Text(
           '$price ${context.localization.sar}',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(color: ColorManager.primaryBlue),
+          style: context.titleLarge?.copyWith(
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.primaryBlue,
+              darkColor: ColorManager.secondaryBlue,
+            ),
+          ),
         ),
         Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.medium,
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.pureBlack,
+              darkColor: ColorManager.hintGrey,
+            ),
           ),
         ),
         RealEstateCountBedAndBathRoom(
@@ -57,23 +61,21 @@ class RealEstateInfo extends StatelessWidget {
         ),
         Text(
           location,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
-            color: ColorManager.softGray,
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.softGray,
+              darkColor: ColorManager.iconGrey,
+            ),
           ),
         ),
-        CustomCompanyLogoAndCratedTime(
-          dateTime: dateTime,
-          company: company,
+        CustomCompanyLogoAndCratedTime(dateTime: dateTime, company: company),
+        const CustomDivider().vPadding(kSpacingSmall),
+        CustomConnectionButton(
+          whatsAppURL: company.phone ?? '',
+          phoneURL: company.phone ?? '',
         ),
-        Divider(
-          color: ColorManager.borderGrey,
-          height: 1.h,
-        ).vPadding(kSpacingSmall),
-         CustomConnectionButton(
-          whatsAppURL: company.phone??  '',
-          phoneURL: company.phone?? '',
-         ),
       ],
     ).onlyPadding(
       leftPadding: kPaddingHorizontal,

@@ -301,5 +301,7 @@
       "book":"احجز",
       "@book":{},
       "lands":"الأراضي",
-      "@lands":{}
+      "@lands":{},
+      "no_available_properties":"لا توجد عقارات متاحة حالياً",
+      "@no_available_properties":{}
 }

@@ -169,6 +169,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "new_account": MessageLookupByLibrary.simpleMessage("حساب جديد"),
     "new_password": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
     "newest": MessageLookupByLibrary.simpleMessage("الأحدث"),
+    "no_available_properties": MessageLookupByLibrary.simpleMessage(
+      "لا توجد عقارات متاحة حالياً",
+    ),
     "no_data_found": MessageLookupByLibrary.simpleMessage("لا يوجد بيانات"),
     "no_result": MessageLookupByLibrary.simpleMessage(
       "لم يتم العثور على نتائج",

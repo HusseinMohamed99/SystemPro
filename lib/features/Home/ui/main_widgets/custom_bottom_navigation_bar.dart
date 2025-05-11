@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Home/data/model/bottom_navigation_bar_model.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/navigation_bar_item.dart';
 
@@ -18,9 +19,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     return Container(
       width: 375,
       height: 70,
-      decoration: const ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
+      decoration: ShapeDecoration(
+        color: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.pureWhite,
+          darkColor: ColorManager.primaryBlack,
+        ),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
@@ -28,9 +33,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x19000000),
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.pureWhite,
+              darkColor: ColorManager.primaryBlack,
+            ),
             blurRadius: 25,
-            offset: Offset(0, -2),
+            offset: const Offset(0, -2),
           ),
         ],
       ),

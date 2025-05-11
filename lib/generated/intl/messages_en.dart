@@ -169,6 +169,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "new_account": MessageLookupByLibrary.simpleMessage("New Account"),
     "new_password": MessageLookupByLibrary.simpleMessage("New Password"),
     "newest": MessageLookupByLibrary.simpleMessage("Newest"),
+    "no_available_properties": MessageLookupByLibrary.simpleMessage(
+      "No Available Properties",
+    ),
     "no_data_found": MessageLookupByLibrary.simpleMessage("No Data Found"),
     "no_result": MessageLookupByLibrary.simpleMessage("No Result"),
     "not_receive_code": MessageLookupByLibrary.simpleMessage(

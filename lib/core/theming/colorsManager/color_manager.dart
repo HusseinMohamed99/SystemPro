@@ -14,6 +14,7 @@ class ColorManager {
     0xFF18181A,
   ); // Formerly secondaryBlack
   static const Color tertiaryBlack = Color(0xFF191D23);
+  static const Color fourthBlack = Color(0xFF262C36);
   static const Color pureWhite = Color(0xFFFFFFFF); // Formerly white
   static const Color softWhite = Color(0xFFF9FAFA); // Formerly secondaryWhite
   static const Color offWhite = Color(0xFFE6E9E9); // Soft, muted white
@@ -24,7 +25,8 @@ class ColorManager {
   static const Color mediumGrey = Color(0xFF949D9E); // Formerly lightGrey
   static const Color borderGrey = Color(0xFFD8DADC); // Formerly lightGrey
   static const Color darkGrey = Color(0xFF4E5556); // Formerly grey
-  static const Color hintGrey = Color(0xFFB8C0CC); // Formerly grey
+  static const Color hintGrey = Color(0xFFE3E3E3); // Formerly grey
+  static const Color iconGrey = Color(0xFFB8C0CC); // Formerly grey
   static const Color brightRed = Color(0xFFF30202); // Formerly red
   static const Color errorRed = Color(0xFFB00020); // Red color for error text
 }

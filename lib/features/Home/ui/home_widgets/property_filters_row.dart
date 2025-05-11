@@ -29,51 +29,74 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
     selectedFilter = context.localization.buy;
   }
 
-@override
-Widget build(BuildContext context) {
-  final allFilters = filters(context);
-  return Row(
-    children: allFilters.map((filter) {
-      final isSelected = selectedFilter == filter;
-      return Expanded(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.w), 
-          child: ChoiceChip(
-            labelPadding: EdgeInsets.symmetric(vertical: 2.h),
-            label: SizedBox(
-              width: double.infinity,
-              child: Text(
-                filter,
-                textAlign: TextAlign.center,
-                style: context.titleLarge?.copyWith(
-                  color: isSelected
-                      ? ColorManager.primaryBlue
-                      : ColorManager.softGray,
-                  fontWeight: FontWeightHelper.medium,
+  @override
+  Widget build(BuildContext context) {
+    final allFilters = filters(context);
+    return Row(
+      children:
+          allFilters.map((filter) {
+            final isSelected = selectedFilter == filter;
+            return Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 4.w),
+                child: ChoiceChip(
+                  labelPadding: EdgeInsetsDirectional.symmetric(vertical: 2.h),
+                  label: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      filter,
+                      textAlign: TextAlign.center,
+                      style: context.titleLarge?.copyWith(
+                        color:
+                            isSelected
+                                ? AdaptiveColor.adaptiveColor(
+                                  context: context,
+                                  lightColor: ColorManager.primaryBlue,
+                                  darkColor: ColorManager.pureWhite,
+                                )
+                                : AdaptiveColor.adaptiveColor(
+                                  context: context,
+                                  lightColor: ColorManager.softGray,
+                                  darkColor: ColorManager.hintGrey,
+                                ),
+                        fontWeight: FontWeightHelper.medium,
+                      ),
+                    ),
+                  ),
+                  selected: isSelected,
+                  onSelected: (_) {
+                    setState(() {
+                      selectedFilter = filter;
+                    });
+                    context.read<MarketplaceCubit>().filterListings(
+                      filter.toLowerCase(),
+                    );
+                  },
+                  selectedColor: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.shadowBlue,
+                    darkColor: ColorManager.primaryBlue,
+                  ),
+                  backgroundColor: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.pureWhite,
+                    darkColor: ColorManager.tertiaryBlack,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.secondaryBlue,
+                        darkColor: ColorManager.tertiaryBlack,
+                      ),
+                    ),
+                  ),
+                  showCheckmark: false,
                 ),
               ),
-            ),
-            selected: isSelected,
-            onSelected: (_) {
-              setState(() {
-                selectedFilter = filter;
-              });
-              context.read<MarketplaceCubit>().filterListings(
-                filter.toLowerCase(),
-              );
-            },
-            selectedColor: ColorManager.shadowBlue,
-            backgroundColor: ColorManager.pureWhite,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: const BorderSide(color: ColorManager.borderGrey),
-            ),
-            showCheckmark: false,
-          ),
-        ),
-      );
-    }).toList(),
-  );
-}
-
+            );
+          }).toList(),
+    );
+  }
 }
