@@ -1399,6 +1399,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Property added to favorites`
+  String get property_added_to_favorites {
+    return Intl.message(
+      'Property added to favorites',
+      name: 'property_added_to_favorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Property removed from favorites`
+  String get property_removed_from_favorites {
+    return Intl.message(
+      'Property removed from favorites',
+      name: 'property_removed_from_favorites',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -272,6 +272,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacy_policy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
     "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "properties": MessageLookupByLibrary.simpleMessage("عقارات"),
+    "property_added_to_favorites": MessageLookupByLibrary.simpleMessage(
+      "تمت إضافة العقار إلى المفضلة",
+    ),
+    "property_removed_from_favorites": MessageLookupByLibrary.simpleMessage(
+      "تمت إزالة العقار من المفضلة",
+    ),
     "property_size": MessageLookupByLibrary.simpleMessage("مساحة العقار"),
     "property_type": MessageLookupByLibrary.simpleMessage("نوع العقار"),
     "purpose": MessageLookupByLibrary.simpleMessage("الغرض"),

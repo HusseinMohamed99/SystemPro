@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/networking/backend/api_error_handler.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
@@ -202,12 +203,11 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
                 listing.isFavorite == isFavorited;
               }
             }
-
             emit(MarketplaceState.success(List.from(_visibleListings)));
             context.showSnackBar(
               isFavorited
-                  ? 'تمت إضافة العقار إلى المفضلة'
-                  : 'تمت إزالة العقار من المفضلة',
+                  ? context.localization.property_added_to_favorites
+                  : context.localization.property_removed_from_favorites,
             );
             getListings();
           } else {

@@ -272,6 +272,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacy_policy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "profile": MessageLookupByLibrary.simpleMessage("Profile"),
     "properties": MessageLookupByLibrary.simpleMessage("Properties"),
+    "property_added_to_favorites": MessageLookupByLibrary.simpleMessage(
+      "Property added to favorites",
+    ),
+    "property_removed_from_favorites": MessageLookupByLibrary.simpleMessage(
+      "Property removed from favorites",
+    ),
     "property_size": MessageLookupByLibrary.simpleMessage("Property Size"),
     "property_type": MessageLookupByLibrary.simpleMessage("Property Type"),
     "purpose": MessageLookupByLibrary.simpleMessage("Purpose"),

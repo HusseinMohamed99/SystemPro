@@ -343,6 +343,10 @@
   "logout_successfully": "Logged out successfully",
   "@logout_successfully": {},
   "delete_account_successfully": "Account deleted successfully",
-  "@delete_account_successfully": {}
+  "@delete_account_successfully": {},
+    "property_added_to_favorites":"Property added to favorites",
+  "@property_added_to_favorites":{},
+  "property_removed_from_favorites":"Property removed from favorites",
+  "@property_removed_from_favorites":{}
 
 }
