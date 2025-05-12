@@ -36,7 +36,11 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: ColorManager.shadowBlue,
+        color: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.shadowBlue,
+          darkColor: ColorManager.tertiaryBlack,
+        ),
       ),
       child: Row(
         children:
@@ -44,13 +48,13 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
               final isSelected = selectedFilter == filter;
               return Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    right:
+                  padding: EdgeInsetsDirectional.only(
+                    end:
                         selectedFilter == context.localization.residentail &&
                                 isSelected
                             ? 8.w
                             : 0,
-                    left:
+                    start:
                         selectedFilter == context.localization.commercial &&
                                 isSelected
                             ? 8.w
@@ -63,8 +67,16 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                     },
                     child: ChoiceChip(
                       key: ValueKey(filter),
-                      side: BorderSide.none,
-                      labelPadding: EdgeInsets.symmetric(vertical: 2.h),
+                      side: BorderSide(
+                        color:  AdaptiveColor.adaptiveColor(
+                          context: context,
+                          lightColor: ColorManager.shadowBlue,
+                          darkColor: ColorManager.tertiaryBlack,
+                        ),
+                      ),
+                      labelPadding: EdgeInsetsDirectional.symmetric(
+                        vertical: 4.h,
+                      ),
                       label: SizedBox(
                         width: double.infinity,
                         child: Text(
@@ -74,7 +86,11 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                             color:
                                 isSelected
                                     ? ColorManager.pureWhite
-                                    : ColorManager.primaryBlue,
+                                    : AdaptiveColor.adaptiveColor(
+                                      context: context,
+                                      lightColor: ColorManager.primaryBlue,
+                                      darkColor: ColorManager.iconGrey,
+                                    ),
                             fontWeight: FontWeightHelper.medium,
                           ),
                         ),
@@ -87,10 +103,20 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                         });
                       },
                       selectedColor: ColorManager.primaryBlue,
-                      backgroundColor: ColorManager.shadowBlue,
+                      backgroundColor: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.shadowBlue,
+                        darkColor: ColorManager.tertiaryBlack,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100),
-                        side: const BorderSide(color: ColorManager.borderGrey),
+                        side: BorderSide(
+                          color: AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.borderGrey,
+                            darkColor: ColorManager.tertiaryBlack,
+                          ),
+                        ),
                       ),
                       showCheckmark: false,
                     ),

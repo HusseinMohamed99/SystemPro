@@ -27,7 +27,7 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
     selectedFilter = context.localization.buy;
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     final allFilters = filters(context);
     return Row(
@@ -36,9 +36,9 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
             final isSelected = selectedFilter == filter;
             return Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                padding: EdgeInsetsDirectional.symmetric(horizontal: 4.w),
                 child: ChoiceChip(
-                  labelPadding: EdgeInsets.symmetric(vertical: 2.h),
+                  labelPadding: EdgeInsetsDirectional.symmetric(vertical: 2.h),
                   label: SizedBox(
                     width: double.infinity,
                     child: Text(
@@ -47,8 +47,16 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
                       style: context.titleLarge?.copyWith(
                         color:
                             isSelected
-                                ? ColorManager.primaryBlue
-                                : ColorManager.softGray,
+                                ? AdaptiveColor.adaptiveColor(
+                                  context: context,
+                                  lightColor: ColorManager.primaryBlue,
+                                  darkColor: ColorManager.pureWhite,
+                                )
+                                : AdaptiveColor.adaptiveColor(
+                                  context: context,
+                                  lightColor: ColorManager.softGray,
+                                  darkColor: ColorManager.hintGrey,
+                                ),
                         fontWeight: FontWeightHelper.medium,
                       ),
                     ),
@@ -58,12 +66,27 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
                     setState(() {
                       selectedFilter = filter;
                     });
-                                     },
-                  selectedColor: ColorManager.shadowBlue,
-                  backgroundColor: ColorManager.pureWhite,
+                
+                  },
+                  selectedColor: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.shadowBlue,
+                    darkColor: ColorManager.primaryBlue,
+                  ),
+                  backgroundColor: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.pureWhite,
+                    darkColor: ColorManager.tertiaryBlack,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: const BorderSide(color: ColorManager.borderGrey),
+                    side: BorderSide(
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.shadowBlue,
+                        darkColor: ColorManager.tertiaryBlack,
+                      ),
+                    ),
                   ),
                   showCheckmark: false,
                 ),
@@ -72,5 +95,4 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
           }).toList(),
     );
   }
-
 }

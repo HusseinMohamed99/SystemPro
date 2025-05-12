@@ -52,15 +52,28 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                       color:
                           isSelected
                               ? ColorManager.pureWhite
-                              : ColorManager.softGray,
+                              :AdaptiveColor.adaptiveColor(
+                                  context: context,
+                                  lightColor: ColorManager.softGray,
+                                  darkColor: ColorManager.hintGrey,
+                                ),
                     ),
                   ),
                   selectedColor: ColorManager.primaryBlue,
-                  backgroundColor: ColorManager.pureWhite,
+                  backgroundColor: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.pureWhite,
+                    darkColor: ColorManager.tertiaryBlack,
+                  ),
                   side:
                       isSelected
                           ? BorderSide.none
-                          : const BorderSide(color: ColorManager.borderGrey),
+                          :  BorderSide(color: AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.borderGrey,
+                              darkColor: ColorManager.tertiaryBlack,
+                            ),
+                          ),
                   selected: selectedTypes.contains(type),
                   onSelected: (selected) {
                     setState(() {
@@ -88,7 +101,11 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
               textAlign: TextAlign.center,
               style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
-                color: ColorManager.primaryBlue,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.primaryBlue,
+                  darkColor: ColorManager.secondaryBlue,
+                ),
               ),
             ),
           ),

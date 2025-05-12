@@ -144,8 +144,16 @@ class _FilterViewBodyState extends State<FilterViewBody> {
               child: CustomButton(
                 text: context.localization.clear_all,
                 onPressed: clearAll,
-                backgroundColor: ColorManager.shadowBlue,
-                textStyleColor: ColorManager.primaryBlue,
+                backgroundColor: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.shadowBlue,
+                  darkColor: ColorManager.tertiaryBlack,
+                ),
+                textStyleColor: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.pureWhite,
+                  darkColor: ColorManager.pureWhite,
+                ),
               ),
             ),
             horizontalSpacing(kSpacingDefault),

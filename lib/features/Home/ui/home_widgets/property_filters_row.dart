@@ -87,7 +87,7 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
                     side: BorderSide(
                       color: AdaptiveColor.adaptiveColor(
                         context: context,
-                        lightColor: ColorManager.secondaryBlue,
+                        lightColor: ColorManager.shadowBlue,
                         darkColor: ColorManager.tertiaryBlack,
                       ),
                     ),

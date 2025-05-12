@@ -49,15 +49,28 @@ class BedroomsWidgetState extends State<BedroomsWidget> {
                       color:
                           isSelected
                               ? ColorManager.pureWhite
-                              : ColorManager.softGray,
+                              : AdaptiveColor.adaptiveColor(
+                                context: context,
+                                lightColor: ColorManager.softGray,
+                                darkColor: ColorManager.pureWhite,
+                              ),
                     ),
                   ),
                   selectedColor: ColorManager.primaryBlue,
-                  backgroundColor: ColorManager.pureWhite,
+                  backgroundColor: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.pureWhite,
+                    darkColor: ColorManager.tertiaryBlack,
+                  ),
                   side:
                       isSelected
                           ? BorderSide.none
-                          : const BorderSide(color: ColorManager.borderGrey),
+                          :  BorderSide(color: AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.borderGrey,
+                              darkColor: ColorManager.tertiaryBlack,
+                            ),
+                          ),
                   selected: isSelected,
                   onSelected: (_) {
                     setState(() {

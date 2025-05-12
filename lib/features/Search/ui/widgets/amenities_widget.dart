@@ -9,13 +9,12 @@ import 'package:system_pro/features/Home/data/model/amenities.dart';
 
 class AmenitiesWidget extends StatefulWidget {
   const AmenitiesWidget({super.key, required this.amenities});
-final List<Amenities>amenities;
+  final List<Amenities> amenities;
   @override
   State<AmenitiesWidget> createState() => AmenitiesWidgetState();
 }
 
 class AmenitiesWidgetState extends State<AmenitiesWidget> {
-  
   final Set<String> selectedAmenities = {};
   bool showAll = false;
   void clearSelection() {
@@ -44,42 +43,43 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                 return FilterChip(
                   showCheckmark: false,
                   label: Text(
-                    amenity.name??'',
+                    amenity.name ?? '',
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
                       color:
                           isSelected
                               ? AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.pureWhite,
-                darkColor: ColorManager.tertiaryBlack,
-              )
+                                context: context,
+                                lightColor: ColorManager.pureWhite,
+                                darkColor: ColorManager.tertiaryBlack,
+                              )
                               : AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.softGray,
-                darkColor: ColorManager.iconGrey,
-              ),
+                                context: context,
+                                lightColor: ColorManager.softGray,
+                                darkColor: ColorManager.iconGrey,
+                              ),
                     ),
                   ),
-                  selectedColor:AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.primaryBlue,
-                darkColor: ColorManager.secondaryBlue,
-              ),
+                  selectedColor: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.primaryBlue,
+                    darkColor: ColorManager.secondaryBlue,
+                  ),
                   backgroundColor: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.pureWhite,
-                darkColor: ColorManager.tertiaryBlack,
-              ),
+                    context: context,
+                    lightColor: ColorManager.pureWhite,
+                    darkColor: ColorManager.tertiaryBlack,
+                  ),
                   side:
                       isSelected
                           ? BorderSide.none
-                          :  BorderSide(color: AdaptiveColor.adaptiveColor(
+                          : BorderSide(
+                            color: AdaptiveColor.adaptiveColor(
                               context: context,
                               lightColor: ColorManager.borderGrey,
                               darkColor: ColorManager.tertiaryBlack,
                             ),
-                        ),
+                          ),
                   selected: selectedAmenities.contains(amenity.name),
                   onSelected: (selected) {
                     setState(() {

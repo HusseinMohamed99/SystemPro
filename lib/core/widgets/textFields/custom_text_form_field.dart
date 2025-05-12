@@ -70,8 +70,14 @@ class CustomTextFormField extends StatelessWidget {
           darkColor: ColorManager.tertiaryBlack,
         ),
         hintText: hintText,
-        hintStyle: context.titleLarge?.copyWith(color: ColorManager.grey),
-        contentPadding: EdgeInsets.symmetric(
+        hintStyle: context.titleLarge?.copyWith(
+          color: AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.softGray,
+            darkColor: ColorManager.hintGrey,
+          ),
+        ),
+        contentPadding: EdgeInsetsDirectional.symmetric(
           horizontal: kPaddingContentHorizontal.w,
           vertical: kPaddingContentVertical.h,
         ),
@@ -83,22 +89,31 @@ class CustomTextFormField extends StatelessWidget {
             prefixIcon == null
                 ? null
                 : IconButton(onPressed: () {}, icon: prefixIcon!),
-        border: buildOutlineBorder(),
-        enabledBorder: buildOutlineBorder(),
-        focusedBorder: buildOutlineBorder(),
-        disabledBorder: buildOutlineBorder(),
-        focusedErrorBorder: buildOutlineBorder(color: ColorManager.errorRed),
-        errorBorder: buildOutlineBorder(color: ColorManager.errorRed),
+        border: buildOutlineBorder(context),
+        enabledBorder: buildOutlineBorder(context),
+        focusedBorder: buildOutlineBorder(context),
+        disabledBorder: buildOutlineBorder(context),
+        focusedErrorBorder: buildOutlineBorder(
+          context,
+          color: ColorManager.errorRed,
+        ),
+        errorBorder: buildOutlineBorder(context, color: ColorManager.errorRed),
       ),
     );
   }
 
-  OutlineInputBorder buildOutlineBorder({Color? color}) {
+  OutlineInputBorder buildOutlineBorder(BuildContext context, {Color? color}) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(kBorderRadiusLarge).r,
       borderSide: BorderSide(
         width: 1.w,
-         color: color ?? ColorManager.borderGrey,
+        color:
+            color ??
+            AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.borderGrey,
+              darkColor: ColorManager.tertiaryBlack,
+            ),
       ),
     );
   }
