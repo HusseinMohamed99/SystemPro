@@ -4,6 +4,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -42,7 +43,7 @@ class ProfileView extends StatelessWidget {
                 child: Text(
                   context.localization.profile,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  style: context.headlineMedium?.copyWith(
                     color: AdaptiveColor.adaptiveColor(
                       context: context,
                       lightColor: ColorManager.primaryBlue,

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Home/data/model/bottom_navigation_bar_model.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/navigation_bar_item.dart';
 
-class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key, required this.onItemTapped});
+class CustomBottomNavigationBar extends StatelessWidget {
+  const CustomBottomNavigationBar({
+    super.key,
+    required this.onItemTapped,
+    required this.currentIndex,
+  });
+
+  final int currentIndex;
   final ValueChanged<int> onItemTapped;
 
   @override
-  State<CustomBottomNavigationBar> createState() =>
-      _CustomBottomNavigationBarState();
-}
-
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int selectedIndex = 0;
-  @override
   Widget build(BuildContext context) {
     return Container(
-      width: 375,
-      height: 70,
+      width: 375.w,
+      height: 70.h,
       decoration: ShapeDecoration(
         color: AdaptiveColor.adaptiveColor(
           context: context,
@@ -51,13 +51,12 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               return Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                      widget.onItemTapped(index);
-                    });
+                    onItemTapped(
+                      index,
+                    ); // Directly call the callback to handle tab change
                   },
                   child: NavigationBarItem(
-                    isSelectedItem: selectedIndex == index,
+                    isSelectedItem: currentIndex == index,
                     bottomNavigationBarEntity: entity,
                   ),
                 ),

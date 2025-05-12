@@ -5,7 +5,7 @@ part 'marketplace_state.freezed.dart';
 
 @freezed
 class MarketplaceState with _$MarketplaceState {
-  const factory MarketplaceState.initial() = _Initial;
+  const factory MarketplaceState.initial() = MarketPlaceInitial;
   const factory MarketplaceState.loading() = MarketPlaceLoading;
   const factory MarketplaceState.success(List<Listing> listings) =
       MarketPlaceSuccess;
@@ -18,4 +18,12 @@ class MarketplaceState with _$MarketplaceState {
 
   const factory MarketplaceState.getFavoriteError(String error) =
       GetFavoriteError;
+
+  const factory MarketplaceState.toggleFavoriteLoading() =
+      ToggleFavoriteLoading;
+  const factory MarketplaceState.toggleFavoriteSuccess(List<Listing> listings) =
+      ToggleFavoriteSuccess;
+
+  const factory MarketplaceState.toggleFavoriteError(String error) =
+      ToggleFavoriteError;
 }

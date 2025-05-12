@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/networking/backend/api_error_handler.dart';
-import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
@@ -18,7 +19,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   String _currentFilter = '';
   int _loadedCount = 0;
   final int _pageSize = 10;
-
 
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
@@ -139,8 +139,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-
-
   Future<void> getFavoriteListings() async {
     emit(const MarketplaceState.getFavoriteLoading());
 
@@ -165,7 +163,9 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
           _loadedCount = _visibleListings.length;
 
-          emit(MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)));
+          emit(
+            MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)),
+          );
         },
         failure: (errorHandler) {
           emit(
@@ -177,6 +177,53 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       );
     } catch (error) {
       emit(MarketplaceState.getFavoriteError('حدث خطأ غير متوقع: $error'));
+    }
+  }
+
+  void refreshListings() {
+    _allListings.clear();
+    _visibleListings.clear();
+    _loadedCount = 0;
+  }
+
+  Future<void> toggleFavorite(int id, BuildContext context) async {
+    try {
+      final result = await _marketplaceRepo.toggleFavorite(id);
+
+      result.when(
+        success: (response) {
+          if (response.status == 'success') {
+            // قم بتحديث المفضلة بناءً على حالة isFavorited من الـ response
+            final isFavorited = response.data?.isFavorited ?? false;
+
+            // تحديث حالة المفضلة في _allListings أو حيثما تحتاج
+            for (var listing in _allListings) {
+              if (listing.id == id) {
+                listing.isFavorite == isFavorited;
+              }
+            }
+
+            emit(MarketplaceState.success(List.from(_visibleListings)));
+            context.showSnackBar(
+              isFavorited
+                  ? 'تمت إضافة العقار إلى المفضلة'
+                  : 'تمت إزالة العقار من المفضلة',
+            );
+            getListings();
+          } else {
+            emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
+          }
+        },
+        failure: (errorHandler) {
+          emit(
+            MarketplaceState.error(
+              'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (error) {
+      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
   }
 }

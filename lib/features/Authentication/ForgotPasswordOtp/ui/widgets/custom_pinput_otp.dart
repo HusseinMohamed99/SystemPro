@@ -35,7 +35,7 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
             border: Border.all(
               color: AdaptiveColor.adaptiveColor(
                 context: context,
-                lightColor: ColorManager.pureWhite,
+                lightColor: ColorManager.borderGrey,
                 darkColor: ColorManager.tertiaryBlack,
               )
             ),
@@ -60,7 +60,7 @@ class CustomPinputOtpCodeWidget extends StatelessWidget {
           border: Border.all(color: 
             AdaptiveColor.adaptiveColor(
               context: context,
-              lightColor: ColorManager.pureWhite,
+              lightColor: ColorManager.borderGrey,
               darkColor: ColorManager.tertiaryBlack,
             ),
           ),

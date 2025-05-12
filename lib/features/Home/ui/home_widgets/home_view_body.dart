@@ -7,6 +7,7 @@ import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
+import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
 import 'package:system_pro/features/Home/ui/home_widgets/property_filters_row.dart';
@@ -22,9 +23,13 @@ class HomeViewBody extends StatelessWidget {
       builder: (context, state) {
         if (state is MarketPlaceLoading) {
           return const AdaptiveIndicator();
-        } else if (state is MarketPlaceError) {
+        }
+
+        if (state is MarketPlaceError) {
           return CustomErrorWidget(errorMessage: state.error);
-        } else if (state is MarketPlaceSuccess) {
+        }
+
+        if (state is MarketPlaceSuccess) {
           final listings = state.listings;
 
           return Column(
@@ -48,36 +53,46 @@ class HomeViewBody extends StatelessWidget {
                 rightPadding: kPaddingDefaultHorizontal,
                 topPadding: kPaddingDefaultVertical,
               ),
-              Expanded(
-                child:
-                    listings.isEmpty
-                        ? CustomErrorWidget(
-                          errorMessage:
-                              context.localization.no_available_properties,
-                        )
-                        : NotificationListener<ScrollNotification>(
-                          onNotification: (scrollInfo) {
-                            if (scrollInfo.metrics.pixels >=
-                                scrollInfo.metrics.maxScrollExtent - 200) {
-                              context.read<MarketplaceCubit>().loadMore();
-                            }
-                            return false;
-                          },
-                          child: CustomScrollView(
-                            slivers: [RealEstateSliverList(listings: listings)],
-                          ),
-                        ).onlyPadding(
-                          leftPadding: kPaddingDefaultHorizontal,
-                          rightPadding: kPaddingDefaultHorizontal,
-                          topPadding: kPaddingDefaultVertical,
-                        ),
-              ),
+              Expanded(child: ListingsList(listings: listings)),
             ],
           );
-        } else {
-          return const SizedBox.shrink();
         }
+
+        return const SizedBox.shrink();
       },
+    );
+  }
+}
+
+class ListingsList extends StatelessWidget {
+  const ListingsList({super.key, required this.listings});
+  final List<Listing> listings;
+
+  @override
+  Widget build(BuildContext context) {
+    if (listings.isEmpty) {
+      return CustomErrorWidget(
+        errorMessage: context.localization.no_available_properties,
+      );
+    }
+
+    final cubit = BlocProvider.of<MarketplaceCubit>(context);
+
+    return NotificationListener<ScrollNotification>(
+      onNotification: (scrollInfo) {
+        if (scrollInfo.metrics.pixels >=
+            scrollInfo.metrics.maxScrollExtent - 200) {
+          cubit.loadMore();
+        }
+        return false;
+      },
+      child: CustomScrollView(
+        slivers: [RealEstateSliverList(listings: listings)],
+      ),
+    ).onlyPadding(
+      leftPadding: kPaddingDefaultHorizontal,
+      rightPadding: kPaddingDefaultHorizontal,
+      topPadding: kPaddingDefaultVertical,
     );
   }
 }

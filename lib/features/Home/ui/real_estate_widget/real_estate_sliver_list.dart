@@ -25,7 +25,7 @@ class RealEstateSliverList extends StatelessWidget {
           child: RealEstateItem(
             listing: listings[index],
             index: index,
-            isFavorite: listing.isFavorited,
+            isFavorite: listing.isFavorite ?? false,
           ),
         );
       },

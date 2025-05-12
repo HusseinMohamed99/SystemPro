@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
@@ -6,6 +7,7 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/listing_image.dart';
+import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({
@@ -46,26 +48,31 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           child: SizedBox(
             height: 150.h,
             width: context.width,
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: widget.images?.length,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              itemBuilder: (context, index) {
-                return CustomCachedNetworkImageWidget(
-                  fit: BoxFit.fitWidth,
-                  width: context.width,
-                  height: 150.h,
-                  imageURL:
-                      widget.images?[index].imageUrl ??
-                      widget.listing?.pictureUrl ??
-                      '',
-                );
-              },
-            ),
+            child:
+                widget.images == null || widget.images!.isEmpty
+                    ? const Center(
+                      child: Text('No images available'),
+                    ) // أو يمكنك وضع صورة افتراضية هنا
+                    : PageView.builder(
+                      controller: _pageController,
+                      itemCount: widget.images?.length,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return CustomCachedNetworkImageWidget(
+                          fit: BoxFit.fitWidth,
+                          width: context.width,
+                          height: 150.h,
+                          imageURL:
+                              widget.images?[index].imageUrl ??
+                              widget.listing?.pictureUrl ??
+                              '',
+                        );
+                      },
+                    ),
           ),
         ),
         Positioned(
@@ -73,7 +80,10 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           right: 16.w,
           child: GestureDetector(
             onTap: () {
-              // context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
+              context.read<MarketplaceCubit>().toggleFavorite(
+                widget.listingId,
+                context,
+              );
             },
             child: Container(
               padding: EdgeInsetsDirectional.symmetric(
@@ -88,7 +98,6 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   darkColor: ColorManager.tertiaryBlack,
                 ),
               ),
-
               child: Icon(
                 widget.isFavorite ? Icons.favorite : Icons.favorite_border,
                 color:

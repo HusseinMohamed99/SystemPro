@@ -81,20 +81,20 @@ class CustomProfileCardList extends StatelessWidget {
                 secondTitle: context.localization.dark_mode,
                 firstOnTap: () async {
                   if (isDarkMode) {
+                    context.read<ChangeThemingCubit>().toggleTheme();
                     await CachingHelper.setData(
                       SharedPrefKeys.isDarkMode,
                       false,
                     );
-                    context.read<ChangeThemingCubit>().toggleTheme();
                   }
                 },
                 secondOnTap: () async {
                   if (!isDarkMode) {
+                    context.read<ChangeThemingCubit>().toggleTheme();
                     await CachingHelper.setData(
                       SharedPrefKeys.isDarkMode,
                       true,
                     );
-                    context.read<ChangeThemingCubit>().toggleTheme();
                   }
                 },
               );
@@ -117,7 +117,6 @@ class CustomProfileCardList extends StatelessWidget {
     required String secondTitle,
     required VoidCallback firstOnTap,
     required VoidCallback secondOnTap,
-    
   }) {
     return showModalBottomSheet(
       backgroundColor: AdaptiveColor.adaptiveColor(
@@ -165,7 +164,7 @@ class CustomProfileCardList extends StatelessWidget {
                     firstTitle,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                    color:   AdaptiveColor.adaptiveColor(
+                      color: AdaptiveColor.adaptiveColor(
                         context: context,
                         lightColor: ColorManager.pureBlack,
                         darkColor: ColorManager.hintGrey,

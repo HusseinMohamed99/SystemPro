@@ -39,7 +39,7 @@ class Listing {
     this.amenities,
     this.subcategory,
     this.listingType,
-    this.isFavorited = false, // الإضافة هنا لجعلها قابلة للتغيير
+    this.isFavorite, // الإضافة هنا لجعلها قابلة للتغيير
   });
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
@@ -87,6 +87,6 @@ class Listing {
   final Subcategory? subcategory;
   final List<Amenities>? amenities;
   final List<ListingImage>? images;
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  bool isFavorited;
+  @JsonKey(name: 'is_favorite')
+  final bool? isFavorite;
 }
