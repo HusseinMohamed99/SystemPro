@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
@@ -25,19 +26,25 @@ class CustomProfileCardList extends StatelessWidget {
       itemCount: profileCardList(context).length,
       separatorBuilder: (context, index) => const CustomDivider(),
       itemBuilder: (context, index) {
+       // قراءة اللغة المختارة من SharedPreferences
         final String selectedLanguage =
-            CachingHelper.getData(SharedPrefKeys.selectedLanguage) ??
-            context.localization.english;
+            CachingHelper.getData(SharedPrefKeys.selectedLanguage) ?? 'en';
+
         final String currentLanguage =
-            selectedLanguage == context.localization.arabic
+            selectedLanguage == 'ar'
                 ? context.localization.arabic
                 : context.localization.english;
+
+        // قراءة وضع الظلام من SharedPreferences
         final bool isDarkMode =
             CachingHelper.getData(SharedPrefKeys.isDarkMode) ?? false;
+
+        // تحديد الوضع بناءً على القيمة المختارة
         final String currentThemeMode =
             isDarkMode
                 ? context.localization.dark_mode
                 : context.localization.light_mode;
+
         return CsutomProfileCard(
           onTap: () async {
             if (index == 0) {

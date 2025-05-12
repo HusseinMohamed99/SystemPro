@@ -23,5 +23,8 @@ ThemeData buildLightTheming({required TextTheme textTheme}) {
       seedColor: ColorManager.primaryBlue,
     ),
      textTheme:textTheme,
+     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: ColorManager.pureWhite,
+    ),
   );
 }

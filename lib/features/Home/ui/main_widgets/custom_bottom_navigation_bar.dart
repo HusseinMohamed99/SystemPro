@@ -53,11 +53,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   onTap: () {
                     onItemTapped(
                       index,
-                    ); // Directly call the callback to handle tab change
+                    );
                   },
                   child: NavigationBarItem(
                     isSelectedItem: currentIndex == index,
                     bottomNavigationBarEntity: entity,
+                    
                   ),
                 ),
               );

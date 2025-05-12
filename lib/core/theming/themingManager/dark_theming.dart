@@ -23,5 +23,9 @@ ThemeData buildDarkTheming({required TextTheme textTheme}) {
       seedColor: ColorManager.primaryBlack,
     ),
     textTheme: textTheme,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: ColorManager.tertiaryBlack,
+
+    ),
   );
 }
