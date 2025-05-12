@@ -36,6 +36,14 @@ class CustomSearchTextField extends StatelessWidget {
           context.pushNamed(Routes.searchView);
         }
       },
+      style: context.titleMedium?.copyWith(
+        color: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.primaryBlack,
+          darkColor: ColorManager.softWhite,
+        ),
+        fontWeight: FontWeightHelper.regular,
+      ),
       onChanged: onChanged,
       controller: controller,
       readOnly: readOnly ?? true,
@@ -49,6 +57,7 @@ class CustomSearchTextField extends StatelessWidget {
           lightColor: ColorManager.softWhite,
           darkColor: ColorManager.tertiaryBlack,
         ),
+        
         hintText: context.localization.search,
         hintStyle: context.titleMedium?.copyWith(
           color: AdaptiveColor.adaptiveColor(

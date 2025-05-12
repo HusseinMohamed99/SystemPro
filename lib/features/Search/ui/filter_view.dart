@@ -17,7 +17,11 @@ class FilterView extends StatelessWidget {
       appBar: customSecondaryAppBar(
         context,
         title: context.localization.filter,
-        textColor: ColorManager.pureBlack,
+        textColor:  AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.pureBlack,
+          darkColor: ColorManager.pureWhite,
+        ),
       ),
       body:FilterViewBody(locationArgument: locationArgument).allPadding(
         vPadding: kPaddingDefaultVertical,

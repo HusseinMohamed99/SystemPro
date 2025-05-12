@@ -131,7 +131,11 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
           child: Icon(
             Icons.close,
             size: kIconSizeDefault.sp,
-            color: ColorManager.softGray,
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.softGray,
+              darkColor: ColorManager.iconGrey,
+            ),
           ),
         ),
         horizontalSpacing(kSpacingSmall),
@@ -151,7 +155,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     final locations = isSearching ? _searchResults : _recentSearches;
     return Expanded(
       child: ListView.builder(
-        padding: EdgeInsets.zero,
+        padding: EdgeInsetsDirectional.zero,
         itemCount: locations.length,
         itemBuilder: (context, index) {
           final location = locations[index];
@@ -160,7 +164,11 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
             leading: Icon(
               isSearching ? Icons.place : Icons.history,
               size: kIconSizeDefault.sp,
-              color: ColorManager.softGray,
+              color:  AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.softGray,
+                darkColor: ColorManager.iconGrey,
+              ),
             ),
             title: Text(
               location['district'] ?? '',
