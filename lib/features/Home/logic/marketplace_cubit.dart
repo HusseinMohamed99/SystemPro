@@ -203,6 +203,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
                 listing.isFavorite == isFavorited;
               }
             }
+            
             emit(MarketplaceState.success(List.from(_visibleListings)));
             
           } else {
