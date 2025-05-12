@@ -187,7 +187,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     _loadedCount = 0;
   }
 
-  Future<void> toggleFavorite(int id, BuildContext context) async {
+  Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
 
@@ -204,12 +204,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
               }
             }
             emit(MarketplaceState.success(List.from(_visibleListings)));
-            context.showSnackBar(
-              isFavorited
-                  ? context.localization.property_added_to_favorites
-                  : context.localization.property_removed_from_favorites,
-            );
-            getListings();
+            
           } else {
             emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }

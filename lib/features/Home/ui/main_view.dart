@@ -61,17 +61,20 @@ class MainView extends StatelessWidget {
             return MainViewBody(currentViewIndex: currentViewIndex);
           },
         ),
-        bottomNavigationBar:
+       bottomNavigationBar:
             BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
-              builder: (context, state) {
+              builder: (context, themeState) {
+                final currentIndex = context.watch<TabCubit>().state;
+
                 return CustomBottomNavigationBar(
                   onItemTapped: (index) {
                     context.read<TabCubit>().setTab(index);
                   },
-                  currentIndex: context.read<TabCubit>().state,
+                  currentIndex: currentIndex,
                 );
               },
             ),
+
       ),
     );
   }

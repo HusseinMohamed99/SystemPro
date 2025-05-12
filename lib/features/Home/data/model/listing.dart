@@ -88,5 +88,5 @@ class Listing {
   final List<Amenities>? amenities;
   final List<ListingImage>? images;
   @JsonKey(name: 'is_favorite')
-  final bool? isFavorite;
+bool? isFavorite;
 }

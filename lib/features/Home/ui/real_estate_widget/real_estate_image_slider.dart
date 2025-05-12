@@ -29,6 +29,27 @@ class RealEstateImageSlider extends StatefulWidget {
 class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
+  late bool isFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorite = widget.isFavorite;
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+
+    // تحديث القيمة داخل الـ Listing نفسه (لو مش null)
+    if (widget.listing != null) {
+      widget.listing!.isFavorite = isFavorite;
+    }
+
+    // نبلغ الـ Cubit علشان يعمل التحديث على مستوى backend
+    context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
+  }
 
   @override
   void dispose() {
@@ -50,9 +71,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             width: context.width,
             child:
                 widget.images == null || widget.images!.isEmpty
-                    ? const Center(
-                      child: Text('No images available'),
-                    ) // أو يمكنك وضع صورة افتراضية هنا
+                    ? const Center(child: Text('No images available'))
                     : PageView.builder(
                       controller: _pageController,
                       itemCount: widget.images?.length,
@@ -79,12 +98,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           top: 16.h,
           right: 16.w,
           child: GestureDetector(
-            onTap: () {
-              context.read<MarketplaceCubit>().toggleFavorite(
-                widget.listingId,
-                context,
-              );
-            },
+            onTap: _toggleFavorite,
             child: Container(
               padding: EdgeInsetsDirectional.symmetric(
                 horizontal: kPaddingSmallHorizontal.w,
@@ -99,9 +113,9 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                 ),
               ),
               child: Icon(
-                widget.isFavorite ? Icons.favorite : Icons.favorite_border,
+                isFavorite ? Icons.favorite : Icons.favorite_border,
                 color:
-                    widget.isFavorite
+                    isFavorite
                         ? ColorManager.brightRed
                         : AdaptiveColor.adaptiveColor(
                           context: context,
