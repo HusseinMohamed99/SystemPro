@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/calculate_percentage.dart';
 import 'package:system_pro/core/helpers/functions/time_ago.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
@@ -22,7 +23,6 @@ class AboutRealEstate extends StatelessWidget {
     required this.bathrooms,
     required this.area,
     required this.subcategory,
-
   });
   final String price,
       downPayment,
@@ -31,7 +31,8 @@ class AboutRealEstate extends StatelessWidget {
       date,
       bedrooms,
       bathrooms,
-      area,subcategory;
+      area,
+      subcategory;
 
   @override
   Widget build(BuildContext context) {
@@ -44,25 +45,42 @@ class AboutRealEstate extends StatelessWidget {
           children: [
             Text(
               '${context.localization.sar} $price',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              style: context.headlineMedium?.copyWith(
                 fontWeight: FontWeightHelper.semiBold,
-                color: ColorManager.primaryBlue,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.primaryBlue,
+                  darkColor: ColorManager.secondaryBlue,
+                ),
               ),
             ),
             Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.pureWhite,
+                  darkColor: ColorManager.tertiaryBlack,
+                ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: ColorManager.borderGrey,
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.borderGrey,
+                    darkColor: ColorManager.tertiaryBlack,
+                  ),
                   width: 1.5.w,
                 ),
               ),
               child: Text(
                 '${calculatePercentage(price, downPayment)} Down Payment',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: context.titleSmall?.copyWith(
                   fontWeight: FontWeightHelper.medium,
-                  color: ColorManager.softGray,
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.softGray,
+                    darkColor: ColorManager.hintGrey,
+                  ),
                 ),
               ),
             ),
@@ -71,15 +89,24 @@ class AboutRealEstate extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.start,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleLarge?.copyWith(
+            fontWeight: FontWeightHelper.medium,
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.primaryBlack,
+              darkColor: ColorManager.hintGrey,
+            ),
+          ),
         ),
         Row(
           children: [
             Icon(
               Icons.place_outlined,
-              color: ColorManager.softGray,
+              color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.softGray,
+                darkColor: ColorManager.iconGrey,
+              ),
               size: kIconSizeDefault.sp,
             ),
             Flexible(
@@ -87,18 +114,26 @@ class AboutRealEstate extends StatelessWidget {
                 location,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: context.titleMedium?.copyWith(
                   fontWeight: FontWeightHelper.regular,
-                  color: ColorManager.softGray,
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.softGray,
+                    darkColor: ColorManager.iconGrey,
+                  ),
                 ),
               ),
             ),
             horizontalSpacing(kSpacingSmall),
             Text(
-              timeAgo(context,date),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              timeAgo(context, date),
+              style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
-                color: ColorManager.softGray,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.softGray,
+                  darkColor: ColorManager.iconGrey,
+                ),
               ),
             ),
           ],
@@ -118,13 +153,27 @@ class AboutRealEstate extends StatelessWidget {
             return Row(
               mainAxisSize: MainAxisSize.min, // مهم لتجنب أخذ كل العرض
               children: [
-                SvgPicture.asset(images[index]),
+                SvgPicture.asset(
+                  images[index],
+                  colorFilter: ColorFilter.mode(
+                    AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.softGray,
+                      darkColor: ColorManager.iconGrey,
+                    ),
+                    BlendMode.srcIn,
+                  ),
+                ),
                 horizontalSpacing(kSpacingSmall.w),
                 Text(
                   values[index],
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.medium,
-                    color: ColorManager.softGray,
+                    color: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.softGray,
+                      darkColor: ColorManager.iconGrey,
+                    ),
                   ),
                 ),
               ],

@@ -46,7 +46,11 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
         Text(
           '${widget.propertyLength} ${context.localization.properties}',
           style: context.titleMedium?.copyWith(
-            color: ColorManager.softGray,
+            color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.softGray,
+                darkColor: ColorManager.iconGrey,
+              ),
             fontWeight: FontWeightHelper.medium,
           ),
         ),

@@ -23,7 +23,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         color: AdaptiveColor.adaptiveColor(
           context: context,
           lightColor: ColorManager.pureWhite,
-          darkColor: ColorManager.primaryBlack,
+          darkColor: ColorManager.tertiaryBlack,
         ),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

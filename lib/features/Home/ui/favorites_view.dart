@@ -26,7 +26,11 @@ class FavoritesView extends StatelessWidget {
             context.localization.favorites,
             textAlign: TextAlign.center,
             style: context.headlineMedium?.copyWith(
-              color: ColorManager.primaryBlue,
+              color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.primaryBlue,
+                darkColor: ColorManager.pureWhite,
+              ),
             ),
           ),
         ),

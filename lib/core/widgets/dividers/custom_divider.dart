@@ -7,6 +7,14 @@ class CustomDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider(color: ColorManager.borderGrey, thickness: 1, height: 1.h);
+    return Divider(
+      color: AdaptiveColor.adaptiveColor(
+        context: context,
+        lightColor: ColorManager.borderGrey,
+        darkColor: ColorManager.iconGrey,
+      ),
+      thickness: 1,
+      height: 1.h,
+    );
   }
 }

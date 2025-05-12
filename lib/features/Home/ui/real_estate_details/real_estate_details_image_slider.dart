@@ -29,35 +29,28 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Image slider
-        ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          ),
-          child: SizedBox(
-            height: 250.h,
-            width: context.width,
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: widget.images?.length,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              itemBuilder: (context, index) {
-                return CustomCachedNetworkImageWidget(
-                  imageURL: widget.images?[index].imageUrl ?? '',
-                  fit: BoxFit.fitWidth,
-                  height: 250.h,
-                );
-              },
-            ),
+        SizedBox(
+          height: 250.h,
+          width: context.width,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: widget.images?.length,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            itemBuilder: (context, index) {
+              return CustomCachedNetworkImageWidget(
+                imageURL: widget.images?[index].imageUrl ?? '',
+                fit: BoxFit.fitWidth,
+                height: 250.h,
+              );
+            },
           ),
         ),
         Positioned(
-          top: context.height * .07,
+          top: context.height * .03,
           left: 20.w,
           child: GestureDetector(
             onTap: () {
@@ -66,20 +59,38 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
             child: Container(
               width: 40.w,
               height: 40.h,
-              padding: EdgeInsets.symmetric(
+              padding: EdgeInsetsDirectional.symmetric(
                 horizontal: kPaddingSmallHorizontal.w,
                 vertical: kPaddingSmallVertical.h,
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: ColorManager.pureWhite,
-                border: Border.all(color: ColorManager.borderGrey, width: 1.5),
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.pureWhite,
+                  darkColor: ColorManager.tertiaryBlack,
+                ),
+                border: Border.all(
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.borderGrey,
+                    darkColor: ColorManager.tertiaryBlack,
+                  ),
+                  width: 1.5,
+                ),
               ),
-              child: Icon(Icons.arrow_back_ios_new, size: 16.sp),
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                size: 16.sp,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.primaryBlack,
+                  darkColor: ColorManager.pureWhite,
+                ),
+              ),
             ),
           ),
         ),
-        // Dots Indicator
         Positioned(
           bottom: 16.h,
           left: 0,
@@ -90,14 +101,22 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
               final isActive = index == _currentIndex;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                width: isActive ? 12 : 8,
+                margin: const EdgeInsetsDirectional.symmetric(horizontal: 4),
+                width: 8,
                 height: 8,
                 decoration: BoxDecoration(
                   color:
                       isActive
-                          ? ColorManager.primaryBlue
-                          : ColorManager.softGray,
+                          ? AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.primaryBlue,
+                      darkColor: ColorManager.secondaryBlue,
+                    )
+                          : AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.softGray,
+                            darkColor: ColorManager.pureWhite,
+                          ),
                   borderRadius: BorderRadius.circular(4),
                 ),
               );

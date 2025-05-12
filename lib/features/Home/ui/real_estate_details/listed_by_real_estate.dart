@@ -4,10 +4,12 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 
@@ -23,16 +25,23 @@ class ListedByWidget extends StatelessWidget {
       children: [
         Text(
           context.localization.listed_by,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: kSpacingXLarge.h),
+          padding: EdgeInsetsDirectional.symmetric(vertical: kSpacingXLarge.h),
           width: context.width,
           decoration: BoxDecoration(
+            color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.pureWhite,
+                darkColor: ColorManager.tertiaryBlack,
+              ),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: ColorManager.borderGrey, width: 1.5.w),
+            border: Border.all(color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.borderGrey,
+                darkColor: ColorManager.tertiaryBlack,
+              ), width: 1.5.w),
           ),
           child: Column(
             spacing: kSpacingDefault.h,
@@ -45,14 +54,11 @@ class ListedByWidget extends StatelessWidget {
               ),
               Text(
                 company.name ?? '',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: context.titleLarge?.copyWith(
                   fontWeight: FontWeightHelper.medium,
                 ),
               ),
-              Divider(
-                color: ColorManager.borderGrey,
-                thickness: 1.5.w,
-              ).hPadding(kSpacingDefault.w),
+             CustomDivider().hPadding(kSpacingDefault.w),
               GestureDetector(
                 onTap: () {
                   context.pushNamed(
@@ -63,9 +69,13 @@ class ListedByWidget extends StatelessWidget {
 
                 child: Text(
                   context.localization.view_profile,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.medium,
-                    color: ColorManager.primaryBlue,
+                    color: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.primaryBlue,
+                      darkColor: ColorManager.secondaryBlue,
+                    ),
                   ),
                 ),
               ),

@@ -49,16 +49,37 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                       fontWeight: FontWeightHelper.regular,
                       color:
                           isSelected
-                              ? ColorManager.pureWhite
-                              : ColorManager.softGray,
+                              ? AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.pureWhite,
+                darkColor: ColorManager.tertiaryBlack,
+              )
+                              : AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.softGray,
+                darkColor: ColorManager.iconGrey,
+              ),
                     ),
                   ),
-                  selectedColor: ColorManager.primaryBlue,
-                  backgroundColor: ColorManager.pureWhite,
+                  selectedColor:AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.primaryBlue,
+                darkColor: ColorManager.secondaryBlue,
+              ),
+                  backgroundColor: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.pureWhite,
+                darkColor: ColorManager.tertiaryBlack,
+              ),
                   side:
                       isSelected
                           ? BorderSide.none
-                          : const BorderSide(color: ColorManager.borderGrey),
+                          :  BorderSide(color: AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.borderGrey,
+                              darkColor: ColorManager.tertiaryBlack,
+                            ),
+                        ),
                   selected: selectedAmenities.contains(amenity.name),
                   onSelected: (selected) {
                     setState(() {
@@ -87,7 +108,11 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
               textAlign: TextAlign.center,
               style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
-                color: ColorManager.primaryBlue,
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.primaryBlue,
+                  darkColor: ColorManager.secondaryBlue,
+                ),
               ),
             ),
           ),

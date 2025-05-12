@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
@@ -23,14 +24,12 @@ final String purpose ;
       children: [
         Text(
           context.localization.purpose,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
         ),
 
         Text(
           'For $purpose',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
           ),
         ),

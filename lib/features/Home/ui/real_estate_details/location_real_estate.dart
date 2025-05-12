@@ -5,70 +5,100 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/url_launcher.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/gen/assets.gen.dart';
-class LocationWidget extends StatelessWidget {
-  const LocationWidget({super.key});
+class LocationRealEstate extends StatelessWidget {
+  const LocationRealEstate({super.key, required this.location});
 
+  final String location;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: kSpacingDefault.h,
       children: [
         Text(
           context.localization.location,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleLarge?.copyWith(
+            fontWeight: FontWeightHelper.medium,
+          ),
         ),
+        verticalSpacing(kSpacingSmall),
         Row(
           children: [
             Icon(
               Icons.place_outlined,
-              color: ColorManager.softGray,
+              color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.pureBlack,
+                darkColor: ColorManager.iconGrey,
+              ),
               size: kIconSizeDefault.sp,
             ),
             Text(
-              'Privado, Madinaty',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              location,
+              style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
-                color: ColorManager.softGray,
               ),
             ),
           ],
         ),
-        Container(
-          width: context.width,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.asset(Assets.images.map.path),
-              Positioned(
-                child: TextButton.icon(
-                  style: TextButton.styleFrom(backgroundColor: Colors.white),
-                  onPressed: () {},
-                  label: Text(
-                    context.localization.see_location,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeightHelper.medium,
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(Assets.images.map.path, height: 200.h, width: 320.w),
+            Positioned(
+              child: GestureDetector(
+                onTap: () {
+                  urlLauncher(
+                    context,
+                    'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(location)}',
+                  );
+                },
+                child: Container(
+                  width: context.width * 0.4,
+                  height: kButtonHeightPrimary.h,
+                  alignment: Alignment.center,
+
+                  decoration: BoxDecoration(
+                    color: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.pureWhite,
+                      darkColor: ColorManager.tertiaryBlack,
                     ),
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
-                  icon: Icon(
-                    Icons.place_outlined,
-                    color: ColorManager.softGray,
-                    size: kIconSizeDefault.sp,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.place_outlined,
+                        color: AdaptiveColor.adaptiveColor(
+                          context: context,
+                          lightColor: ColorManager.softGray,
+                          darkColor: ColorManager.iconGrey,
+                        ),
+                        size: kIconSizeDefault.sp,
+                      ),
+                      Text(
+                        context.localization.see_location,
+                        textAlign: TextAlign.center,
+                        style: context.titleMedium?.copyWith(
+                          fontWeight: FontWeightHelper.medium,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

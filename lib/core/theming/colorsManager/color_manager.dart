@@ -38,8 +38,8 @@ class AdaptiveColor {
     required Color lightColor,
     required Color darkColor,
   }) {
-    // final isDark = context.watch<ChangeThemingCubit>().state.isDarkMode;
-    final isDark = context.read<ChangeThemingCubit>().isDark;
+//  final isDark = context.watch<ChangeThemingCubit>().state.isDarkMode;
+     final isDark = context.read<ChangeThemingCubit>().state.isDarkMode;
 
     return isDark ? darkColor : lightColor;
   }
