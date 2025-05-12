@@ -49,9 +49,9 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
             },
           ),
         ),
-        Positioned(
+        PositionedDirectional(
           top: context.height * .03,
-          left: 20.w,
+          start: 20.w,
           child: GestureDetector(
             onTap: () {
               context.pop();
@@ -91,10 +91,10 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
             ),
           ),
         ),
-        Positioned(
+        PositionedDirectional(
           bottom: 16.h,
-          left: 0,
-          right: 0,
+          start: 0,
+          end: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(widget.images?.length ?? 0, (index) {
