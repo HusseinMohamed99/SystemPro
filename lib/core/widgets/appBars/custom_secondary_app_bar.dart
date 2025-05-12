@@ -30,7 +30,14 @@ AppBar customSecondaryAppBar(
     title: Text(
       title ?? '',
       textAlign: TextAlign.center,
-      style: context.headlineMedium?.copyWith(color:textColor ?? ColorManager.primaryBlue),
+      style: context.headlineMedium?.copyWith(
+        color: textColor ??
+            AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.primaryBlue,
+              darkColor: ColorManager.pureWhite,
+            ),
+      ),
     ),
   );
 }
@@ -41,15 +48,18 @@ IconButton customAppBarBack(BuildContext context, {VoidCallback? onBackPress}) {
       minimumSize: Size(40.w, 40.h),
       maximumSize: Size(40.w, 40.h),
       backgroundColor: AdaptiveColor.adaptiveColor(
-      context: context,
-      lightColor: ColorManager.pureWhite,
-      darkColor: ColorManager.tertiaryBlack,
-    ),
-      side: BorderSide(color:AdaptiveColor.adaptiveColor(
-      context: context,
-      lightColor: ColorManager.borderGrey,
-      darkColor: ColorManager.tertiaryBlack,
-    ), width: 2.w),
+        context: context,
+        lightColor: ColorManager.pureWhite,
+        darkColor: ColorManager.tertiaryBlack,
+      ),
+      side: BorderSide(
+        color: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.borderGrey,
+          darkColor: ColorManager.tertiaryBlack,
+        ),
+        width: 2.w,
+      ),
     ),
     icon: Icon(
       Icons.arrow_back_ios_new,

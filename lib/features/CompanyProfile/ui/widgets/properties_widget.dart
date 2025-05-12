@@ -22,7 +22,11 @@ class PropertiesWidget extends StatelessWidget {
         Text(
           '$propertyLength ${context.localization.properties}',
           style: context.titleMedium?.copyWith(
-            color: ColorManager.softGray,
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.softGray,
+              darkColor: ColorManager.hintGrey,
+            ),
             fontWeight: FontWeightHelper.medium,
           ),
         ),

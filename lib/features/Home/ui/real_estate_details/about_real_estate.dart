@@ -10,7 +10,6 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
-
 class AboutRealEstate extends StatelessWidget {
   const AboutRealEstate({
     super.key,
@@ -33,7 +32,6 @@ class AboutRealEstate extends StatelessWidget {
       bathrooms,
       area,
       subcategory;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -139,8 +137,8 @@ class AboutRealEstate extends StatelessWidget {
           ],
         ),
         Wrap(
-          spacing: kSpacingDefault.w, // المسافة الأفقية بين العناصر
-          runSpacing: kSpacingSmall.h, // المسافة الرأسية بين الأسطر
+          spacing: kSpacingDefault.w,   
+          runSpacing: kSpacingSmall.h,
           children: List.generate(4, (index) {
             final images = [
               Assets.images.buildingApartment,
@@ -149,9 +147,8 @@ class AboutRealEstate extends StatelessWidget {
               Assets.images.area,
             ];
             final values = [subcategory, bedrooms, bathrooms, '$area sqm'];
-
             return Row(
-              mainAxisSize: MainAxisSize.min, // مهم لتجنب أخذ كل العرض
+              mainAxisSize: MainAxisSize.min, 
               children: [
                 SvgPicture.asset(
                   images[index],

@@ -66,7 +66,7 @@ class RealEstateInfo extends StatelessWidget {
             color: AdaptiveColor.adaptiveColor(
               context: context,
               lightColor: ColorManager.softGray,
-              darkColor: ColorManager.iconGrey,
+              darkColor: ColorManager.hintGrey,
             ),
           ),
         ),

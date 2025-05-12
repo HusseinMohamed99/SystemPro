@@ -25,7 +25,11 @@ class LocationWidget extends StatelessWidget {
           children: [
             Icon(
               Icons.place_outlined,
-              color: ColorManager.pureBlack,
+              color: AdaptiveColor.adaptiveColor(
+                context: context,
+                lightColor: ColorManager.pureBlack,
+                darkColor: ColorManager.iconGrey,
+              ),
               size: kIconSizeDefault.sp,
             ),
             Text(

@@ -26,7 +26,6 @@ class AboutRealEstateWidget extends StatelessWidget {
             final TextEditingController textController = TextEditingController(
               text: description,
             );
-
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -38,14 +37,18 @@ class AboutRealEstateWidget extends StatelessWidget {
                     fontWeight: FontWeightHelper.regular,
                   ),
                 ),
-                if (textController.text.length >=
-                    150)
+                if (textController.text.length >= 150)
                   GestureDetector(
                     onTap: () {
                       showDialog(
                         context: context,
                         builder:
                             (context) => AlertDialog(
+                              backgroundColor: AdaptiveColor.adaptiveColor(
+                                context: context,
+                                lightColor: ColorManager.pureWhite,
+                                darkColor: ColorManager.tertiaryBlack,
+                              ),
                               content: SingleChildScrollView(
                                 child: Text(
                                   textController.text,
@@ -61,7 +64,11 @@ class AboutRealEstateWidget extends StatelessWidget {
                       context.localization.see_more,
                       style: context.titleMedium?.copyWith(
                         fontWeight: FontWeightHelper.regular,
-                        color: ColorManager.primaryBlue,
+                        color: AdaptiveColor.adaptiveColor(
+                          context: context,
+                          lightColor: ColorManager.primaryBlue,
+                          darkColor: ColorManager.secondaryBlue,
+                        ),
                       ),
                     ),
                   ),

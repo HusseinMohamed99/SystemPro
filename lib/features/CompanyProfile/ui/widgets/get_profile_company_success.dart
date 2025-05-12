@@ -69,7 +69,11 @@ class GetProfileCompanySuccess extends StatelessWidget {
                     '${companyListings.length} ${context.localization.properties}',
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
-                      color: ColorManager.softGray,
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.softGray,
+                        darkColor: ColorManager.hintGrey,
+                      ),
                     ),
                   ),
                 ],
