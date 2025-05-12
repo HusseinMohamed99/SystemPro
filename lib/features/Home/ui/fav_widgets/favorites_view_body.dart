@@ -10,10 +10,8 @@ class FavoritesViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  CustomScrollView(
-      slivers: [RealEstateSliverList(
-        listings: listings,
-      )],
+    return CustomScrollView(
+      slivers: [RealEstateSliverList(listings: listings)],
     ).hPadding(kPaddingDefaultHorizontal);
   }
 }

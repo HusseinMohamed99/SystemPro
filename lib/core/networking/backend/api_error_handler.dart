@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
 import 'package:system_pro/core/networking/backend/api_error_model.dart';
@@ -56,7 +55,6 @@ class ResponseCode {
   static const int notFound = 404; // Failure, not found
   static const int internalServerError = 500; // Failure, crash on server side
   static const int apiLogicError = 422; // API logic error
-
   // Local Status Codes
   static const int connectTimeout = -1; // Connection timeout
   static const int cancel = -2; // Request was canceled
@@ -81,7 +79,6 @@ class ResponseMessage {
   static const String internalServerError =
       ApiErrors.internalServerError; // Failure, crash on server side
   static const String notFound = ApiErrors.notFoundError; // Failure, not found
-
   // Local Status Messages
   static const String connectTimeout =
       ApiErrors.timeoutError; // Connection timeout
@@ -151,7 +148,6 @@ extension DataSourceExtension on DataSource {
         message: ResponseMessage.defaultError,
       ),
     };
-
     // Return the corresponding ApiErrorModel or a default one if not found
     return errorMap[this] ??
         ApiErrorModel(
@@ -162,7 +158,6 @@ extension DataSourceExtension on DataSource {
 }
 
 class ErrorHandler implements Exception {
-
   ErrorHandler.handle(dynamic error) {
     if (error is DioException) {
       // dio error so its an error from response of the API or from dio itself

@@ -1,7 +1,3 @@
-// Scale Factor
-// Responsive Font Size
-// (min , max) Font Size
-
 import 'package:flutter/material.dart';
 
 double getResponsiveFontSize(BuildContext context, {required double fontSize}) {

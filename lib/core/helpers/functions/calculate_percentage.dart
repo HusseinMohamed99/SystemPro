@@ -14,4 +14,3 @@ String calculatePercentage(String priceStr, String downPaymentStr) {
   // تحديد رقمين بعد العلامة العشرية
   return '${percentage.toStringAsFixed(0)} %';
 }
-

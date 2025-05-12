@@ -5,17 +5,20 @@ extension WidgetExtension on Widget {
   // Padding
   Widget allPadding({required double vPadding, required double hPadding}) =>
       Padding(
-        padding: EdgeInsets.symmetric(
+        padding: EdgeInsetsDirectional.symmetric(
           vertical: vPadding.h,
           horizontal: hPadding.w,
         ),
         child: this,
       );
-  Widget vPadding(double padding) =>
-      Padding(padding: EdgeInsets.symmetric(vertical: padding.h), child: this);
+
+  Widget vPadding(double padding) => Padding(
+    padding: EdgeInsetsDirectional.symmetric(vertical: padding.h),
+    child: this,
+  );
 
   Widget hPadding(double padding) => Padding(
-    padding: EdgeInsets.symmetric(horizontal: padding.w),
+    padding: EdgeInsetsDirectional.symmetric(horizontal: padding.w),
     child: this,
   );
 
@@ -25,11 +28,11 @@ extension WidgetExtension on Widget {
     double leftPadding = 0,
     double rightPadding = 0,
   }) => Padding(
-    padding: EdgeInsets.only(
+    padding: EdgeInsetsDirectional.only(
       top: topPadding.h,
       bottom: bottomPadding.h,
-      left: leftPadding.w,
-      right: rightPadding.w,
+      start: leftPadding.w,
+      end: rightPadding.w,
     ),
     child: this,
   );

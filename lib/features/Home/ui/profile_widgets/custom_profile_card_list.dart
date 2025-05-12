@@ -12,6 +12,7 @@ import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
 
@@ -22,28 +23,21 @@ class CustomProfileCardList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList.separated(
       itemCount: profileCardList(context).length,
-      separatorBuilder:
-          (context, index) =>
-              Divider(height: 1.h, color: ColorManager.borderGrey),
+      separatorBuilder: (context, index) => const CustomDivider(),
       itemBuilder: (context, index) {
-        // قراءة اللغة المختارة من SharedPreferences
         final String selectedLanguage =
-            CachingHelper.getData(SharedPrefKeys.selectedLanguage) ?? 'en';
+            CachingHelper.getData(SharedPrefKeys.selectedLanguage) ??
+            context.localization.english;
         final String currentLanguage =
-            selectedLanguage == 'ar'
+            selectedLanguage == context.localization.arabic
                 ? context.localization.arabic
                 : context.localization.english;
-
-        // قراءة وضع الظلام من SharedPreferences
         final bool isDarkMode =
             CachingHelper.getData(SharedPrefKeys.isDarkMode) ?? false;
-
-        // تحديد الوضع بناءً على القيمة المختارة
         final String currentThemeMode =
             isDarkMode
                 ? context.localization.dark_mode
                 : context.localization.light_mode;
-
         return CsutomProfileCard(
           onTap: () async {
             if (index == 0) {
@@ -51,7 +45,6 @@ class CustomProfileCardList extends StatelessWidget {
                 Routes.editProfileView,
                 arguments: userName,
               );
-
               if (result == true) {
                 context.read<ProfileCubit>().emitGetProfileStates();
               }
@@ -62,21 +55,19 @@ class CustomProfileCardList extends StatelessWidget {
                 firstTitle: context.localization.english,
                 secondTitle: context.localization.arabic,
                 firstOnTap: () async {
-                  if (selectedLanguage != 'en') {
-                    // إذا اللغة المختارة ليست "en"
+                  if (selectedLanguage != context.localization.english) {
                     await CachingHelper.setData(
                       SharedPrefKeys.selectedLanguage,
-                      'en',
+                      context.localization.english,
                     );
                     context.read<ChangeLocalizationCubit>().toggleLocale();
                   }
                 },
                 secondOnTap: () async {
-                  if (selectedLanguage != 'ar') {
-                    // إذا اللغة المختارة ليست "ar"
+                  if (selectedLanguage != context.localization.arabic) {
                     await CachingHelper.setData(
                       SharedPrefKeys.selectedLanguage,
-                      'ar',
+                      context.localization.arabic,
                     );
                     context.read<ChangeLocalizationCubit>().toggleLocale();
                   }
@@ -90,7 +81,6 @@ class CustomProfileCardList extends StatelessWidget {
                 secondTitle: context.localization.dark_mode,
                 firstOnTap: () async {
                   if (isDarkMode) {
-                    // إذا كان الوضع الحالي هو "داكن" و يريد تغييره إلى "فاتح"
                     await CachingHelper.setData(
                       SharedPrefKeys.isDarkMode,
                       false,
@@ -100,7 +90,6 @@ class CustomProfileCardList extends StatelessWidget {
                 },
                 secondOnTap: () async {
                   if (!isDarkMode) {
-                    // إذا كان الوضع الحالي هو "فاتح" و يريد تغييره إلى "داكن"
                     await CachingHelper.setData(
                       SharedPrefKeys.isDarkMode,
                       true,
@@ -114,8 +103,8 @@ class CustomProfileCardList extends StatelessWidget {
           isLocalization: index == 1,
           isThemeMode: index == 2,
           title: profileCardList(context)[index],
-          language: currentLanguage, // عرض اللغة الحالية هنا
-          themeMode: currentThemeMode, // عرض الوضع الحالي هنا
+          language: currentLanguage,
+          themeMode: currentThemeMode,
         );
       },
     );
@@ -128,12 +117,18 @@ class CustomProfileCardList extends StatelessWidget {
     required String secondTitle,
     required VoidCallback firstOnTap,
     required VoidCallback secondOnTap,
+    
   }) {
     return showModalBottomSheet(
+      backgroundColor: AdaptiveColor.adaptiveColor(
+        context: context,
+        lightColor: ColorManager.pureWhite,
+        darkColor: ColorManager.tertiaryBlack,
+      ),
       context: context,
       builder:
           (context) => Container(
-            padding: EdgeInsets.symmetric(
+            padding: EdgeInsetsDirectional.symmetric(
               vertical: kSpacingDefault.h,
               horizontal: kSpacingDefault.w,
             ),
@@ -146,7 +141,11 @@ class CustomProfileCardList extends StatelessWidget {
                   child: Container(
                     width: 40.w,
                     height: 4.h,
-                    color: ColorManager.borderGrey,
+                    color: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.softGray,
+                      darkColor: ColorManager.iconGrey,
+                    ),
                   ),
                 ),
                 verticalSpacing(kSpacingDefault),
@@ -154,6 +153,11 @@ class CustomProfileCardList extends StatelessWidget {
                   '${context.localization.change} $title',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeightHelper.medium,
+                    color: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.pureBlack,
+                      darkColor: ColorManager.hintGrey,
+                    ),
                   ),
                 ),
                 ListTile(
@@ -161,6 +165,11 @@ class CustomProfileCardList extends StatelessWidget {
                     firstTitle,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
+                    color:   AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.pureBlack,
+                        darkColor: ColorManager.hintGrey,
+                      ),
                     ),
                   ),
                   onTap: () {
@@ -173,6 +182,11 @@ class CustomProfileCardList extends StatelessWidget {
                     secondTitle,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.pureBlack,
+                        darkColor: ColorManager.hintGrey,
+                      ),
                     ),
                   ),
                   onTap: () {

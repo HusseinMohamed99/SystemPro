@@ -1264,6 +1264,141 @@ class S {
       args: [],
     );
   }
+
+  /// `No Favorite Properties`
+  String get no_favorite_properties {
+    return Intl.message(
+      'No Favorite Properties',
+      name: 'no_favorite_properties',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unable to Call`
+  String get unable_to_call {
+    return Intl.message(
+      'Unable to Call',
+      name: 'unable_to_call',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please allow call permission from settings`
+  String get unable_to_call_message {
+    return Intl.message(
+      'Please allow call permission from settings',
+      name: 'unable_to_call_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Call Permission Denied`
+  String get call_permission_denied {
+    return Intl.message(
+      'Call Permission Denied',
+      name: 'call_permission_denied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid Link`
+  String get invalid_link {
+    return Intl.message(
+      'Invalid Link',
+      name: 'invalid_link',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unable to open link:`
+  String get unable_to_open_link {
+    return Intl.message(
+      'Unable to open link:',
+      name: 'unable_to_open_link',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} days ago`
+  String daysAgo(Object count) {
+    return Intl.message(
+      '$count days ago',
+      name: 'daysAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `1 day ago`
+  String get oneDayAgo {
+    return Intl.message('1 day ago', name: 'oneDayAgo', desc: '', args: []);
+  }
+
+  /// `{count} hours ago`
+  String hoursAgo(Object count) {
+    return Intl.message(
+      '$count hours ago',
+      name: 'hoursAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `1 hour ago`
+  String get oneHourAgo {
+    return Intl.message('1 hour ago', name: 'oneHourAgo', desc: '', args: []);
+  }
+
+  /// `{count} minutes ago`
+  String minutesAgo(Object count) {
+    return Intl.message(
+      '$count minutes ago',
+      name: 'minutesAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `1 minute ago`
+  String get oneMinuteAgo {
+    return Intl.message(
+      '1 minute ago',
+      name: 'oneMinuteAgo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Just now`
+  String get justNow {
+    return Intl.message('Just now', name: 'justNow', desc: '', args: []);
+  }
+
+  /// `Logged out successfully`
+  String get logout_successfully {
+    return Intl.message(
+      'Logged out successfully',
+      name: 'logout_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account deleted successfully`
+  String get delete_account_successfully {
+    return Intl.message(
+      'Account deleted successfully',
+      name: 'delete_account_successfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

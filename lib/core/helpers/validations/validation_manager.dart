@@ -8,35 +8,28 @@ class ValidationManager {
     String? displayName,
   ) {
     final localization = context.localization;
-
     // Trim the displayName to remove leading/trailing spaces
     displayName = displayName?.trim();
-
     // Check if the displayName is null, empty, or contains only whitespace
     if (displayName == null || displayName.isEmpty) {
       return localization.full_name_empty;
     }
-
     // Check if the displayName contains only numbers
     if (_containsOnlyNumbers(displayName)) {
       return localization.full_name_cannot_be_only_numbers;
     }
-
     // Check if the displayName contains only letters, numbers, and spaces
     if (!_containsValidCharacters(displayName)) {
       return localization.full_name_no_special_characters;
     }
-
     // Check if the displayName is at least 3 characters long
     if (displayName.length < 3) {
       return localization.full_name_minimum_length;
     }
-
     // Check if the displayName is no longer than 20 characters
     if (displayName.length > 20) {
       return localization.full_name_maximum_length;
     }
-
     // If all checks pass, return null (no error)
     return null;
   }
@@ -44,20 +37,16 @@ class ValidationManager {
   // Validates Egyptian phone numbers
   static String? phoneValidator(BuildContext context, String? phone) {
     final localization = context.localization;
-
     // Trim the phone number to remove leading/trailing spaces
     phone = phone?.trim();
-
     // Check if the phone number is null, empty, or contains only whitespace
     if (phone == null || phone.isEmpty) {
       return localization.phone_empty;
     }
-
     // Check if the phone number matches the Egyptian phone number format
     if (!_isValidEgyptianPhoneNumber(phone)) {
       return localization.phone_invalid_format;
     }
-
     // If all checks pass, return null (no error)
     return null;
   }
@@ -65,14 +54,11 @@ class ValidationManager {
   // Validates email addresses
   static String? emailValidator(BuildContext context, String? value) {
     final localization = context.localization;
-
     // Trim leading/trailing spaces
     value = value?.trim();
-
     if (value == null || value.isEmpty) {
       return localization.email_empty;
     }
-
     // Check minimum length (6) and maximum length (320)
     if (value.length < 6) {
       return localization.email_too_short;
@@ -80,28 +66,23 @@ class ValidationManager {
     if (value.length > 320) {
       return localization.email_too_long;
     }
-
     // No consecutive dots
     if (value.contains('..')) {
       return localization.email_no_consecutive_dots;
     }
-
     // No leading or trailing special characters
     if (RegExp(r'^[\.\-_]|[\.\-_]$').hasMatch(value)) {
       return localization.email_invalid_start_end;
     }
-
     // Validate domain part (no consecutive dots or invalid format)
     final parts = value.split('@');
     if (parts.length != 2 || parts[1].contains('..')) {
       return localization.email_invalid_domain;
     }
-
     // Validate using regex
     if (!isValidEmail(value)) {
       return localization.email_invalid_format;
     }
-
     return null; // No error
   }
 
@@ -113,20 +94,16 @@ class ValidationManager {
   // Validates OTP codes
   static String? otpValidator(BuildContext context, String? value) {
     final localization = context.localization;
-
     // Trim the OTP to remove leading/trailing spaces
     value = value?.trim();
-
     // Check if the OTP is null, empty, or contains only whitespace
     if (value == null || value.isEmpty) {
       return localization.otp_empty;
     }
-
     // Check if the OTP contains only numbers
     if (!_containsOnlyNumbers(value)) {
       return localization.otp_invalid_format;
     }
-
     // If all checks pass, return null (no error)
     return null;
   }
@@ -134,15 +111,12 @@ class ValidationManager {
   // Validates passwords
   static String? passwordValidator(BuildContext context, String? value) {
     final localization = context.localization;
-
     // Trim the password to remove leading/trailing spaces
     value = value?.trim();
-
     // Check if the password is null, empty, or contains only whitespace
     if (value == null || value.isEmpty) {
       return localization.password_empty;
     }
-
     // Check if the password meets all requirements
     if (!_isPasswordValid(value)) {
       if (!hasMinLength(value)) {
@@ -161,7 +135,6 @@ class ValidationManager {
         return localization.password_missing_special;
       }
     }
-
     // If all checks pass, return null (no error)
     return null;
   }
@@ -173,12 +146,10 @@ class ValidationManager {
     String? password,
   }) {
     final localization = context.localization;
-
     // Check if the repeated password matches the original password
     if (value != password) {
       return localization.password_does_not_match;
     }
-
     // If all checks pass, return null (no error)
     return null;
   }

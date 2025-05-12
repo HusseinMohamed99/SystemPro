@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/logic/localization/localization_cubit.dart';
-import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
-import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -37,7 +30,7 @@ class CsutomProfileCard extends StatelessWidget {
         child: Container(
           width: context.width,
           color: Colors.transparent,
-          padding: EdgeInsets.symmetric(vertical: kSpacingXLarge.h),
+          padding: EdgeInsetsDirectional.symmetric(vertical: kSpacingXLarge.h),
           child: Row(
             children: [
               Text(
@@ -59,7 +52,11 @@ class CsutomProfileCard extends StatelessWidget {
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
-                      color: ColorManager.pureBlack,
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.pureBlack,
+                        darkColor: ColorManager.pureWhite,
+                      ),
                       size: 20.sp,
                     ),
                   ],
@@ -67,7 +64,11 @@ class CsutomProfileCard extends StatelessWidget {
               else
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: ColorManager.pureBlack,
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.pureBlack,
+                    darkColor: ColorManager.pureWhite,
+                  ),
                   size: 20.sp,
                 ),
             ],

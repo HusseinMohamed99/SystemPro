@@ -20,6 +20,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(count) => "${count} days ago";
+
+  static String m1(count) => "${count} hours ago";
+
+  static String m2(count) => "${count} minutes ago";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "about": MessageLookupByLibrary.simpleMessage("About"),
@@ -39,6 +45,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "book": MessageLookupByLibrary.simpleMessage("Book"),
     "buy": MessageLookupByLibrary.simpleMessage("Buy"),
     "call": MessageLookupByLibrary.simpleMessage("Call"),
+    "call_permission_denied": MessageLookupByLibrary.simpleMessage(
+      "Call Permission Denied",
+    ),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "Sign-in canceled by the user.",
     ),
@@ -61,6 +70,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Current Password",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Dark"),
+    "daysAgo": m0,
+    "delete_account_successfully": MessageLookupByLibrary.simpleMessage(
+      "Account deleted successfully",
+    ),
     "delete_my_account": MessageLookupByLibrary.simpleMessage(
       "Delete My Account",
     ),
@@ -144,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "hoursAgo": m1,
     "internal_error_message": MessageLookupByLibrary.simpleMessage(
       "An internal error occurred. Please try again later.",
     ),
@@ -153,6 +167,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_email_message": MessageLookupByLibrary.simpleMessage(
       "The email address is badly formatted.",
     ),
+    "invalid_link": MessageLookupByLibrary.simpleMessage("Invalid Link"),
+    "justNow": MessageLookupByLibrary.simpleMessage("Just now"),
     "lands": MessageLookupByLibrary.simpleMessage("Lands"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light"),
@@ -160,8 +176,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "location": MessageLookupByLibrary.simpleMessage("Location"),
     "login": MessageLookupByLibrary.simpleMessage("Log in"),
     "logout": MessageLookupByLibrary.simpleMessage("Log out"),
+    "logout_successfully": MessageLookupByLibrary.simpleMessage(
+      "Logged out successfully",
+    ),
     "max": MessageLookupByLibrary.simpleMessage("Max"),
     "min": MessageLookupByLibrary.simpleMessage("Min"),
+    "minutesAgo": m2,
     "my_account": MessageLookupByLibrary.simpleMessage("My Account"),
     "network_request_failed_message": MessageLookupByLibrary.simpleMessage(
       "Please check your internet connection",
@@ -173,11 +193,17 @@ class MessageLookup extends MessageLookupByLibrary {
       "No Available Properties",
     ),
     "no_data_found": MessageLookupByLibrary.simpleMessage("No Data Found"),
+    "no_favorite_properties": MessageLookupByLibrary.simpleMessage(
+      "No Favorite Properties",
+    ),
     "no_result": MessageLookupByLibrary.simpleMessage("No Result"),
     "not_receive_code": MessageLookupByLibrary.simpleMessage(
       "Didn\'t receive code?",
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "oneDayAgo": MessageLookupByLibrary.simpleMessage("1 day ago"),
+    "oneHourAgo": MessageLookupByLibrary.simpleMessage("1 hour ago"),
+    "oneMinuteAgo": MessageLookupByLibrary.simpleMessage("1 minute ago"),
     "operation_not_allowed_message": MessageLookupByLibrary.simpleMessage(
       "Email/password accounts are not enabled. Please enable it in Firebase.",
     ),
@@ -289,6 +315,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme_mode": MessageLookupByLibrary.simpleMessage("Theme Mode"),
     "too_many_requests_message": MessageLookupByLibrary.simpleMessage(
       "Too many requests. Please try again later.",
+    ),
+    "unable_to_call": MessageLookupByLibrary.simpleMessage("Unable to Call"),
+    "unable_to_call_message": MessageLookupByLibrary.simpleMessage(
+      "Please allow call permission from settings",
+    ),
+    "unable_to_open_link": MessageLookupByLibrary.simpleMessage(
+      "Unable to open link:",
     ),
     "user_disabled_message": MessageLookupByLibrary.simpleMessage(
       "This user account has been disabled by an administrator.",

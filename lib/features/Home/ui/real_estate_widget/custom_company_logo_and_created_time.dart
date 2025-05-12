@@ -25,7 +25,7 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
     return Row(
       children: [
         Text(
-          timeAgo(dateTime),
+           timeAgo(context, dateTime),
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
             color:  AdaptiveColor.adaptiveColor(

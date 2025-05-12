@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 
 class AppLogs {
   AppLogs._();
-
   static String get _getCurrentTime {
     final DateTime now = DateTime.now();
     return '${now.minute}:${now.second}:${now.millisecond}';

@@ -6,6 +6,7 @@ class ColorManager {
   static const Color primaryBlue = Color(0xFF6E62E5); // Formerly green
   static const Color secondaryBlue = Color(0xFFBD92FC); // Formerly green
   static const Color shadowBlue = Color(0xFFF1EFFC); // Formerly green
+  static const Color secondaryShadowBlue = Color(0xFFBD92FC); // Formerly green
   static const Color pureBlack = Color(0xFF000000); // Formerly black
   static const Color primaryBlack = Color(
     0xFF0D0F11,
@@ -37,7 +38,8 @@ class AdaptiveColor {
     required Color lightColor,
     required Color darkColor,
   }) {
-    final isDark = context.watch<ChangeThemingCubit>().state.isDarkMode;
+    // final isDark = context.watch<ChangeThemingCubit>().state.isDarkMode;
+    final isDark = context.read<ChangeThemingCubit>().isDark;
 
     return isDark ? darkColor : lightColor;
   }

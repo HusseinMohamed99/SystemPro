@@ -8,6 +8,7 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/logic/profile_state.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card_list.dart';
@@ -25,7 +26,7 @@ class ProfileView extends StatelessWidget {
         }
 
         if (state is LogoutSuccess) {
-          context.showSnackBar('Logged out successfully');
+          context.showSnackBar(context.localization.logout_successfully);
           context.pushNamedAndRemoveUntil(
             Routes.loginView,
             predicate: (Route<dynamic> route) => false,
@@ -35,7 +36,6 @@ class ProfileView extends StatelessWidget {
       builder: (context, state) {
         if (state is UserDataSuccess) {
           final user = state.data.userData;
-
           return Column(
             children: [
               Center(
@@ -43,7 +43,11 @@ class ProfileView extends StatelessWidget {
                   context.localization.profile,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: ColorManager.primaryBlue,
+                    color: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.primaryBlue,
+                      darkColor: ColorManager.pureWhite,
+                    ),
                   ),
                 ),
               ),
@@ -67,7 +71,11 @@ class ProfileView extends StatelessWidget {
                               context,
                             ).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeightHelper.medium,
-                              color: ColorManager.primaryBlue,
+                              color: AdaptiveColor.adaptiveColor(
+                                context: context,
+                                lightColor: ColorManager.primaryBlue,
+                                darkColor: ColorManager.secondaryBlue,
+                              ),
                             ),
                           ),
                         ),
@@ -81,10 +89,10 @@ class ProfileView extends StatelessWidget {
         }
 
         if (state is UserDataLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const AdaptiveIndicator();
         }
 
-        return const SizedBox.shrink(); // أو حالة fallback
+        return const SizedBox.shrink();
       },
     );
   }

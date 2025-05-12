@@ -14,10 +14,14 @@ class SearchBarWithFilterButton extends StatelessWidget {
         horizontalSpacing(8),
         Container(
           decoration: BoxDecoration(
-            color: ColorManager.primaryBlue, // Purple
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.primaryBlue,
+              darkColor: ColorManager.secondaryBlue,
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsetsDirectional.all(10),
           child: const Icon(Icons.tune, color: ColorManager.pureWhite),
         ),
       ],

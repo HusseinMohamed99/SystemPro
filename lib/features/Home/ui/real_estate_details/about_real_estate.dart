@@ -95,7 +95,7 @@ class AboutRealEstate extends StatelessWidget {
             ),
             horizontalSpacing(kSpacingSmall),
             Text(
-              timeAgo(date),
+              timeAgo(context,date),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
                 color: ColorManager.softGray,

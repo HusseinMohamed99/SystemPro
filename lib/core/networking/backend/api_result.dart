@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:system_pro/core/networking/backend/api_error_handler.dart';
 
-
 part 'api_result.freezed.dart';
 
 @Freezed()

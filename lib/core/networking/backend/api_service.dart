@@ -20,7 +20,6 @@ import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_response.dart';
 import 'package:system_pro/features/Home/data/model/favorites/get_favorites_response.dart';
 import 'package:system_pro/features/Home/data/model/favorites/toggle_favorite_response.dart';
-import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/model/user/user_data_response.dart';
 
@@ -29,10 +28,8 @@ part 'api_service.g.dart';
 @RestApi(baseUrl: ApiConstants.apiBaseUrl)
 abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
-
   @POST(ApiConstants.login)
   Future<LoginResponse> login(@Body() LoginRequestBody loginRequestBody);
-
   @POST(ApiConstants.signup)
   Future<SignupResponse> signup(@Body() SignupRequestBody signupRequestBody);
   @POST(ApiConstants.forgotPassword)
@@ -59,23 +56,16 @@ abstract class ApiService {
   Future<ApiSuccessModel> logout();
   @POST(ApiConstants.deleteAccount)
   Future<ApiSuccessModel> deleteAccount();
-
   @GET(ApiConstants.getUserData)
   Future<UserDataResponse> getUserData();
-
   @PUT(ApiConstants.editProfile)
   Future<EditProfileResponse> editProfile(
     @Body() EditProfileRequestBody editProfileRequestBody,
   );
   @GET(ApiConstants.getMarketplaceListings)
   Future<MarketplaceResponse> getMarketplaceListings();
-
-@POST('${ApiConstants.addFavoriteRealEstate}/{id}')
-Future<ToggleFavoriteResponse> toggleFavorite(@Path('id') int listingId);
-
-
-
-@GET(ApiConstants.getFavoriteRealEstate)
-Future<GetFavoritesResponse> getFavoriteListings();
-
+  @POST('${ApiConstants.addFavoriteRealEstate}/{id}')
+  Future<ToggleFavoriteResponse> toggleFavorite(@Path('id') int listingId);
+  @GET(ApiConstants.getFavoriteRealEstate)
+  Future<GetFavoritesResponse> getFavoriteListings();
 }

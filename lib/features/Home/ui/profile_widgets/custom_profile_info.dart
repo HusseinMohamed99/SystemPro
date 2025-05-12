@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -16,19 +17,29 @@ class CustomProfileInfo extends StatelessWidget {
           width: 88.w,
           height: 88.h,
           decoration: BoxDecoration(
-            color: ColorManager.shadowBlue,
+            color: AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.shadowBlue,
+              darkColor: ColorManager.secondaryShadowBlue,
+            ),
             borderRadius: BorderRadius.circular(50),
           ),
           child: Center(
             child: Text(
               userName != null && userName!.isNotEmpty
-                  ? userName![0].substring(0, 1).toUpperCase()
+                  ? userName!.substring(0, 1).toUpperCase()
                   : '?',
-              style: Theme.of(context).textTheme.displaySmall,
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                color: AdaptiveColor.adaptiveColor(
+                  context: context,
+                  lightColor: ColorManager.primaryBlue,
+                  darkColor: ColorManager.pureWhite,
+                ),
+              ),
             ),
           ),
         ),
-        SizedBox(width: kSpacingDefault.w),
+        horizontalSpacing(kSpacingDefault),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +55,11 @@ class CustomProfileInfo extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: ColorManager.softGray,
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.softGray,
+                    darkColor: ColorManager.hintGrey,
+                  ),
                   fontWeight: FontWeightHelper.regular,
                 ),
               ),

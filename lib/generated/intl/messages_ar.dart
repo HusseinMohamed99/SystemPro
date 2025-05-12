@@ -20,6 +20,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(count) => "منذ ${count} يوم";
+
+  static String m1(count) => "منذ ${count} ساعة";
+
+  static String m2(count) => "منذ ${count} دقيقة";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "about": MessageLookupByLibrary.simpleMessage("الوصف"),
@@ -39,6 +45,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "book": MessageLookupByLibrary.simpleMessage("احجز"),
     "buy": MessageLookupByLibrary.simpleMessage("شراء"),
     "call": MessageLookupByLibrary.simpleMessage("اتصال"),
+    "call_permission_denied": MessageLookupByLibrary.simpleMessage(
+      "تم رفض صلاحية الاتصال",
+    ),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
       "تم إلغاء تسجيل الدخول بواسطة المستخدم.",
     ),
@@ -63,6 +72,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "كلمة المرور الحالية",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("غامق"),
+    "daysAgo": m0,
+    "delete_account_successfully": MessageLookupByLibrary.simpleMessage(
+      "تم حذف الحساب بنجاح",
+    ),
     "delete_my_account": MessageLookupByLibrary.simpleMessage("حذف حسابي"),
     "deleting_account": MessageLookupByLibrary.simpleMessage(
       "جاري حذف الحساب...",
@@ -144,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "have_account": MessageLookupByLibrary.simpleMessage("تمتلك حساب بالفعل؟"),
     "help": MessageLookupByLibrary.simpleMessage("المساعدة"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+    "hoursAgo": m1,
     "internal_error_message": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ داخلي. يرجى المحاولة مرة أخرى لاحقًا.",
     ),
@@ -153,6 +167,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_email_message": MessageLookupByLibrary.simpleMessage(
       "عنوان البريد الإلكتروني بتنسيق غير صحيح.",
     ),
+    "invalid_link": MessageLookupByLibrary.simpleMessage("الرابط غير صالح"),
+    "justNow": MessageLookupByLibrary.simpleMessage("الآن"),
     "lands": MessageLookupByLibrary.simpleMessage("الأراضي"),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
     "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
@@ -160,8 +176,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "location": MessageLookupByLibrary.simpleMessage("الموقع"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+    "logout_successfully": MessageLookupByLibrary.simpleMessage(
+      "تم تسجيل الخروج بنجاح",
+    ),
     "max": MessageLookupByLibrary.simpleMessage("الحد الأقصى"),
     "min": MessageLookupByLibrary.simpleMessage("الحد الأدنى"),
+    "minutesAgo": m2,
     "my_account": MessageLookupByLibrary.simpleMessage("حسابي"),
     "network_request_failed_message": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ في الشبكة. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
@@ -173,11 +193,17 @@ class MessageLookup extends MessageLookupByLibrary {
       "لا توجد عقارات متاحة حالياً",
     ),
     "no_data_found": MessageLookupByLibrary.simpleMessage("لا يوجد بيانات"),
+    "no_favorite_properties": MessageLookupByLibrary.simpleMessage(
+      "لا يوجد عقارات مفضلة",
+    ),
     "no_result": MessageLookupByLibrary.simpleMessage(
       "لم يتم العثور على نتائج",
     ),
     "not_receive_code": MessageLookupByLibrary.simpleMessage("لم يصل الكود؟"),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
+    "oneDayAgo": MessageLookupByLibrary.simpleMessage("منذ يوم واحد"),
+    "oneHourAgo": MessageLookupByLibrary.simpleMessage("منذ ساعة واحدة"),
+    "oneMinuteAgo": MessageLookupByLibrary.simpleMessage("منذ دقيقة واحدة"),
     "operation_not_allowed_message": MessageLookupByLibrary.simpleMessage(
       "حسابات البريد الإلكتروني/كلمة المرور غير مفعلّة. الرجاء تفعيلها في Firebase.",
     ),
@@ -291,6 +317,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme_mode": MessageLookupByLibrary.simpleMessage("الوضع"),
     "too_many_requests_message": MessageLookupByLibrary.simpleMessage(
       "تم إرسال العديد من الطلبات. يرجى المحاولة لاحقًا.",
+    ),
+    "unable_to_call": MessageLookupByLibrary.simpleMessage(
+      "لا يمكن تنفيذ المكالمة",
+    ),
+    "unable_to_call_message": MessageLookupByLibrary.simpleMessage(
+      "من فضلك فعّل صلاحية الاتصال من الإعدادات",
+    ),
+    "unable_to_open_link": MessageLookupByLibrary.simpleMessage(
+      "تعذر فتح الرابط:",
     ),
     "user_disabled_message": MessageLookupByLibrary.simpleMessage(
       "تم تعطيل حساب هذا المستخدم بواسطة المسؤول.",
