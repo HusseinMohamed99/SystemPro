@@ -1255,6 +1255,11 @@ class S {
     return Intl.message('Lands', name: 'lands', desc: '', args: []);
   }
 
+  /// `Lands Type`
+  String get lands_type {
+    return Intl.message('Lands Type', name: 'lands_type', desc: '', args: []);
+  }
+
   /// `No Available Properties`
   String get no_available_properties {
     return Intl.message(

@@ -110,8 +110,8 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                   ),
                 ),
               ],
-              if (selectedCategory == context.localization.commercial ||
-                  selectedCategory == context.localization.lands) ...[
+              if (selectedCategory == context.localization.commercial
+                  ) ...[
                 SliverToBoxAdapter(
                   child: PropertyTypeWidget(
                     key: propertyKey,
@@ -130,6 +130,23 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                   ),
                 ),
               ],
+              
+              if (selectedCategory == context.localization.lands)...[
+                        SliverToBoxAdapter(
+                  child: PropertyTypeWidget(
+                    key: propertyKey,
+                    propertyTypes: propertyTypes,
+                    titleType: context.localization.lands_type,
+                  ),
+                ),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                const SliverToBoxAdapter(child: PriceRangeWidget()),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                const SliverToBoxAdapter(child: PropertySizeWidget()),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+              ],
+              
+              
               SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
             ],
           ),
@@ -151,7 +168,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 ),
                 textStyleColor: AdaptiveColor.adaptiveColor(
                   context: context,
-                  lightColor: ColorManager.pureWhite,
+                  lightColor: ColorManager.primaryBlue,
                   darkColor: ColorManager.pureWhite,
                 ),
               ),

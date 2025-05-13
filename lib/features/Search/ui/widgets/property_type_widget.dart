@@ -7,10 +7,14 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class PropertyTypeWidget extends StatefulWidget {
-  const PropertyTypeWidget({super.key, required this.propertyTypes});
+  const PropertyTypeWidget({
+    super.key,
+    required this.propertyTypes,
+    this.titleType,
+  });
 
   final List<String> propertyTypes;
-
+  final String? titleType;
   @override
   State<PropertyTypeWidget> createState() => PropertyTypeWidgetState();
 }
@@ -33,7 +37,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          context.localization.property_type,
+          widget.titleType ?? context.localization.property_type,
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),
@@ -52,11 +56,11 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                       color:
                           isSelected
                               ? ColorManager.pureWhite
-                              :AdaptiveColor.adaptiveColor(
-                                  context: context,
-                                  lightColor: ColorManager.softGray,
-                                  darkColor: ColorManager.hintGrey,
-                                ),
+                              : AdaptiveColor.adaptiveColor(
+                                context: context,
+                                lightColor: ColorManager.softGray,
+                                darkColor: ColorManager.hintGrey,
+                              ),
                     ),
                   ),
                   selectedColor: ColorManager.primaryBlue,
@@ -68,7 +72,8 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                   side:
                       isSelected
                           ? BorderSide.none
-                          :  BorderSide(color: AdaptiveColor.adaptiveColor(
+                          : BorderSide(
+                            color: AdaptiveColor.adaptiveColor(
                               context: context,
                               lightColor: ColorManager.borderGrey,
                               darkColor: ColorManager.tertiaryBlack,
@@ -97,7 +102,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
             child: Text(
               showAll
                   ? context.localization.show_less
-                  : context.localization.see_more_property_type,
+                  : '${context.localization.see_more} ${widget.titleType ?? context.localization.property_type}',
               textAlign: TextAlign.center,
               style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,

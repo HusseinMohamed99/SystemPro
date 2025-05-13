@@ -300,6 +300,8 @@
   "@book": {},
   "lands": "الأراضي",
   "@lands": {},
+  "lands_type": "نوع الأراضي",
+  "@lands_type": {},
   "no_available_properties": "لا توجد عقارات متاحة حالياً",
   "@no_available_properties": {},
   "no_favorite_properties": "لا يوجد عقارات مفضلة",
@@ -340,13 +342,12 @@
   "@oneMinuteAgo": {},
   "justNow": "الآن",
   "@justNow": {},
-    "logout_successfully": "تم تسجيل الخروج بنجاح",
+  "logout_successfully": "تم تسجيل الخروج بنجاح",
   "@logout_successfully": {},
   "delete_account_successfully": "تم حذف الحساب بنجاح",
   "@delete_account_successfully": {},
-  "property_added_to_favorites":"تمت إضافة العقار إلى المفضلة",
-  "@property_added_to_favorites":{},
-  "property_removed_from_favorites":"تمت إزالة العقار من المفضلة",
-  "@property_removed_from_favorites":{}
-  
+  "property_added_to_favorites": "تمت إضافة العقار إلى المفضلة",
+  "@property_added_to_favorites": {},
+  "property_removed_from_favorites": "تمت إزالة العقار من المفضلة",
+  "@property_removed_from_favorites": {}
 }

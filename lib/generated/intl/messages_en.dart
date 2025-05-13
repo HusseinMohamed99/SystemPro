@@ -170,6 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_link": MessageLookupByLibrary.simpleMessage("Invalid Link"),
     "justNow": MessageLookupByLibrary.simpleMessage("Just now"),
     "lands": MessageLookupByLibrary.simpleMessage("Lands"),
+    "lands_type": MessageLookupByLibrary.simpleMessage("Lands Type"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light"),
     "listed_by": MessageLookupByLibrary.simpleMessage("Listed by"),

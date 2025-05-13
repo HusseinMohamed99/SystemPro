@@ -170,6 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_link": MessageLookupByLibrary.simpleMessage("الرابط غير صالح"),
     "justNow": MessageLookupByLibrary.simpleMessage("الآن"),
     "lands": MessageLookupByLibrary.simpleMessage("الأراضي"),
+    "lands_type": MessageLookupByLibrary.simpleMessage("نوع الأراضي"),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
     "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
     "listed_by": MessageLookupByLibrary.simpleMessage("تم نشره بواسطة"),
