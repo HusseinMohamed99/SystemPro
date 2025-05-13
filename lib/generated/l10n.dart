@@ -1245,9 +1245,9 @@ class S {
     return Intl.message('See More', name: 'see_more', desc: '', args: []);
   }
 
-  /// `Book`
+  /// `Booking`
   String get book {
-    return Intl.message('Book', name: 'book', desc: '', args: []);
+    return Intl.message('Booking', name: 'book', desc: '', args: []);
   }
 
   /// `Lands`

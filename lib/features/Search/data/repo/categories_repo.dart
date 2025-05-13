@@ -1,18 +1,15 @@
 import 'package:system_pro/core/networking/backend/api_error_handler.dart';
 import 'package:system_pro/core/networking/backend/api_result.dart';
 import 'package:system_pro/core/networking/backend/api_service.dart';
-import 'package:system_pro/features/Authentication/Login/data/model/login_request_body.dart';
-import 'package:system_pro/features/Authentication/Login/data/model/login_response.dart';
+import 'package:system_pro/features/Search/data/model/category_response.dart';
 
-class LoginRepo {
-  LoginRepo(this._apiService);
+class CategoriesRepo {
+  CategoriesRepo(this._apiService);
   final ApiService _apiService;
 
-  Future<ApiResult<LoginResponse>> login(
-    LoginRequestBody loginRequestBody,
-  ) async {
+  Future<ApiResult<CategoryResponse>> getCategories() async {
     try {
-      final response = await _apiService.login(loginRequestBody);
+      final response = await _apiService.getCategories();
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));

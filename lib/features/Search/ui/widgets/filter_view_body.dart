@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
@@ -7,6 +8,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
+import 'package:system_pro/features/Search/logic/categories_cubit.dart';
+import 'package:system_pro/features/Search/logic/categories_state.dart';
 import 'package:system_pro/features/Search/ui/widgets/amenities_widget.dart';
 import 'package:system_pro/features/Search/ui/widgets/bathrooms_widget.dart';
 import 'package:system_pro/features/Search/ui/widgets/bedrooms_widget.dart';
@@ -71,118 +74,123 @@ class _FilterViewBodyState extends State<FilterViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ToggleCategoryWidget(
-          onCategoryChanged: (category) {
-            setState(() {
-              selectedCategory = category;
-            });
-          },
-        ),
-        verticalSpacing(kSpacingXXLarge),
-        const BuyRentToggleWidget(),
-        verticalSpacing(kSpacingXXLarge),
-        Expanded(
-          child: CustomScrollView(
-            slivers: [
-              if (selectedCategory == context.localization.residentail) ...[
-                SliverToBoxAdapter(
-                  child: PropertyTypeWidget(
-                    key: propertyKey,
-                    propertyTypes: propertyTypes,
-                  ),
-                ),
-
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                const SliverToBoxAdapter(child: PriceRangeWidget()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                const SliverToBoxAdapter(child: PropertySizeWidget()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(
-                  child: AmenitiesWidget(
-                    key: amenitiesKey,
-                    amenities: const [],
-                  ),
-                ),
-              ],
-              if (selectedCategory == context.localization.commercial
-                  ) ...[
-                SliverToBoxAdapter(
-                  child: PropertyTypeWidget(
-                    key: propertyKey,
-                    propertyTypes: propertyTypes,
-                  ),
-                ),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                const SliverToBoxAdapter(child: PriceRangeWidget()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                const SliverToBoxAdapter(child: PropertySizeWidget()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                SliverToBoxAdapter(
-                  child: AmenitiesWidget(
-                    key: amenitiesKey,
-                    amenities: const [],
-                  ),
-                ),
-              ],
-              
-              if (selectedCategory == context.localization.lands)...[
-                        SliverToBoxAdapter(
-                  child: PropertyTypeWidget(
-                    key: propertyKey,
-                    propertyTypes: propertyTypes,
-                    titleType: context.localization.lands_type,
-                  ),
-                ),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                const SliverToBoxAdapter(child: PriceRangeWidget()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                const SliverToBoxAdapter(child: PropertySizeWidget()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              ],
-              
-              
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
-            ],
-          ),
-        ),
-
-        const CustomDivider().onlyPadding(
-          bottomPadding: kPaddingDefaultVertical,
-        ),
-        Row(
+    return BlocConsumer<CategoriesCubit, CategoriesState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Column(
           children: [
+            ToggleCategoryWidget(
+              onCategoryChanged: (category) {
+                setState(() {
+                  selectedCategory = category;
+                });
+              },
+            ),
+            verticalSpacing(kSpacingXXLarge),
+            const BuyRentToggleWidget(),
+            verticalSpacing(kSpacingXXLarge),
             Expanded(
-              child: CustomButton(
-                text: context.localization.clear_all,
-                onPressed: clearAll,
-                backgroundColor: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.shadowBlue,
-                  darkColor: ColorManager.tertiaryBlack,
-                ),
-                textStyleColor: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.pureWhite,
-                ),
+              child: CustomScrollView(
+                slivers: [
+                  if (selectedCategory == context.localization.residentail) ...[
+                    SliverToBoxAdapter(
+                      child: PropertyTypeWidget(
+                        key: propertyKey,
+                        propertyTypes: propertyTypes,
+                      ),
+                    ),
+
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    const SliverToBoxAdapter(child: PriceRangeWidget()),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    SliverToBoxAdapter(
+                      child: BathroomsWidget(key: bathroomsKey),
+                    ),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    const SliverToBoxAdapter(child: PropertySizeWidget()),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    SliverToBoxAdapter(
+                      child: AmenitiesWidget(
+                        key: amenitiesKey,
+                        amenities: const [],
+                      ),
+                    ),
+                  ],
+                  if (selectedCategory == context.localization.commercial) ...[
+                    SliverToBoxAdapter(
+                      child: PropertyTypeWidget(
+                        key: propertyKey,
+                        propertyTypes: propertyTypes,
+                      ),
+                    ),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    const SliverToBoxAdapter(child: PriceRangeWidget()),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    const SliverToBoxAdapter(child: PropertySizeWidget()),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    SliverToBoxAdapter(
+                      child: AmenitiesWidget(
+                        key: amenitiesKey,
+                        amenities: const [],
+                      ),
+                    ),
+                  ],
+
+                  if (selectedCategory == context.localization.lands) ...[
+                    SliverToBoxAdapter(
+                      child: PropertyTypeWidget(
+                        key: propertyKey,
+                        propertyTypes: propertyTypes,
+                        titleType: context.localization.lands_type,
+                      ),
+                    ),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    const SliverToBoxAdapter(child: PriceRangeWidget()),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                    const SliverToBoxAdapter(child: PropertySizeWidget()),
+                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+                  ],
+
+                  SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
+                ],
               ),
             ),
-            horizontalSpacing(kSpacingDefault),
-            Expanded(
-              child: CustomButton(
-                text: context.localization.find,
-                onPressed: () {},
-              ),
+
+            const CustomDivider().onlyPadding(
+              bottomPadding: kPaddingDefaultVertical,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    text: context.localization.clear_all,
+                    onPressed: clearAll,
+                    backgroundColor: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.shadowBlue,
+                      darkColor: ColorManager.tertiaryBlack,
+                    ),
+                    textStyleColor: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.primaryBlue,
+                      darkColor: ColorManager.pureWhite,
+                    ),
+                  ),
+                ),
+                horizontalSpacing(kSpacingDefault),
+                Expanded(
+                  child: CustomButton(
+                    text: context.localization.find,
+                    onPressed: () {},
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

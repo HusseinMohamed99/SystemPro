@@ -22,6 +22,7 @@ import 'package:system_pro/features/Home/data/model/favorites/get_favorites_resp
 import 'package:system_pro/features/Home/data/model/favorites/toggle_favorite_response.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/model/user/user_data_response.dart';
+import 'package:system_pro/features/Search/data/model/category_response.dart';
 
 part 'api_service.g.dart';
 
@@ -68,4 +69,9 @@ abstract class ApiService {
   Future<ToggleFavoriteResponse> toggleFavorite(@Path('id') int listingId);
   @GET(ApiConstants.getFavoriteRealEstate)
   Future<GetFavoritesResponse> getFavoriteListings();
+
+  @GET(ApiConstants.getCategories)
+  Future<CategoryResponse> getCategories({
+    @Query('with_subcategories') bool withSubcategories = true,
+  });
 }

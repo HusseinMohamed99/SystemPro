@@ -42,7 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "back_to_login": MessageLookupByLibrary.simpleMessage("Back to Login"),
     "bathrooms": MessageLookupByLibrary.simpleMessage("Bathrooms"),
     "bedrooms": MessageLookupByLibrary.simpleMessage("Bedrooms"),
-    "book": MessageLookupByLibrary.simpleMessage("Book"),
+    "book": MessageLookupByLibrary.simpleMessage("Booking"),
     "buy": MessageLookupByLibrary.simpleMessage("Buy"),
     "call": MessageLookupByLibrary.simpleMessage("Call"),
     "call_permission_denied": MessageLookupByLibrary.simpleMessage(

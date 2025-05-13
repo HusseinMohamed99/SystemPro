@@ -15,6 +15,7 @@ class ApiConstants {
   static const String getMarketplaceListings = 'api/marketplace/listings';
   static const String getFavoriteRealEstate = 'api/mobile/favorites';
   static const String addFavoriteRealEstate = 'api/mobile/favorites';
+static const String getCategories = '/api/mobile';
 }
 
 class ApiErrors {

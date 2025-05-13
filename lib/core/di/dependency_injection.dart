@@ -28,6 +28,8 @@ import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
+import 'package:system_pro/features/Search/data/repo/categories_repo.dart';
+import 'package:system_pro/features/Search/logic/categories_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -111,4 +113,8 @@ void setupGetIt({
   _registerFactory(() => EditProfileCubit(getIt()));
 
   _registerFactory(() => RealEstateCubit(getIt()));
+
+  _registerLazySingleton(() => CategoriesRepo(getIt()));
+  _registerFactory(() => CategoriesCubit(getIt()));
+
 }
