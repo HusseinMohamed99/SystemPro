@@ -41,14 +41,14 @@ class HomeViewBody extends StatelessWidget {
                 bottomPadding: kPaddingVertical,
                 topPadding: kPaddingDefaultVertical,
               ),
-               PropertyFiltersRow(
+              PropertyFiltersRow(
                 filtersToggle: filtersToggle(context),
                 onToggleChanged: (filter) {
-                  BlocProvider.of<MarketplaceCubit>(context)
-                      .filterListings(filter);
+                  BlocProvider.of<MarketplaceCubit>(
+                    context,
+                  ).filterListings(filter);
                 },
-
-               ).onlyPadding(
+              ).onlyPadding(
                 leftPadding: kPaddingDefaultHorizontal,
                 rightPadding: kPaddingDefaultHorizontal,
                 bottomPadding: kPaddingVertical,
@@ -88,12 +88,16 @@ class ListingsList extends StatelessWidget {
 
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
+        // إذا كنا في نهاية الصفحة ولا يوجد لودينغ جاري بالفعل
         if (scrollInfo.metrics.pixels >=
-            scrollInfo.metrics.maxScrollExtent - 200) {
+                scrollInfo.metrics.maxScrollExtent - 50 &&
+            !cubit.isLoading &&
+            cubit.hasMore) {
           cubit.loadMore();
         }
         return false;
       },
+
       child: CustomScrollView(
         slivers: [RealEstateSliverList(listings: listings)],
       ),

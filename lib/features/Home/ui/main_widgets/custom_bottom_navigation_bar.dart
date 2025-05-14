@@ -31,17 +31,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             topRight: Radius.circular(30),
           ),
         ),
-        shadows: [
-          BoxShadow(
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.pureWhite,
-              darkColor: ColorManager.primaryBlack,
-            ),
-            blurRadius: 25,
-            offset: const Offset(0, -2),
-          ),
-        ],
+       
       ),
       child: Row(
         children:

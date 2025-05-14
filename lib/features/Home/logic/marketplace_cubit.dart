@@ -5,7 +5,6 @@ import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
-
 class MarketplaceCubit extends Cubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
     : super(const MarketplaceState.initial());
@@ -17,9 +16,21 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
   String _currentFilter = '';
   int _loadedCount = 0;
-  final int _pageSize = 10;
+  final int _pageSize = 5;
 
-  // للحصول على القوائم وعرضها
+  List<Listing> get _filteredListings {
+    if (_currentFilter.isEmpty) return _allListings;
+    return _allListings
+        .where(
+          (listing) =>
+              listing.listingType?.toLowerCase() ==
+              _currentFilter.toLowerCase(),
+        )
+        .toList();
+  }
+
+  bool get hasMore => _loadedCount < _filteredListings.length;
+
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
 
@@ -29,16 +40,13 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       await result.when(
         success: (MarketplaceResponse response) async {
           final all = response.data?.listings ?? [];
-          _allListings.clear();
-          _visibleListings.clear();
-          _loadedCount = 0;
+          _allListings
+            ..clear()
+            ..addAll(all);
           _currentFilter = filter;
-
-          _allListings.addAll(all);
           _applyFilter(filter);
-          _loadMoreInternal();
         },
-        failure: (ErrorHandler errorHandler) {
+        failure: (errorHandler) {
           emit(
             MarketplaceState.error(
               'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
@@ -50,68 +58,50 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
   }
-
-  // تطبيق الفلاتر بناءً على المعايير المحددة
-  void _applyFilter(String filter) {
+void _applyFilter(String filter) {
     _currentFilter = filter;
     _loadedCount = 0;
     _visibleListings.clear();
 
-    List<Listing> filteredData = [];
-
-    if (filter.isEmpty) {
-      filteredData = List.from(_allListings);
-    } else {
-      filteredData =
-          _allListings
-              .where(
-                (listing) =>
-                    listing.listingType?.toLowerCase() == filter.toLowerCase(),
-              )
-              .toList();
-    }
-
-    final nextItems = filteredData.skip(_loadedCount).take(_pageSize).toList();
+    final nextItems =
+        _filteredListings.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
 
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-  // فلترة القوائم حسب نوع الفلاتر المعطاة
+
   void filterListings(String filter) {
-    _applyFilter(filter);
-    _loadMoreInternal();
+    _applyFilter(filter); // لا حاجة لـ _loadMoreInternal
   }
 
-  // تحميل المزيد من القوائم
   void _loadMoreInternal() {
-    final allFiltered =
-        _currentFilter.isEmpty
-            ? _allListings
-            : _allListings
-                .where(
-                  (listing) =>
-                      listing.listingType?.toLowerCase() ==
-                      _currentFilter.toLowerCase(),
-                )
-                .toList();
-
-    final nextItems = allFiltered.skip(_loadedCount).take(_pageSize).toList();
+    final nextItems =
+        _filteredListings.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
 
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-  // تحميل المزيد من القوائم عند التمرير
-  void loadMore() {
-    if (_loadedCount < _allListings.length) {
+  bool isLoading = false; // متغير لتتبع حالة التحميل
+
+Future<void> loadMore() async {
+    if (isLoading || !hasMore)
+      return; // تأكد من أنه لا يوجد تحميل قيد التنفيذ أو أنه تم تحميل كل البيانات
+
+    isLoading = true;
+    emit(const MarketplaceState.loading());
+
+    try {
       _loadMoreInternal();
+    } finally {
+      isLoading = false; // عند الانتهاء من التحميل، قم بإيقاف الـ loading
     }
   }
 
-  // فلترة القوائم حسب معايير معينة (سعر، وقت، إلخ)
+
   void sortListings({
     required String newest,
     required String priceLow,
@@ -143,14 +133,12 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-  // إعادة تحميل البيانات
   void refreshListings() {
     _allListings.clear();
     _visibleListings.clear();
     _loadedCount = 0;
   }
 
-  // جلب قائمة المفضلة
   Future<void> getFavoriteListings() async {
     emit(const MarketplaceState.getFavoriteLoading());
 
@@ -161,18 +149,12 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         success: (response) {
           final favoriteListings = response.data ?? [];
 
-          if (favoriteListings.isEmpty) {
-            emit(const MarketplaceState.getFavoriteSuccess([]));
-            return;
-          }
-
           _allListings
             ..clear()
             ..addAll(favoriteListings);
           _visibleListings
             ..clear()
             ..addAll(favoriteListings.take(_pageSize));
-
           _loadedCount = _visibleListings.length;
 
           emit(
@@ -192,7 +174,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  // تحديث المفضلة (إضافة أو إزالة)
   Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
@@ -202,7 +183,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
 
-            // تحديث حالة العنصر في _allListings
             for (var listing in _allListings) {
               if (listing.id == id) {
                 listing.isFavorite = isFavorited;
@@ -210,11 +190,9 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
               }
             }
 
-            // إذا المستخدم في شاشة المفضلة، فلتر القائمة
             final favoriteListings =
                 _allListings.where((e) => e.isFavorite == true).toList();
 
-            // تحديث الشاشة بناءً على الفئة الحالية
             if (_currentFilter.isEmpty) {
               emit(MarketplaceState.success(List.from(_visibleListings)));
             } else {
@@ -237,7 +215,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  // جلب وتطبيق الفلاتر المتقدمة
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
 
@@ -247,17 +224,13 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       await result.when(
         success: (MarketplaceResponse response) async {
           final all = response.data?.listings ?? [];
-          _allListings.clear();
-          _visibleListings.clear();
-          _loadedCount = 0;
-          _currentFilter = args.category;
+          _allListings
+            ..clear()
+            ..addAll(all);
 
-          _allListings.addAll(all);
-
-          // تطبيق الفلاتر
-          applyFilterForResult(args);
+          _applyAdvancedFilter(args);
         },
-        failure: (ErrorHandler errorHandler) {
+        failure: (errorHandler) {
           emit(
             MarketplaceState.error(
               'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
@@ -270,20 +243,31 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  // تطبيق الفلاتر المتقدمة على القوائم
-  void applyFilterForResult(FilterResultArguments args) {
+  void _applyAdvancedFilter(FilterResultArguments args) {
     emit(const MarketplaceState.loading());
 
     _currentFilter = args.category;
     _loadedCount = 0;
     _visibleListings.clear();
 
-    List<Listing> filteredData = _allListings;
+    List<Listing> filtered =
+        _allListings.where((listing) {
+          final matchCategory =
+              args.category.isEmpty ||
+              listing.category?.toLowerCase() == args.category.toLowerCase();
 
-    // تطبيق الفلاتر بناءً على المعايير المدخلة
-    // يمكن إضافة المزيد من الفلاتر هنا بناءً على المتطلبات.
+          final matchBedrooms =
+              args.bedrooms == null || listing.rooms == args.bedrooms;
 
-    final nextItems = filteredData.skip(_loadedCount).take(_pageSize).toList();
+          final matchBathrooms =
+              args.bathrooms == null || listing.bathrooms == args.bathrooms;
+
+          // يمكنك إضافة المزيد من الفلاتر مثل السعر، الموقع، إلخ
+
+          return matchCategory && matchBedrooms && matchBathrooms;
+        }).toList();
+
+    final nextItems = filtered.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
 
