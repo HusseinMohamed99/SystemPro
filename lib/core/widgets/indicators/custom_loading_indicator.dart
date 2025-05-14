@@ -45,13 +45,11 @@ class AdaptiveIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Center(
-      child: CircularProgressIndicator.adaptive(
-        valueColor: AlwaysStoppedAnimation<Color>(
-          AdaptiveColor.adaptiveColor(
-            context: context,
-            lightColor: ColorManager.primaryBlue,
-            darkColor: ColorManager.secondaryBlue,
-          ),
+      child: SpinKitThreeInOut(
+        color: AdaptiveColor.adaptiveColor(
+          context: context,
+          lightColor: ColorManager.primaryBlue,
+          darkColor: ColorManager.secondaryBlue,
         ),
       ),
     );
