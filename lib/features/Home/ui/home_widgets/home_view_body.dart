@@ -17,57 +17,58 @@ import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_slive
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MarketplaceCubit, MarketplaceState>(
-      builder: (context, state) {
-        if (state is MarketPlaceLoading) {
-          return const AdaptiveIndicator();
-        }
-
-        if (state is MarketPlaceError) {
-          return CustomErrorWidget(errorMessage: state.error);
-        }
-
-        if (state is MarketPlaceSuccess) {
-          final listings = state.listings;
-
-          return Column(
-            children: [
-              const CustomSearchTextField().onlyPadding(
-                leftPadding: kPaddingDefaultHorizontal,
-                rightPadding: kPaddingDefaultHorizontal,
-                bottomPadding: kPaddingVertical,
-                topPadding: kPaddingDefaultVertical,
-              ),
-              PropertyFiltersRow(
-                filtersToggle: filtersToggle(context),
-                onToggleChanged: (filter) {
-                  BlocProvider.of<MarketplaceCubit>(
-                    context,
-                  ).filterListings(filter);
-                },
-              ).onlyPadding(
-                leftPadding: kPaddingDefaultHorizontal,
-                rightPadding: kPaddingDefaultHorizontal,
-                bottomPadding: kPaddingVertical,
-              ),
-              const CustomDivider(),
-              ResultsCountAndSortButton(
-                propertyLength: listings.length.toString(),
-              ).onlyPadding(
-                leftPadding: kPaddingDefaultHorizontal,
-                rightPadding: kPaddingDefaultHorizontal,
-                topPadding: kPaddingDefaultVertical,
-              ),
-              Expanded(child: ListingsList(listings: listings)),
-            ],
-          );
-        }
-
-        return const SizedBox.shrink();
-      },
+    return Column(
+      children: [
+        const CustomSearchTextField().onlyPadding(
+          leftPadding: kPaddingDefaultHorizontal,
+          rightPadding: kPaddingDefaultHorizontal,
+          bottomPadding: kPaddingVertical,
+          topPadding: kPaddingDefaultVertical,
+        ),
+        Expanded(
+          child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
+            builder: (context, state) {
+              if (state is MarketPlaceLoading) {
+                return const AdaptiveIndicator();
+              }
+              if (state is MarketPlaceError) {
+                return CustomErrorWidget(errorMessage: state.error);
+              }
+              if (state is MarketPlaceSuccess) {
+                final listings = state.listings;
+                return Column(
+                  children: [
+                    PropertyFiltersRow(
+                      filtersToggle: filtersToggle(context),
+                      onToggleChanged: (filter) {
+                        BlocProvider.of<MarketplaceCubit>(
+                          context,
+                        ).filterListings(filter);
+                      },
+                    ).onlyPadding(
+                      leftPadding: kPaddingDefaultHorizontal,
+                      rightPadding: kPaddingDefaultHorizontal,
+                      bottomPadding: kPaddingVertical,
+                    ),
+                    const CustomDivider(),
+                    ResultsCountAndSortButton(
+                      propertyLength: listings.length.toString(),
+                    ).onlyPadding(
+                      leftPadding: kPaddingDefaultHorizontal,
+                      rightPadding: kPaddingDefaultHorizontal,
+                      topPadding: kPaddingDefaultVertical,
+                    ),
+                    Expanded(child: ListingsList(listings: listings)),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -75,7 +76,6 @@ class HomeViewBody extends StatelessWidget {
 class ListingsList extends StatelessWidget {
   const ListingsList({super.key, required this.listings});
   final List<Listing> listings;
-
   @override
   Widget build(BuildContext context) {
     if (listings.isEmpty) {
@@ -83,12 +83,9 @@ class ListingsList extends StatelessWidget {
         errorMessage: context.localization.no_available_properties,
       );
     }
-
     final cubit = BlocProvider.of<MarketplaceCubit>(context);
-
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
-        // إذا كنا في نهاية الصفحة ولا يوجد لودينغ جاري بالفعل
         if (scrollInfo.metrics.pixels >=
                 scrollInfo.metrics.maxScrollExtent - 50 &&
             !cubit.isLoading &&
@@ -97,7 +94,6 @@ class ListingsList extends StatelessWidget {
         }
         return false;
       },
-
       child: CustomScrollView(
         slivers: [RealEstateSliverList(listings: listings)],
       ),
