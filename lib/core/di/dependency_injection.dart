@@ -77,11 +77,10 @@ void setupGetIt({
   }
 
   // ────────────────────── LOCALIZATION ──────────────────────
-  if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
-    final localizationCubit = ChangeLocalizationCubit();
-    localizationCubit.changeLocalization(initialLocale);
-    getIt.registerSingleton<ChangeLocalizationCubit>(localizationCubit);
+ if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
+    getIt.registerSingleton<ChangeLocalizationCubit>(ChangeLocalizationCubit());
   }
+
 
   // ────────────────────── AUTH ──────────────────────
   _registerLazySingleton(() => LoginRepo(getIt()));

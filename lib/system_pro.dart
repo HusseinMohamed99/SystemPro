@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/adaptive/adaptive_layout.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/localization/localization_state.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
@@ -37,67 +38,68 @@ class SystemProApp extends StatelessWidget {
       ],
       child: BlocBuilder<ChangeLocalizationCubit, ChangeLocalizationState>(
         builder: (context, localizationState) {
-          final locale = localizationState.map(
-            initial: (state) => const Locale('en'),
-            loading: (state) => const Locale('en'),
-            loaded: (state) => Locale(state.localization),
-            error: (state) => const Locale('en'),
-          );
+          if (localizationState is ChangeLocalizationLoaded) {
+            final locale = Locale(localizationState.localization);
+            AppLogs.debugLog('locale: $locale');
 
-          return BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
-            builder: (context, themingState) {
-              // final theme = themingState.theme;
-              final isDark = themingState.isDarkMode;
+            return BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
+              builder: (context, themingState) {
+                final isDark = themingState.isDarkMode;
 
-              return AdaptiveLayout(
-                mobileLayout:
-                    (context) => ScreenUtilInit(
-                      designSize: const Size(375, 812),
-                      minTextAdapt: true,
-                      splitScreenMode: true,
-                      builder: (_, child) {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.portraitUp,
-                          DeviceOrientation.portraitDown,
-                        ]);
-                        return MediaQuery(
-                          data: MediaQuery.of(
-                            context,
-                          ).copyWith(textScaler: const TextScaler.linear(1.0)),
-                          child: MaterialApp(
-                            theme: buildLightTheming(
-                              textTheme: changeThemingCubit.lightTextTheme,
+                return AdaptiveLayout(
+                  mobileLayout:
+                      (context) => ScreenUtilInit(
+                        designSize: const Size(375, 812),
+                        minTextAdapt: true,
+                        splitScreenMode: true,
+                        builder: (_, child) {
+                          SystemChrome.setPreferredOrientations([
+                            DeviceOrientation.portraitUp,
+                            DeviceOrientation.portraitDown,
+                          ]);
+                          return MediaQuery(
+                            data: MediaQuery.of(context).copyWith(
+                              textScaler: const TextScaler.linear(1.0),
                             ),
-                            darkTheme: buildDarkTheming(
-                              textTheme: changeThemingCubit.darkTextTheme,
+                            child: MaterialApp(
+                              theme: buildLightTheming(
+                                textTheme: changeThemingCubit.lightTextTheme,
+                              ),
+                              darkTheme: buildDarkTheming(
+                                textTheme: changeThemingCubit.darkTextTheme,
+                              ),
+                              themeMode:
+                                  isDark ? ThemeMode.dark : ThemeMode.light,
+                              locale: locale,
+                              localizationsDelegates: const [
+                                S.delegate,
+                                GlobalMaterialLocalizations.delegate,
+                                GlobalWidgetsLocalizations.delegate,
+                                GlobalCupertinoLocalizations.delegate,
+                              ],
+                              supportedLocales: S.delegate.supportedLocales,
+                              onGenerateRoute: appRouter.generateRoute,
+                              initialRoute: getInitialRoute(),
+                              title: 'System Pro',
+                              debugShowCheckedModeBanner: false,
                             ),
-                            themeMode:
-                                isDark ? ThemeMode.dark : ThemeMode.light,
-                            locale: locale,
-                            localizationsDelegates: const [
-                              S.delegate,
-                              GlobalMaterialLocalizations.delegate,
-                              GlobalWidgetsLocalizations.delegate,
-                              GlobalCupertinoLocalizations.delegate,
-                            ],
-                            supportedLocales: S.delegate.supportedLocales,
-                            onGenerateRoute: appRouter.generateRoute,
-                            initialRoute: getInitialRoute(),
-                            title: 'System Pro',
-                            debugShowCheckedModeBanner: false,
-                          ),
-                        );
-                      },
-                    ),
+                          );
+                        },
+                      ),
+                  tabletLayout: (BuildContext context) {
+                    return const Text('Tablet Layout');
+                  },
+                  desktopLayout: (BuildContext context) {
+                    return const Text('Desktop Layout');
+                  },
+                );
+              },
+            );
+          }
 
-                tabletLayout: (BuildContext context) {
-                  return const Text('Tablet Layout');
-                },
-                desktopLayout: (BuildContext context) {
-                  return const Text('Desktop Layout');
-                },
-              );
-            },
+          // لو اللغة لسه مش محملة، بنعرض شاشة تحميل مؤقتًا
+          return const MaterialApp(
+            home: Scaffold(body: Center(child: CircularProgressIndicator())),
           );
         },
       ),

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
-class CsutomProfileCard extends StatelessWidget {
-  const CsutomProfileCard({
+class CustomProfileCard extends StatelessWidget {
+  const CustomProfileCard({
     super.key,
     required this.isLocalization,
     required this.title,
@@ -35,7 +36,7 @@ class CsutomProfileCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: context.titleLarge?.copyWith(
                   fontWeight: FontWeightHelper.regular,
                 ),
               ),

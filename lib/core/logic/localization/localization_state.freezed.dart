@@ -22,43 +22,43 @@ mixin _$ChangeLocalizationState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String localization) loaded,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String localization)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String error)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String localization)? loaded,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(ChangeLocalizationInitial value) initial,
+    required TResult Function(ChangeLocalizationLoading value) loading,
+    required TResult Function(ChangeLocalizationLoaded value) loaded,
+    required TResult Function(ChangeLocalizationError value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
+    TResult? Function(ChangeLocalizationInitial value)? initial,
+    TResult? Function(ChangeLocalizationLoading value)? loading,
+    TResult? Function(ChangeLocalizationLoaded value)? loaded,
+    TResult? Function(ChangeLocalizationError value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult Function(ChangeLocalizationInitial value)? initial,
+    TResult Function(ChangeLocalizationLoading value)? loading,
+    TResult Function(ChangeLocalizationLoaded value)? loaded,
+    TResult Function(ChangeLocalizationError value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -89,20 +89,24 @@ class _$ChangeLocalizationStateCopyWithImpl<
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-    _$InitialImpl value,
-    $Res Function(_$InitialImpl) then,
-  ) = __$$InitialImplCopyWithImpl<$Res>;
+abstract class _$$ChangeLocalizationInitialImplCopyWith<$Res> {
+  factory _$$ChangeLocalizationInitialImplCopyWith(
+    _$ChangeLocalizationInitialImpl value,
+    $Res Function(_$ChangeLocalizationInitialImpl) then,
+  ) = __$$ChangeLocalizationInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$ChangeLocalizationStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-    _$InitialImpl _value,
-    $Res Function(_$InitialImpl) _then,
+class __$$ChangeLocalizationInitialImplCopyWithImpl<$Res>
+    extends
+        _$ChangeLocalizationStateCopyWithImpl<
+          $Res,
+          _$ChangeLocalizationInitialImpl
+        >
+    implements _$$ChangeLocalizationInitialImplCopyWith<$Res> {
+  __$$ChangeLocalizationInitialImplCopyWithImpl(
+    _$ChangeLocalizationInitialImpl _value,
+    $Res Function(_$ChangeLocalizationInitialImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of ChangeLocalizationState
@@ -111,8 +115,8 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+class _$ChangeLocalizationInitialImpl implements ChangeLocalizationInitial {
+  const _$ChangeLocalizationInitialImpl();
 
   @override
   String toString() {
@@ -122,7 +126,8 @@ class _$InitialImpl implements _Initial {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeLocalizationInitialImpl);
   }
 
   @override
@@ -134,7 +139,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String localization) loaded,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
     return initial();
   }
@@ -145,7 +150,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String localization)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String error)? error,
   }) {
     return initial?.call();
   }
@@ -156,7 +161,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String localization)? loaded,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -168,10 +173,10 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(ChangeLocalizationInitial value) initial,
+    required TResult Function(ChangeLocalizationLoading value) loading,
+    required TResult Function(ChangeLocalizationLoaded value) loaded,
+    required TResult Function(ChangeLocalizationError value) error,
   }) {
     return initial(this);
   }
@@ -179,10 +184,10 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
+    TResult? Function(ChangeLocalizationInitial value)? initial,
+    TResult? Function(ChangeLocalizationLoading value)? loading,
+    TResult? Function(ChangeLocalizationLoaded value)? loaded,
+    TResult? Function(ChangeLocalizationError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -190,10 +195,10 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult Function(ChangeLocalizationInitial value)? initial,
+    TResult Function(ChangeLocalizationLoading value)? loading,
+    TResult Function(ChangeLocalizationLoaded value)? loaded,
+    TResult Function(ChangeLocalizationError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -203,25 +208,29 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements ChangeLocalizationState {
-  const factory _Initial() = _$InitialImpl;
+abstract class ChangeLocalizationInitial implements ChangeLocalizationState {
+  const factory ChangeLocalizationInitial() = _$ChangeLocalizationInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
+abstract class _$$ChangeLocalizationLoadingImplCopyWith<$Res> {
+  factory _$$ChangeLocalizationLoadingImplCopyWith(
+    _$ChangeLocalizationLoadingImpl value,
+    $Res Function(_$ChangeLocalizationLoadingImpl) then,
+  ) = __$$ChangeLocalizationLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$ChangeLocalizationStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
+class __$$ChangeLocalizationLoadingImplCopyWithImpl<$Res>
+    extends
+        _$ChangeLocalizationStateCopyWithImpl<
+          $Res,
+          _$ChangeLocalizationLoadingImpl
+        >
+    implements _$$ChangeLocalizationLoadingImplCopyWith<$Res> {
+  __$$ChangeLocalizationLoadingImplCopyWithImpl(
+    _$ChangeLocalizationLoadingImpl _value,
+    $Res Function(_$ChangeLocalizationLoadingImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of ChangeLocalizationState
@@ -230,8 +239,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
+class _$ChangeLocalizationLoadingImpl implements ChangeLocalizationLoading {
+  const _$ChangeLocalizationLoadingImpl();
 
   @override
   String toString() {
@@ -241,7 +250,8 @@ class _$LoadingImpl implements _Loading {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeLocalizationLoadingImpl);
   }
 
   @override
@@ -253,7 +263,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String localization) loaded,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
     return loading();
   }
@@ -264,7 +274,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String localization)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String error)? error,
   }) {
     return loading?.call();
   }
@@ -275,7 +285,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String localization)? loaded,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -287,10 +297,10 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(ChangeLocalizationInitial value) initial,
+    required TResult Function(ChangeLocalizationLoading value) loading,
+    required TResult Function(ChangeLocalizationLoaded value) loaded,
+    required TResult Function(ChangeLocalizationError value) error,
   }) {
     return loading(this);
   }
@@ -298,10 +308,10 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
+    TResult? Function(ChangeLocalizationInitial value)? initial,
+    TResult? Function(ChangeLocalizationLoading value)? loading,
+    TResult? Function(ChangeLocalizationLoaded value)? loaded,
+    TResult? Function(ChangeLocalizationError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -309,10 +319,10 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult Function(ChangeLocalizationInitial value)? initial,
+    TResult Function(ChangeLocalizationLoading value)? loading,
+    TResult Function(ChangeLocalizationLoaded value)? loaded,
+    TResult Function(ChangeLocalizationError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -322,27 +332,31 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements ChangeLocalizationState {
-  const factory _Loading() = _$LoadingImpl;
+abstract class ChangeLocalizationLoading implements ChangeLocalizationState {
+  const factory ChangeLocalizationLoading() = _$ChangeLocalizationLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-    _$LoadedImpl value,
-    $Res Function(_$LoadedImpl) then,
-  ) = __$$LoadedImplCopyWithImpl<$Res>;
+abstract class _$$ChangeLocalizationLoadedImplCopyWith<$Res> {
+  factory _$$ChangeLocalizationLoadedImplCopyWith(
+    _$ChangeLocalizationLoadedImpl value,
+    $Res Function(_$ChangeLocalizationLoadedImpl) then,
+  ) = __$$ChangeLocalizationLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String localization});
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$ChangeLocalizationStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-    _$LoadedImpl _value,
-    $Res Function(_$LoadedImpl) _then,
+class __$$ChangeLocalizationLoadedImplCopyWithImpl<$Res>
+    extends
+        _$ChangeLocalizationStateCopyWithImpl<
+          $Res,
+          _$ChangeLocalizationLoadedImpl
+        >
+    implements _$$ChangeLocalizationLoadedImplCopyWith<$Res> {
+  __$$ChangeLocalizationLoadedImplCopyWithImpl(
+    _$ChangeLocalizationLoadedImpl _value,
+    $Res Function(_$ChangeLocalizationLoadedImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of ChangeLocalizationState
@@ -351,7 +365,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @override
   $Res call({Object? localization = null}) {
     return _then(
-      _$LoadedImpl(
+      _$ChangeLocalizationLoadedImpl(
         localization:
             null == localization
                 ? _value.localization
@@ -364,8 +378,8 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl({required this.localization});
+class _$ChangeLocalizationLoadedImpl implements ChangeLocalizationLoaded {
+  const _$ChangeLocalizationLoadedImpl({required this.localization});
 
   @override
   final String localization;
@@ -379,7 +393,7 @@ class _$LoadedImpl implements _Loaded {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
+            other is _$ChangeLocalizationLoadedImpl &&
             (identical(other.localization, localization) ||
                 other.localization == localization));
   }
@@ -392,8 +406,10 @@ class _$LoadedImpl implements _Loaded {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
+  _$$ChangeLocalizationLoadedImplCopyWith<_$ChangeLocalizationLoadedImpl>
+  get copyWith => __$$ChangeLocalizationLoadedImplCopyWithImpl<
+    _$ChangeLocalizationLoadedImpl
+  >(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -401,7 +417,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String localization) loaded,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
     return loaded(localization);
   }
@@ -412,7 +428,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String localization)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String error)? error,
   }) {
     return loaded?.call(localization);
   }
@@ -423,7 +439,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String localization)? loaded,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -435,10 +451,10 @@ class _$LoadedImpl implements _Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(ChangeLocalizationInitial value) initial,
+    required TResult Function(ChangeLocalizationLoading value) loading,
+    required TResult Function(ChangeLocalizationLoaded value) loaded,
+    required TResult Function(ChangeLocalizationError value) error,
   }) {
     return loaded(this);
   }
@@ -446,10 +462,10 @@ class _$LoadedImpl implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
+    TResult? Function(ChangeLocalizationInitial value)? initial,
+    TResult? Function(ChangeLocalizationLoading value)? loading,
+    TResult? Function(ChangeLocalizationLoaded value)? loaded,
+    TResult? Function(ChangeLocalizationError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -457,10 +473,10 @@ class _$LoadedImpl implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult Function(ChangeLocalizationInitial value)? initial,
+    TResult Function(ChangeLocalizationLoading value)? loading,
+    TResult Function(ChangeLocalizationLoaded value)? loaded,
+    TResult Function(ChangeLocalizationError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -470,57 +486,92 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements ChangeLocalizationState {
-  const factory _Loaded({required final String localization}) = _$LoadedImpl;
+abstract class ChangeLocalizationLoaded implements ChangeLocalizationState {
+  const factory ChangeLocalizationLoaded({required final String localization}) =
+      _$ChangeLocalizationLoadedImpl;
 
   String get localization;
 
   /// Create a copy of ChangeLocalizationState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ChangeLocalizationLoadedImplCopyWith<_$ChangeLocalizationLoadedImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-    _$ErrorImpl value,
-    $Res Function(_$ErrorImpl) then,
-  ) = __$$ErrorImplCopyWithImpl<$Res>;
+abstract class _$$ChangeLocalizationErrorImplCopyWith<$Res> {
+  factory _$$ChangeLocalizationErrorImplCopyWith(
+    _$ChangeLocalizationErrorImpl value,
+    $Res Function(_$ChangeLocalizationErrorImpl) then,
+  ) = __$$ChangeLocalizationErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$ChangeLocalizationStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl _value,
-    $Res Function(_$ErrorImpl) _then,
+class __$$ChangeLocalizationErrorImplCopyWithImpl<$Res>
+    extends
+        _$ChangeLocalizationStateCopyWithImpl<
+          $Res,
+          _$ChangeLocalizationErrorImpl
+        >
+    implements _$$ChangeLocalizationErrorImplCopyWith<$Res> {
+  __$$ChangeLocalizationErrorImplCopyWithImpl(
+    _$ChangeLocalizationErrorImpl _value,
+    $Res Function(_$ChangeLocalizationErrorImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of ChangeLocalizationState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? error = null}) {
+    return _then(
+      _$ChangeLocalizationErrorImpl(
+        error:
+            null == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl();
+class _$ChangeLocalizationErrorImpl implements ChangeLocalizationError {
+  const _$ChangeLocalizationErrorImpl({required this.error});
+
+  @override
+  final String error;
 
   @override
   String toString() {
-    return 'ChangeLocalizationState.error()';
+    return 'ChangeLocalizationState.error(error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ErrorImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeLocalizationErrorImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of ChangeLocalizationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeLocalizationErrorImplCopyWith<_$ChangeLocalizationErrorImpl>
+  get copyWith => __$$ChangeLocalizationErrorImplCopyWithImpl<
+    _$ChangeLocalizationErrorImpl
+  >(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -528,9 +579,9 @@ class _$ErrorImpl implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String localization) loaded,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
-    return error();
+    return error(this.error);
   }
 
   @override
@@ -539,9 +590,9 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String localization)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String error)? error,
   }) {
-    return error?.call();
+    return error?.call(this.error);
   }
 
   @override
@@ -550,11 +601,11 @@ class _$ErrorImpl implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String localization)? loaded,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(this.error);
     }
     return orElse();
   }
@@ -562,10 +613,10 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(ChangeLocalizationInitial value) initial,
+    required TResult Function(ChangeLocalizationLoading value) loading,
+    required TResult Function(ChangeLocalizationLoaded value) loaded,
+    required TResult Function(ChangeLocalizationError value) error,
   }) {
     return error(this);
   }
@@ -573,10 +624,10 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
+    TResult? Function(ChangeLocalizationInitial value)? initial,
+    TResult? Function(ChangeLocalizationLoading value)? loading,
+    TResult? Function(ChangeLocalizationLoaded value)? loaded,
+    TResult? Function(ChangeLocalizationError value)? error,
   }) {
     return error?.call(this);
   }
@@ -584,10 +635,10 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult Function(ChangeLocalizationInitial value)? initial,
+    TResult Function(ChangeLocalizationLoading value)? loading,
+    TResult Function(ChangeLocalizationLoaded value)? loaded,
+    TResult Function(ChangeLocalizationError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -597,6 +648,15 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements ChangeLocalizationState {
-  const factory _Error() = _$ErrorImpl;
+abstract class ChangeLocalizationError implements ChangeLocalizationState {
+  const factory ChangeLocalizationError({required final String error}) =
+      _$ChangeLocalizationErrorImpl;
+
+  String get error;
+
+  /// Create a copy of ChangeLocalizationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeLocalizationErrorImplCopyWith<_$ChangeLocalizationErrorImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
