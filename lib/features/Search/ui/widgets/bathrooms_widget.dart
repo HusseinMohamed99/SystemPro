@@ -15,8 +15,18 @@ class BathroomsWidget extends StatefulWidget {
 
 class BathroomsWidgetState extends State<BathroomsWidget> {
   final List<String> options = ['Any', '1', '2', '3', '4', '5+'];
-
   String? selectedOption;
+
+  /// Getter to expose selected bathrooms as int
+  int? get selectedBathrooms {
+    if (selectedOption == null || selectedOption == 'Any') {
+      return null;
+    } else if (selectedOption == '5+') {
+      return 5;
+    } else {
+      return int.tryParse(selectedOption!);
+    }
+  }
 
   void clearSelection() {
     setState(() {
@@ -66,7 +76,8 @@ class BathroomsWidgetState extends State<BathroomsWidget> {
                   side:
                       isSelected
                           ? BorderSide.none
-                          :  BorderSide(color: AdaptiveColor.adaptiveColor(
+                          : BorderSide(
+                            color: AdaptiveColor.adaptiveColor(
                               context: context,
                               lightColor: ColorManager.borderGrey,
                               darkColor: ColorManager.tertiaryBlack,

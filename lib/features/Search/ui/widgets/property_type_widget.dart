@@ -5,32 +5,42 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
+import 'package:system_pro/features/Search/data/model/category_response.dart';
 
 class PropertyTypeWidget extends StatefulWidget {
-  const PropertyTypeWidget({
-    super.key,
-    required this.propertyTypes,
-    this.titleType,
-  });
+  const PropertyTypeWidget({super.key, this.titleType, this.subcategories});
 
-  final List<String> propertyTypes;
   final String? titleType;
+  final List<Subcategory>? subcategories;
+
   @override
   State<PropertyTypeWidget> createState() => PropertyTypeWidgetState();
 }
 
 class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
-  final Set<String> selectedTypes = {};
+  final Set<String> selectedTypes =
+      {}; // This is where selected types are stored
   bool showAll = false;
 
   void clearSelection() {
-    setState(selectedTypes.clear);
+    setState(() {
+      selectedTypes.clear();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Display only the first 5 items unless `showAll` is true
     final typesToShow =
-        showAll ? widget.propertyTypes : widget.propertyTypes.take(5).toList();
+        showAll ? widget.subcategories : widget.subcategories?.take(5).toList();
+
+    // If there are no subcategories, show an error
+    if (widget.subcategories == null || widget.subcategories!.isEmpty) {
+      return CustomErrorWidget(
+        errorMessage: context.localization.no_data_found,
+      );
+    }
 
     return Column(
       spacing: kSpacingSmall.h,
@@ -43,14 +53,14 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
           ),
         ),
         Wrap(
-          spacing: 8,
+          spacing: 5.w,
           children:
-              typesToShow.map((type) {
-                final isSelected = selectedTypes.contains(type);
+              typesToShow!.map((subcategory) {
+                final isSelected = selectedTypes.contains(subcategory.name);
                 return FilterChip(
                   showCheckmark: false,
                   label: Text(
-                    type,
+                    subcategory.name ?? 'غير معروف',
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
                       color:
@@ -79,20 +89,20 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                               darkColor: ColorManager.tertiaryBlack,
                             ),
                           ),
-                  selected: selectedTypes.contains(type),
+                  selected: selectedTypes.contains(subcategory.name),
                   onSelected: (selected) {
                     setState(() {
                       if (selected) {
-                        selectedTypes.add(type);
+                        selectedTypes.add(subcategory.name ?? '');
                       } else {
-                        selectedTypes.remove(type);
+                        selectedTypes.remove(subcategory.name ?? '');
                       }
                     });
                   },
                 );
               }).toList(),
         ),
-        if (widget.propertyTypes.length > 5)
+        if ((widget.subcategories?.length ?? 0) > 5)
           GestureDetector(
             onTap: () {
               setState(() {

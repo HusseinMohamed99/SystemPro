@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/networking/backend/api_error_handler.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
+import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
 class MarketplaceCubit extends Cubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
@@ -39,7 +37,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           _applyFilter(filter);
           _loadMoreInternal();
         },
-
         failure: (ErrorHandler errorHandler) {
           emit(
             MarketplaceState.error(
@@ -194,18 +191,15 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       result.when(
         success: (response) {
           if (response.status == 'success') {
-            // قم بتحديث المفضلة بناءً على حالة isFavorited من الـ response
             final isFavorited = response.data?.isFavorited ?? false;
 
-            // تحديث حالة المفضلة في _allListings أو حيثما تحتاج
             for (var listing in _allListings) {
               if (listing.id == id) {
                 listing.isFavorite == isFavorited;
               }
             }
-            
+
             emit(MarketplaceState.success(List.from(_visibleListings)));
-            
           } else {
             emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }
@@ -221,5 +215,189 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     } catch (error) {
       emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
+  }
+
+  // ✅ فلترة متقدمة باستخدام FilterResultArguments
+  Future<void> fetchAndFilterListings(FilterResultArguments args) async {
+    emit(const MarketplaceState.loading());
+
+    try {
+      // جلب البيانات من الـ API
+      final result = await _marketplaceRepo.getMarketplaceListings();
+
+      await result.when(
+        success: (MarketplaceResponse response) async {
+          final all = response.data?.listings ?? [];
+          _allListings.clear();
+          _visibleListings.clear();
+          _loadedCount = 0;
+          _currentFilter = args.category;
+
+          _allListings.addAll(all);
+
+          // بعد جلب البيانات نطبق الفلاتر
+          applyFilterForResult(args);
+        },
+        failure: (ErrorHandler errorHandler) {
+          emit(
+            MarketplaceState.error(
+              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (error) {
+      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+    }
+  }
+
+  void applyFilterForResult(FilterResultArguments args) {
+    emit(const MarketplaceState.loading());
+
+    // تحديث الفلاتر
+    _currentFilter = args.category;
+    _loadedCount = 0;
+    _visibleListings.clear();
+
+    final bool noFiltersApplied =
+        _currentFilter.isEmpty &&
+        args.buyRentOption.isEmpty &&
+        args.selectedSubcategories.isEmpty &&
+        args.minPrice == null &&
+        args.maxPrice == null &&
+        args.bedrooms == null &&
+        args.bathrooms == null &&
+        args.minSize == null &&
+        args.maxSize == null &&
+        args.selectedAmenities.isEmpty;
+
+    List<Listing> filteredData = _allListings;
+
+    if (!noFiltersApplied) {
+      // فلترة حسب نوع العملية (شراء أو إيجار)
+      if (args.buyRentOption.isNotEmpty) {
+        filteredData =
+            filteredData
+                .where(
+                  (listing) =>
+                      listing.listingType?.toLowerCase() ==
+                      args.buyRentOption.toLowerCase(),
+                )
+                .toList();
+      }
+
+      // فلترة حسب التصنيف الرئيسي (Commercial, Residential)
+      if (_currentFilter.isNotEmpty) {
+        filteredData =
+            filteredData
+                .where(
+                  (listing) =>
+                      listing.category?.toLowerCase() ==
+                      _currentFilter.toLowerCase(),
+                )
+                .toList();
+      }
+
+      // فلترة حسب التصنيفات الفرعية (لو مش مختار لازم نشمل كل التصنيفات)
+      if (args.selectedSubcategories.isNotEmpty) {
+        filteredData =
+            filteredData.where((listing) {
+              final subName = listing.subcategory?.name?.toLowerCase() ?? '';
+              return args.selectedSubcategories
+                  .map((e) => e.toLowerCase())
+                  .contains(subName);
+            }).toList();
+      }
+
+      // فلترة حسب عدد الغرف (إذا اختار رقم معين يجب أن يتطابق مع البيانات)
+      if (args.bedrooms != null) {
+        if (args.bedrooms == -1) {
+          // إذا اختار "any"، نعرض جميع الأعداد
+          filteredData =
+              filteredData.where((listing) => listing.rooms != null).toList();
+        } else {
+          filteredData =
+              filteredData
+                  .where((listing) => listing.rooms == args.bedrooms)
+                  .toList();
+        }
+      }
+
+      // فلترة حسب عدد الحمامات
+      if (args.bathrooms != null) {
+        if (args.bathrooms == -1) {
+          // إذا اختار "any"، نعرض جميع الأعداد
+          filteredData =
+              filteredData
+                  .where((listing) => listing.bathrooms != null)
+                  .toList();
+        } else {
+          filteredData =
+              filteredData
+                  .where((listing) => listing.bathrooms == args.bathrooms)
+                  .toList();
+        }
+      }
+
+      // فلترة حسب سعر العقار (minPrice, maxPrice)
+      if (args.minPrice != null || args.maxPrice != null) {
+        filteredData =
+            filteredData.where((listing) {
+              final price = double.tryParse(listing.price ?? '0.0');
+              bool matchesPrice = true;
+              if (args.minPrice != null) {
+                matchesPrice = price != null && price >= args.minPrice!;
+              }
+              if (args.maxPrice != null) {
+                matchesPrice =
+                    matchesPrice && price != null && price <= args.maxPrice!;
+              }
+              return matchesPrice;
+            }).toList();
+      }
+
+      // فلترة حسب المساحة (minSize, maxSize)
+      if (args.minSize != null) {
+        filteredData =
+            filteredData.where((listing) {
+              final size = double.tryParse(listing.area ?? '0.0');
+              return size != null && size >= args.minSize!;
+            }).toList();
+      }
+
+      if (args.maxSize != null) {
+        filteredData =
+            filteredData.where((listing) {
+              final size = double.tryParse(listing.area ?? '0.0');
+              return size != null && size <= args.maxSize!;
+            }).toList();
+      }
+
+      // فلترة حسب الـ Amenities (لو مش مختار نعرض كل الـ amenities)
+      if (args.selectedAmenities.isNotEmpty) {
+        filteredData =
+            filteredData.where((listing) {
+              final amenities = listing.amenities ?? [];
+              return amenities.any(
+                (amenity) => args.selectedAmenities.contains(amenity.id),
+              );
+            }).toList();
+      }
+    }
+
+    // طباعة البيانات بعد الفلترة
+    print('Filtered Listings:');
+    for (var listing in filteredData) {
+      print(
+        'Listing ID: ${listing.id}, Price: ${listing.price}, Rooms: ${listing.rooms}, Bathrooms: ${listing.bathrooms}, Area: ${listing.area}, PropertyType: ${listing.subcategory?.name}, Amenities: ${listing.amenities?.map((amenity) => amenity.name).join(', ')}',
+      );
+    }
+
+    // تحميل أول دفعة للعرض
+    final nextItems = filteredData.skip(_loadedCount).take(_pageSize).toList();
+    _visibleListings.addAll(nextItems);
+    _loadedCount = _visibleListings.length;
+
+    emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 }

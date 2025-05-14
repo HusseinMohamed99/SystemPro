@@ -8,7 +8,18 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/textFields/custom_text_form_field.dart';
 
 class PropertySizeWidget extends StatelessWidget {
-  const PropertySizeWidget({super.key});
+  const PropertySizeWidget({
+    super.key,
+    required this.minSizeController,
+    required this.minSizeFocusNode,
+    required this.maxSizeController,
+    required this.maxSizeFocusNode,
+  });
+  final TextEditingController minSizeController;
+  final FocusNode minSizeFocusNode;
+  final TextEditingController maxSizeController;
+
+  final FocusNode maxSizeFocusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +39,16 @@ class PropertySizeWidget extends StatelessWidget {
             Expanded(
               child: CustomTextFormField(
                 hintText: context.localization.min,
-                focusNode: FocusNode(),
-                controller: TextEditingController(),
+                focusNode: minSizeFocusNode,
+                controller: minSizeController,
               ),
             ),
             horizontalSpacing(kSpacingDefault),
             Expanded(
               child: CustomTextFormField(
                 hintText: context.localization.max,
-                focusNode: FocusNode(),
-                controller: TextEditingController(),
+                focusNode: maxSizeFocusNode,
+                controller: maxSizeController,
               ),
             ),
           ],

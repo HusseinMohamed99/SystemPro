@@ -5,11 +5,12 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/data/model/amenities.dart';
+import 'package:system_pro/features/Search/data/model/category_response.dart';
 
 class AmenitiesWidget extends StatefulWidget {
   const AmenitiesWidget({super.key, required this.amenities});
-  final List<Amenities> amenities;
+  final List<Amenity> amenities;
+
   @override
   State<AmenitiesWidget> createState() => AmenitiesWidgetState();
 }
@@ -17,6 +18,16 @@ class AmenitiesWidget extends StatefulWidget {
 class AmenitiesWidgetState extends State<AmenitiesWidget> {
   final Set<String> selectedAmenities = {};
   bool showAll = false;
+
+  /// ✅ Getter to return selected amenity IDs as a List<int>
+  List<int> get selectedAmenityIds {
+    return widget.amenities
+        .where((amenity) => selectedAmenities.contains(amenity.name))
+        .map((amenity) => amenity.id ?? 0) // use 0 as fallback
+        .where((id) => id != 0) // filter out null/fallbacks
+        .toList();
+  }
+
   void clearSelection() {
     setState(selectedAmenities.clear);
   }
@@ -24,10 +35,10 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
   @override
   Widget build(BuildContext context) {
     final allAmenities = widget.amenities;
+    final displayedAmenities = showAll ? allAmenities : allAmenities.take(5);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: kSpacingSmall.h,
       children: [
         Text(
           context.localization.amenities,
@@ -35,10 +46,12 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
             fontWeight: FontWeightHelper.medium,
           ),
         ),
+        SizedBox(height: kSpacingSmall.h),
         Wrap(
           spacing: 8,
+          runSpacing: 8,
           children:
-              allAmenities.map((amenity) {
+              displayedAmenities.map((amenity) {
                 final isSelected = selectedAmenities.contains(amenity.name);
                 return FilterChip(
                   showCheckmark: false,
@@ -80,7 +93,7 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                               darkColor: ColorManager.tertiaryBlack,
                             ),
                           ),
-                  selected: selectedAmenities.contains(amenity.name),
+                  selected: isSelected,
                   onSelected: (selected) {
                     setState(() {
                       if (selected) {
@@ -93,7 +106,6 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                 );
               }).toList(),
         ),
-
         if (allAmenities.length > 5)
           GestureDetector(
             onTap: () {
@@ -101,17 +113,20 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                 showAll = !showAll;
               });
             },
-            child: Text(
-              showAll
-                  ? context.localization.show_less
-                  : context.localization.see_more_amenities,
-              textAlign: TextAlign.center,
-              style: context.titleMedium?.copyWith(
-                fontWeight: FontWeightHelper.medium,
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.secondaryBlue,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Text(
+                showAll
+                    ? context.localization.show_less
+                    : context.localization.see_more_amenities,
+                textAlign: TextAlign.center,
+                style: context.titleMedium?.copyWith(
+                  fontWeight: FontWeightHelper.medium,
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.primaryBlue,
+                    darkColor: ColorManager.secondaryBlue,
+                  ),
                 ),
               ),
             ),

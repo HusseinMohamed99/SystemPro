@@ -349,5 +349,7 @@
   "property_added_to_favorites": "Property added to favorites",
   "@property_added_to_favorites": {},
   "property_removed_from_favorites": "Property removed from favorites",
-  "@property_removed_from_favorites": {}
+  "@property_removed_from_favorites": {},
+  "results_search": "Results Search",
+  "@results_search": {}
 }

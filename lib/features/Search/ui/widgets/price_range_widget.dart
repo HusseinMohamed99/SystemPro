@@ -8,7 +8,17 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/textFields/custom_text_form_field.dart';
 
 class PriceRangeWidget extends StatelessWidget {
-  const PriceRangeWidget({super.key});
+  const PriceRangeWidget({
+    super.key,
+    required this.minPriceController,
+    required this.maxPriceController,
+    required this.minPriceFocusNode,
+    required this.maxPriceFocusNode,
+  });
+  final TextEditingController minPriceController;
+  final FocusNode minPriceFocusNode;
+  final TextEditingController maxPriceController;
+  final FocusNode maxPriceFocusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +37,16 @@ class PriceRangeWidget extends StatelessWidget {
             Expanded(
               child: CustomTextFormField(
                 hintText: context.localization.min,
-                focusNode: FocusNode(),
-                controller: TextEditingController(),
+                focusNode: minPriceFocusNode,
+                controller: minPriceController,
               ),
             ),
             horizontalSpacing(kSpacingDefault),
             Expanded(
               child: CustomTextFormField(
                 hintText: context.localization.max,
-                focusNode: FocusNode(),
-                controller: TextEditingController(),
+                focusNode: maxPriceFocusNode,
+                controller: maxPriceController,
               ),
             ),
           ],

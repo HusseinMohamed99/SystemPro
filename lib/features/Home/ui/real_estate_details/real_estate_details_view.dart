@@ -6,13 +6,13 @@ import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/about_real_estate.dart';
+import 'package:system_pro/features/Home/ui/real_estate_details/amenities_real_estate.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/description_real_estate.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/listed_by_real_estate.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/location_real_estate.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/purpose_real_estate.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/real_estate_details_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
-import 'package:system_pro/features/Search/ui/widgets/amenities_widget.dart';
 
 class RealEstateDetailsView extends StatelessWidget {
   const RealEstateDetailsView({super.key, required this.listing});

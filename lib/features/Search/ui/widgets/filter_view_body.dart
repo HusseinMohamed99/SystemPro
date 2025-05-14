@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
+import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
+import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
+import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/features/Search/logic/categories_cubit.dart';
 import 'package:system_pro/features/Search/logic/categories_state.dart';
@@ -33,14 +40,20 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   final amenitiesKey = GlobalKey<AmenitiesWidgetState>();
   final propertyKey = GlobalKey<PropertyTypeWidgetState>();
 
-  void clearAll() {
-    bedroomsKey.currentState?.clearSelection();
-    bathroomsKey.currentState?.clearSelection();
-    amenitiesKey.currentState?.clearSelection();
-    propertyKey.currentState?.clearSelection();
-  }
-
   late String selectedCategory;
+  String selectedBuyRentOption = 'buy'; // Default
+
+  // Price
+  final minPriceController = TextEditingController();
+  final maxPriceController = TextEditingController();
+  final minPriceFocusNode = FocusNode();
+  final maxPriceFocusNode = FocusNode();
+
+  // Size
+  final minSizeController = TextEditingController();
+  final maxSizeController = TextEditingController();
+  final minSizeFocusNode = FocusNode();
+  final maxSizeFocusNode = FocusNode();
 
   @override
   void didChangeDependencies() {
@@ -48,28 +61,28 @@ class _FilterViewBodyState extends State<FilterViewBody> {
     selectedCategory = context.localization.residentail;
   }
 
-  List<String> get propertyTypes {
-    if (selectedCategory == 'residential') {
-      return [
-        'Apartment',
-        'Villa',
-        'Townhouse',
-        'Penthouse',
-        'Duplex',
-        'Compound',
-        'Studio',
-        'Loft',
-      ];
-    } else {
-      return [
-        'Offices',
-        'Clinic',
-        'Commercial Building',
-        'Factory',
-        'Restaurant & Cafe',
-        'Retail',
-      ];
-    }
+  @override
+  void dispose() {
+    minPriceController.dispose();
+    maxPriceController.dispose();
+    minSizeController.dispose();
+    maxSizeController.dispose();
+    minPriceFocusNode.dispose();
+    maxPriceFocusNode.dispose();
+    minSizeFocusNode.dispose();
+    maxSizeFocusNode.dispose();
+    super.dispose();
+  }
+
+  void clearAll() {
+    bedroomsKey.currentState?.clearSelection();
+    bathroomsKey.currentState?.clearSelection();
+    amenitiesKey.currentState?.clearSelection();
+    propertyKey.currentState?.clearSelection();
+    minPriceController.clear();
+    maxPriceController.clear();
+    minSizeController.clear();
+    maxSizeController.clear();
   }
 
   @override
@@ -77,87 +90,45 @@ class _FilterViewBodyState extends State<FilterViewBody> {
     return BlocConsumer<CategoriesCubit, CategoriesState>(
       listener: (context, state) {},
       builder: (context, state) {
+        if (state is Loading) return const AdaptiveIndicator();
+        if (state is Error) return CustomErrorWidget(errorMessage: state.error);
+        if (state is! Success) return const SizedBox.shrink();
+
+        final categories = state.data.data?.categories ?? [];
+        if (categories.isEmpty) {
+          return const CustomErrorWidget(errorMessage: 'لا توجد فئات متاحة');
+        }
+
         return Column(
           children: [
             ToggleCategoryWidget(
+              filters: filters(context),
               onCategoryChanged: (category) {
-                setState(() {
-                  selectedCategory = category;
-                });
+                setState(() => selectedCategory = category);
+                AppLogs.successLog('Category changed to $category');
               },
             ),
             verticalSpacing(kSpacingXXLarge),
-            const BuyRentToggleWidget(),
+            BuyRentToggleWidget(
+              filtersToggle: filtersToggle(context),
+              onToggleChanged: (value) {
+                setState(() => selectedBuyRentOption = value);
+              },
+            ),
             verticalSpacing(kSpacingXXLarge),
             Expanded(
               child: CustomScrollView(
                 slivers: [
-                  if (selectedCategory == context.localization.residentail) ...[
-                    SliverToBoxAdapter(
-                      child: PropertyTypeWidget(
-                        key: propertyKey,
-                        propertyTypes: propertyTypes,
-                      ),
-                    ),
-
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    const SliverToBoxAdapter(child: PriceRangeWidget()),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    SliverToBoxAdapter(
-                      child: BathroomsWidget(key: bathroomsKey),
-                    ),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    const SliverToBoxAdapter(child: PropertySizeWidget()),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    SliverToBoxAdapter(
-                      child: AmenitiesWidget(
-                        key: amenitiesKey,
-                        amenities: const [],
-                      ),
-                    ),
-                  ],
-                  if (selectedCategory == context.localization.commercial) ...[
-                    SliverToBoxAdapter(
-                      child: PropertyTypeWidget(
-                        key: propertyKey,
-                        propertyTypes: propertyTypes,
-                      ),
-                    ),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    const SliverToBoxAdapter(child: PriceRangeWidget()),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    const SliverToBoxAdapter(child: PropertySizeWidget()),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    SliverToBoxAdapter(
-                      child: AmenitiesWidget(
-                        key: amenitiesKey,
-                        amenities: const [],
-                      ),
-                    ),
-                  ],
-
-                  if (selectedCategory == context.localization.lands) ...[
-                    SliverToBoxAdapter(
-                      child: PropertyTypeWidget(
-                        key: propertyKey,
-                        propertyTypes: propertyTypes,
-                        titleType: context.localization.lands_type,
-                      ),
-                    ),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    const SliverToBoxAdapter(child: PriceRangeWidget()),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                    const SliverToBoxAdapter(child: PropertySizeWidget()),
-                    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-                  ],
-
+                  if (selectedCategory == categories[0].name)
+                    ..._buildResidentialSection(categories[0]),
+                  if (selectedCategory == categories[1].name)
+                    ..._buildCommercialSection(categories[1]),
+                  if (selectedCategory == categories[2].name)
+                    ..._buildLandSection(categories[2]),
                   SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
                 ],
               ),
             ),
-
             const CustomDivider().onlyPadding(
               bottomPadding: kPaddingDefaultVertical,
             ),
@@ -183,7 +154,46 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 Expanded(
                   child: CustomButton(
                     text: context.localization.find,
-                    onPressed: () {},
+                    onPressed: () {
+                      final filterArgs = FilterResultArguments(
+                        category: selectedCategory,
+                        buyRentOption: selectedBuyRentOption,
+                        selectedSubcategories:
+                            propertyKey.currentState?.selectedTypes.toList() ??
+                            [],
+                        bedrooms: bedroomsKey.currentState?.selectedBedrooms,
+                        bathrooms: bathroomsKey.currentState?.selectedBathrooms,
+                        minPrice: double.tryParse(minPriceController.text),
+                        maxPrice: double.tryParse(maxPriceController.text),
+                        minSize: double.tryParse(minSizeController.text),
+                        maxSize: double.tryParse(maxSizeController.text),
+                        selectedAmenities:
+                            amenitiesKey.currentState?.selectedAmenityIds ?? [],
+                      );
+                      AppLogs.successLog(
+                        'Filter bathrooms: ${filterArgs.bathrooms}',
+                      );
+                      AppLogs.successLog('Filter bedrooms: ${filterArgs.bedrooms}');
+                      AppLogs.successLog('Filter minPrice: ${filterArgs.minPrice}');
+                      AppLogs.successLog('Filter maxPrice: ${filterArgs.maxPrice}');
+                      AppLogs.successLog('Filter minSize: ${filterArgs.minSize}');
+                      AppLogs.successLog('Filter maxSize: ${filterArgs.maxSize}');
+                      AppLogs.successLog(
+                        'Filter selectedAmenities: ${filterArgs.selectedAmenities}',
+                      );
+                      AppLogs.successLog(
+                        'Filter selectedSubcategories: ${filterArgs.selectedSubcategories}',
+                      );
+                      AppLogs.successLog('Filter category: ${filterArgs.category}');
+                      AppLogs.successLog(
+                        'Filter buyRentOption: ${filterArgs.buyRentOption}',
+                      );
+
+                      context.pushNamed(
+                        Routes.filterResultWidget,
+                        arguments: filterArgs,
+                      );
+                    },
                   ),
                 ),
               ],
@@ -193,4 +203,105 @@ class _FilterViewBodyState extends State<FilterViewBody> {
       },
     );
   }
+
+  List<Widget> _buildResidentialSection(category) => [
+    SliverToBoxAdapter(
+      child: PropertyTypeWidget(
+        key: propertyKey,
+        subcategories: category.subcategories ?? [],
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: PriceRangeWidget(
+        minPriceController: minPriceController,
+        maxPriceController: maxPriceController,
+        minPriceFocusNode: minPriceFocusNode,
+        maxPriceFocusNode: maxPriceFocusNode,
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: PropertySizeWidget(
+        minSizeController: minSizeController,
+        maxSizeController: maxSizeController,
+        minSizeFocusNode: minSizeFocusNode,
+        maxSizeFocusNode: maxSizeFocusNode,
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: AmenitiesWidget(
+        key: amenitiesKey,
+        amenities: category.amenities ?? [],
+      ),
+    ),
+  ];
+
+  List<Widget> _buildCommercialSection(category) => [
+    SliverToBoxAdapter(
+      child: PropertyTypeWidget(
+        key: propertyKey,
+        subcategories: category.subcategories ?? [],
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: PriceRangeWidget(
+        minPriceController: minPriceController,
+        maxPriceController: maxPriceController,
+        minPriceFocusNode: minPriceFocusNode,
+        maxPriceFocusNode: maxPriceFocusNode,
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: PropertySizeWidget(
+        minSizeController: minSizeController,
+        maxSizeController: maxSizeController,
+        minSizeFocusNode: minSizeFocusNode,
+        maxSizeFocusNode: maxSizeFocusNode,
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: AmenitiesWidget(
+        key: amenitiesKey,
+        amenities: category.amenities ?? [],
+      ),
+    ),
+  ];
+
+  List<Widget> _buildLandSection(category) => [
+    SliverToBoxAdapter(
+      child: PropertyTypeWidget(
+        key: propertyKey,
+        titleType: context.localization.lands_type,
+        subcategories: category.subcategories ?? [],
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: PriceRangeWidget(
+        minPriceController: minPriceController,
+        maxPriceController: maxPriceController,
+        minPriceFocusNode: minPriceFocusNode,
+        maxPriceFocusNode: maxPriceFocusNode,
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+    SliverToBoxAdapter(
+      child: PropertySizeWidget(
+        minSizeController: minSizeController,
+        maxSizeController: maxSizeController,
+        minSizeFocusNode: minSizeFocusNode,
+        maxSizeFocusNode: maxSizeFocusNode,
+      ),
+    ),
+    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+  ];
 }

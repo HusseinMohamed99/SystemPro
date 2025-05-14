@@ -349,5 +349,7 @@
   "property_added_to_favorites": "تمت إضافة العقار إلى المفضلة",
   "@property_added_to_favorites": {},
   "property_removed_from_favorites": "تمت إزالة العقار من المفضلة",
-  "@property_removed_from_favorites": {}
+  "@property_removed_from_favorites": {},
+    "results_search": "نتايج البحث",
+  "@results_search": {}
 }
