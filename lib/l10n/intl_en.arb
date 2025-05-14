@@ -351,5 +351,7 @@
   "property_removed_from_favorites": "Property removed from favorites",
   "@property_removed_from_favorites": {},
   "results_search": "Results Search",
-  "@results_search": {}
+  "@results_search": {},
+  "down_payment":"Down Payment",
+  "@down_payment":{}
 }

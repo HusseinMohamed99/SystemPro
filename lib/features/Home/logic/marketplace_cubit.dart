@@ -190,12 +190,15 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
       result.when(
         success: (response) {
+          print('Success Response: ${response.status}');
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
+            print('isFavorited: $isFavorited');
 
+            // تحديث حالة المفضلة في جميع العناصر التي تحتوي على id مطابق
             for (var listing in _allListings) {
               if (listing.id == id) {
-                listing.isFavorite == isFavorited;
+                listing.isFavorite = isFavorited; // التعديل هنا
               }
             }
 
@@ -205,6 +208,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           }
         },
         failure: (errorHandler) {
+          print('Error: ${errorHandler.apiErrorModel.message}');
           emit(
             MarketplaceState.error(
               'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
@@ -213,6 +217,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         },
       );
     } catch (error) {
+      print('Unexpected error: $error');
       emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
   }

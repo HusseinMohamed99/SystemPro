@@ -85,6 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Don\'t have an account?",
     ),
     "done": MessageLookupByLibrary.simpleMessage("Done"),
+    "down_payment": MessageLookupByLibrary.simpleMessage("Down Payment"),
     "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
     "email_already_exists": MessageLookupByLibrary.simpleMessage(

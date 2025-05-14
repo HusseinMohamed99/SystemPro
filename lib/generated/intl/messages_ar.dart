@@ -85,6 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "لا تملك حساب؟",
     ),
     "done": MessageLookupByLibrary.simpleMessage("تم"),
+    "down_payment": MessageLookupByLibrary.simpleMessage("الدفع المسبق"),
     "edit_profile": MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
     "email": MessageLookupByLibrary.simpleMessage("البريد الإلكترونى"),
     "email_already_exists": MessageLookupByLibrary.simpleMessage(

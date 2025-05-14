@@ -10,6 +10,7 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
+
 class AboutRealEstate extends StatelessWidget {
   const AboutRealEstate({
     super.key,
@@ -39,21 +40,23 @@ class AboutRealEstate extends StatelessWidget {
       spacing: kSpacingDefault.h,
       children: [
         Row(
-          spacing: kSpacingDefault.w,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '${context.localization.sar} $price',
-              style: context.headlineMedium?.copyWith(
-                fontWeight: FontWeightHelper.semiBold,
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.secondaryBlue,
+            Expanded(
+              child: Text(
+                '${context.localization.sar} $price',
+                style: context.headlineMedium?.copyWith(
+                  fontWeight: FontWeightHelper.semiBold,
+                  color: AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.primaryBlue,
+                    darkColor: ColorManager.secondaryBlue,
+                  ),
                 ),
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsetsDirectional.all(6),
               decoration: BoxDecoration(
                 color: AdaptiveColor.adaptiveColor(
                   context: context,
@@ -71,7 +74,7 @@ class AboutRealEstate extends StatelessWidget {
                 ),
               ),
               child: Text(
-                '${calculatePercentage(price, downPayment)} Down Payment',
+                '${calculatePercentage(price, downPayment)} ${context.localization.down_payment}',
                 style: context.titleSmall?.copyWith(
                   fontWeight: FontWeightHelper.medium,
                   color: AdaptiveColor.adaptiveColor(
@@ -137,7 +140,7 @@ class AboutRealEstate extends StatelessWidget {
           ],
         ),
         Wrap(
-          spacing: kSpacingDefault.w,   
+          spacing: kSpacingDefault.w,
           runSpacing: kSpacingSmall.h,
           children: List.generate(4, (index) {
             final images = [
@@ -148,7 +151,7 @@ class AboutRealEstate extends StatelessWidget {
             ];
             final values = [subcategory, bedrooms, bathrooms, '$area sqm'];
             return Row(
-              mainAxisSize: MainAxisSize.min, 
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
                   images[index],

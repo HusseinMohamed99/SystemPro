@@ -351,5 +351,7 @@
   "property_removed_from_favorites": "تمت إزالة العقار من المفضلة",
   "@property_removed_from_favorites": {},
     "results_search": "نتايج البحث",
-  "@results_search": {}
+  "@results_search": {},
+    "down_payment":"الدفع المسبق",
+  "@down_payment":{}
 }

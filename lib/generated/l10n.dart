@@ -1434,6 +1434,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Down Payment`
+  String get down_payment {
+    return Intl.message(
+      'Down Payment',
+      name: 'down_payment',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
