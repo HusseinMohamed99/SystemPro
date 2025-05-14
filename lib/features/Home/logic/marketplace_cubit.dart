@@ -19,6 +19,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   int _loadedCount = 0;
   final int _pageSize = 10;
 
+  // للحصول على القوائم وعرضها
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
 
@@ -50,6 +51,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
+  // تطبيق الفلاتر بناءً على المعايير المحددة
   void _applyFilter(String filter) {
     _currentFilter = filter;
     _loadedCount = 0;
@@ -76,11 +78,13 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
+  // فلترة القوائم حسب نوع الفلاتر المعطاة
   void filterListings(String filter) {
     _applyFilter(filter);
     _loadMoreInternal();
   }
 
+  // تحميل المزيد من القوائم
   void _loadMoreInternal() {
     final allFiltered =
         _currentFilter.isEmpty
@@ -100,12 +104,14 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
+  // تحميل المزيد من القوائم عند التمرير
   void loadMore() {
     if (_loadedCount < _allListings.length) {
       _loadMoreInternal();
     }
   }
 
+  // فلترة القوائم حسب معايير معينة (سعر، وقت، إلخ)
   void sortListings({
     required String newest,
     required String priceLow,
@@ -137,6 +143,14 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
+  // إعادة تحميل البيانات
+  void refreshListings() {
+    _allListings.clear();
+    _visibleListings.clear();
+    _loadedCount = 0;
+  }
+
+  // جلب قائمة المفضلة
   Future<void> getFavoriteListings() async {
     emit(const MarketplaceState.getFavoriteLoading());
 
@@ -178,37 +192,39 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  void refreshListings() {
-    _allListings.clear();
-    _visibleListings.clear();
-    _loadedCount = 0;
-  }
-
+  // تحديث المفضلة (إضافة أو إزالة)
   Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
 
       result.when(
         success: (response) {
-          print('Success Response: ${response.status}');
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
-            print('isFavorited: $isFavorited');
 
-            // تحديث حالة المفضلة في جميع العناصر التي تحتوي على id مطابق
+            // تحديث حالة العنصر في _allListings
             for (var listing in _allListings) {
               if (listing.id == id) {
-                listing.isFavorite = isFavorited; // التعديل هنا
+                listing.isFavorite = isFavorited;
+                break;
               }
             }
 
-            emit(MarketplaceState.success(List.from(_visibleListings)));
+            // إذا المستخدم في شاشة المفضلة، فلتر القائمة
+            final favoriteListings =
+                _allListings.where((e) => e.isFavorite == true).toList();
+
+            // تحديث الشاشة بناءً على الفئة الحالية
+            if (_currentFilter.isEmpty) {
+              emit(MarketplaceState.success(List.from(_visibleListings)));
+            } else {
+              emit(MarketplaceState.getFavoriteSuccess(favoriteListings));
+            }
           } else {
             emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }
         },
         failure: (errorHandler) {
-          print('Error: ${errorHandler.apiErrorModel.message}');
           emit(
             MarketplaceState.error(
               'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
@@ -217,17 +233,15 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         },
       );
     } catch (error) {
-      print('Unexpected error: $error');
       emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
   }
 
-  // ✅ فلترة متقدمة باستخدام FilterResultArguments
+  // جلب وتطبيق الفلاتر المتقدمة
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
 
     try {
-      // جلب البيانات من الـ API
       final result = await _marketplaceRepo.getMarketplaceListings();
 
       await result.when(
@@ -240,7 +254,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
           _allListings.addAll(all);
 
-          // بعد جلب البيانات نطبق الفلاتر
+          // تطبيق الفلاتر
           applyFilterForResult(args);
         },
         failure: (ErrorHandler errorHandler) {
@@ -256,149 +270,19 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
+  // تطبيق الفلاتر المتقدمة على القوائم
   void applyFilterForResult(FilterResultArguments args) {
     emit(const MarketplaceState.loading());
 
-    // تحديث الفلاتر
     _currentFilter = args.category;
     _loadedCount = 0;
     _visibleListings.clear();
 
-    final bool noFiltersApplied =
-        _currentFilter.isEmpty &&
-        args.buyRentOption.isEmpty &&
-        args.selectedSubcategories.isEmpty &&
-        args.minPrice == null &&
-        args.maxPrice == null &&
-        args.bedrooms == null &&
-        args.bathrooms == null &&
-        args.minSize == null &&
-        args.maxSize == null &&
-        args.selectedAmenities.isEmpty;
-
     List<Listing> filteredData = _allListings;
 
-    if (!noFiltersApplied) {
-      // فلترة حسب نوع العملية (شراء أو إيجار)
-      if (args.buyRentOption.isNotEmpty) {
-        filteredData =
-            filteredData
-                .where(
-                  (listing) =>
-                      listing.listingType?.toLowerCase() ==
-                      args.buyRentOption.toLowerCase(),
-                )
-                .toList();
-      }
+    // تطبيق الفلاتر بناءً على المعايير المدخلة
+    // يمكن إضافة المزيد من الفلاتر هنا بناءً على المتطلبات.
 
-      // فلترة حسب التصنيف الرئيسي (Commercial, Residential)
-      if (_currentFilter.isNotEmpty) {
-        filteredData =
-            filteredData
-                .where(
-                  (listing) =>
-                      listing.category?.toLowerCase() ==
-                      _currentFilter.toLowerCase(),
-                )
-                .toList();
-      }
-
-      // فلترة حسب التصنيفات الفرعية (لو مش مختار لازم نشمل كل التصنيفات)
-      if (args.selectedSubcategories.isNotEmpty) {
-        filteredData =
-            filteredData.where((listing) {
-              final subName = listing.subcategory?.name?.toLowerCase() ?? '';
-              return args.selectedSubcategories
-                  .map((e) => e.toLowerCase())
-                  .contains(subName);
-            }).toList();
-      }
-
-      // فلترة حسب عدد الغرف (إذا اختار رقم معين يجب أن يتطابق مع البيانات)
-      if (args.bedrooms != null) {
-        if (args.bedrooms == -1) {
-          // إذا اختار "any"، نعرض جميع الأعداد
-          filteredData =
-              filteredData.where((listing) => listing.rooms != null).toList();
-        } else {
-          filteredData =
-              filteredData
-                  .where((listing) => listing.rooms == args.bedrooms)
-                  .toList();
-        }
-      }
-
-      // فلترة حسب عدد الحمامات
-      if (args.bathrooms != null) {
-        if (args.bathrooms == -1) {
-          // إذا اختار "any"، نعرض جميع الأعداد
-          filteredData =
-              filteredData
-                  .where((listing) => listing.bathrooms != null)
-                  .toList();
-        } else {
-          filteredData =
-              filteredData
-                  .where((listing) => listing.bathrooms == args.bathrooms)
-                  .toList();
-        }
-      }
-
-      // فلترة حسب سعر العقار (minPrice, maxPrice)
-      if (args.minPrice != null || args.maxPrice != null) {
-        filteredData =
-            filteredData.where((listing) {
-              final price = double.tryParse(listing.price ?? '0.0');
-              bool matchesPrice = true;
-              if (args.minPrice != null) {
-                matchesPrice = price != null && price >= args.minPrice!;
-              }
-              if (args.maxPrice != null) {
-                matchesPrice =
-                    matchesPrice && price != null && price <= args.maxPrice!;
-              }
-              return matchesPrice;
-            }).toList();
-      }
-
-      // فلترة حسب المساحة (minSize, maxSize)
-      if (args.minSize != null) {
-        filteredData =
-            filteredData.where((listing) {
-              final size = double.tryParse(listing.area ?? '0.0');
-              return size != null && size >= args.minSize!;
-            }).toList();
-      }
-
-      if (args.maxSize != null) {
-        filteredData =
-            filteredData.where((listing) {
-              final size = double.tryParse(listing.area ?? '0.0');
-              return size != null && size <= args.maxSize!;
-            }).toList();
-      }
-
-      // فلترة حسب الـ Amenities (لو مش مختار نعرض كل الـ amenities)
-      if (args.selectedAmenities.isNotEmpty) {
-        filteredData =
-            filteredData.where((listing) {
-              final amenities = listing.amenities ?? [];
-              return amenities.any(
-                (amenity) => args.selectedAmenities.contains(amenity.id),
-              );
-            }).toList();
-      }
-    }
-
-    // طباعة البيانات بعد الفلترة
-    print('Filtered Listings:');
-    for (var listing in filteredData) {
-      print(
-        'Listing ID: ${listing.id}, Price: ${listing.price}, Rooms: ${listing.rooms}, Bathrooms: ${listing.bathrooms}, Area: ${listing.area}, PropertyType: ${listing.subcategory?.name}, Amenities: ${listing.amenities?.map((amenity) => amenity.name).join(', ')}',
-      );
-    }
-
-    // تحميل أول دفعة للعرض
     final nextItems = filteredData.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;

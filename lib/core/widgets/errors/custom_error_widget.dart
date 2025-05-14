@@ -14,7 +14,7 @@ class CustomErrorWidget extends StatelessWidget {
           color: AdaptiveColor.adaptiveColor(
             context: context,
             lightColor: ColorManager.softGray,
-            darkColor: ColorManager.errorRed,
+            darkColor: ColorManager.hintGrey,
           ),
         ),
       ),

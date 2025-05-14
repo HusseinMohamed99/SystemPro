@@ -26,7 +26,7 @@ Map<String, dynamic> _$ToggleFavoriteResponseToJson(
 };
 
 ToggleFavoriteData _$ToggleFavoriteDataFromJson(Map<String, dynamic> json) =>
-    ToggleFavoriteData(isFavorited: json['is_favorited'] as bool);
+    ToggleFavoriteData(isFavorited: json['is_favorite'] as bool);
 
 Map<String, dynamic> _$ToggleFavoriteDataToJson(ToggleFavoriteData instance) =>
-    <String, dynamic>{'is_favorited': instance.isFavorited};
+    <String, dynamic>{'is_favorite': instance.isFavorited};

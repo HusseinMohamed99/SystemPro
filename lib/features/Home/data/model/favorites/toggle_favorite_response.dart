@@ -23,7 +23,7 @@ class ToggleFavoriteData {
 
   factory ToggleFavoriteData.fromJson(Map<String, dynamic> json) =>
       _$ToggleFavoriteDataFromJson(json);
-  @JsonKey(name: 'is_favorited')
+  @JsonKey(name: 'is_favorite')
   final bool isFavorited;
 
   Map<String, dynamic> toJson() => _$ToggleFavoriteDataToJson(this);
