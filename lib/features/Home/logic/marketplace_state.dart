@@ -19,11 +19,4 @@ class MarketplaceState with _$MarketplaceState {
   const factory MarketplaceState.getFavoriteError(String error) =
       GetFavoriteError;
 
-  const factory MarketplaceState.toggleFavoriteLoading() =
-      ToggleFavoriteLoading;
-  const factory MarketplaceState.toggleFavoriteSuccess(List<Listing> listings) =
-      ToggleFavoriteSuccess;
-
-  const factory MarketplaceState.toggleFavoriteError(String error) =
-      ToggleFavoriteError;
 }

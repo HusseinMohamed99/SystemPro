@@ -28,43 +28,45 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "about": MessageLookupByLibrary.simpleMessage("الوصف"),
-    "about_us": MessageLookupByLibrary.simpleMessage("من نحن"),
+    "about": MessageLookupByLibrary.simpleMessage("حول"),
+    "about_us": MessageLookupByLibrary.simpleMessage("عن التطبيق"),
     "account_created_successfully": MessageLookupByLibrary.simpleMessage(
       "تم إنشاء الحساب بنجاح",
     ),
     "account_exists_message": MessageLookupByLibrary.simpleMessage(
-      "يوجد حساب بالفعل ببيانات مختلفة.",
+      "الحساب موجود بالفعل ببيانات مختلفة",
     ),
-    "amenities": MessageLookupByLibrary.simpleMessage("وسائل الراحة"),
+    "amenities": MessageLookupByLibrary.simpleMessage("المرافق"),
     "any": MessageLookupByLibrary.simpleMessage("أي"),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
-    "back_to_login": MessageLookupByLibrary.simpleMessage("رجوع لتسجيل الدخول"),
+    "back_to_login": MessageLookupByLibrary.simpleMessage(
+      "العودة لتسجيل الدخول",
+    ),
     "bathrooms": MessageLookupByLibrary.simpleMessage("الحمامات"),
     "bedrooms": MessageLookupByLibrary.simpleMessage("غرف النوم"),
-    "book": MessageLookupByLibrary.simpleMessage("احجز"),
+    "book": MessageLookupByLibrary.simpleMessage("حجز"),
     "buy": MessageLookupByLibrary.simpleMessage("شراء"),
     "call": MessageLookupByLibrary.simpleMessage("اتصال"),
     "call_permission_denied": MessageLookupByLibrary.simpleMessage(
       "تم رفض صلاحية الاتصال",
     ),
     "cancel_by_user_message": MessageLookupByLibrary.simpleMessage(
-      "تم إلغاء تسجيل الدخول بواسطة المستخدم.",
+      "تم إلغاء تسجيل الدخول من قبل المستخدم",
     ),
-    "change": MessageLookupByLibrary.simpleMessage("تغير"),
+    "change": MessageLookupByLibrary.simpleMessage("تغيير"),
     "change_password": MessageLookupByLibrary.simpleMessage(
       "تغيير كلمة المرور",
     ),
     "check_email": MessageLookupByLibrary.simpleMessage(
-      "يرجى التحقق من بريدك الالكترونى",
+      "الرجاء التحقق من بريدك الإلكتروني",
     ),
     "clear_all": MessageLookupByLibrary.simpleMessage("مسح الكل"),
     "commercial": MessageLookupByLibrary.simpleMessage("تجاري"),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
-      "تأكيد كلمة المرور الجديدة",
+      "تأكيد كلمة المرور",
     ),
     "contact_us": MessageLookupByLibrary.simpleMessage("اتصل بنا"),
-    "create_account": MessageLookupByLibrary.simpleMessage("قم بإنشاء حساب"),
+    "create_account": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
     "create_new_account": MessageLookupByLibrary.simpleMessage(
       "إنشاء حساب جديد",
     ),
@@ -77,104 +79,104 @@ class MessageLookup extends MessageLookupByLibrary {
       "تم حذف الحساب بنجاح",
     ),
     "delete_my_account": MessageLookupByLibrary.simpleMessage("حذف حسابي"),
-    "deleting_account": MessageLookupByLibrary.simpleMessage(
-      "جاري حذف الحساب...",
-    ),
+    "deleting_account": MessageLookupByLibrary.simpleMessage("جاري حذف الحساب"),
     "description": MessageLookupByLibrary.simpleMessage("الوصف"),
     "do_not_have_account": MessageLookupByLibrary.simpleMessage(
-      "لا تملك حساب؟",
+      "ليس لديك حساب؟",
     ),
     "done": MessageLookupByLibrary.simpleMessage("تم"),
-    "down_payment": MessageLookupByLibrary.simpleMessage("الدفع المسبق"),
+    "down_payment": MessageLookupByLibrary.simpleMessage("الدفعة المقدمة"),
     "edit_profile": MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
-    "email": MessageLookupByLibrary.simpleMessage("البريد الإلكترونى"),
+    "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "email_already_exists": MessageLookupByLibrary.simpleMessage(
-      "البريد الإلكتروني موجود بالفعل",
+      "البريد الإلكتروني موجود مسبقاً",
     ),
     "email_already_inUse_error": MessageLookupByLibrary.simpleMessage(
-      "عنوان البريد الإلكتروني قيد الاستخدام بالفعل بواسطة حساب آخر.",
+      "البريد الإلكتروني مستخدم بالفعل",
     ),
     "email_empty": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن ترك البريد الإلكترونى فارغًا",
+      "حقل البريد الإلكتروني لا يمكن أن يكون فارغاً",
     ),
     "email_invalid_domain": MessageLookupByLibrary.simpleMessage(
-      "تنسيق النطاق غير صالح.",
+      "صيغة النطاق غير صالحة",
     ),
     "email_invalid_format": MessageLookupByLibrary.simpleMessage(
-      "الرجاء إدخال عنوان بريد إلكتروني صحيح.",
+      "الرجاء إدخال بريد إلكتروني صحيح",
     ),
     "email_invalid_start_end": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن أن يبدأ أو ينتهي البريد الإلكتروني بأحرف خاصة.",
+      "لا يمكن أن يبدأ أو ينتهي البريد الإلكتروني برموز خاصة",
     ),
     "email_no_consecutive_dots": MessageLookupByLibrary.simpleMessage(
-      "البريد الإلكتروني لا يمكن أن يحتوي على نقاط متتالية.",
+      "لا يمكن أن يحتوي البريد الإلكتروني على نقاط متتالية",
     ),
     "email_or_password_incorrect": MessageLookupByLibrary.simpleMessage(
       "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     ),
     "email_too_long": MessageLookupByLibrary.simpleMessage(
-      "البريد الإلكتروني يجب أن يكون أقل من 320 حرفًا.",
+      "يجب أن يكون البريد الإلكتروني أقل من 320 حرفاً",
     ),
     "email_too_short": MessageLookupByLibrary.simpleMessage(
-      "البريد الإلكتروني يجب أن يحتوي على 6 أحرف على الأقل.",
+      "يجب أن يكون البريد الإلكتروني 6 أحرف على الأقل",
     ),
     "email_valid": MessageLookupByLibrary.simpleMessage(
-      "الرجاء إدخال عنوان بريد إلكتروني صالح",
+      "الرجاء إدخال بريد إلكتروني صحيح",
     ),
     "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
     "enter_email": MessageLookupByLibrary.simpleMessage(
-      "ادخل البريد الالكترونى",
+      "أدخل بريدك الإلكتروني",
     ),
-    "enter_password": MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور"),
+    "enter_password": MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور"),
     "favorites": MessageLookupByLibrary.simpleMessage("المفضلة"),
-    "filter": MessageLookupByLibrary.simpleMessage("فلتر"),
+    "filter": MessageLookupByLibrary.simpleMessage("تصفية"),
     "find": MessageLookupByLibrary.simpleMessage("بحث"),
     "forgot_password": MessageLookupByLibrary.simpleMessage(
       "نسيت كلمة المرور؟",
     ),
     "forgot_password_subtitle": MessageLookupByLibrary.simpleMessage(
-      "لا تقلق! هذا قد يحدث. يرجى إدخال البريد الإلكتروني المرتبط بالحساب الخاص بك.",
+      "لا تقلق! أدخل البريد الإلكتروني المرتبط بحسابك",
     ),
-    "full_name": MessageLookupByLibrary.simpleMessage("الاسم كامل"),
+    "full_name": MessageLookupByLibrary.simpleMessage("الاسم الكامل"),
     "full_name_cannot_be_only_numbers": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن أن يكون الاسم مكونًا فقط من الأرقام",
+      "لا يمكن أن يكون الاسم أرقاماً فقط",
     ),
     "full_name_empty": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن ترك الاسم الكامل فارغًا",
+      "حقل الاسم الكامل لا يمكن أن يكون فارغاً",
     ),
     "full_name_maximum_length": MessageLookupByLibrary.simpleMessage(
-      "يجب أن يحتوي الاسم الكامل على 20 حرفًا كحد أقصى",
+      "يجب أن يكون الاسم الكامل 20 حرفاً كحد أقصى",
     ),
     "full_name_minimum_length": MessageLookupByLibrary.simpleMessage(
-      "يجب أن يحتوي الاسم الكامل على 3 أحرف على الأقل",
+      "يجب أن يكون الاسم الكامل 3 أحرف على الأقل",
     ),
     "full_name_no_special_characters": MessageLookupByLibrary.simpleMessage(
-      "الاسم يجب أن يحتوي فقط على حروف",
+      "يجب أن يحتوي الاسم على أحرف فقط",
     ),
     "general": MessageLookupByLibrary.simpleMessage("عام"),
     "general_error": MessageLookupByLibrary.simpleMessage(
-      "حدث خطأ غير معروف. يرجى المحاولة لاحقًا.",
+      "حدث خطأ، الرجاء المحاولة لاحقاً",
     ),
-    "have_account": MessageLookupByLibrary.simpleMessage("تمتلك حساب بالفعل؟"),
-    "help": MessageLookupByLibrary.simpleMessage("المساعدة"),
+    "have_account": MessageLookupByLibrary.simpleMessage(
+      "هل لديك حساب بالفعل؟",
+    ),
+    "help": MessageLookupByLibrary.simpleMessage("مساعدة"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "hoursAgo": m1,
     "internal_error_message": MessageLookupByLibrary.simpleMessage(
-      "حدث خطأ داخلي. يرجى المحاولة مرة أخرى لاحقًا.",
+      "حدث خطأ داخلي، الرجاء المحاولة لاحقاً",
     ),
     "invalid_credential_message": MessageLookupByLibrary.simpleMessage(
-      "بيانات غير صالحة أو منتهيةالصلاحية.",
+      "بيانات الاعتماد غير صالحة أو منتهية",
     ),
     "invalid_email_message": MessageLookupByLibrary.simpleMessage(
-      "عنوان البريد الإلكتروني بتنسيق غير صحيح.",
+      "صيغة البريد الإلكتروني غير صالحة",
     ),
-    "invalid_link": MessageLookupByLibrary.simpleMessage("الرابط غير صالح"),
+    "invalid_link": MessageLookupByLibrary.simpleMessage("رابط غير صالح"),
     "justNow": MessageLookupByLibrary.simpleMessage("الآن"),
-    "lands": MessageLookupByLibrary.simpleMessage("الأراضي"),
-    "lands_type": MessageLookupByLibrary.simpleMessage("نوع الأراضي"),
+    "lands": MessageLookupByLibrary.simpleMessage("أراضي"),
+    "lands_type": MessageLookupByLibrary.simpleMessage("أنواع الأراضي"),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
     "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
-    "listed_by": MessageLookupByLibrary.simpleMessage("تم نشره بواسطة"),
+    "listed_by": MessageLookupByLibrary.simpleMessage("مدرج بواسطة"),
     "location": MessageLookupByLibrary.simpleMessage("الموقع"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -186,94 +188,92 @@ class MessageLookup extends MessageLookupByLibrary {
     "minutesAgo": m2,
     "my_account": MessageLookupByLibrary.simpleMessage("حسابي"),
     "network_request_failed_message": MessageLookupByLibrary.simpleMessage(
-      "حدث خطأ في الشبكة. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+      "الرجاء التحقق من اتصال الإنترنت",
     ),
     "new_account": MessageLookupByLibrary.simpleMessage("حساب جديد"),
     "new_password": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
     "newest": MessageLookupByLibrary.simpleMessage("الأحدث"),
     "no_available_properties": MessageLookupByLibrary.simpleMessage(
-      "لا توجد عقارات متاحة حالياً",
+      "لا توجد عقارات متاحة",
     ),
-    "no_data_found": MessageLookupByLibrary.simpleMessage("لا يوجد بيانات"),
+    "no_data_found": MessageLookupByLibrary.simpleMessage("لا توجد بيانات"),
     "no_favorite_properties": MessageLookupByLibrary.simpleMessage(
-      "لا يوجد عقارات مفضلة",
+      "لا توجد عقارات في المفضلة",
     ),
-    "no_result": MessageLookupByLibrary.simpleMessage(
-      "لم يتم العثور على نتائج",
-    ),
-    "not_receive_code": MessageLookupByLibrary.simpleMessage("لم يصل الكود؟"),
+    "no_result": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
+    "not_receive_code": MessageLookupByLibrary.simpleMessage("لم تستلم الرمز؟"),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
-    "oneDayAgo": MessageLookupByLibrary.simpleMessage("منذ يوم واحد"),
-    "oneHourAgo": MessageLookupByLibrary.simpleMessage("منذ ساعة واحدة"),
-    "oneMinuteAgo": MessageLookupByLibrary.simpleMessage("منذ دقيقة واحدة"),
+    "oneDayAgo": MessageLookupByLibrary.simpleMessage("منذ يوم"),
+    "oneHourAgo": MessageLookupByLibrary.simpleMessage("منذ ساعة"),
+    "oneMinuteAgo": MessageLookupByLibrary.simpleMessage("منذ دقيقة"),
     "operation_not_allowed_message": MessageLookupByLibrary.simpleMessage(
-      "حسابات البريد الإلكتروني/كلمة المرور غير مفعلّة. الرجاء تفعيلها في Firebase.",
+      "حسابات البريد/كلمة المرور غير مفعلة",
     ),
     "otp": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
     "otp_empty": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن ترك رمز التحقق فارغًا",
+      "حقل رمز التحقق لا يمكن أن يكون فارغاً",
     ),
     "otp_invalid_format": MessageLookupByLibrary.simpleMessage(
-      "رمز التحقق يجب أن يحتوي على أرقام فقط.",
+      "يجب أن يحتوي رمز التحقق على أرقام فقط",
     ),
     "otp_length": MessageLookupByLibrary.simpleMessage(
-      "الرمز التحقق يجب على الأقل 4 رقم",
+      "يجب أن يكون رمز التحقق 4 أرقام",
     ),
     "otp_valid": MessageLookupByLibrary.simpleMessage(
-      "الرجاء إدخال رمز التحقق صالح",
+      "الرجاء إدخال رمز تحقق صحيح",
     ),
     "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
     "password_changed": MessageLookupByLibrary.simpleMessage(
-      "تغيير كلمة المرور",
+      "تم تغيير كلمة المرور",
     ),
     "password_changed_subtitle": MessageLookupByLibrary.simpleMessage(
       "تم تغيير كلمة المرور بنجاح",
     ),
     "password_does_not_match": MessageLookupByLibrary.simpleMessage(
-      "كلمات المرور لا تتطابق",
+      "كلمات المرور غير متطابقة",
     ),
     "password_empty": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن ترك كلمة المرور فارغة",
+      "حقل كلمة المرور لا يمكن أن يكون فارغاً",
     ),
     "password_length": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور يجب أن تكون على الأقل 8 حروف",
+      "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
     ),
     "password_missing_lowercase": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور يجب أن تحتوي على حروف صغيرة",
+      "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
     ),
     "password_missing_number": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور يجب أن تحتوي على رقم",
+      "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
     ),
     "password_missing_special": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور يجب أن تحتوي على رمز خاص",
+      "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل",
     ),
     "password_missing_uppercase": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور يجب أن تحتوي على حروف كبيرة",
+      "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
     ),
-    "personal_account": MessageLookupByLibrary.simpleMessage("الملف الشخصى"),
+    "personal_account": MessageLookupByLibrary.simpleMessage("حساب شخصي"),
     "personal_information": MessageLookupByLibrary.simpleMessage(
       "المعلومات الشخصية",
     ),
-    "personal_profile": MessageLookupByLibrary.simpleMessage("الملف الشخصى"),
+    "personal_profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "phone_already_exists": MessageLookupByLibrary.simpleMessage(
-      "رقم الهاتف موجود بالفعل",
+      "رقم الجوال موجود مسبقاً",
     ),
     "phone_empty": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن ترك رقم الهاتف فارغًا",
+      "حقل رقم الجوال لا يمكن أن يكون فارغاً",
     ),
     "phone_invalid_format": MessageLookupByLibrary.simpleMessage(
-      "الرجاء إدخال رقم هاتف مصرى صالح",
+      "الرجاء إدخال رقم جوال سعودي صحيح",
     ),
-    "phone_number": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+    "phone_number": MessageLookupByLibrary.simpleMessage("رقم الجوال"),
     "phone_valid": MessageLookupByLibrary.simpleMessage(
-      "الرجاء إدخال رقم هاتف صالح",
+      "الرجاء إدخال رقم جوال صحيح",
     ),
-    "price_high": MessageLookupByLibrary.simpleMessage("السعر من الأعلى"),
-    "price_low": MessageLookupByLibrary.simpleMessage("السعر من الأقل"),
+    "price_high": MessageLookupByLibrary.simpleMessage("السعر (مرتفع)"),
+    "price_low": MessageLookupByLibrary.simpleMessage("السعر (منخفض)"),
     "price_range": MessageLookupByLibrary.simpleMessage("نطاق السعر"),
     "privacy_policy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
     "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
-    "properties": MessageLookupByLibrary.simpleMessage("عقارات"),
+    "properties": MessageLookupByLibrary.simpleMessage("العقارات"),
     "property_added_to_favorites": MessageLookupByLibrary.simpleMessage(
       "تمت إضافة العقار إلى المفضلة",
     ),
@@ -283,77 +283,79 @@ class MessageLookup extends MessageLookupByLibrary {
     "property_size": MessageLookupByLibrary.simpleMessage("مساحة العقار"),
     "property_type": MessageLookupByLibrary.simpleMessage("نوع العقار"),
     "purpose": MessageLookupByLibrary.simpleMessage("الغرض"),
-    "recent_search": MessageLookupByLibrary.simpleMessage("البحث الأخير"),
+    "recent_search": MessageLookupByLibrary.simpleMessage(
+      "عمليات البحث الحديثة",
+    ),
     "rent": MessageLookupByLibrary.simpleMessage("إيجار"),
-    "reset_password": MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
+    "reset_password": MessageLookupByLibrary.simpleMessage(
+      "إعادة تعيين كلمة المرور",
+    ),
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
-      "يرجى كتابة شيء يمكنك تذكره",
+      "الرجاء إدخال كلمة مرور جديدة",
     ),
     "residentail": MessageLookupByLibrary.simpleMessage("سكني"),
-    "result": MessageLookupByLibrary.simpleMessage("نتائج"),
-    "results_search": MessageLookupByLibrary.simpleMessage("نتايج البحث"),
+    "result": MessageLookupByLibrary.simpleMessage("النتائج"),
+    "results_search": MessageLookupByLibrary.simpleMessage("نتائج البحث"),
     "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
-    "search": MessageLookupByLibrary.simpleMessage("ابحث"),
+    "search": MessageLookupByLibrary.simpleMessage("بحث"),
     "see_location": MessageLookupByLibrary.simpleMessage("عرض الموقع"),
-    "see_more": MessageLookupByLibrary.simpleMessage("اظهار المزيد"),
+    "see_more": MessageLookupByLibrary.simpleMessage("عرض المزيد"),
     "see_more_amenities": MessageLookupByLibrary.simpleMessage(
-      "عرض المزيد من الوسائل",
+      "عرض المزيد من المرافق",
     ),
     "see_more_property_type": MessageLookupByLibrary.simpleMessage(
       "عرض المزيد من الأنواع",
     ),
     "select_location": MessageLookupByLibrary.simpleMessage(
-      "يرجى اختيار الموقع أولاً",
+      "الرجاء تحديد الموقع أولاً",
     ),
-    "send_code": MessageLookupByLibrary.simpleMessage("إرسال الكود"),
+    "send_code": MessageLookupByLibrary.simpleMessage("إرسال الرمز"),
     "send_code_again": MessageLookupByLibrary.simpleMessage(
-      "ارسل الكود مرة اخرى",
+      "إعادة إرسال الرمز",
     ),
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
-    "show_less": MessageLookupByLibrary.simpleMessage("إظهار أقل"),
+    "show_less": MessageLookupByLibrary.simpleMessage("عرض أقل"),
     "sign_in_successfully": MessageLookupByLibrary.simpleMessage(
       "تم تسجيل الدخول بنجاح",
     ),
     "sign_up": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
     "terms_of_conditions_error": MessageLookupByLibrary.simpleMessage(
-      "يجب عليك الموافقة على الشروط والأحكام.",
+      "يجب الموافقة على الشروط والأحكام",
     ),
-    "terms_of_service": MessageLookupByLibrary.simpleMessage(
-      "الشروط والأحكام الخاصة بنا",
-    ),
-    "terms_of_use": MessageLookupByLibrary.simpleMessage("الشروط والأحكام"),
-    "theme_mode": MessageLookupByLibrary.simpleMessage("الوضع"),
+    "terms_of_service": MessageLookupByLibrary.simpleMessage("شروط الخدمة"),
+    "terms_of_use": MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+    "theme_mode": MessageLookupByLibrary.simpleMessage("وضع السمة"),
     "too_many_requests_message": MessageLookupByLibrary.simpleMessage(
-      "تم إرسال العديد من الطلبات. يرجى المحاولة لاحقًا.",
+      "طلبات كثيرة جداً، الرجاء المحاولة لاحقاً",
     ),
-    "unable_to_call": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن تنفيذ المكالمة",
-    ),
+    "unable_to_call": MessageLookupByLibrary.simpleMessage("تعذر الاتصال"),
     "unable_to_call_message": MessageLookupByLibrary.simpleMessage(
-      "من فضلك فعّل صلاحية الاتصال من الإعدادات",
+      "الرجاء منح صلاحية الاتصال من الإعدادات",
     ),
     "unable_to_open_link": MessageLookupByLibrary.simpleMessage(
       "تعذر فتح الرابط:",
     ),
     "user_disabled_message": MessageLookupByLibrary.simpleMessage(
-      "تم تعطيل حساب هذا المستخدم بواسطة المسؤول.",
+      "تم تعطيل حساب المستخدم من قبل المسؤول",
     ),
     "user_not_found_message": MessageLookupByLibrary.simpleMessage(
-      "لم يتم العثور على حساب باستخدام هذا البريد الإلكتروني.",
+      "لا يوجد مستخدم بهذا البريد الإلكتروني",
     ),
     "verify": MessageLookupByLibrary.simpleMessage("تحقق"),
-    "view_profile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),
-    "we_sent_code": MessageLookupByLibrary.simpleMessage("لقد ارسلنا الكود"),
+    "view_profile": MessageLookupByLibrary.simpleMessage("عرض الملف"),
+    "we_sent_code": MessageLookupByLibrary.simpleMessage(
+      "لقد أرسلنا رمزاً إلى",
+    ),
     "weak_password_error": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور ضعيفة جدًا. يرجى تقديم كلمة مرور أقوى.",
+      "كلمة المرور ضعيفة جداً",
     ),
     "whatsApp": MessageLookupByLibrary.simpleMessage("واتساب"),
     "wrong_password_message": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور خاطئة. يرجى المحاولة مرة أخرى.",
+      "كلمة المرور غير صحيحة، الرجاء المحاولة مرة أخرى",
     ),
     "you_agree_to": MessageLookupByLibrary.simpleMessage(
-      "من خلال إنشاء حساب، فإنك توافق على",
+      "بإنشائك للحساب، فإنك توافق على:",
     ),
   };
 }
