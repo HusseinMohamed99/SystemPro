@@ -164,7 +164,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
             leading: Icon(
               isSearching ? Icons.place : Icons.history,
               size: kIconSizeDefault.sp,
-              color:  AdaptiveColor.adaptiveColor(
+              color: AdaptiveColor.adaptiveColor(
                 context: context,
                 lightColor: ColorManager.softGray,
                 darkColor: ColorManager.iconGrey,
@@ -176,10 +176,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
                 fontWeight: FontWeightHelper.medium,
               ),
             ),
-            subtitle: Text(
-              location['city'] ?? '',
-              style: context.titleSmall,
-            ),
+            subtitle: Text(location['city'] ?? '', style: context.titleSmall),
             onTap: () => _handleLocationSelect(location),
           );
         },
@@ -196,7 +193,9 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
         _buildSearchHeader(),
         verticalSpacing(kSpacingXLarge),
         Text(
-          isSearching ? context.localization.result : context.localization.recent_search,
+          isSearching
+              ? context.localization.result
+              : context.localization.recent_search,
           style: context.titleMedium!.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),
@@ -207,9 +206,6 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
           text: context.localization.done,
           onPressed: () {
             if (_selectedLocation != null) {
-              AppLogs.successLog(
-                'district: ${_selectedLocation!['district']!} && city: ${_selectedLocation!['city']!}',
-              );
               context.pushNamed(
                 Routes.filterView,
                 arguments: LocationArgument(

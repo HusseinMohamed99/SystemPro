@@ -20,10 +20,10 @@ class FilterResultWidget extends StatefulWidget {
   final FilterResultArguments arguments;
 
   @override
-  _FilterResultWidgetState createState() => _FilterResultWidgetState();
+  FilterResultWidgetState createState() => FilterResultWidgetState();
 }
 
-class _FilterResultWidgetState extends State<FilterResultWidget> {
+class FilterResultWidgetState extends State<FilterResultWidget> {
   bool _isFirstBuild = true;
 
   @override

@@ -10,7 +10,6 @@ import 'package:system_pro/features/Search/data/model/category_response.dart';
 class AmenitiesWidget extends StatefulWidget {
   const AmenitiesWidget({super.key, required this.amenities});
   final List<Amenity> amenities;
-
   @override
   State<AmenitiesWidget> createState() => AmenitiesWidgetState();
 }
@@ -18,13 +17,11 @@ class AmenitiesWidget extends StatefulWidget {
 class AmenitiesWidgetState extends State<AmenitiesWidget> {
   final Set<String> selectedAmenities = {};
   bool showAll = false;
-
-  /// ✅ Getter to return selected amenity IDs as a List<int>
   List<int> get selectedAmenityIds {
     return widget.amenities
         .where((amenity) => selectedAmenities.contains(amenity.name))
-        .map((amenity) => amenity.id ?? 0) // use 0 as fallback
-        .where((id) => id != 0) // filter out null/fallbacks
+        .map((amenity) => amenity.id ?? 0)
+        .where((id) => id != 0)
         .toList();
   }
 
@@ -36,7 +33,6 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
   Widget build(BuildContext context) {
     final allAmenities = widget.amenities;
     final displayedAmenities = showAll ? allAmenities : allAmenities.take(5);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
