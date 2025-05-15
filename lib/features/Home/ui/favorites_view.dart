@@ -10,8 +10,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
-import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
-import 'package:system_pro/features/Home/logic/marketplace_state.dart';
+import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
+import 'package:system_pro/features/Home/logic/favorite_state.dart';
 import 'package:system_pro/features/Home/ui/fav_widgets/favorites_view_body.dart';
 
 class FavoritesView extends StatefulWidget {
@@ -26,7 +26,7 @@ class _FavoritesViewState extends State<FavoritesView> {
   void initState() {
     super.initState();
     // Call fetch favorite listings once screen is initialized
-    context.read<MarketplaceCubit>().getFavoriteListings();
+    context.read<FavoriteCubit>().getFavoriteListings();
   }
 
   @override
@@ -50,7 +50,7 @@ class _FavoritesViewState extends State<FavoritesView> {
         const CustomDivider(),
         verticalSpacing(kSpacingXLarge),
         Expanded(
-          child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
+          child: BlocBuilder<FavoriteCubit, FavoriteState>(
             builder: (context, state) {
               if (state is GetFavoriteLoading) {
                 return const AdaptiveIndicator();

@@ -23,9 +23,6 @@ mixin _$MarketplaceState {
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
     required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -33,9 +30,6 @@ mixin _$MarketplaceState {
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
     TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -43,9 +37,6 @@ mixin _$MarketplaceState {
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
     TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,9 +45,6 @@ mixin _$MarketplaceState {
     required TResult Function(MarketPlaceLoading value) loading,
     required TResult Function(MarketPlaceSuccess value) success,
     required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -64,9 +52,6 @@ mixin _$MarketplaceState {
     TResult? Function(MarketPlaceLoading value)? loading,
     TResult? Function(MarketPlaceSuccess value)? success,
     TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -74,9 +59,6 @@ mixin _$MarketplaceState {
     TResult Function(MarketPlaceLoading value)? loading,
     TResult Function(MarketPlaceSuccess value)? success,
     TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -150,9 +132,6 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
     required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
   }) {
     return initial();
   }
@@ -164,9 +143,6 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
     TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
   }) {
     return initial?.call();
   }
@@ -178,9 +154,6 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
     TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -196,9 +169,6 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
     required TResult Function(MarketPlaceLoading value) loading,
     required TResult Function(MarketPlaceSuccess value) success,
     required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
   }) {
     return initial(this);
   }
@@ -210,9 +180,6 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
     TResult? Function(MarketPlaceLoading value)? loading,
     TResult? Function(MarketPlaceSuccess value)? success,
     TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
   }) {
     return initial?.call(this);
   }
@@ -224,9 +191,6 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
     TResult Function(MarketPlaceLoading value)? loading,
     TResult Function(MarketPlaceSuccess value)? success,
     TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -287,9 +251,6 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
     required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
   }) {
     return loading();
   }
@@ -301,9 +262,6 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
     TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
   }) {
     return loading?.call();
   }
@@ -315,9 +273,6 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
     TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -333,9 +288,6 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
     required TResult Function(MarketPlaceLoading value) loading,
     required TResult Function(MarketPlaceSuccess value) success,
     required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
   }) {
     return loading(this);
   }
@@ -347,9 +299,6 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
     TResult? Function(MarketPlaceLoading value)? loading,
     TResult? Function(MarketPlaceSuccess value)? success,
     TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
   }) {
     return loading?.call(this);
   }
@@ -361,9 +310,6 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
     TResult Function(MarketPlaceLoading value)? loading,
     TResult Function(MarketPlaceSuccess value)? success,
     TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -461,9 +407,6 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
     required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
   }) {
     return success(listings);
   }
@@ -475,9 +418,6 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
     TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
   }) {
     return success?.call(listings);
   }
@@ -489,9 +429,6 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
     TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -507,9 +444,6 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
     required TResult Function(MarketPlaceLoading value) loading,
     required TResult Function(MarketPlaceSuccess value) success,
     required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
   }) {
     return success(this);
   }
@@ -521,9 +455,6 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
     TResult? Function(MarketPlaceLoading value)? loading,
     TResult? Function(MarketPlaceSuccess value)? success,
     TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
   }) {
     return success?.call(this);
   }
@@ -535,9 +466,6 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
     TResult Function(MarketPlaceLoading value)? loading,
     TResult Function(MarketPlaceSuccess value)? success,
     TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -637,9 +565,6 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
     required TResult Function() loading,
     required TResult Function(List<Listing> listings) success,
     required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
   }) {
     return error(this.error);
   }
@@ -651,9 +576,6 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
     TResult? Function()? loading,
     TResult? Function(List<Listing> listings)? success,
     TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
   }) {
     return error?.call(this.error);
   }
@@ -665,9 +587,6 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
     TResult Function()? loading,
     TResult Function(List<Listing> listings)? success,
     TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -683,9 +602,6 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
     required TResult Function(MarketPlaceLoading value) loading,
     required TResult Function(MarketPlaceSuccess value) success,
     required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
   }) {
     return error(this);
   }
@@ -697,9 +613,6 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
     TResult? Function(MarketPlaceLoading value)? loading,
     TResult? Function(MarketPlaceSuccess value)? success,
     TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
   }) {
     return error?.call(this);
   }
@@ -711,9 +624,6 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
     TResult Function(MarketPlaceLoading value)? loading,
     TResult Function(MarketPlaceSuccess value)? success,
     TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -732,500 +642,5 @@ abstract class MarketPlaceError implements MarketplaceState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MarketPlaceErrorImplCopyWith<_$MarketPlaceErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$GetFavoriteLoadingImplCopyWith<$Res> {
-  factory _$$GetFavoriteLoadingImplCopyWith(
-    _$GetFavoriteLoadingImpl value,
-    $Res Function(_$GetFavoriteLoadingImpl) then,
-  ) = __$$GetFavoriteLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetFavoriteLoadingImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$GetFavoriteLoadingImpl>
-    implements _$$GetFavoriteLoadingImplCopyWith<$Res> {
-  __$$GetFavoriteLoadingImplCopyWithImpl(
-    _$GetFavoriteLoadingImpl _value,
-    $Res Function(_$GetFavoriteLoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MarketplaceState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$GetFavoriteLoadingImpl implements GetFavoriteLoading {
-  const _$GetFavoriteLoadingImpl();
-
-  @override
-  String toString() {
-    return 'MarketplaceState.getFavoriteLoading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetFavoriteLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
-    required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
-  }) {
-    return getFavoriteLoading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
-    TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
-  }) {
-    return getFavoriteLoading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
-    TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (getFavoriteLoading != null) {
-      return getFavoriteLoading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(MarketPlaceInitial value) initial,
-    required TResult Function(MarketPlaceLoading value) loading,
-    required TResult Function(MarketPlaceSuccess value) success,
-    required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
-  }) {
-    return getFavoriteLoading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(MarketPlaceInitial value)? initial,
-    TResult? Function(MarketPlaceLoading value)? loading,
-    TResult? Function(MarketPlaceSuccess value)? success,
-    TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
-  }) {
-    return getFavoriteLoading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(MarketPlaceInitial value)? initial,
-    TResult Function(MarketPlaceLoading value)? loading,
-    TResult Function(MarketPlaceSuccess value)? success,
-    TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (getFavoriteLoading != null) {
-      return getFavoriteLoading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class GetFavoriteLoading implements MarketplaceState {
-  const factory GetFavoriteLoading() = _$GetFavoriteLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$GetFavoriteSuccessImplCopyWith<$Res> {
-  factory _$$GetFavoriteSuccessImplCopyWith(
-    _$GetFavoriteSuccessImpl value,
-    $Res Function(_$GetFavoriteSuccessImpl) then,
-  ) = __$$GetFavoriteSuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<Listing> listings});
-}
-
-/// @nodoc
-class __$$GetFavoriteSuccessImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$GetFavoriteSuccessImpl>
-    implements _$$GetFavoriteSuccessImplCopyWith<$Res> {
-  __$$GetFavoriteSuccessImplCopyWithImpl(
-    _$GetFavoriteSuccessImpl _value,
-    $Res Function(_$GetFavoriteSuccessImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MarketplaceState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? listings = null}) {
-    return _then(
-      _$GetFavoriteSuccessImpl(
-        null == listings
-            ? _value._listings
-            : listings // ignore: cast_nullable_to_non_nullable
-                as List<Listing>,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
-  const _$GetFavoriteSuccessImpl(final List<Listing> listings)
-    : _listings = listings;
-
-  final List<Listing> _listings;
-  @override
-  List<Listing> get listings {
-    if (_listings is EqualUnmodifiableListView) return _listings;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listings);
-  }
-
-  @override
-  String toString() {
-    return 'MarketplaceState.getFavoriteSuccess(listings: $listings)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetFavoriteSuccessImpl &&
-            const DeepCollectionEquality().equals(other._listings, _listings));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_listings));
-
-  /// Create a copy of MarketplaceState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GetFavoriteSuccessImplCopyWith<_$GetFavoriteSuccessImpl> get copyWith =>
-      __$$GetFavoriteSuccessImplCopyWithImpl<_$GetFavoriteSuccessImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
-    required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
-  }) {
-    return getFavoriteSuccess(listings);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
-    TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
-  }) {
-    return getFavoriteSuccess?.call(listings);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
-    TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (getFavoriteSuccess != null) {
-      return getFavoriteSuccess(listings);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(MarketPlaceInitial value) initial,
-    required TResult Function(MarketPlaceLoading value) loading,
-    required TResult Function(MarketPlaceSuccess value) success,
-    required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
-  }) {
-    return getFavoriteSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(MarketPlaceInitial value)? initial,
-    TResult? Function(MarketPlaceLoading value)? loading,
-    TResult? Function(MarketPlaceSuccess value)? success,
-    TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
-  }) {
-    return getFavoriteSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(MarketPlaceInitial value)? initial,
-    TResult Function(MarketPlaceLoading value)? loading,
-    TResult Function(MarketPlaceSuccess value)? success,
-    TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (getFavoriteSuccess != null) {
-      return getFavoriteSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class GetFavoriteSuccess implements MarketplaceState {
-  const factory GetFavoriteSuccess(final List<Listing> listings) =
-      _$GetFavoriteSuccessImpl;
-
-  List<Listing> get listings;
-
-  /// Create a copy of MarketplaceState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GetFavoriteSuccessImplCopyWith<_$GetFavoriteSuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$GetFavoriteErrorImplCopyWith<$Res> {
-  factory _$$GetFavoriteErrorImplCopyWith(
-    _$GetFavoriteErrorImpl value,
-    $Res Function(_$GetFavoriteErrorImpl) then,
-  ) = __$$GetFavoriteErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$GetFavoriteErrorImplCopyWithImpl<$Res>
-    extends _$MarketplaceStateCopyWithImpl<$Res, _$GetFavoriteErrorImpl>
-    implements _$$GetFavoriteErrorImplCopyWith<$Res> {
-  __$$GetFavoriteErrorImplCopyWithImpl(
-    _$GetFavoriteErrorImpl _value,
-    $Res Function(_$GetFavoriteErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MarketplaceState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$GetFavoriteErrorImpl(
-        null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$GetFavoriteErrorImpl implements GetFavoriteError {
-  const _$GetFavoriteErrorImpl(this.error);
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'MarketplaceState.getFavoriteError(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetFavoriteErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of MarketplaceState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GetFavoriteErrorImplCopyWith<_$GetFavoriteErrorImpl> get copyWith =>
-      __$$GetFavoriteErrorImplCopyWithImpl<_$GetFavoriteErrorImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<Listing> listings) success,
-    required TResult Function(String error) error,
-    required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
-    required TResult Function(String error) getFavoriteError,
-  }) {
-    return getFavoriteError(this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Listing> listings)? success,
-    TResult? Function(String error)? error,
-    TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult? Function(String error)? getFavoriteError,
-  }) {
-    return getFavoriteError?.call(this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Listing> listings)? success,
-    TResult Function(String error)? error,
-    TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
-    TResult Function(String error)? getFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (getFavoriteError != null) {
-      return getFavoriteError(this.error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(MarketPlaceInitial value) initial,
-    required TResult Function(MarketPlaceLoading value) loading,
-    required TResult Function(MarketPlaceSuccess value) success,
-    required TResult Function(MarketPlaceError value) error,
-    required TResult Function(GetFavoriteLoading value) getFavoriteLoading,
-    required TResult Function(GetFavoriteSuccess value) getFavoriteSuccess,
-    required TResult Function(GetFavoriteError value) getFavoriteError,
-  }) {
-    return getFavoriteError(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(MarketPlaceInitial value)? initial,
-    TResult? Function(MarketPlaceLoading value)? loading,
-    TResult? Function(MarketPlaceSuccess value)? success,
-    TResult? Function(MarketPlaceError value)? error,
-    TResult? Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult? Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult? Function(GetFavoriteError value)? getFavoriteError,
-  }) {
-    return getFavoriteError?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(MarketPlaceInitial value)? initial,
-    TResult Function(MarketPlaceLoading value)? loading,
-    TResult Function(MarketPlaceSuccess value)? success,
-    TResult Function(MarketPlaceError value)? error,
-    TResult Function(GetFavoriteLoading value)? getFavoriteLoading,
-    TResult Function(GetFavoriteSuccess value)? getFavoriteSuccess,
-    TResult Function(GetFavoriteError value)? getFavoriteError,
-    required TResult orElse(),
-  }) {
-    if (getFavoriteError != null) {
-      return getFavoriteError(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class GetFavoriteError implements MarketplaceState {
-  const factory GetFavoriteError(final String error) = _$GetFavoriteErrorImpl;
-
-  String get error;
-
-  /// Create a copy of MarketplaceState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GetFavoriteErrorImplCopyWith<_$GetFavoriteErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

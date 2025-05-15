@@ -118,63 +118,23 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-  void refreshListings() {
-    _allListings.clear();
-    _visibleListings.clear();
-    _loadedCount = 0;
-  }
-
-  Future<void> getFavoriteListings() async {
-    emit(const MarketplaceState.getFavoriteLoading());
-    try {
-      final result = await _marketplaceRepo.getFavoriteListings();
-      result.when(
-        success: (response) {
-          final favoriteListings = response.data ?? [];
-          _allListings
-            ..clear()
-            ..addAll(favoriteListings);
-          _visibleListings
-            ..clear()
-            ..addAll(favoriteListings.take(_pageSize));
-          _loadedCount = _visibleListings.length;
-          emit(
-            MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)),
-          );
-        },
-        failure: (errorHandler) {
-          emit(
-            MarketplaceState.getFavoriteError(
-              'فشل في جلب المفضلات: ${errorHandler.apiErrorModel.message}',
-            ),
-          );
-        },
-      );
-    } catch (error) {
-      emit(MarketplaceState.getFavoriteError('حدث خطأ غير متوقع: $error'));
-    }
-  }
-
-  Future<void> toggleFavorite(int id) async {
+Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
       result.when(
         success: (response) {
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
+            // تحديث حالة الـ favorite في _allListings
             for (var listing in _allListings) {
               if (listing.id == id) {
                 listing.isFavorite = isFavorited;
                 break;
               }
             }
-            final favoriteListings =
-                _allListings.where((e) => e.isFavorite == true).toList();
-            if (_currentFilter.isEmpty) {
-              emit(MarketplaceState.success(List.from(_visibleListings)));
-            } else {
-              emit(MarketplaceState.getFavoriteSuccess(favoriteListings));
-            }
+            // تحديث _visibleListings بناءً على _allListings و _currentFilter
+            // خاصة لو فيه فلترة مفعلة
+            _applyFilter(_currentFilter);
           } else {
             emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }

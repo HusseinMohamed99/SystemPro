@@ -26,6 +26,7 @@ import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
 // Other Features
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
+import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Search/data/repo/categories_repo.dart';
@@ -115,5 +116,6 @@ void setupGetIt({
 
   _registerLazySingleton(() => CategoriesRepo(getIt()));
   _registerFactory(() => CategoriesCubit(getIt()));
+  _registerFactory(() =>FavoriteCubit(getIt()));
 
 }
