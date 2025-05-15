@@ -7,6 +7,7 @@ class CachingHelper {
   CachingHelper._();
 
   static late SharedPreferences _preferences;
+
   // Singleton instance for SharedPreferences.
   static Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
@@ -18,79 +19,67 @@ class CachingHelper {
   /// Removes a value from SharedPreferences with the given [key].
   static Future<void> removeData(String key) async {
     _logAction('Removing data', key);
-    final prefs = _preferences;
-    await prefs.remove(key);
+    await _preferences.remove(key);
   }
 
   /// Clears all keys and values in SharedPreferences.
   static Future<void> clearAllData() async {
     _logAction('Clearing all SharedPreferences data');
-    final prefs = _preferences;
-    await prefs.clear();
+    await _preferences.clear();
   }
 
   /// Saves a value in SharedPreferences with the given [key].
-  static setData(String key, dynamic value) async {
+  static Future<void> setData(String key, dynamic value) async {
     _logAction('Setting data', key, value);
-    final prefs = _preferences;
-
     if (value is String) {
-      await prefs.setString(key, value);
+      await _preferences.setString(key, value);
     } else if (value is int) {
-      await prefs.setInt(key, value);
+      await _preferences.setInt(key, value);
     } else if (value is bool) {
-      await prefs.setBool(key, value);
+      await _preferences.setBool(key, value);
     } else if (value is double) {
-      await prefs.setDouble(key, value);
+      await _preferences.setDouble(key, value);
     } else if (value is List<String>) {
-      await prefs.setStringList(key, value);
+      await _preferences.setStringList(key, value);
     } else {
       AppLogs.debugLog('Unsupported value type: ${value.runtimeType}');
     }
   }
 
   /// Retrieves a value from SharedPreferences based on its type.
-  static getData<T>(String key) {
+  static T? getData<T>(String key) {
     _logAction('Getting data', key);
-    final prefs = _preferences;
-    return prefs.get(key) as T?;
+    return _preferences.get(key) as T?;
   }
 
   /// Gets a bool value from SharedPreferences with the given [key].
-  static Future<bool> getBool(String key) async {
-    AppLogs.debugLog('SharedPrefHelper: Getting bool value with key: $key');
-    final prefs = _preferences;
-    return prefs.getBool(key) ?? false;
+  static bool getBool(String key) {
+    AppLogs.debugLog('Getting bool with key: $key');
+    return _preferences.getBool(key) ?? false;
   }
 
   /// Gets a double value from SharedPreferences with the given [key].
-  static Future<double> getDouble(String key) async {
-    AppLogs.debugLog('SharedPrefHelper: Getting double value with key: $key');
-    final prefs = _preferences;
-    return prefs.getDouble(key) ?? 0.0;
+  static double getDouble(String key) {
+    AppLogs.debugLog('Getting double with key: $key');
+    return _preferences.getDouble(key) ?? 0.0;
   }
 
   /// Gets an int value from SharedPreferences with the given [key].
-  static Future<int> getInt(String key) async {
-    AppLogs.debugLog('SharedPrefHelper: Getting int value with key: $key');
-    final prefs = _preferences;
-    return prefs.getInt(key) ?? 0;
+  static int getInt(String key) {
+    AppLogs.debugLog('Getting int with key: $key');
+    return _preferences.getInt(key) ?? 0;
   }
 
   /// Gets a String value from SharedPreferences with the given [key].
-  static getString(String key) {
-    AppLogs.debugLog('SharedPrefHelper: Getting String value with key: $key');
-    final prefs = _preferences;
-    return prefs.getString(key) ?? '';
+  static String getString(String key) {
+    AppLogs.debugLog('Getting String with key: $key');
+    return _preferences.getString(key) ?? '';
   }
 
   /// Gets a list of String values from SharedPreferences with the given [key].
-  static Future<List<String>> getListString(String key) async {
-    AppLogs.debugLog(
-      'SharedPrefHelper: Getting List<String> value with key: $key',
-    );
-    final prefs = _preferences;
-    return prefs.getStringList(key) ?? [];
+  static List<String> getListString(String key) {
+    AppLogs.debugLog('Getting List<String> with key: $key');
+    return _preferences.getStringList(key) ?? [];
   }
 
   /// Removes a specific key from FlutterSecureStorage.

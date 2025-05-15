@@ -19,7 +19,7 @@ void main() async {
   await checkIfLoggedInUser();
   final savedLocale =
       CachingHelper.getString(SharedPrefKeys.selectedLanguage) ?? 'en';
-  final isDarkMode = await CachingHelper.getBool(SharedPrefKeys.isDarkMode);
+  final isDarkMode = CachingHelper.getBool(SharedPrefKeys.isDarkMode);
   AppConfig.userToken = await CachingHelper.getSecuredString(
     SharedPrefKeys.userToken,
   );
@@ -34,6 +34,7 @@ void main() async {
     ),
   );
 }
+
 class AppBootstrap extends StatelessWidget {
   const AppBootstrap({
     super.key,
@@ -54,6 +55,7 @@ class AppBootstrap extends StatelessWidget {
     return SystemProApp(appRouter: AppRouters());
   }
 }
+
 checkIfLoggedInUser() async {
   final String userToken = await CachingHelper.getSecuredString(
     SharedPrefKeys.userToken,

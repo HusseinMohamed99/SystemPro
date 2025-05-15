@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_family.dart';
-import 'package:system_pro/core/theming/styleManager/text_style.dart';
 
 ThemeData buildLightTheming({required TextTheme textTheme}) {
   return ThemeData(
@@ -19,11 +18,9 @@ ThemeData buildLightTheming({required TextTheme textTheme}) {
         systemNavigationBarColor: ColorManager.pureWhite,
       ),
     ),
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: ColorManager.primaryBlue,
-    ),
-     textTheme:textTheme,
-     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    colorScheme: ColorScheme.fromSeed(seedColor: ColorManager.primaryBlue),
+    textTheme: textTheme,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: ColorManager.pureWhite,
     ),
   );
