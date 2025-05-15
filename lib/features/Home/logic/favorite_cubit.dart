@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
-import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
+import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 import 'package:system_pro/features/Home/logic/favorite_state.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
-  FavoriteCubit(this._marketplaceRepo) : super(const FavoriteState.initial());
-  final MarketplaceRepo _marketplaceRepo;
+  FavoriteCubit(this._favoriteRepo) : super(const FavoriteState.initial());
+  final FavoriteRepo _favoriteRepo;
 
 final List<Listing> _favoriteListings = [];
   final List<Listing> _visibleFavorites = [];
@@ -22,7 +22,7 @@ final List<Listing> _favoriteListings = [];
     emit(const FavoriteState.getFavoriteLoading());
 
     try {
-      final result = await _marketplaceRepo.getFavoriteListings();
+      final result = await _favoriteRepo.getFavoriteListings();
       result.when(
         success: (response) {
           final favorites = response.data ?? [];
@@ -65,7 +65,7 @@ final List<Listing> _favoriteListings = [];
 
   Future<void> toggleFavorite(int id) async {
     try {
-      final result = await _marketplaceRepo.toggleFavorite(id);
+      final result = await _favoriteRepo.toggleFavorite(id);
       result.when(
         success: (response) {
           if (response.status == 'success') {

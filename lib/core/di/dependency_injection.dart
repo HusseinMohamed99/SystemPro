@@ -23,6 +23,7 @@ import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.da
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
 import 'package:system_pro/features/EditProfile/data/repo/edit_profile_repo.dart';
 import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
+import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 // Other Features
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
@@ -78,10 +79,9 @@ void setupGetIt({
   }
 
   // ────────────────────── LOCALIZATION ──────────────────────
- if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
+  if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
     getIt.registerSingleton<ChangeLocalizationCubit>(ChangeLocalizationCubit());
   }
-
 
   // ────────────────────── AUTH ──────────────────────
   _registerLazySingleton(() => LoginRepo(getIt()));
@@ -116,6 +116,7 @@ void setupGetIt({
 
   _registerLazySingleton(() => CategoriesRepo(getIt()));
   _registerFactory(() => CategoriesCubit(getIt()));
-  _registerFactory(() =>FavoriteCubit(getIt()));
 
+  _registerLazySingleton(() => FavoriteRepo(getIt()));
+  _registerFactory(() => FavoriteCubit(getIt()));
 }

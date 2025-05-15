@@ -18,7 +18,7 @@ void main() async {
   await CachingHelper.init();
   await checkIfLoggedInUser();
   final savedLocale =
-      CachingHelper.getString(SharedPrefKeys.selectedLanguage) ?? 'en';
+      CachingHelper.getString(SharedPrefKeys.selectedLanguage);
   final isDarkMode = CachingHelper.getBool(SharedPrefKeys.isDarkMode);
   AppConfig.userToken = await CachingHelper.getSecuredString(
     SharedPrefKeys.userToken,

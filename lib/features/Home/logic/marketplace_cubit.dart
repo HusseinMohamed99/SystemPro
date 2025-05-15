@@ -37,7 +37,15 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
             ..clear()
             ..addAll(all);
           _currentFilter = filter;
-          _applyFilter(filter);
+
+          // خليها تعرض أول 5 فقط بدل ما تعملي _applyFilter اللي ممكن تعرض الكل مرة واحدة
+          _loadedCount = 0;
+          _visibleListings.clear();
+          final nextItems = _filteredListings.take(_pageSize).toList();
+          _visibleListings.addAll(nextItems);
+          _loadedCount = _visibleListings.length;
+
+          emit(MarketplaceState.success(List.from(_visibleListings)));
         },
         failure: (errorHandler) {
           emit(
@@ -56,10 +64,13 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     _currentFilter = filter;
     _loadedCount = 0;
     _visibleListings.clear();
-    final nextItems =
-        _filteredListings.skip(_loadedCount).take(_pageSize).toList();
+
+    final filtered = _filteredListings;
+    final nextItems = filtered.take(_pageSize).toList();
+
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
+
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
@@ -67,23 +78,19 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     _applyFilter(filter);
   }
 
-  void _loadMoreInternal() {
-    final nextItems =
-        _filteredListings.skip(_loadedCount).take(_pageSize).toList();
-    _visibleListings.addAll(nextItems);
-    _loadedCount = _visibleListings.length;
-    emit(MarketplaceState.success(List.from(_visibleListings)));
-  }
-
   bool isLoading = false;
   Future<void> loadMore() async {
-    if (isLoading || !hasMore) {
-      return;
-    }
+    if (isLoading || !hasMore) return;
+
     isLoading = true;
-    emit(const MarketplaceState.loading());
+
     try {
-      _loadMoreInternal();
+      final nextItems =
+          _filteredListings.skip(_loadedCount).take(_pageSize).toList();
+      _visibleListings.addAll(nextItems);
+      _loadedCount = _visibleListings.length;
+
+      emit(MarketplaceState.success(List.from(_visibleListings)));
     } finally {
       isLoading = false;
     }
@@ -118,7 +125,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-Future<void> toggleFavorite(int id) async {
+  Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
       result.when(
