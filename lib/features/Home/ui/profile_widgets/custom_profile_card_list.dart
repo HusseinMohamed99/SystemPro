@@ -5,7 +5,6 @@ import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/localization/localization_state.dart';
@@ -21,29 +20,23 @@ import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.
 class CustomProfileCardList extends StatelessWidget {
   const CustomProfileCardList({super.key, required this.userName});
   final String userName;
-
   @override
   Widget build(BuildContext context) {
-    // تخزين البيانات الخاصة باللغة ووضع الظلام في متغيرات ثابتة لتجنب الفحص المتكرر
     return BlocBuilder<ChangeLocalizationCubit, ChangeLocalizationState>(
       builder: (context, state) {
         final String selectedLanguage =
             CachingHelper.getData(SharedPrefKeys.selectedLanguage) ?? 'en';
         final bool isDarkMode =
             CachingHelper.getData(SharedPrefKeys.isDarkMode) ?? false;
-
         final String currentLanguage =
             selectedLanguage == 'ar'
                 ? context.localization.arabic
                 : context.localization.english;
-
         final String currentThemeMode =
             isDarkMode
                 ? context.localization.dark_mode
                 : context.localization.light_mode;
-
         final profileCards = profileCardList(context);
-
         return SliverList.separated(
           itemCount: profileCards.length,
           separatorBuilder: (context, index) => const CustomDivider(),
@@ -82,7 +75,6 @@ class CustomProfileCardList extends StatelessWidget {
     String selectedLanguageCode, // ← تأكد أنه كود اللغة 'en' أو 'ar'
   ) async {
     final localizationCubit = context.read<ChangeLocalizationCubit>();
-
     await customBottomSheet(
       context: context,
       title: context.localization.language,
@@ -109,7 +101,6 @@ class CustomProfileCardList extends StatelessWidget {
       languageCode,
     );
   }
-
 
   // دالة لعرض اختيار السمة (الوضع المظلم/الفاتح)
   Future<void> _showThemeSelectionSheet(

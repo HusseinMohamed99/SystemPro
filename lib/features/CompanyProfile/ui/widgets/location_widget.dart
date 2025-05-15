@@ -9,7 +9,6 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({super.key, required this.location});
-
   final String location;
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,9 @@ class LocationWidget extends StatelessWidget {
       children: [
         Text(
           context.localization.location,
-          style: context.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleLarge?.copyWith(
+            fontWeight: FontWeightHelper.medium,
+          ),
         ),
         verticalSpacing(kSpacingSmall),
         Row(

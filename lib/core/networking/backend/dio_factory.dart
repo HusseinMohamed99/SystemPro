@@ -3,7 +3,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 
 class DioFactory {
-  /// private constructor as I don't want to allow creating an instance of this class
   DioFactory._();
   static Dio? dio;
   static Dio getDio() {
@@ -30,7 +29,6 @@ class DioFactory {
   }
 
   static void setTokenIntoHeaderAfterLogin(String token) {
-    // إضافة الـ token إلى الـ headers الحالية
     dio?.options.headers.addAll({'Authorization': 'Bearer $token'});
   }
 

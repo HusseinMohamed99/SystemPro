@@ -16,7 +16,9 @@ class PropertiesWidget extends StatelessWidget {
       children: [
         Text(
           context.localization.properties,
-          style: context.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleLarge?.copyWith(
+            fontWeight: FontWeightHelper.medium,
+          ),
         ),
         verticalSpacing(kSpacingLarge),
         Text(

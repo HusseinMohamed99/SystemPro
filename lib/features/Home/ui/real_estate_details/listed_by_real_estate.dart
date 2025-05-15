@@ -12,10 +12,8 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
-
 class ListedByWidget extends StatelessWidget {
   const ListedByWidget({super.key, required this.company});
-
   final Company company;
   @override
   Widget build(BuildContext context) {
@@ -25,23 +23,28 @@ class ListedByWidget extends StatelessWidget {
       children: [
         Text(
           context.localization.listed_by,
-          style: context.titleLarge?.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleLarge?.copyWith(
+            fontWeight: FontWeightHelper.medium,
+          ),
         ),
         Container(
           padding: EdgeInsetsDirectional.symmetric(vertical: kSpacingXLarge.h),
           width: context.width,
           decoration: BoxDecoration(
             color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.pureWhite,
-                darkColor: ColorManager.tertiaryBlack,
-              ),
+              context: context,
+              lightColor: ColorManager.pureWhite,
+              darkColor: ColorManager.tertiaryBlack,
+            ),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AdaptiveColor.adaptiveColor(
+            border: Border.all(
+              color: AdaptiveColor.adaptiveColor(
                 context: context,
                 lightColor: ColorManager.borderGrey,
                 darkColor: ColorManager.tertiaryBlack,
-              ), width: 1.5.w),
+              ),
+              width: 1.5.w,
+            ),
           ),
           child: Column(
             spacing: kSpacingDefault.h,
@@ -58,7 +61,7 @@ class ListedByWidget extends StatelessWidget {
                   fontWeight: FontWeightHelper.medium,
                 ),
               ),
-             const CustomDivider().hPadding(kSpacingDefault.w),
+              const CustomDivider().hPadding(kSpacingDefault.w),
               GestureDetector(
                 onTap: () {
                   context.pushNamed(
@@ -66,7 +69,6 @@ class ListedByWidget extends StatelessWidget {
                     arguments: company,
                   );
                 },
-
                 child: Text(
                   context.localization.view_profile,
                   style: context.titleMedium?.copyWith(

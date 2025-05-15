@@ -8,14 +8,16 @@ Future<void> urlLauncher(
   String? url, {
   LaunchMode mode = LaunchMode.externalApplication,
 }) async {
+    final l10n = context.localization;
+  final showSnackbar = context.showSnackBar;
   if (url == null || url.isEmpty) {
-    context.showSnackBar(context.localization.invalid_link);
+    showSnackbar(l10n.invalid_link);
     return;
   }
   final Uri uri = Uri.parse(url);
   if (await canLaunchUrl(uri)) {
     await launchUrl(uri, mode: mode);
   } else {
-    context.showSnackBar('${context.localization.unable_to_open_link} $url');
+    showSnackbar('${l10n.unable_to_open_link} $url');
   }
 }

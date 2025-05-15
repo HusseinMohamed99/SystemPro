@@ -22,10 +22,8 @@ class GetProfileCompanySuccess extends StatelessWidget {
     required this.company,
     required this.companyListings,
   });
-
   final Company company;
   final List<Listing> companyListings;
-
   @override
   Widget build(BuildContext context) {
     return Column(

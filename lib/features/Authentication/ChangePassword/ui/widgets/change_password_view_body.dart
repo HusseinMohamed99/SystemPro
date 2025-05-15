@@ -5,7 +5,6 @@ import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/change_password_form.dart';
-
 class ChangePasswordViewBody extends StatelessWidget {
   const ChangePasswordViewBody({super.key, required this.email});
   final String email;
@@ -24,7 +23,8 @@ class ChangePasswordViewBody extends StatelessWidget {
         SliverToBoxAdapter(
           child: Text(
             context.localization.reset_password_subtitle,
-            style: context.titleLarge?.copyWith(color: AdaptiveColor.adaptiveColor(
+            style: context.titleLarge?.copyWith(
+              color: AdaptiveColor.adaptiveColor(
                 context: context,
                 lightColor: ColorManager.softGray,
                 darkColor: ColorManager.hintGrey,

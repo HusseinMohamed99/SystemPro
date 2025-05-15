@@ -1,23 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:system_pro/core/networking/backend/api_error_handler.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
+
 class MarketplaceCubit extends Cubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
     : super(const MarketplaceState.initial());
-
   final MarketplaceRepo _marketplaceRepo;
-
   final List<Listing> _allListings = [];
   final List<Listing> _visibleListings = [];
-
   String _currentFilter = '';
   int _loadedCount = 0;
   final int _pageSize = 5;
-
   List<Listing> get _filteredListings {
     if (_currentFilter.isEmpty) return _allListings;
     return _allListings
@@ -30,13 +26,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   }
 
   bool get hasMore => _loadedCount < _filteredListings.length;
-
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
-
     try {
       final result = await _marketplaceRepo.getMarketplaceListings();
-
       await result.when(
         success: (MarketplaceResponse response) async {
           final all = response.data?.listings ?? [];
@@ -49,7 +42,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         failure: (errorHandler) {
           emit(
             MarketplaceState.error(
-              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
+              'حدث خطأ في تحميل البيانات:${errorHandler.apiErrorModel.message}',
             ),
           );
         },
@@ -58,22 +51,20 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
     }
   }
-void _applyFilter(String filter) {
+
+  void _applyFilter(String filter) {
     _currentFilter = filter;
     _loadedCount = 0;
     _visibleListings.clear();
-
     final nextItems =
         _filteredListings.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
-
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-
   void filterListings(String filter) {
-    _applyFilter(filter); // لا حاجة لـ _loadMoreInternal
+    _applyFilter(filter);
   }
 
   void _loadMoreInternal() {
@@ -81,27 +72,22 @@ void _applyFilter(String filter) {
         _filteredListings.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
-
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
-  bool isLoading = false; // متغير لتتبع حالة التحميل
-
-Future<void> loadMore() async {
+  bool isLoading = false;
+  Future<void> loadMore() async {
     if (isLoading || !hasMore) {
-      return; // تأكد من أنه لا يوجد تحميل قيد التنفيذ أو أنه تم تحميل كل البيانات
+      return;
     }
-
     isLoading = true;
     emit(const MarketplaceState.loading());
-
     try {
       _loadMoreInternal();
     } finally {
-      isLoading = false; // عند الانتهاء من التحميل، قم بإيقاف الـ loading
+      isLoading = false;
     }
   }
-
 
   void sortListings({
     required String newest,
@@ -110,7 +96,6 @@ Future<void> loadMore() async {
     required String sortType,
   }) {
     if (_visibleListings.isEmpty) return;
-
     if (sortType == newest) {
       _visibleListings.sort((a, b) {
         final aTime = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
@@ -130,7 +115,6 @@ Future<void> loadMore() async {
         return bPrice.compareTo(aPrice);
       });
     }
-
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
@@ -142,14 +126,11 @@ Future<void> loadMore() async {
 
   Future<void> getFavoriteListings() async {
     emit(const MarketplaceState.getFavoriteLoading());
-
     try {
       final result = await _marketplaceRepo.getFavoriteListings();
-
       result.when(
         success: (response) {
           final favoriteListings = response.data ?? [];
-
           _allListings
             ..clear()
             ..addAll(favoriteListings);
@@ -157,7 +138,6 @@ Future<void> loadMore() async {
             ..clear()
             ..addAll(favoriteListings.take(_pageSize));
           _loadedCount = _visibleListings.length;
-
           emit(
             MarketplaceState.getFavoriteSuccess(List.from(_visibleListings)),
           );
@@ -178,22 +158,18 @@ Future<void> loadMore() async {
   Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
-
       result.when(
         success: (response) {
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
-
             for (var listing in _allListings) {
               if (listing.id == id) {
                 listing.isFavorite = isFavorited;
                 break;
               }
             }
-
             final favoriteListings =
                 _allListings.where((e) => e.isFavorite == true).toList();
-
             if (_currentFilter.isEmpty) {
               emit(MarketplaceState.success(List.from(_visibleListings)));
             } else {
@@ -218,23 +194,20 @@ Future<void> loadMore() async {
 
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
-
     try {
       final result = await _marketplaceRepo.getMarketplaceListings();
-
       await result.when(
         success: (MarketplaceResponse response) async {
           final all = response.data?.listings ?? [];
           _allListings
             ..clear()
             ..addAll(all);
-
           _applyAdvancedFilter(args);
         },
         failure: (errorHandler) {
           emit(
             MarketplaceState.error(
-              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
+              'حدث خطأ في تحميل البيانات:${errorHandler.apiErrorModel.message}',
             ),
           );
         },
@@ -246,32 +219,23 @@ Future<void> loadMore() async {
 
   void _applyAdvancedFilter(FilterResultArguments args) {
     emit(const MarketplaceState.loading());
-
     _currentFilter = args.category;
     _loadedCount = 0;
     _visibleListings.clear();
-
     final List<Listing> filtered =
         _allListings.where((listing) {
           final matchCategory =
               args.category.isEmpty ||
               listing.category?.toLowerCase() == args.category.toLowerCase();
-
           final matchBedrooms =
               args.bedrooms == null || listing.rooms == args.bedrooms;
-
           final matchBathrooms =
               args.bathrooms == null || listing.bathrooms == args.bathrooms;
-
-          // يمكنك إضافة المزيد من الفلاتر مثل السعر، الموقع، إلخ
-
           return matchCategory && matchBedrooms && matchBathrooms;
         }).toList();
-
     final nextItems = filtered.skip(_loadedCount).take(_pageSize).toList();
     _visibleListings.addAll(nextItems);
     _loadedCount = _visibleListings.length;
-
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 }
