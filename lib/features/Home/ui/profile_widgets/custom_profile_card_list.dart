@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/localization/localization_state.dart';
@@ -43,18 +42,23 @@ class CustomProfileCardList extends StatelessWidget {
           itemBuilder: (context, index) {
             return CustomProfileCard(
               onTap: () async {
+                final navigator = Navigator.of(context);
+                final profileCubit = context.read<ProfileCubit>();
                 if (index == 0) {
-                  final result = await context.pushNamed(
+                  final result = await navigator.pushNamed(
                     Routes.editProfileView,
                     arguments: userName,
                   );
                   if (result == true) {
-                    context.read<ProfileCubit>().emitGetProfileStates();
+                    profileCubit.emitGetProfileStates();
                   }
                 } else if (index == 1) {
-                  await _showLanguageSelectionSheet(context, selectedLanguage);
+                  await _showLanguageSelectionSheet(
+                    navigator.context,
+                    selectedLanguage,
+                  );
                 } else if (index == 2) {
-                  await _showThemeSelectionSheet(context, isDarkMode);
+                  await _showThemeSelectionSheet(navigator.context, isDarkMode);
                 }
               },
               isLocalization: index == 1,
@@ -69,17 +73,16 @@ class CustomProfileCardList extends StatelessWidget {
     );
   }
 
-  // دالة لعرض اختيار اللغة
   Future<void> _showLanguageSelectionSheet(
     BuildContext context,
-    String selectedLanguageCode, // ← تأكد أنه كود اللغة 'en' أو 'ar'
+    String selectedLanguageCode,
   ) async {
-    final localizationCubit = context.read<ChangeLocalizationCubit>();
+    final localization = context.localization;
     await customBottomSheet(
       context: context,
-      title: context.localization.language,
-      firstTitle: context.localization.english,
-      secondTitle: context.localization.arabic,
+      title: localization.language,
+      firstTitle: localization.english,
+      secondTitle: localization.arabic,
       firstOnTap: () async {
         if (selectedLanguageCode != 'en') {
           await _updateLanguage(context, 'en');
@@ -102,16 +105,16 @@ class CustomProfileCardList extends StatelessWidget {
     );
   }
 
-  // دالة لعرض اختيار السمة (الوضع المظلم/الفاتح)
   Future<void> _showThemeSelectionSheet(
     BuildContext context,
     bool isDarkMode,
   ) async {
+    final localization = context.localization;
     await customBottomSheet(
       context: context,
-      title: context.localization.theme_mode,
-      firstTitle: context.localization.light_mode,
-      secondTitle: context.localization.dark_mode,
+      title: localization.theme_mode,
+      firstTitle: localization.light_mode,
+      secondTitle: localization.dark_mode,
       firstOnTap: () async {
         if (isDarkMode) {
           await _updateTheme(context, false);
@@ -125,13 +128,12 @@ class CustomProfileCardList extends StatelessWidget {
     );
   }
 
-  // دالة لتحديث السمة
-  Future<void> _updateTheme(BuildContext context, bool isDarkMode) async {
+Future<void> _updateTheme(BuildContext context, bool isDarkMode) async {
+    final cubit = context.read<ChangeThemingCubit>();
     await CachingHelper.setData(SharedPrefKeys.isDarkMode, isDarkMode);
-    context.read<ChangeThemingCubit>().toggleTheme();
+    cubit.toggleTheme();
   }
 
-  // دالة لإظهار Bottom Sheet
   Future<dynamic> customBottomSheet({
     required BuildContext context,
     required String title,
@@ -140,6 +142,8 @@ class CustomProfileCardList extends StatelessWidget {
     required VoidCallback firstOnTap,
     required VoidCallback secondOnTap,
   }) {
+    final localization = context.localization;
+    final textTheme = Theme.of(context).textTheme;
     return showModalBottomSheet(
       backgroundColor: AdaptiveColor.adaptiveColor(
         context: context,
@@ -171,8 +175,8 @@ class CustomProfileCardList extends StatelessWidget {
                 ),
                 verticalSpacing(kSpacingDefault),
                 Text(
-                  '${context.localization.change} $title',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  '${localization.change} $title',
+                  style: textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeightHelper.medium,
                     color: AdaptiveColor.adaptiveColor(
                       context: context,
@@ -184,7 +188,7 @@ class CustomProfileCardList extends StatelessWidget {
                 ListTile(
                   title: Text(
                     firstTitle,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
                       color: AdaptiveColor.adaptiveColor(
                         context: context,
@@ -194,14 +198,14 @@ class CustomProfileCardList extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
+                    Navigator.of(context).pop();
                     firstOnTap();
-                    context.pop();
                   },
                 ),
                 ListTile(
                   title: Text(
                     secondTitle,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
                       color: AdaptiveColor.adaptiveColor(
                         context: context,
@@ -211,8 +215,8 @@ class CustomProfileCardList extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
+                    Navigator.of(context).pop();
                     secondOnTap();
-                    context.pop();
                   },
                 ),
               ],
