@@ -6,9 +6,9 @@ import 'package:system_pro/features/Authentication/ForgotPassword/data/model/for
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_response.dart';
 
 class ForgotPasswordRepo {
-  final ApiService _apiService;
 
   ForgotPasswordRepo(this._apiService);
+  final ApiService _apiService;
 
   Future<ApiResult<ForgotPasswordResponse>> forgotPassword(
     ForgotPasswordRequestBody forgotPasswordRequestBody,

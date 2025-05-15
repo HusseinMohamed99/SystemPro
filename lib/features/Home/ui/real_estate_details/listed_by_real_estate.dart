@@ -58,7 +58,7 @@ class ListedByWidget extends StatelessWidget {
                   fontWeight: FontWeightHelper.medium,
                 ),
               ),
-             CustomDivider().hPadding(kSpacingDefault.w),
+             const CustomDivider().hPadding(kSpacingDefault.w),
               GestureDetector(
                 onTap: () {
                   context.pushNamed(

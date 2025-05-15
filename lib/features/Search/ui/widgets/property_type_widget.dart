@@ -24,9 +24,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
   bool showAll = false;
 
   void clearSelection() {
-    setState(() {
-      selectedTypes.clear();
-    });
+    setState(selectedTypes.clear);
   }
 
   @override

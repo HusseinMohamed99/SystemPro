@@ -88,8 +88,9 @@ void _applyFilter(String filter) {
   bool isLoading = false; // متغير لتتبع حالة التحميل
 
 Future<void> loadMore() async {
-    if (isLoading || !hasMore)
+    if (isLoading || !hasMore) {
       return; // تأكد من أنه لا يوجد تحميل قيد التنفيذ أو أنه تم تحميل كل البيانات
+    }
 
     isLoading = true;
     emit(const MarketplaceState.loading());
@@ -250,7 +251,7 @@ Future<void> loadMore() async {
     _loadedCount = 0;
     _visibleListings.clear();
 
-    List<Listing> filtered =
+    final List<Listing> filtered =
         _allListings.where((listing) {
           final matchCategory =
               args.category.isEmpty ||

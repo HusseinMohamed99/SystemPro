@@ -29,7 +29,6 @@ import 'package:system_pro/features/Search/ui/widgets/toggle_category_widget.dar
 class FilterViewBody extends StatefulWidget {
   const FilterViewBody({super.key, required this.locationArgument});
   final LocationArgument locationArgument;
-
   @override
   State<FilterViewBody> createState() => _FilterViewBodyState();
 }
@@ -39,22 +38,18 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   final bathroomsKey = GlobalKey<BathroomsWidgetState>();
   final amenitiesKey = GlobalKey<AmenitiesWidgetState>();
   final propertyKey = GlobalKey<PropertyTypeWidgetState>();
-
   late String selectedCategory;
-  String selectedBuyRentOption = 'buy'; // Default
+  String selectedBuyRentOption = 'buy';
 
-  // Price
   final minPriceController = TextEditingController();
   final maxPriceController = TextEditingController();
   final minPriceFocusNode = FocusNode();
   final maxPriceFocusNode = FocusNode();
 
-  // Size
   final minSizeController = TextEditingController();
   final maxSizeController = TextEditingController();
   final minSizeFocusNode = FocusNode();
   final maxSizeFocusNode = FocusNode();
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -93,12 +88,10 @@ class _FilterViewBodyState extends State<FilterViewBody> {
         if (state is Loading) return const AdaptiveIndicator();
         if (state is Error) return CustomErrorWidget(errorMessage: state.error);
         if (state is! Success) return const SizedBox.shrink();
-
         final categories = state.data.data?.categories ?? [];
         if (categories.isEmpty) {
           return const CustomErrorWidget(errorMessage: 'لا توجد فئات متاحة');
         }
-
         return Column(
           children: [
             ToggleCategoryWidget(
@@ -170,25 +163,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                         selectedAmenities:
                             amenitiesKey.currentState?.selectedAmenityIds ?? [],
                       );
-                      AppLogs.successLog(
-                        'Filter bathrooms: ${filterArgs.bathrooms}',
-                      );
-                      AppLogs.successLog('Filter bedrooms: ${filterArgs.bedrooms}');
-                      AppLogs.successLog('Filter minPrice: ${filterArgs.minPrice}');
-                      AppLogs.successLog('Filter maxPrice: ${filterArgs.maxPrice}');
-                      AppLogs.successLog('Filter minSize: ${filterArgs.minSize}');
-                      AppLogs.successLog('Filter maxSize: ${filterArgs.maxSize}');
-                      AppLogs.successLog(
-                        'Filter selectedAmenities: ${filterArgs.selectedAmenities}',
-                      );
-                      AppLogs.successLog(
-                        'Filter selectedSubcategories: ${filterArgs.selectedSubcategories}',
-                      );
-                      AppLogs.successLog('Filter category: ${filterArgs.category}');
-                      AppLogs.successLog(
-                        'Filter buyRentOption: ${filterArgs.buyRentOption}',
-                      );
-
                       context.pushNamed(
                         Routes.filterResultWidget,
                         arguments: filterArgs,
@@ -241,7 +215,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
       ),
     ),
   ];
-
   List<Widget> _buildCommercialSection(category) => [
     SliverToBoxAdapter(
       child: PropertyTypeWidget(
@@ -275,7 +248,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
       ),
     ),
   ];
-
   List<Widget> _buildLandSection(category) => [
     SliverToBoxAdapter(
       child: PropertyTypeWidget(
