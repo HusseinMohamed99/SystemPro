@@ -7,8 +7,10 @@ part 'marketplace_state.freezed.dart';
 class MarketplaceState with _$MarketplaceState {
   const factory MarketplaceState.initial() = MarketPlaceInitial;
   const factory MarketplaceState.loading() = MarketPlaceLoading;
-  const factory MarketplaceState.success(List<Listing> listings) =
-      MarketPlaceSuccess;
+  const factory MarketplaceState.success({
+    required List<Listing> listings,
+    required String selectedFilter,
+  }) = MarketPlaceSuccess;
 
   const factory MarketplaceState.error(String error) = MarketPlaceError;
 }

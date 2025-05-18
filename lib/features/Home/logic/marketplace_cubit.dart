@@ -20,6 +20,8 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   final int _limit = 5;
   String _direction = 'next';
 
+  String get currentFilter => _currentFilter;
+
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
@@ -52,7 +54,12 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
             _cursor = _visibleListings.last.id ?? _cursor;
           }
 
-          emit(MarketplaceState.success(List.from(_visibleListings)));
+          emit(
+            MarketplaceState.success(
+              listings: List.from(_visibleListings),
+              selectedFilter: _currentFilter,
+            ),
+          );
         },
         failure: (errorHandler) {
           emit(
@@ -109,7 +116,12 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       });
     }
 
-    emit(MarketplaceState.success(List.from(_visibleListings)));
+    emit(
+      MarketplaceState.success(
+        listings: List.from(_visibleListings),
+        selectedFilter: _currentFilter,
+      ),
+    );
   }
 
   Future<void> toggleFavorite(int id) async {
@@ -128,7 +140,12 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
               }
             }
 
-            emit(MarketplaceState.success(List.from(_visibleListings)));
+            emit(
+              MarketplaceState.success(
+                listings: List.from(_visibleListings),
+                selectedFilter: _currentFilter,
+              ),
+            );
           } else {
             emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }
@@ -181,7 +198,13 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           }
 
           hasMore = filtered.length >= _limit;
-          emit(MarketplaceState.success(List.from(_visibleListings)));
+
+          emit(
+            MarketplaceState.success(
+              listings: List.from(_visibleListings),
+              selectedFilter: _currentFilter,
+            ),
+          );
         },
         failure: (errorHandler) {
           emit(
@@ -196,7 +219,20 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  Future<void> filterListings(String filter) async {
-    await getListings(filter: filter);
+ Future<void> filterListings(String filter) async {
+    _currentFilter = filter;
+
+    final filtered =
+        _visibleListings.where((listing) {
+          return listing.listingType?.toLowerCase() == filter.toLowerCase();
+        }).toList();
+
+    emit(
+      MarketplaceState.success(
+        listings: filtered,
+        selectedFilter: _currentFilter,
+      ),
+    );
   }
+
 }

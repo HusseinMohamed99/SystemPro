@@ -47,7 +47,7 @@ class HomeViewBody extends StatelessWidget {
                           context,
                         );
                         cubit.filterListings(filter);
-                      },
+                      }, selectedFilter: state.selectedFilter,
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
                       rightPadding: kPaddingDefaultHorizontal,

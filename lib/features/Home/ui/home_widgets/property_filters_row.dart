@@ -5,43 +5,32 @@ import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
-class PropertyFiltersRow extends StatefulWidget {
-  const PropertyFiltersRow({   super.key,
+class PropertyFiltersRow extends StatelessWidget {
+  const PropertyFiltersRow({
+    super.key,
     required this.filtersToggle,
+    required this.selectedFilter,
     required this.onToggleChanged,
   });
 
   final Map<String, String> filtersToggle;
+  final String selectedFilter;
   final void Function(String selectedValue) onToggleChanged;
 
   @override
-  State<PropertyFiltersRow> createState() => _PropertyFiltersRowState();
-}
-
-class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
-  late String selectedFilter;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    selectedFilter = widget.filtersToggle.values.first;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final allFilters = widget.filtersToggle;
-
     return Row(
       children:
-          allFilters.keys.map((filter) {
-            final value = allFilters[filter]!;
+          filtersToggle.entries.map((entry) {
+            final filter = entry.key;
+            final value = entry.value;
             final isSelected = selectedFilter == value;
 
             return Expanded(
               child: Padding(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 4.w),
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: ChoiceChip(
-                  labelPadding: EdgeInsetsDirectional.symmetric(vertical: 2.h),
+                  labelPadding: EdgeInsets.symmetric(vertical: 2.h),
                   label: SizedBox(
                     width: double.infinity,
                     child: Text(
@@ -65,13 +54,7 @@ class _PropertyFiltersRowState extends State<PropertyFiltersRow> {
                     ),
                   ),
                   selected: isSelected,
-                  onSelected: (_) {
-                    setState(() {
-                      selectedFilter = value;
-                    });
-                    widget.onToggleChanged(value);
-                    AppLogs.successLog('Filter selected: $value');
-                  },
+                  onSelected: (_) => onToggleChanged(value),
                   selectedColor: AdaptiveColor.adaptiveColor(
                     context: context,
                     lightColor: ColorManager.shadowBlue,
