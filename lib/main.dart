@@ -9,7 +9,9 @@ import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
+import 'package:system_pro/core/logic/localization/localization_state.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
+import 'package:system_pro/core/logic/theming/change_theming_state.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
@@ -54,7 +56,7 @@ void main() async {
   );
 }
 
-class AppBootstrap extends StatelessWidget {
+class AppBootstrap extends StatefulWidget {
   const AppBootstrap({
     super.key,
     required this.initialLocale,
@@ -65,10 +67,33 @@ class AppBootstrap extends StatelessWidget {
   final bool isDarkMode;
 
   @override
+  State<AppBootstrap> createState() => _AppBootstrapState();
+}
+
+class _AppBootstrapState extends State<AppBootstrap> {
+  late Locale _locale;
+  late ThemeMode _themeMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _locale = Locale(widget.initialLocale);
+    _themeMode = widget.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  }
+
+  void _updateLocale(String newLocale) {
+    setState(() => _locale = Locale(newLocale));
+  }
+
+  void _updateTheme(bool isDark) {
+    setState(() => _themeMode = isDark ? ThemeMode.dark : ThemeMode.light);
+  }
+
+  @override
   Widget build(BuildContext context) {
     setupGetIt(
-      initialLocale: initialLocale,
-      isDarkMode: isDarkMode,
+      initialLocale: _locale.languageCode,
+      isDarkMode: _themeMode == ThemeMode.dark,
       context: context,
     );
 
@@ -77,7 +102,27 @@ class AppBootstrap extends StatelessWidget {
         BlocProvider(create: (_) => getIt<ChangeLocalizationCubit>()),
         BlocProvider(create: (_) => getIt<ChangeThemingCubit>()),
       ],
-      child: SystemProApp(appRouter: AppRouters()),
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<ChangeLocalizationCubit, ChangeLocalizationState>(
+            listener: (context, state) {
+              if (state is ChangeLocalizationLoaded) {
+                _updateLocale(state.localization);
+              }
+            },
+          ),
+          BlocListener<ChangeThemingCubit, ChangeThemingState>(
+            listener: (context, state) {
+              _updateTheme(state.isDarkMode);
+            },
+          ),
+        ],
+        child: SystemProApp(
+          appRouter: AppRouters(),
+          locale: _locale,
+          themeMode: _themeMode,
+        ),
+      ),
     );
   }
 }

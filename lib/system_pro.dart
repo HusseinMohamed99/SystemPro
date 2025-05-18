@@ -15,25 +15,19 @@ import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart
 import 'package:system_pro/generated/l10n.dart';
 
 class SystemProApp extends StatelessWidget {
-  const SystemProApp({super.key, required this.appRouter});
+  const SystemProApp({
+    super.key,
+    required this.appRouter,
+    required this.locale,
+    required this.themeMode,
+  });
+
   final AppRouters appRouter;
+  final Locale locale;
+  final ThemeMode themeMode;
 
   @override
   Widget build(BuildContext context) {
-    // 📍 قراءة اللغة الحالية
-    final locale = context.select<ChangeLocalizationCubit, Locale?>((cubit) {
-      final state = cubit.state;
-      if (state is ChangeLocalizationLoaded) {
-        return Locale(state.localization);
-      }
-      return null;
-    });
-
-    // 📍 قراءة حالة الثيم الحالي
-    final isDark = context.select<ChangeThemingCubit, bool>(
-      (cubit) => cubit.state.isDarkMode,
-    );
-
     final themeCubit = context.read<ChangeThemingCubit>();
 
     return AdaptiveLayout(
@@ -43,42 +37,24 @@ class SystemProApp extends StatelessWidget {
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (_, __) {
-              // ✅ عرض مؤشر تحميل فقط إذا اللغة غير جاهزة
-             if (locale == null) {
-                return const Directionality(
-                  textDirection: TextDirection.ltr, // أو rtl لو اللغة عربي
-                  child: Scaffold(
-                    body: Center(child: AdaptiveIndicator()),
-                  ),
-                );
-              }
-
-
-              return MediaQuery(
-                data: MediaQuery.of(
-                  context,
-                ).copyWith(textScaler: const TextScaler.linear(1.0)),
-                child: MaterialApp(
-                  title: 'System Pro',
-                  debugShowCheckedModeBanner: false,
-                  theme: buildLightTheming(
-                    textTheme: themeCubit.lightTextTheme,
-                  ),
-                  darkTheme: buildDarkTheming(
-                    textTheme: themeCubit.darkTextTheme,
-                  ),
-                  themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-                  locale: locale,
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: S.delegate.supportedLocales,
-                  onGenerateRoute: appRouter.generateRoute,
-                  initialRoute: getInitialRoute(),
+              return MaterialApp(
+                title: 'System Pro',
+                debugShowCheckedModeBanner: false,
+                theme: buildLightTheming(textTheme: themeCubit.lightTextTheme),
+                darkTheme: buildDarkTheming(
+                  textTheme: themeCubit.darkTextTheme,
                 ),
+                themeMode: themeMode,
+                locale: locale,
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                onGenerateRoute: appRouter.generateRoute,
+                initialRoute: getInitialRoute(),
               );
             },
           ),
