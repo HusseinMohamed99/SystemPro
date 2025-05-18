@@ -1,28 +1,47 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/bloc_observer.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/logic/localization/localization_cubit.dart';
+import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // ✅ قفل الشاشة على الوضع الرأسي فقط
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   await dotenv.load();
   Bloc.observer = MyBlocObserver();
 
   await CachingHelper.init();
-  await checkIfLoggedInUser();
-  final savedLocale =
-      CachingHelper.getString(SharedPrefKeys.selectedLanguage);
+
+  // 🔄 تحقق من حالة المستخدم
+  isLoggedInUser =
+      !(await CachingHelper.getSecuredString(
+        SharedPrefKeys.userToken,
+      )).isNullOrEmpty();
+
+  // 🔧 تحميل الإعدادات من التخزين
+  final savedLocale = CachingHelper.getString(SharedPrefKeys.selectedLanguage);
   final isDarkMode = CachingHelper.getBool(SharedPrefKeys.isDarkMode);
+
   AppConfig.userToken = await CachingHelper.getSecuredString(
     SharedPrefKeys.userToken,
   );
+
   runApp(
     ScreenUtilInit(
       designSize: const Size(393, 852),
@@ -52,17 +71,13 @@ class AppBootstrap extends StatelessWidget {
       isDarkMode: isDarkMode,
       context: context,
     );
-    return SystemProApp(appRouter: AppRouters());
-  }
-}
 
-checkIfLoggedInUser() async {
-  final String userToken = await CachingHelper.getSecuredString(
-    SharedPrefKeys.userToken,
-  );
-  if (!userToken.isNullOrEmpty()) {
-    isLoggedInUser = true;
-  } else {
-    isLoggedInUser = false;
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<ChangeLocalizationCubit>()),
+        BlocProvider(create: (_) => getIt<ChangeThemingCubit>()),
+      ],
+      child: SystemProApp(appRouter: AppRouters()),
+    );
   }
 }

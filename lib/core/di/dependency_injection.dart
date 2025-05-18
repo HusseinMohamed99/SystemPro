@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
+// Core
 import 'package:system_pro/core/networking/backend/api_service.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/styleManager/text_style.dart';
@@ -15,75 +16,98 @@ import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forg
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/repo/otp_repo.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_cubit.dart';
-// Auth Features
+// Auth
 import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
+// Company Profile
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
+// Edit Profile
 import 'package:system_pro/features/EditProfile/data/repo/edit_profile_repo.dart';
 import 'package:system_pro/features/EditProfile/logic/edit_profile_cubit.dart';
 import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
-// Other Features
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
+// Profile & Marketplace
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
 import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
+// Categories / Search
 import 'package:system_pro/features/Search/data/repo/categories_repo.dart';
 import 'package:system_pro/features/Search/logic/categories_cubit.dart';
 
 final getIt = GetIt.instance;
 
-/// Helper for lazy singleton registration
+/// Helpers
 void _registerLazySingleton<T extends Object>(T Function() factory) {
   if (!getIt.isRegistered<T>()) {
     getIt.registerLazySingleton<T>(factory);
   }
 }
 
-/// Helper for factory registration
 void _registerFactory<T extends Object>(T Function() factory) {
   if (!getIt.isRegistered<T>()) {
     getIt.registerFactory<T>(factory);
   }
 }
 
+/// Entry point
 void setupGetIt({
   required BuildContext context,
   required String initialLocale,
   required bool isDarkMode,
 }) {
-  // ────────────────────── CORE SERVICES ──────────────────────
+  _registerCoreModule();
+  _registerThemingModule(context, isDarkMode);
+  _registerLocalizationModule();
+  _registerAuthModule();
+  _registerProfileModule();
+  _registerEditProfileModule();
+  _registerMarketplaceModule();
+  _registerCompanyProfileModule();
+  _registerCategoriesModule();
+}
+
+/// ─────────────────── CORE MODULE ───────────────────
+void _registerCoreModule() {
   if (!getIt.isRegistered<ApiService>()) {
     final dio = DioFactory.getDio();
-    getIt.registerSingleton<ApiService>(ApiService(dio));
+    _registerLazySingleton(() => ApiService(dio));
   }
+}
 
-  // ────────────────────── THEME SETUP ──────────────────────
+/// ─────────────────── THEME MODULE ───────────────────
+void _registerThemingModule(BuildContext context, bool isDarkMode) {
   final lightTextTheme = AppTextStyleManager.lightTextTheme(context);
   final darkTextTheme = AppTextStyleManager.darkTextTheme(context);
+
+  final theme =
+      isDarkMode
+          ? buildDarkTheming(textTheme: darkTextTheme)
+          : buildLightTheming(textTheme: lightTextTheme);
 
   if (!getIt.isRegistered<ChangeThemingCubit>()) {
     getIt.registerSingleton<ChangeThemingCubit>(
       ChangeThemingCubit(
-        initialTheme:
-            isDarkMode
-                ? buildDarkTheming(textTheme: darkTextTheme)
-                : buildLightTheming(textTheme: lightTextTheme),
+        initialTheme: theme,
         lightTextTheme: lightTextTheme,
         darkTextTheme: darkTextTheme,
-        isDark: isDarkMode,
+        isDarkMode: isDarkMode,
       ),
     );
   }
+}
 
-  // ────────────────────── LOCALIZATION ──────────────────────
+/// ─────────────────── LOCALIZATION MODULE ───────────────────
+void _registerLocalizationModule() {
   if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
     getIt.registerSingleton<ChangeLocalizationCubit>(ChangeLocalizationCubit());
   }
+}
 
-  // ────────────────────── AUTH ──────────────────────
+/// ─────────────────── AUTH MODULE ───────────────────
+void _registerAuthModule() {
   _registerLazySingleton(() => LoginRepo(getIt()));
   _registerFactory(() => LoginCubit(getIt()));
 
@@ -101,22 +125,36 @@ void setupGetIt({
 
   _registerLazySingleton(() => ChangePasswordRepo(getIt()));
   _registerFactory(() => ChangePasswordCubit(getIt()));
+}
 
-  // ────────────────────── PROFILE & HOME ──────────────────────
+/// ─────────────────── PROFILE MODULE ───────────────────
+void _registerProfileModule() {
   _registerLazySingleton(() => ProfileRepo(getIt()));
   _registerFactory(() => ProfileCubit(getIt()));
+}
 
+/// ─────────────────── EDIT PROFILE MODULE ───────────────────
+void _registerEditProfileModule() {
+  _registerLazySingleton(() => EditProfileRepo(getIt()));
+  _registerFactory(() => EditProfileCubit(getIt()));
+}
+
+/// ─────────────────── MARKETPLACE MODULE ───────────────────
+void _registerMarketplaceModule() {
   _registerLazySingleton(() => MarketplaceRepo(getIt()));
   _registerFactory(() => MarketplaceCubit(getIt()));
 
-  _registerLazySingleton(() => EditProfileRepo(getIt()));
-  _registerFactory(() => EditProfileCubit(getIt()));
-
-  _registerFactory(() => RealEstateCubit(getIt()));
-
-  _registerLazySingleton(() => CategoriesRepo(getIt()));
-  _registerFactory(() => CategoriesCubit(getIt()));
-
   _registerLazySingleton(() => FavoriteRepo(getIt()));
   _registerFactory(() => FavoriteCubit(getIt()));
+}
+
+/// ─────────────────── COMPANY PROFILE MODULE ───────────────────
+void _registerCompanyProfileModule() {
+  _registerFactory(() => RealEstateCubit(getIt()));
+}
+
+/// ─────────────────── CATEGORIES MODULE ───────────────────
+void _registerCategoriesModule() {
+  _registerLazySingleton(() => CategoriesRepo(getIt()));
+  _registerFactory(() => CategoriesCubit(getIt()));
 }

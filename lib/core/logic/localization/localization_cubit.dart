@@ -8,39 +8,33 @@ import 'package:system_pro/generated/l10n.dart';
 
 class ChangeLocalizationCubit extends Cubit<ChangeLocalizationState> {
   ChangeLocalizationCubit() : super(const ChangeLocalizationState.initial()) {
-    _initLocalization(); // ← تحميل اللغة عند التهيئة
+    _initLocalization();
   }
 
-  String currentLocalization = 'en';
+  late String currentLocalization;
 
   Future<void> _initLocalization() async {
     final savedLang =
         await CachingHelper.getData(SharedPrefKeys.selectedLanguage) ?? 'en';
-    await changeLocalization(savedLang, save: false); // ← بدون حفظ مرة ثانية
+    await changeLocalization(savedLang, save: false);
   }
 
   Future<void> changeLocalization(String localeCode, {bool save = true}) async {
     emit(const ChangeLocalizationState.loading());
 
-    final supportedLocales = S.delegate.supportedLocales;
-    const fallbackLocale = Locale('en');
-
-    final isSupported = supportedLocales.any(
+    final supported = S.delegate.supportedLocales.any(
       (locale) => locale.languageCode == localeCode,
     );
 
-    currentLocalization =
-        isSupported ? localeCode : fallbackLocale.languageCode;
+    currentLocalization = supported ? localeCode : 'en';
 
-    // التخزين
     if (save) {
       await CachingHelper.setData(
-       SharedPrefKeys.selectedLanguage,
-         currentLocalization,
+        SharedPrefKeys.selectedLanguage,
+        currentLocalization,
       );
     }
 
-    // تحميل الترجمات
     Intl.defaultLocale = currentLocalization;
     await S.load(Locale(currentLocalization));
 
@@ -49,7 +43,7 @@ class ChangeLocalizationCubit extends Cubit<ChangeLocalizationState> {
 
   Future<void> toggleLocale() async {
     final newLocale = currentLocalization == 'ar' ? 'en' : 'ar';
-    await changeLocalization(newLocale); // ← احفظ اللغة الجديدة
+    await changeLocalization(newLocale);
   }
 
   bool get isArabic => currentLocalization == 'ar';

@@ -9,20 +9,24 @@ class ChangeThemingCubit extends Cubit<ChangeThemingState> {
     required ThemeData initialTheme,
     required this.lightTextTheme,
     required this.darkTextTheme,
-    required this.isDark,
+    required bool isDarkMode,
   }) : super(
-         ChangeThemingState.initial(theme: initialTheme, isDarkMode: isDark),
+         ChangeThemingState.initial(
+           theme: initialTheme,
+           isDarkMode: isDarkMode,
+         ),
        );
+
   final TextTheme lightTextTheme;
   final TextTheme darkTextTheme;
-  final bool isDark;
+
   void toggleTheme() {
     final isDark = !state.isDarkMode;
-    emit(ChangeThemingState.loading(theme: state.theme, isDarkMode: isDark));
     final newTheme =
         isDark
             ? buildDarkTheming(textTheme: darkTextTheme)
             : buildLightTheming(textTheme: lightTextTheme);
+
     emit(ChangeThemingState.loaded(theme: newTheme, isDarkMode: isDark));
   }
 
