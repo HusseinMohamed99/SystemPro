@@ -11,6 +11,7 @@ import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/themingManager/dark_theming.dart';
 import 'package:system_pro/core/theming/themingManager/light_theming.dart';
+import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/generated/l10n.dart';
 
 class SystemProApp extends StatelessWidget {
@@ -43,11 +44,15 @@ class SystemProApp extends StatelessWidget {
             splitScreenMode: true,
             builder: (_, __) {
               // ✅ عرض مؤشر تحميل فقط إذا اللغة غير جاهزة
-              if (locale == null) {
-                return const Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
+             if (locale == null) {
+                return const Directionality(
+                  textDirection: TextDirection.ltr, // أو rtl لو اللغة عربي
+                  child: Scaffold(
+                    body: Center(child: AdaptiveIndicator()),
+                  ),
                 );
               }
+
 
               return MediaQuery(
                 data: MediaQuery.of(
