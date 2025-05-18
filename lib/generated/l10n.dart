@@ -1025,9 +1025,9 @@ class S {
     return Intl.message('Filter', name: 'filter', desc: '', args: []);
   }
 
-  /// `Residentail`
+  /// `Residential`
   String get residentail {
-    return Intl.message('Residentail', name: 'residentail', desc: '', args: []);
+    return Intl.message('Residential', name: 'residentail', desc: '', args: []);
   }
 
   /// `Commercial`

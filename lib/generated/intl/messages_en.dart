@@ -289,7 +289,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Please type something you’ll remember",
     ),
-    "residentail": MessageLookupByLibrary.simpleMessage("Residentail"),
+    "residentail": MessageLookupByLibrary.simpleMessage("Residential"),
     "result": MessageLookupByLibrary.simpleMessage("Result"),
     "results_search": MessageLookupByLibrary.simpleMessage("Results Search"),
     "sar": MessageLookupByLibrary.simpleMessage("SAR"),

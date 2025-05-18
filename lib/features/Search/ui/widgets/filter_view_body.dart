@@ -13,6 +13,7 @@ import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
+import 'package:system_pro/features/Search/data/model/category_response.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/features/Search/logic/categories_cubit.dart';
@@ -29,6 +30,7 @@ import 'package:system_pro/features/Search/ui/widgets/toggle_category_widget.dar
 class FilterViewBody extends StatefulWidget {
   const FilterViewBody({super.key, required this.locationArgument});
   final LocationArgument locationArgument;
+
   @override
   State<FilterViewBody> createState() => _FilterViewBodyState();
 }
@@ -38,7 +40,8 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   final bathroomsKey = GlobalKey<BathroomsWidgetState>();
   final amenitiesKey = GlobalKey<AmenitiesWidgetState>();
   final propertyKey = GlobalKey<PropertyTypeWidgetState>();
-  late String selectedCategory;
+
+  String selectedCategory = 'residential';
   String selectedBuyRentOption = 'buy';
 
   final minPriceController = TextEditingController();
@@ -50,11 +53,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   final maxSizeController = TextEditingController();
   final minSizeFocusNode = FocusNode();
   final maxSizeFocusNode = FocusNode();
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    selectedCategory = context.localization.residentail;
-  }
 
   @override
   void dispose() {
@@ -82,16 +80,17 @@ class _FilterViewBodyState extends State<FilterViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategoriesCubit, CategoriesState>(
-      listener: (context, state) {},
+    return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
         if (state is Loading) return const AdaptiveIndicator();
         if (state is Error) return CustomErrorWidget(errorMessage: state.error);
         if (state is! Success) return const SizedBox.shrink();
+
         final categories = state.data.data?.categories ?? [];
         if (categories.isEmpty) {
           return const CustomErrorWidget(errorMessage: 'لا توجد فئات متاحة');
         }
+
         return Column(
           children: [
             ToggleCategoryWidget(
@@ -112,12 +111,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
             Expanded(
               child: CustomScrollView(
                 slivers: [
-                  if (selectedCategory == categories[0].name)
-                    ..._buildResidentialSection(categories[0]),
-                  if (selectedCategory == categories[1].name)
-                    ..._buildCommercialSection(categories[1]),
-                  if (selectedCategory == categories[2].name)
-                    ..._buildLandSection(categories[2]),
+                  ..._buildSectionForCategory(categories),
                   SliverToBoxAdapter(child: verticalSpacing(kSpacingMedium)),
                 ],
               ),
@@ -178,102 +172,59 @@ class _FilterViewBodyState extends State<FilterViewBody> {
     );
   }
 
-  List<Widget> _buildResidentialSection(category) => [
-    SliverToBoxAdapter(
-      child: PropertyTypeWidget(
-        key: propertyKey,
-        subcategories: category.subcategories ?? [],
+  List<Widget> _buildSectionForCategory(List<Category> categories) {
+    if (categories.isEmpty) return [];
+
+    final Category current = categories.firstWhere(
+      (cat) => cat.name == selectedCategory,
+      orElse: () => categories.first,
+    );
+
+    final widgets = <Widget>[
+      SliverToBoxAdapter(
+        child: PropertyTypeWidget(
+          key: propertyKey,
+          titleType:
+              current.name == context.localization.lands
+                  ? context.localization.lands_type
+                  : null,
+          subcategories: current.subcategories ?? [],
+        ),
       ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: PriceRangeWidget(
-        minPriceController: minPriceController,
-        maxPriceController: maxPriceController,
-        minPriceFocusNode: minPriceFocusNode,
-        maxPriceFocusNode: maxPriceFocusNode,
+      SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+      SliverToBoxAdapter(
+        child: PriceRangeWidget(
+          minPriceController: minPriceController,
+          maxPriceController: maxPriceController,
+          minPriceFocusNode: minPriceFocusNode,
+          maxPriceFocusNode: maxPriceFocusNode,
+        ),
       ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: PropertySizeWidget(
-        minSizeController: minSizeController,
-        maxSizeController: maxSizeController,
-        minSizeFocusNode: minSizeFocusNode,
-        maxSizeFocusNode: maxSizeFocusNode,
+      SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+      if (selectedCategory == context.localization.residentail) ...[
+        SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
+        SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+        SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
+        SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+      ],
+      SliverToBoxAdapter(
+        child: PropertySizeWidget(
+          minSizeController: minSizeController,
+          maxSizeController: maxSizeController,
+          minSizeFocusNode: minSizeFocusNode,
+          maxSizeFocusNode: maxSizeFocusNode,
+        ),
       ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: AmenitiesWidget(
-        key: amenitiesKey,
-        amenities: category.amenities ?? [],
-      ),
-    ),
-  ];
-  List<Widget> _buildCommercialSection(category) => [
-    SliverToBoxAdapter(
-      child: PropertyTypeWidget(
-        key: propertyKey,
-        subcategories: category.subcategories ?? [],
-      ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: PriceRangeWidget(
-        minPriceController: minPriceController,
-        maxPriceController: maxPriceController,
-        minPriceFocusNode: minPriceFocusNode,
-        maxPriceFocusNode: maxPriceFocusNode,
-      ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: PropertySizeWidget(
-        minSizeController: minSizeController,
-        maxSizeController: maxSizeController,
-        minSizeFocusNode: minSizeFocusNode,
-        maxSizeFocusNode: maxSizeFocusNode,
-      ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: AmenitiesWidget(
-        key: amenitiesKey,
-        amenities: category.amenities ?? [],
-      ),
-    ),
-  ];
-  List<Widget> _buildLandSection(category) => [
-    SliverToBoxAdapter(
-      child: PropertyTypeWidget(
-        key: propertyKey,
-        titleType: context.localization.lands_type,
-        subcategories: category.subcategories ?? [],
-      ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: PriceRangeWidget(
-        minPriceController: minPriceController,
-        maxPriceController: maxPriceController,
-        minPriceFocusNode: minPriceFocusNode,
-        maxPriceFocusNode: maxPriceFocusNode,
-      ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-    SliverToBoxAdapter(
-      child: PropertySizeWidget(
-        minSizeController: minSizeController,
-        maxSizeController: maxSizeController,
-        minSizeFocusNode: minSizeFocusNode,
-        maxSizeFocusNode: maxSizeFocusNode,
-      ),
-    ),
-    SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-  ];
+      SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+      if (current.amenities != null && current.amenities!.isNotEmpty)
+        SliverToBoxAdapter(
+          child: AmenitiesWidget(
+            key: amenitiesKey,
+            amenities: current.amenities!,
+          ),
+        ),
+    ];
+
+    return widgets;
+  }
 }
