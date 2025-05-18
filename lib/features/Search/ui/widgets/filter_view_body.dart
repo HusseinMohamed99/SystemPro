@@ -145,17 +145,16 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                       final filterArgs = FilterResultArguments(
                         category: selectedCategory,
                         buyRentOption: selectedBuyRentOption,
-                        selectedSubcategories:
-                            propertyKey.currentState?.selectedTypes.toList() ??
-                            [],
+                        selectedSubcategories: propertyKey.currentState?.selectedTypes.toList() ?? [],
                         bedrooms: bedroomsKey.currentState?.selectedBedrooms,
                         bathrooms: bathroomsKey.currentState?.selectedBathrooms,
                         minPrice: double.tryParse(minPriceController.text),
                         maxPrice: double.tryParse(maxPriceController.text),
                         minSize: double.tryParse(minSizeController.text),
                         maxSize: double.tryParse(maxSizeController.text),
-                        selectedAmenities:
-                            amenitiesKey.currentState?.selectedAmenityIds ?? [],
+                        selectedAmenities: amenitiesKey.currentState?.selectedAmenityIds ?? [],
+                        // Add debug print statements
+                       
                       );
                       context.pushNamed(
                         Routes.filterResultWidget,
