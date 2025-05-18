@@ -16,43 +16,67 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 375.w,
-      height: 70.h,
-      decoration: ShapeDecoration(
-        color: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.pureWhite,
-          darkColor: ColorManager.tertiaryBlack,
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-        ),
-       
+    final items = bottomNavBarItems(context);
+
+    return Material(
+      elevation: 8,
+      color: AdaptiveColor.adaptiveColor(
+        context: context,
+        lightColor: ColorManager.pureWhite,
+        darkColor: ColorManager.tertiaryBlack,
       ),
-      child: Row(
-        children:
-            bottomNavBarItems(context).asMap().entries.map((entry) {
-              final index = entry.key;
-              final entity = entry.value;
-              return Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    onItemTapped(
-                      index,
-                    );
-                  },
-                  child: NavigationBarItem(
-                    isSelectedItem: currentIndex == index,
-                    bottomNavigationBarEntity: entity,
-                    
-                  ),
-                ),
-              );
-            }).toList(),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+      child: Container(
+        width: double.infinity,
+        height: 70.h,
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(items.length, (index) {
+            final item = items[index];
+            final isSelected = currentIndex == index;
+
+            return Expanded(
+              child: _NavigationBarItemWrapper(
+                index: index,
+                isSelected: isSelected,
+                onTap: onItemTapped,
+                entity: item,
+              ),
+            );
+          }),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavigationBarItemWrapper extends StatelessWidget {
+  const _NavigationBarItemWrapper({
+    required this.index,
+    required this.isSelected,
+    required this.onTap,
+    required this.entity,
+  });
+
+  final int index;
+  final bool isSelected;
+  final ValueChanged<int> onTap;
+  final BottomNavigationBarEntity entity;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onTap(index),
+      borderRadius: BorderRadius.circular(20.r),
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      child: NavigationBarItem(
+        isSelectedItem: isSelected,
+        bottomNavigationBarEntity: entity,
       ),
     );
   }
