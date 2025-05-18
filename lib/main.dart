@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +36,8 @@ void main() async {
       )).isNullOrEmpty();
 
   // 🔧 تحميل الإعدادات من التخزين
-  final savedLocale = CachingHelper.getString(SharedPrefKeys.selectedLanguage);
+  final savedLocale =
+      CachingHelper.getString(SharedPrefKeys.selectedLanguage) ?? 'en';
   final isDarkMode = CachingHelper.getBool(SharedPrefKeys.isDarkMode);
 
   AppConfig.userToken = await CachingHelper.getSecuredString(
@@ -77,7 +77,10 @@ class _AppBootstrapState extends State<AppBootstrap> {
   @override
   void initState() {
     super.initState();
-    _locale = Locale(widget.initialLocale);
+    _locale =
+        widget.initialLocale.isNotEmpty
+            ? Locale(widget.initialLocale)
+            : const Locale('en');
     _themeMode = widget.isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
