@@ -4,7 +4,6 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/core/widgets/textFields/email_form_field_widget.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/widgets/forgot_password_form.dart';
 
 class ForgotPasswordViewBody extends StatelessWidget {

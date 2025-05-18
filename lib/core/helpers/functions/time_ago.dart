@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 
 String timeAdgo(String dateTimeString) {

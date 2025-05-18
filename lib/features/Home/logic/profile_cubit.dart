@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
-import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
 import 'package:system_pro/features/Home/logic/profile_state.dart';

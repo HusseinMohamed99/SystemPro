@@ -38,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Form(
       key: context.read<LoginCubit>().formKey,
       child: Column(
@@ -68,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
               style: context.titleMedium?.copyWith(
                 color: AdaptiveColor.adaptiveColor(
                   context: context,
-                  lightColor:ColorManager.primaryBlue,
+                  lightColor: ColorManager.primaryBlue,
                   darkColor: ColorManager.secondaryBlue,
                 ),
               ),
@@ -78,7 +78,7 @@ class _LoginFormState extends State<LoginForm> {
           CustomButton(
             text: context.localization.login,
             onPressed: () {
-             validateThenDoLogin(context);
+              validateThenDoLogin(context);
             },
           ),
           const Spacer(),
@@ -94,7 +94,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void validateThenDoLogin(BuildContext context) {
+  void validateThenDoLogin(final BuildContext context) {
     if (context.read<LoginCubit>().formKey.currentState!.validate()) {
       context.read<LoginCubit>().emitLoginStates();
     }
