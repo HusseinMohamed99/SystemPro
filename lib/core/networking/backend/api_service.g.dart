@@ -337,16 +337,24 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<MarketplaceResponse> getMarketplaceListings() async {
+  Future<MarketplaceResponse> getMarketplaceListings({
+    required String direction,
+    required int cursor,
+    required int limit,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'direction': direction,
+      r'cursor': cursor,
+      r'limit': limit,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<MarketplaceResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/marketplace/listings',
+            'api/marketplace/listings/cursor',
             queryParameters: queryParameters,
             data: _data,
           )

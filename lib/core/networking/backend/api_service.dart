@@ -63,8 +63,13 @@ abstract class ApiService {
   Future<EditProfileResponse> editProfile(
     @Body() EditProfileRequestBody editProfileRequestBody,
   );
-  @GET(ApiConstants.getMarketplaceListings)
-  Future<MarketplaceResponse> getMarketplaceListings();
+ @GET(ApiConstants.getMarketplaceListings)
+  Future<MarketplaceResponse> getMarketplaceListings({
+    @Query('direction') required String direction,
+    @Query('cursor') required int cursor,
+    @Query('limit') required int limit,
+  });
+
   @POST('${ApiConstants.addFavoriteRealEstate}/{id}')
   Future<ToggleFavoriteResponse> toggleFavorite(@Path('id') int listingId);
   @GET(ApiConstants.getFavoriteRealEstate)

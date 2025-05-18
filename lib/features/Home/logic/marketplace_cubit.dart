@@ -8,92 +8,77 @@ import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 class MarketplaceCubit extends Cubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
     : super(const MarketplaceState.initial());
+
   final MarketplaceRepo _marketplaceRepo;
-  final List<Listing> _allListings = [];
+
   final List<Listing> _visibleListings = [];
   String _currentFilter = '';
-  int _loadedCount = 0;
-  final int _pageSize = 5;
-  List<Listing> get _filteredListings {
-    if (_currentFilter.isEmpty) return _allListings;
-    return _allListings
-        .where(
-          (listing) =>
-              listing.listingType?.toLowerCase() ==
-              _currentFilter.toLowerCase(),
-        )
-        .toList();
-  }
+  bool isLoading = false;
+  bool hasMore = true;
 
-  bool get hasMore => _loadedCount < _filteredListings.length;
+  int _cursor = 0;
+  final int _limit = 5;
+  String _direction = 'next';
+
   Future<void> getListings({String filter = ''}) async {
     emit(const MarketplaceState.loading());
+    _resetPagination();
+    await _fetchListings(filter: filter);
+  }
+
+  Future<void> _fetchListings({String filter = ''}) async {
+    if (isLoading || !hasMore) return;
+    isLoading = true;
+
     try {
-      final result = await _marketplaceRepo.getMarketplaceListings();
+      final result = await _marketplaceRepo.getMarketplaceListings(
+        direction: _direction,
+        cursor: _cursor,
+        limit: _limit,
+      );
+
       await result.when(
         success: (MarketplaceResponse response) async {
-          final all = response.data?.listings ?? [];
-          _allListings
-            ..clear()
-            ..addAll(all);
-          _currentFilter = filter;
+          final newItems = response.data?.listings ?? [];
 
-          // خليها تعرض أول 5 فقط بدل ما تعملي _applyFilter اللي ممكن تعرض الكل مرة واحدة
-          _loadedCount = 0;
-          _visibleListings.clear();
-          final nextItems = _filteredListings.take(_pageSize).toList();
-          _visibleListings.addAll(nextItems);
-          _loadedCount = _visibleListings.length;
+          if (newItems.isEmpty || newItems.length < _limit) {
+            hasMore = false;
+          }
+
+          _currentFilter = filter;
+          _visibleListings.addAll(newItems);
+
+          if (_visibleListings.isNotEmpty) {
+            _cursor = _visibleListings.last.id ?? _cursor;
+          }
 
           emit(MarketplaceState.success(List.from(_visibleListings)));
         },
         failure: (errorHandler) {
           emit(
             MarketplaceState.error(
-              'حدث خطأ في تحميل البيانات:${errorHandler.apiErrorModel.message}',
+              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
             ),
           );
         },
       );
     } catch (error) {
       emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
-    }
-  }
-
-  void _applyFilter(String filter) {
-    _currentFilter = filter;
-    _loadedCount = 0;
-    _visibleListings.clear();
-
-    final filtered = _filteredListings;
-    final nextItems = filtered.take(_pageSize).toList();
-
-    _visibleListings.addAll(nextItems);
-    _loadedCount = _visibleListings.length;
-
-    emit(MarketplaceState.success(List.from(_visibleListings)));
-  }
-
-  void filterListings(String filter) {
-    _applyFilter(filter);
-  }
-
-  bool isLoading = false;
-  Future<void> loadMore() async {
-    if (isLoading || !hasMore) return;
-
-    isLoading = true;
-
-    try {
-      final nextItems =
-          _filteredListings.skip(_loadedCount).take(_pageSize).toList();
-      _visibleListings.addAll(nextItems);
-      _loadedCount = _visibleListings.length;
-
-      emit(MarketplaceState.success(List.from(_visibleListings)));
     } finally {
       isLoading = false;
     }
+  }
+
+  Future<void> loadMore() async {
+    await _fetchListings(filter: _currentFilter);
+  }
+
+  void _resetPagination() {
+    _visibleListings.clear();
+    _cursor = 0;
+    hasMore = true;
+    isLoading = false;
+    _direction = 'next';
   }
 
   void sortListings({
@@ -103,6 +88,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     required String sortType,
   }) {
     if (_visibleListings.isEmpty) return;
+
     if (sortType == newest) {
       _visibleListings.sort((a, b) {
         final aTime = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
@@ -122,26 +108,27 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         return bPrice.compareTo(aPrice);
       });
     }
+
     emit(MarketplaceState.success(List.from(_visibleListings)));
   }
 
   Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
+
       result.when(
         success: (response) {
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
-            // تحديث حالة الـ favorite في _allListings
-            for (var listing in _allListings) {
+
+            for (var listing in _visibleListings) {
               if (listing.id == id) {
                 listing.isFavorite = isFavorited;
                 break;
               }
             }
-            // تحديث _visibleListings بناءً على _allListings و _currentFilter
-            // خاصة لو فيه فلترة مفعلة
-            _applyFilter(_currentFilter);
+
+            emit(MarketplaceState.success(List.from(_visibleListings)));
           } else {
             emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }
@@ -161,20 +148,45 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
+    _resetPagination();
+
     try {
-      final result = await _marketplaceRepo.getMarketplaceListings();
+      final result = await _marketplaceRepo.getMarketplaceListings(
+        direction: _direction,
+        cursor: _cursor,
+        limit: _limit,
+      );
+
       await result.when(
         success: (MarketplaceResponse response) async {
           final all = response.data?.listings ?? [];
-          _allListings
-            ..clear()
-            ..addAll(all);
-          _applyAdvancedFilter(args);
+
+          final filtered =
+              all.where((listing) {
+                final matchCategory =
+                    args.category.isEmpty ||
+                    listing.category?.toLowerCase() ==
+                        args.category.toLowerCase();
+                final matchBedrooms =
+                    args.bedrooms == null || listing.rooms == args.bedrooms;
+                final matchBathrooms =
+                    args.bathrooms == null ||
+                    listing.bathrooms == args.bathrooms;
+                return matchCategory && matchBedrooms && matchBathrooms;
+              }).toList();
+
+          _visibleListings.addAll(filtered);
+          if (_visibleListings.isNotEmpty) {
+            _cursor = _visibleListings.last.id ?? _cursor;
+          }
+
+          hasMore = filtered.length >= _limit;
+          emit(MarketplaceState.success(List.from(_visibleListings)));
         },
         failure: (errorHandler) {
           emit(
             MarketplaceState.error(
-              'حدث خطأ في تحميل البيانات:${errorHandler.apiErrorModel.message}',
+              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
             ),
           );
         },
@@ -184,25 +196,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  void _applyAdvancedFilter(FilterResultArguments args) {
-    emit(const MarketplaceState.loading());
-    _currentFilter = args.category;
-    _loadedCount = 0;
-    _visibleListings.clear();
-    final List<Listing> filtered =
-        _allListings.where((listing) {
-          final matchCategory =
-              args.category.isEmpty ||
-              listing.category?.toLowerCase() == args.category.toLowerCase();
-          final matchBedrooms =
-              args.bedrooms == null || listing.rooms == args.bedrooms;
-          final matchBathrooms =
-              args.bathrooms == null || listing.bathrooms == args.bathrooms;
-          return matchCategory && matchBedrooms && matchBathrooms;
-        }).toList();
-    final nextItems = filtered.skip(_loadedCount).take(_pageSize).toList();
-    _visibleListings.addAll(nextItems);
-    _loadedCount = _visibleListings.length;
-    emit(MarketplaceState.success(List.from(_visibleListings)));
+  Future<void> filterListings(String filter) async {
+    await getListings(filter: filter);
   }
 }

@@ -12,7 +12,14 @@ MarketplaceData _$MarketplaceDataFromJson(Map<String, dynamic> json) =>
           (json['listings'] as List<dynamic>?)
               ?.map((e) => Listing.fromJson(e as Map<String, dynamic>))
               .toList(),
+      pagination:
+          json['pagination'] == null
+              ? null
+              : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MarketplaceDataToJson(MarketplaceData instance) =>
-    <String, dynamic>{'listings': instance.listings};
+    <String, dynamic>{
+      'listings': instance.listings,
+      'pagination': instance.pagination,
+    };

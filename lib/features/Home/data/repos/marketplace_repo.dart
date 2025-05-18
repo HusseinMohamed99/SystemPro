@@ -8,9 +8,17 @@ class MarketplaceRepo {
   MarketplaceRepo(this._apiService);
   final ApiService _apiService;
 
-  Future<ApiResult<MarketplaceResponse>> getMarketplaceListings() async {
+  Future<ApiResult<MarketplaceResponse>> getMarketplaceListings({
+    required String direction,
+    required int cursor,
+    required int limit,
+  }) async {
     try {
-      final response = await _apiService.getMarketplaceListings();
+      final response = await _apiService.getMarketplaceListings(
+        direction: direction,
+        cursor: cursor,
+        limit: limit,
+      );
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));

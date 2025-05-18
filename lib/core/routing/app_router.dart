@@ -115,7 +115,7 @@ class AppRouters {
           },
         );
 
-      case Routes.companyProfileView:
+     case Routes.companyProfileView:
         final int companyId = arguments as int;
 
         return MaterialPageRoute(
@@ -123,11 +123,16 @@ class AppRouters {
               (_) => BlocProvider(
                 create:
                     (context) =>
-                        getIt<RealEstateCubit>()
-                          ..getListingsByCompany(companyId),
+                        getIt<RealEstateCubit>()..getListingsByCompany(
+                          companyId: companyId,
+                          direction: 'next',
+                          cursor: 0,
+                          limit: 5,
+                        ),
                 child: CompanyProfileView(companyID: companyId),
               ),
         );
+
 
       case Routes.realEstateDetailsView:
         return MaterialPageRoute(

@@ -43,9 +43,10 @@ class HomeViewBody extends StatelessWidget {
                     PropertyFiltersRow(
                       filtersToggle: filtersToggle(context),
                       onToggleChanged: (filter) {
-                        BlocProvider.of<MarketplaceCubit>(
+                        final cubit = BlocProvider.of<MarketplaceCubit>(
                           context,
-                        ).filterListings(filter);
+                        );
+                        cubit.filterListings(filter);
                       },
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,

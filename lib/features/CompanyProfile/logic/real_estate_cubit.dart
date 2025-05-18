@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_state.dart';
+import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 
 class RealEstateCubit extends Cubit<RealEstateState> {
@@ -8,60 +9,90 @@ class RealEstateCubit extends Cubit<RealEstateState> {
 
   final MarketplaceRepo _marketplaceRepo;
 
-  void getMarketplaceListings() async {
+  final List<Listing> _companyListings = [];
+  bool isLoading = false;
+  bool hasMore = true;
+  int _cursor = 0;
+  final int _limit = 5;
+  String _direction = 'next';
+  int _currentCompanyId = 0;
+
+  void getListingsByCompany({
+    required int companyId,
+    String direction = 'next',
+    int cursor = 0,
+    int limit = 5,
+  }) async {
     emit(const RealEstateState.loading());
 
-    final response = await _marketplaceRepo.getMarketplaceListings();
+    _resetPagination(companyId);
 
-    response.when(
-      success: (data) {
-        final listings = data.data?.listings ?? [];
-        emit(RealEstateState.filtered(listings));
-      },
-      failure: (error) {
-        emit(RealEstateState.error(error.apiErrorModel.message ?? ''));
-      },
+    await _fetchCompanyListings(
+      companyId: companyId,
+      direction: direction,
+      cursor: cursor,
+      limit: limit,
     );
   }
 
-  void getFilteredListings() async {
-    emit(const RealEstateState.loading());
+  Future<void> loadMoreListingsByCompany() async {
+    if (isLoading || !hasMore) return;
 
-    final response = await _marketplaceRepo.getMarketplaceListings();
-
-    response.when(
-      success: (data) {
-        final listings = data.data?.listings ?? [];
-        final filtered =
-            listings
-                .where((listing) => listing.companyId == listing.company?.id)
-                .toList();
-        emit(RealEstateState.filtered(filtered));
-      },
-      failure: (error) {
-        emit(RealEstateState.error(error.apiErrorModel.message ?? ''));
-      },
+    await _fetchCompanyListings(
+      companyId: _currentCompanyId,
+      direction: _direction,
+      cursor: _cursor,
+      limit: _limit,
     );
   }
 
-  /// ✅ هذه الدالة لحالة CompanyProfileView
-  void getListingsByCompany(int companyId) async {
-    emit(const RealEstateState.loading());
+  Future<void> _fetchCompanyListings({
+    required int companyId,
+    required String direction,
+    required int cursor,
+    required int limit,
+  }) async {
+    isLoading = true;
 
-    final response = await _marketplaceRepo.getMarketplaceListings();
+    final response = await _marketplaceRepo.getMarketplaceListings(
+      direction: direction,
+      cursor: cursor,
+      limit: limit,
+    );
 
     response.when(
       success: (data) {
-        final listings = data.data?.listings ?? [];
+        final allListings = data.data?.listings ?? [];
         final filtered =
-            listings
+            allListings
                 .where((listing) => listing.company?.id == companyId)
                 .toList();
-        emit(RealEstateState.filtered(filtered));
+
+        if (filtered.isEmpty || filtered.length < limit) {
+          hasMore = false;
+        }
+
+        _companyListings.addAll(filtered);
+        if (_companyListings.isNotEmpty) {
+          _cursor = _companyListings.last.id ?? _cursor;
+        }
+
+        emit(RealEstateState.filtered(List.from(_companyListings)));
       },
       failure: (error) {
         emit(RealEstateState.error(error.apiErrorModel.message ?? ''));
       },
     );
+
+    isLoading = false;
+  }
+
+  void _resetPagination(int companyId) {
+    _companyListings.clear();
+    _cursor = 0;
+    hasMore = true;
+    isLoading = false;
+    _direction = 'next';
+    _currentCompanyId = companyId;
   }
 }
