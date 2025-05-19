@@ -32,30 +32,31 @@ class RealEstateImageSlider extends StatefulWidget {
 class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-  late bool isFavorite;
+  late bool localIsFavorite;
 
   @override
   void initState() {
     super.initState();
-    isFavorite = widget.isFavorite;
+    localIsFavorite = widget.isFavorite;
   }
 
   void _toggleFavorite() {
     setState(() {
-      isFavorite = !isFavorite;
+      localIsFavorite = !localIsFavorite;
     });
 
-    // تحديث داخل العنصر نفسه
-    if (widget.listing != null) {
-      widget.listing!.isFavorite = isFavorite;
-    }
-
-    // تنفيذ الدالة الخارجية لو متوفرة (FavoritesView)
     if (widget.onToggleFavorite != null) {
       widget.onToggleFavorite!();
     } else {
-      // fallback على MarketplaceCubit
       context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant RealEstateImageSlider oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isFavorite != oldWidget.isFavorite) {
+      localIsFavorite = widget.isFavorite;
     }
   }
 
@@ -121,9 +122,9 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                 ),
               ),
               child: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
+                localIsFavorite ? Icons.favorite : Icons.favorite_border,
                 color:
-                    isFavorite
+                    localIsFavorite
                         ? ColorManager.brightRed
                         : AdaptiveColor.adaptiveColor(
                           context: context,
