@@ -4,7 +4,6 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
@@ -93,7 +92,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
 
         return Column(
           children: [
-          ToggleCategoryWidget(
+            ToggleCategoryWidget(
               filters: filters(context),
               enabledSlugs:
                   categories.map((e) => e.name).whereType<String>().toList(),
@@ -104,7 +103,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 setState(() => selectedCategoryId = category.id ?? 1);
               },
             ),
-
 
             verticalSpacing(kSpacingXXLarge),
             BuyRentToggleWidget(
@@ -149,6 +147,8 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                     text: context.localization.find,
                     onPressed: () {
                       final filterArgs = FilterResultArguments(
+                        location:
+                            '${widget.locationArgument.district}, ${widget.locationArgument.city}',
                         category: selectedCategoryId ?? 0,
                         listingType: selectedBuyRentOption,
                         selectedSubcategories:
@@ -162,7 +162,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                         selectedAmenities:
                             amenitiesKey.currentState?.selectedAmenityIds ?? [],
                       );
-print('filterArgs: ${filterArgs.category}');
                       context.pushNamed(
                         Routes.filterResultWidget,
                         arguments: filterArgs,

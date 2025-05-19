@@ -10,6 +10,7 @@ class MarketplaceRepo {
 
   Future<ApiResult<MarketplaceResponse>> getMarketplaceListings({
     required String direction,
+     String? location,
      String? listingType,
     required int cursor,
     required int limit,
@@ -38,6 +39,7 @@ class MarketplaceRepo {
         priceMin: priceMin,
         priceMax: priceMax,
         amenities: amenities,
+        location: location,
         
       );
       return ApiResult.success(response);

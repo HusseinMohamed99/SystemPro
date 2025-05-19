@@ -113,6 +113,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         areaMin: args.minSize,
         areaMax: args.maxSize,
         amenities: args.selectedAmenities,
+        location: args.location,
       );
 
       await result.when(
@@ -213,6 +214,8 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         areaMin: args.minSize,
         areaMax: args.maxSize,
         amenities: args.selectedAmenities,
+        location: args.location,
+
       );
 
       await result.when(

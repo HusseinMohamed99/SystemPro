@@ -339,6 +339,7 @@ class _ApiService implements ApiService {
   @override
   Future<MarketplaceResponse> getMarketplaceListings({
     String? listingType,
+    String? location,
     int? categoryID,
     int? subCategoryID,
     int? bedrooms,
@@ -355,6 +356,7 @@ class _ApiService implements ApiService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'listing_type': listingType,
+      r'location': location,
       r'category_id': categoryID,
       r'subcategory_id': subCategoryID,
       r'rooms': bedrooms,

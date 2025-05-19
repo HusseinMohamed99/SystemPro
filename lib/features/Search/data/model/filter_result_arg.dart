@@ -10,9 +10,11 @@ class FilterResultArguments {
     this.minSize,
     this.maxSize,
     this.selectedAmenities,
+    required this.location,
   });
   final int category;
   final String listingType;
+  final String location;
   final int? selectedSubcategories;
   final int? bedrooms;
   final int? bathrooms;

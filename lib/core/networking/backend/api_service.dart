@@ -66,6 +66,7 @@ abstract class ApiService {
   @GET(ApiConstants.getMarketplaceListings)
   Future<MarketplaceResponse> getMarketplaceListings({
     @Query('listing_type') String? listingType,
+    @Query('location') String? location,
     @Query('category_id') int? categoryID,
     @Query('subcategory_id') int? subCategoryID,
     @Query('rooms') int? bedrooms,
