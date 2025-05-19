@@ -22,10 +22,14 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
   String get currentFilter => _currentFilter;
 
-  Future<void> getListings({String filter = ''}) async {
+  Future<void> getListings({String? filter}) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
-    await _fetchListings(filter: filter);
+
+    final effectiveFilter = filter?.isNotEmpty == true ? filter! : 'buy';
+    _currentFilter = effectiveFilter;
+
+    await _fetchListings(filter: effectiveFilter);
   }
 
   Future<void> _fetchListings({String filter = ''}) async {
@@ -41,13 +45,22 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
       await result.when(
         success: (MarketplaceResponse response) async {
-          final newItems = response.data?.listings ?? [];
+          final allItems = response.data?.listings ?? [];
+
+          // ✅ نفلتر النتائج حسب نوع الفلتر (buy/rent)
+          final newItems =
+              allItems
+                  .where(
+                    (listing) =>
+                        listing.listingType?.toLowerCase() ==
+                        filter.toLowerCase(),
+                  )
+                  .toList();
 
           if (newItems.isEmpty || newItems.length < _limit) {
             hasMore = false;
           }
 
-          _currentFilter = filter;
           _visibleListings.addAll(newItems);
 
           if (_visibleListings.isNotEmpty) {

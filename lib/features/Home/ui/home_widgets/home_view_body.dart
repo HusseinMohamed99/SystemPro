@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
-import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
 import 'package:system_pro/features/Home/ui/home_widgets/listings_list_widget.dart';
 import 'package:system_pro/features/Home/ui/home_widgets/property_filters_row.dart';
 import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_button.dart';
-import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -41,14 +38,14 @@ class HomeViewBody extends StatelessWidget {
                 final listings = state.listings;
                 return Column(
                   children: [
-                    PropertyFiltersRow(
+                    PropertyFiltersRow(selectedFilter: state.selectedFilter,
                       filtersToggle: filtersToggle(context),
                       onToggleChanged: (filter) {
                         final cubit = BlocProvider.of<MarketplaceCubit>(
                           context,
                         );
-                        cubit.filterListings(filter);
-                      }, selectedFilter: state.selectedFilter,
+                        cubit.getListings(filter: filter);
+                      }, 
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
                       rightPadding: kPaddingDefaultHorizontal,
