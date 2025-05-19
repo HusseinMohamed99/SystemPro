@@ -7,8 +7,16 @@ import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_item.dart';
 
 class RealEstateSliverList extends StatelessWidget {
-  const RealEstateSliverList({super.key, required this.listings});
+  const RealEstateSliverList({
+    super.key,
+    required this.listings,
+    this.onToggleFavoriteBuilder,
+  });
+
   final List<Listing> listings;
+
+  /// 🆕 Callback function to return the correct toggle handler per listing
+  final VoidCallback Function(Listing listing)? onToggleFavoriteBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +25,13 @@ class RealEstateSliverList extends StatelessWidget {
         final listing = listings[index];
         return GestureDetector(
           onTap: () {
-            context.pushNamed(
-              Routes.realEstateDetailsView,
-              arguments: listings[index],
-            );
+            context.pushNamed(Routes.realEstateDetailsView, arguments: listing);
           },
           child: RealEstateItem(
-            listing: listings[index],
+            listing: listing,
             index: index,
             isFavorite: listing.isFavorite ?? false,
+            onToggleFavorite: onToggleFavoriteBuilder?.call(listing), // 🆕
           ),
         );
       },

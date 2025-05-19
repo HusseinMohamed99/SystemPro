@@ -14,10 +14,14 @@ class RealEstateItem extends StatelessWidget {
     required this.listing,
     required this.index,
     required this.isFavorite,
+    this.onToggleFavorite, // ✅ الجديد
   });
+
   final Listing listing;
   final int index;
   final bool isFavorite;
+  final VoidCallback? onToggleFavorite; // ✅ الجديد
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -37,7 +41,6 @@ class RealEstateItem extends StatelessWidget {
             ),
             width: 1.5.w,
           ),
-
           color: AdaptiveColor.adaptiveColor(
             context: context,
             lightColor: ColorManager.pureWhite,
@@ -52,6 +55,7 @@ class RealEstateItem extends StatelessWidget {
               isFavorite: isFavorite,
               listingId: listing.id ?? 0,
               listing: listing,
+              onToggleFavorite: onToggleFavorite, // ✅ الممرر
             ),
             verticalSpacing(kSpacingSmall),
             RealEstateInfo(

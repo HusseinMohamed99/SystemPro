@@ -10,6 +10,7 @@ class MarketplaceRepo {
 
   Future<ApiResult<MarketplaceResponse>> getMarketplaceListings({
     required String direction,
+    required String listingType,
     required int cursor,
     required int limit,
   }) async {
@@ -18,6 +19,7 @@ class MarketplaceRepo {
         direction: direction,
         cursor: cursor,
         limit: limit,
+        listingType: listingType,
       );
       return ApiResult.success(response);
     } catch (error) {

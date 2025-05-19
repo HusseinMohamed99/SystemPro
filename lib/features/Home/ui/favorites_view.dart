@@ -50,7 +50,8 @@ class _FavoritesViewState extends State<FavoritesView> {
         const CustomDivider(),
         verticalSpacing(kSpacingXLarge),
         Expanded(
-          child: BlocBuilder<FavoriteCubit, FavoriteState>(
+          child: BlocConsumer<FavoriteCubit, FavoriteState>(
+            listener: (context, state) {},
             builder: (context, state) {
               if (state is GetFavoriteLoading) {
                 return const AdaptiveIndicator();

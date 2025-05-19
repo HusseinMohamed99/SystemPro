@@ -5,14 +5,14 @@ import 'package:system_pro/features/Home/logic/favorite_state.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit(this._favoriteRepo) : super(const FavoriteState.initial());
+
   final FavoriteRepo _favoriteRepo;
 
-final List<Listing> _favoriteListings = [];
+  final List<Listing> _favoriteListings = [];
   final List<Listing> _visibleFavorites = [];
   int _loadedCount = 0;
   final int _pageSize = 5;
   bool isLoading = false;
-
 
   bool get hasMore => _loadedCount < _favoriteListings.length;
 
@@ -38,8 +38,11 @@ final List<Listing> _favoriteListings = [];
           emit(FavoriteState.getFavoriteSuccess(List.from(_visibleFavorites)));
         },
         failure: (errorHandler) {
-          emit(FavoriteState.getFavoriteError(
-              'فشل في جلب المفضلات: ${errorHandler.apiErrorModel.message}'));
+          emit(
+            FavoriteState.getFavoriteError(
+              'فشل في جلب المفضلات: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
         },
       );
     } catch (error) {
@@ -63,37 +66,53 @@ final List<Listing> _favoriteListings = [];
     }
   }
 
-  Future<void> toggleFavorite(int id) async {
+  Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _favoriteRepo.toggleFavorite(id);
+
       result.when(
         success: (response) {
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
-            final index =
-                _favoriteListings.indexWhere((listing) => listing.id == id);
+
             if (isFavorited) {
-              // لو تم إضافة للمفضلات
-              if (index == -1) {
-                // إعادة تحميل كامل أو إضافة يدوي (حسب التصميم)
-                getFavoriteListings();
+              final alreadyExists = _favoriteListings.any(
+                (item) => item.id == id,
+              );
+
+              if (!alreadyExists) {
+                if (listing != null) {
+                  _favoriteListings.add(listing);
+                  _visibleFavorites.insert(0, listing);
+                  _loadedCount = _visibleFavorites.length;
+                  emit(
+                    FavoriteState.getFavoriteSuccess(
+                      List.from(_visibleFavorites),
+                    ),
+                  );
+                } else {
+                  getFavoriteListings(); // fallback
+                }
               }
             } else {
-              // لو تم إزالة من المفضلات
-              if (index != -1) {
-                _favoriteListings.removeAt(index);
-                _visibleFavorites.removeWhere((e) => e.id == id);
-                emit(FavoriteState.getFavoriteSuccess(List.from(_visibleFavorites)));
-              }
+              // ✅ حذف من القوائم معًا مباشرة
+              _favoriteListings.removeWhere((e) => e.id == id);
+              _visibleFavorites.removeWhere((e) => e.id == id);
+              _loadedCount = _visibleFavorites.length;
+              emit(
+                FavoriteState.getFavoriteSuccess(List.from(_visibleFavorites)),
+              );
             }
           } else {
             emit(const FavoriteState.getFavoriteError('فشل في تبديل المفضلة'));
           }
         },
         failure: (errorHandler) {
-          emit(FavoriteState.getFavoriteError(
-            'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
-          ));
+          emit(
+            FavoriteState.getFavoriteError(
+              'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
         },
       );
     } catch (error) {

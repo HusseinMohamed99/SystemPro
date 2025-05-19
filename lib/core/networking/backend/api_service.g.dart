@@ -338,12 +338,14 @@ class _ApiService implements ApiService {
 
   @override
   Future<MarketplaceResponse> getMarketplaceListings({
+    required String listingType,
     required String direction,
     required int cursor,
     required int limit,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
+      r'listing_type': listingType,
       r'direction': direction,
       r'cursor': cursor,
       r'limit': limit,

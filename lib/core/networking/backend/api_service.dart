@@ -65,6 +65,7 @@ abstract class ApiService {
   );
  @GET(ApiConstants.getMarketplaceListings)
   Future<MarketplaceResponse> getMarketplaceListings({
+    @Query('listing_type') required String listingType,
     @Query('direction') required String direction,
     @Query('cursor') required int cursor,
     @Query('limit') required int limit,

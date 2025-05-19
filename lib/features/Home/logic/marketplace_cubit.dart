@@ -41,6 +41,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         direction: _direction,
         cursor: _cursor,
         limit: _limit,
+        listingType: filter,
       );
 
       await result.when(
@@ -137,61 +138,62 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  Future<void> fetchAndFilterListings(FilterResultArguments args) async {
-    emit(const MarketplaceState.loading());
-    _resetPagination();
+  // Future<void> fetchAndFilterListings(FilterResultArguments args) async {
+  //   emit(const MarketplaceState.loading());
+  //   _resetPagination();
 
-    try {
-      final result = await _marketplaceRepo.getMarketplaceListings(
-        direction: _direction,
-        cursor: _cursor,
-        limit: _limit,
-      );
+  //   try {
+  //     final result = await _marketplaceRepo.getMarketplaceListings(
+  //       direction: _direction,
+  //       cursor: _cursor,
+  //       limit: _limit,
+  //       listingType: args.filter,
+  //     );
 
-      await result.when(
-        success: (MarketplaceResponse response) async {
-          final all = response.data?.listings ?? [];
+  //     await result.when(
+  //       success: (MarketplaceResponse response) async {
+  //         final all = response.data?.listings ?? [];
 
-          final filtered =
-              all.where((listing) {
-                final matchCategory =
-                    args.category.isEmpty ||
-                    listing.category?.toLowerCase() ==
-                        args.category.toLowerCase();
-                final matchBedrooms =
-                    args.bedrooms == null || listing.rooms == args.bedrooms;
-                final matchBathrooms =
-                    args.bathrooms == null ||
-                    listing.bathrooms == args.bathrooms;
-                return matchCategory && matchBedrooms && matchBathrooms;
-              }).toList();
+  //         final filtered =
+  //             all.where((listing) {
+  //               final matchCategory =
+  //                   args.category.isEmpty ||
+  //                   listing.category?.toLowerCase() ==
+  //                       args.category.toLowerCase();
+  //               final matchBedrooms =
+  //                   args.bedrooms == null || listing.rooms == args.bedrooms;
+  //               final matchBathrooms =
+  //                   args.bathrooms == null ||
+  //                   listing.bathrooms == args.bathrooms;
+  //               return matchCategory && matchBedrooms && matchBathrooms;
+  //             }).toList();
 
-          _visibleListings.addAll(filtered);
-          if (_visibleListings.isNotEmpty) {
-            _cursor = _visibleListings.last.id ?? _cursor;
-          }
+  //         _visibleListings.addAll(filtered);
+  //         if (_visibleListings.isNotEmpty) {
+  //           _cursor = _visibleListings.last.id ?? _cursor;
+  //         }
 
-          hasMore = filtered.length >= _limit;
+  //         hasMore = filtered.length >= _limit;
 
-          emit(
-            MarketplaceState.success(
-              listings: List.from(_visibleListings),
-              selectedFilter: _currentFilter,
-            ),
-          );
-        },
-        failure: (errorHandler) {
-          emit(
-            MarketplaceState.error(
-              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
-            ),
-          );
-        },
-      );
-    } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
-    }
-  }
+  //         emit(
+  //           MarketplaceState.success(
+  //             listings: List.from(_visibleListings),
+  //             selectedFilter: _currentFilter,
+  //           ),
+  //         );
+  //       },
+  //       failure: (errorHandler) {
+  //         emit(
+  //           MarketplaceState.error(
+  //             'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
+  //           ),
+  //         );
+  //       },
+  //     );
+  //   } catch (error) {
+  //     emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+  //   }
+  // }
 
   Future<void> filterListings(String filter) async {
     _currentFilter = filter;

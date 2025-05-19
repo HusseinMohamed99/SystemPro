@@ -16,11 +16,14 @@ class RealEstateImageSlider extends StatefulWidget {
     required this.isFavorite,
     required this.listingId,
     required this.listing,
+    this.onToggleFavorite,
   });
+
   final List<ListingImage>? images;
   final bool isFavorite;
   final int listingId;
   final Listing? listing;
+  final VoidCallback? onToggleFavorite;
 
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
@@ -42,13 +45,18 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
       isFavorite = !isFavorite;
     });
 
-    // تحديث القيمة داخل الـ Listing نفسه (لو مش null)
+    // تحديث داخل العنصر نفسه
     if (widget.listing != null) {
       widget.listing!.isFavorite = isFavorite;
     }
 
-    // نبلغ الـ Cubit علشان يعمل التحديث على مستوى backend
-    context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
+    // تنفيذ الدالة الخارجية لو متوفرة (FavoritesView)
+    if (widget.onToggleFavorite != null) {
+      widget.onToggleFavorite!();
+    } else {
+      // fallback على MarketplaceCubit
+      context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
+    }
   }
 
   @override
@@ -127,38 +135,39 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             ),
           ),
         ),
-        Positioned(
-          bottom: 8.h,
-          left: 0,
-          right: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(widget.images?.length ?? 0, (index) {
-              final isActive = index == _currentIndex;
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                margin: const EdgeInsetsDirectional.symmetric(horizontal: 4),
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color:
-                      isActive
-                          ? AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.primaryBlue,
-                            darkColor: ColorManager.secondaryBlue,
-                          )
-                          : AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.softWhite,
-                            darkColor: ColorManager.pureWhite,
-                          ),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              );
-            }),
+        if ((widget.images?.length ?? 0) > 1)
+          Positioned(
+            bottom: 8.h,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(widget.images?.length ?? 0, (index) {
+                final isActive = index == _currentIndex;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsetsDirectional.symmetric(horizontal: 4),
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color:
+                        isActive
+                            ? AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.primaryBlue,
+                              darkColor: ColorManager.secondaryBlue,
+                            )
+                            : AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.softWhite,
+                              darkColor: ColorManager.pureWhite,
+                            ),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                );
+              }),
+            ),
           ),
-        ),
       ],
     );
   }

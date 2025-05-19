@@ -31,9 +31,9 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
     super.didChangeDependencies();
     if (_isFirstBuild) {
       _isFirstBuild = false;
-      BlocProvider.of<MarketplaceCubit>(
-        context,
-      ).fetchAndFilterListings(widget.arguments);
+      BlocProvider.of<MarketplaceCubit>(context);
+
+      // .fetchAndFilterListings(widget.arguments);
     }
   }
 

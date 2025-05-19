@@ -8,8 +8,11 @@ class FavoriteState with _$FavoriteState {
   const factory FavoriteState.initial() = FavoriteInitial;
 
   const factory FavoriteState.getFavoriteLoading() = GetFavoriteLoading;
+
+  /// تم تحميل أو تحديث قائمة المفضلات بنجاح
   const factory FavoriteState.getFavoriteSuccess(List<Listing> listings) =
       GetFavoriteSuccess;
 
+  /// فشل تحميل أو تحديث المفضلات
   const factory FavoriteState.getFavoriteError(String error) = GetFavoriteError;
 }
