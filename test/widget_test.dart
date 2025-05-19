@@ -13,7 +13,13 @@ import 'package:system_pro/system_pro.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(SystemProApp(appRouter: AppRouters()));
+    await tester.pumpWidget(
+      SystemProApp(
+        appRouter: AppRouters(),
+        locale: const Locale('en'),
+        themeMode: ThemeMode.light,
+      ),
+    );
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
