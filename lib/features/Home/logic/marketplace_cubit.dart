@@ -124,45 +124,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  Future<void> toggleFavorite(int id) async {
-    try {
-      final result = await _marketplaceRepo.toggleFavorite(id);
-
-      result.when(
-        success: (response) {
-          if (response.status == 'success') {
-            final isFavorited = response.data?.isFavorited ?? false;
-
-            for (var listing in _visibleListings) {
-              if (listing.id == id) {
-                listing.isFavorite = isFavorited;
-                break;
-              }
-            }
-
-            emit(
-              MarketplaceState.success(
-                listings: List.from(_visibleListings),
-                selectedFilter: _currentFilter,
-              ),
-            );
-          } else {
-            emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
-          }
-        },
-        failure: (errorHandler) {
-          emit(
-            MarketplaceState.error(
-              'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
-            ),
-          );
-        },
-      );
-    } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
-    }
-  }
-
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
@@ -219,7 +180,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
- Future<void> filterListings(String filter) async {
+  Future<void> filterListings(String filter) async {
     _currentFilter = filter;
 
     final filtered =
@@ -235,4 +196,43 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
+  /// FAVORITES
+  Future<void> toggleFavorite(int id) async {
+    try {
+      final result = await _marketplaceRepo.toggleFavorite(id);
+
+      result.when(
+        success: (response) {
+          if (response.status == 'success') {
+            final isFavorited = response.data?.isFavorited ?? false;
+
+            for (var listing in _visibleListings) {
+              if (listing.id == id) {
+                listing.isFavorite = isFavorited;
+                break;
+              }
+            }
+
+            emit(
+              MarketplaceState.success(
+                listings: List.from(_visibleListings),
+                selectedFilter: _currentFilter,
+              ),
+            );
+          } else {
+            emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
+          }
+        },
+        failure: (errorHandler) {
+          emit(
+            MarketplaceState.error(
+              'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (error) {
+      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+    }
+  }
 }
