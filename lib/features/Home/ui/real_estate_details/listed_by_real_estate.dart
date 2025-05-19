@@ -66,7 +66,7 @@ class ListedByWidget extends StatelessWidget {
                 onTap: () {
                   context.pushNamed(
                     Routes.companyProfileView,
-                    arguments: company,
+                    arguments: company.id,
                   );
                 },
                 child: Text(
