@@ -17,7 +17,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   bool hasMore = true;
 
   int _cursor = 0;
-  final int _limit = 5;
+  int _limit = 5;
   String _direction = 'next';
 
   String get currentFilter => _currentFilter;
@@ -93,9 +93,66 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     await _fetchListings(filter: _currentFilter);
   }
 
+  Future<void> loadMoreWithArgs(FilterResultArguments args) async {
+    if (isLoading || !hasMore) return;
+    isLoading = true;
+    _limit += 5;
+
+    try {
+      final result = await _marketplaceRepo.getMarketplaceListings(
+        direction: _direction,
+        cursor: _cursor,
+        limit: _limit,
+        listingType: args.listingType,
+        categoryID: args.category,
+        subCategoryID: args.selectedSubcategories,
+        bedrooms: args.bedrooms,
+        bathrooms: args.bathrooms,
+        priceMin: args.minPrice,
+        priceMax: args.maxPrice,
+        areaMin: args.minSize,
+        areaMax: args.maxSize,
+        amenities: args.selectedAmenities,
+      );
+
+      await result.when(
+        success: (MarketplaceResponse response) async {
+          final newItems = response.data?.listings ?? [];
+
+          _visibleListings.addAll(newItems);
+
+          if (_visibleListings.isNotEmpty) {
+            _cursor = _visibleListings.last.id ?? _cursor;
+          }
+
+          hasMore = newItems.length >= _limit;
+
+          emit(
+            MarketplaceState.success(
+              listings: List.from(_visibleListings),
+              selectedFilter: _currentFilter,
+            ),
+          );
+        },
+        failure: (errorHandler) {
+          emit(
+            MarketplaceState.error(
+              'حدث خطأ في تحميل المزيد: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (error) {
+      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+    } finally {
+      isLoading = false;
+    }
+  }
+
   void _resetPagination() {
     _visibleListings.clear();
     _cursor = 0;
+    _limit = 5;
     hasMore = true;
     isLoading = false;
     _direction = 'next';
@@ -153,80 +210,22 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         bathrooms: args.bathrooms,
         priceMin: args.minPrice,
         priceMax: args.maxPrice,
-        areaMax: args.maxSize,
         areaMin: args.minSize,
+        areaMax: args.maxSize,
         amenities: args.selectedAmenities,
-
       );
 
       await result.when(
         success: (MarketplaceResponse response) async {
-          final all = response.data?.listings ?? [];
+          final newItems = response.data?.listings ?? [];
 
-          final filtered =
-              all.where((listing) {
-                final listingPrice =
-                    double.tryParse(listing.price ?? '0') ?? 0.0;
-                final listingArea =
-                    double.tryParse(listing.area?.toString() ?? '0') ?? 0.0;
-
-                final matchCategory =
-                    args.category == 0 || listing.categoryId == args.category;
-                final matchBedrooms =
-                    args.bedrooms == null || listing.rooms == args.bedrooms;
-                final matchBathrooms =
-                    args.bathrooms == null ||
-                    listing.bathrooms == args.bathrooms;
-
-                final matchMinPrice =
-                    args.minPrice is num
-                        ? listingPrice >= (args.minPrice as num)
-                        : true;
-                final matchMaxPrice =
-                    args.maxPrice is num
-                        ? listingPrice <= (args.maxPrice as num)
-                        : true;
-                final matchMinSize =
-                    args.minSize is num
-                        ? listingArea >= (args.minSize as num)
-                        : true;
-                final matchMaxSize =
-                    args.maxSize is num
-                        ? listingArea <= (args.maxSize as num)
-                        : true;
-
-                final matchAmenities =
-                    args.selectedAmenities == null ||
-                    args.selectedAmenities!.every(
-                      (id) =>
-                          listing.amenities
-                              ?.map((a) => a.id)
-                              .whereType<int>()
-                              .contains(id) ??
-                          false,
-                    );
-final matchSubcategories =
-                    args.selectedSubcategories == null ||
-                    listing.subcategoryId == args.selectedSubcategories;
-
-                return matchCategory &&
-                    matchBedrooms &&
-                    matchBathrooms &&
-                    matchMinPrice &&
-                    matchMaxPrice &&
-                    matchMinSize &&
-                    matchMaxSize &&
-                    matchAmenities &&
-                    matchSubcategories;
-              }).toList();
-
-          _visibleListings.addAll(filtered);
+          _visibleListings.addAll(newItems);
 
           if (_visibleListings.isNotEmpty) {
             _cursor = _visibleListings.last.id ?? _cursor;
           }
 
-          hasMore = filtered.length >= _limit;
+          hasMore = newItems.length >= _limit;
 
           emit(
             MarketplaceState.success(

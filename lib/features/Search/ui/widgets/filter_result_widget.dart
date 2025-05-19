@@ -76,7 +76,12 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
                   rightPadding: kPaddingDefaultHorizontal,
                   topPadding: kPaddingDefaultVertical,
                 ),
-                Expanded(child: ListingsListFilter(listings: listings)),
+                Expanded(
+                  child: ListingsListFilter(
+                    listings: listings,
+                    arguments: widget.arguments,
+                  ),
+                ),
               ],
             );
           }
@@ -89,8 +94,13 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
 }
 
 class ListingsListFilter extends StatelessWidget {
-  const ListingsListFilter({super.key, required this.listings});
+  const ListingsListFilter({
+    super.key,
+    required this.listings,
+    required this.arguments,
+  });
   final List<Listing> listings;
+  final FilterResultArguments arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +110,7 @@ class ListingsListFilter extends StatelessWidget {
       onNotification: (scrollInfo) {
         if (scrollInfo.metrics.pixels >=
             scrollInfo.metrics.maxScrollExtent - 200) {
-          cubit.loadMore();
+          cubit.loadMoreWithArgs(arguments);
         }
         return false;
       },
