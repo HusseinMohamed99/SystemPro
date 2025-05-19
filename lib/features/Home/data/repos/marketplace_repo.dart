@@ -10,9 +10,18 @@ class MarketplaceRepo {
 
   Future<ApiResult<MarketplaceResponse>> getMarketplaceListings({
     required String direction,
-    required String listingType,
+     String? listingType,
     required int cursor,
     required int limit,
+     int? categoryID,
+     int? subCategoryID,
+     int? bedrooms,
+     int? bathrooms,
+     num? areaMin,
+     num? areaMax,
+     num? priceMin,
+     num? priceMax,
+     List<int>? amenities
   }) async {
     try {
       final response = await _apiService.getMarketplaceListings(
@@ -20,6 +29,16 @@ class MarketplaceRepo {
         cursor: cursor,
         limit: limit,
         listingType: listingType,
+        categoryID: categoryID,
+        subCategoryID: subCategoryID,
+        bedrooms: bedrooms,
+        bathrooms: bathrooms,
+        areaMin: areaMin,
+        areaMax: areaMax,
+        priceMin: priceMin,
+        priceMax: priceMax,
+        amenities: amenities,
+        
       );
       return ApiResult.success(response);
     } catch (error) {

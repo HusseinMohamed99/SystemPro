@@ -48,7 +48,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         success: (MarketplaceResponse response) async {
           final allItems = response.data?.listings ?? [];
 
-          // ✅ نفلتر النتائج حسب نوع الفلتر (buy/rent)
           final newItems =
               allItems
                   .where(
@@ -138,70 +137,127 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  // Future<void> fetchAndFilterListings(FilterResultArguments args) async {
-  //   emit(const MarketplaceState.loading());
-  //   _resetPagination();
+  Future<void> fetchAndFilterListings(FilterResultArguments args) async {
+    emit(const MarketplaceState.loading());
+    _resetPagination();
 
-  //   try {
-  //     final result = await _marketplaceRepo.getMarketplaceListings(
-  //       direction: _direction,
-  //       cursor: _cursor,
-  //       limit: _limit,
-  //       listingType: args.filter,
-  //     );
+    try {
+      final result = await _marketplaceRepo.getMarketplaceListings(
+        direction: _direction,
+        cursor: _cursor,
+        limit: _limit,
+        listingType: args.listingType,
+        categoryID: args.category,
+        subCategoryID: args.selectedSubcategories,
+        bedrooms: args.bedrooms,
+        bathrooms: args.bathrooms,
+        priceMin: args.minPrice,
+        priceMax: args.maxPrice,
+        areaMax: args.maxSize,
+        areaMin: args.minSize,
+        amenities: args.selectedAmenities,
 
-  //     await result.when(
-  //       success: (MarketplaceResponse response) async {
-  //         final all = response.data?.listings ?? [];
+      );
 
-  //         final filtered =
-  //             all.where((listing) {
-  //               final matchCategory =
-  //                   args.category.isEmpty ||
-  //                   listing.category?.toLowerCase() ==
-  //                       args.category.toLowerCase();
-  //               final matchBedrooms =
-  //                   args.bedrooms == null || listing.rooms == args.bedrooms;
-  //               final matchBathrooms =
-  //                   args.bathrooms == null ||
-  //                   listing.bathrooms == args.bathrooms;
-  //               return matchCategory && matchBedrooms && matchBathrooms;
-  //             }).toList();
+      await result.when(
+        success: (MarketplaceResponse response) async {
+          final all = response.data?.listings ?? [];
 
-  //         _visibleListings.addAll(filtered);
-  //         if (_visibleListings.isNotEmpty) {
-  //           _cursor = _visibleListings.last.id ?? _cursor;
-  //         }
+          final filtered =
+              all.where((listing) {
+                final listingPrice =
+                    double.tryParse(listing.price ?? '0') ?? 0.0;
+                final listingArea =
+                    double.tryParse(listing.area?.toString() ?? '0') ?? 0.0;
 
-  //         hasMore = filtered.length >= _limit;
+                final matchCategory =
+                    args.category == 0 || listing.categoryId == args.category;
+                final matchBedrooms =
+                    args.bedrooms == null || listing.rooms == args.bedrooms;
+                final matchBathrooms =
+                    args.bathrooms == null ||
+                    listing.bathrooms == args.bathrooms;
 
-  //         emit(
-  //           MarketplaceState.success(
-  //             listings: List.from(_visibleListings),
-  //             selectedFilter: _currentFilter,
-  //           ),
-  //         );
-  //       },
-  //       failure: (errorHandler) {
-  //         emit(
-  //           MarketplaceState.error(
-  //             'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
-  //           ),
-  //         );
-  //       },
-  //     );
-  //   } catch (error) {
-  //     emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
-  //   }
-  // }
+                final matchMinPrice =
+                    args.minPrice is num
+                        ? listingPrice >= (args.minPrice as num)
+                        : true;
+                final matchMaxPrice =
+                    args.maxPrice is num
+                        ? listingPrice <= (args.maxPrice as num)
+                        : true;
+                final matchMinSize =
+                    args.minSize is num
+                        ? listingArea >= (args.minSize as num)
+                        : true;
+                final matchMaxSize =
+                    args.maxSize is num
+                        ? listingArea <= (args.maxSize as num)
+                        : true;
+
+                final matchAmenities =
+                    args.selectedAmenities == null ||
+                    args.selectedAmenities!.every(
+                      (id) =>
+                          listing.amenities
+                              ?.map((a) => a.id)
+                              .whereType<int>()
+                              .contains(id) ??
+                          false,
+                    );
+final matchSubcategories =
+                    args.selectedSubcategories == null ||
+                    listing.subcategoryId == args.selectedSubcategories;
+
+                return matchCategory &&
+                    matchBedrooms &&
+                    matchBathrooms &&
+                    matchMinPrice &&
+                    matchMaxPrice &&
+                    matchMinSize &&
+                    matchMaxSize &&
+                    matchAmenities &&
+                    matchSubcategories;
+              }).toList();
+
+          _visibleListings.addAll(filtered);
+
+          if (_visibleListings.isNotEmpty) {
+            _cursor = _visibleListings.last.id ?? _cursor;
+          }
+
+          hasMore = filtered.length >= _limit;
+
+          emit(
+            MarketplaceState.success(
+              listings: List.from(_visibleListings),
+              selectedFilter: _currentFilter,
+            ),
+          );
+        },
+        failure: (errorHandler) {
+          emit(
+            MarketplaceState.error(
+              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (error) {
+      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+    }
+  }
 
   Future<void> filterListings(String filter) async {
     _currentFilter = filter;
 
     final filtered =
-        _visibleListings.where((listing) {
-          return listing.listingType?.toLowerCase() == filter.toLowerCase();
-        }).toList();
+        _visibleListings
+            .where(
+              (listing) =>
+                  listing.listingType?.toLowerCase() == filter.toLowerCase(),
+            )
+            .toList();
 
     emit(
       MarketplaceState.success(
@@ -211,7 +267,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// FAVORITES
   Future<void> toggleFavorite(int id) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);

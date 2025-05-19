@@ -19,21 +19,18 @@ class PropertyTypeWidget extends StatefulWidget {
 }
 
 class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
-  final Set<String> selectedTypes =
-      {}; // This is where selected types are stored
+  int? selectedTypeId; // ✅ بدل Set -> اختيار واحد فقط
   bool showAll = false;
 
   void clearSelection() {
-    setState(selectedTypes.clear);
+    setState(() => selectedTypeId = null);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Display only the first 5 items unless `showAll` is true
     final typesToShow =
         showAll ? widget.subcategories : widget.subcategories?.take(5).toList();
 
-    // If there are no subcategories, show an error
     if (widget.subcategories == null || widget.subcategories!.isEmpty) {
       return CustomErrorWidget(
         errorMessage: context.localization.no_data_found,
@@ -54,7 +51,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
           spacing: 5.w,
           children:
               typesToShow!.map((subcategory) {
-                final isSelected = selectedTypes.contains(subcategory.name);
+                final isSelected = selectedTypeId == subcategory.id;
                 return FilterChip(
                   showCheckmark: false,
                   label: Text(
@@ -87,13 +84,17 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                               darkColor: ColorManager.tertiaryBlack,
                             ),
                           ),
-                  selected: selectedTypes.contains(subcategory.name),
-                  onSelected: (selected) {
+                  selected: isSelected,
+                  onSelected: (_) {
                     setState(() {
-                      if (selected) {
-                        selectedTypes.add(subcategory.name ?? '');
+                      final id = subcategory.id;
+                      if (id == null) return;
+
+                      // ✅ Toggle selection logic
+                      if (selectedTypeId == id) {
+                        selectedTypeId = null;
                       } else {
-                        selectedTypes.remove(subcategory.name ?? '');
+                        selectedTypeId = id;
                       }
                     });
                   },
@@ -102,11 +103,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
         ),
         if ((widget.subcategories?.length ?? 0) > 5)
           GestureDetector(
-            onTap: () {
-              setState(() {
-                showAll = !showAll;
-              });
-            },
+            onTap: () => setState(() => showAll = !showAll),
             child: Text(
               showAll
                   ? context.localization.show_less

@@ -63,9 +63,18 @@ abstract class ApiService {
   Future<EditProfileResponse> editProfile(
     @Body() EditProfileRequestBody editProfileRequestBody,
   );
- @GET(ApiConstants.getMarketplaceListings)
+  @GET(ApiConstants.getMarketplaceListings)
   Future<MarketplaceResponse> getMarketplaceListings({
-    @Query('listing_type') required String listingType,
+    @Query('listing_type') String? listingType,
+    @Query('category_id') int? categoryID,
+    @Query('subcategory_id') int? subCategoryID,
+    @Query('rooms') int? bedrooms,
+    @Query('bathsrooms') int? bathrooms,
+    @Query('area_min') num? areaMin,
+    @Query('area_max') num? areaMax,
+    @Query('price_min') num? priceMin,
+    @Query('price_max') num ?priceMax,
+    @Query('amenities') List<int>? amenities,
     @Query('direction') required String direction,
     @Query('cursor') required int cursor,
     @Query('limit') required int limit,

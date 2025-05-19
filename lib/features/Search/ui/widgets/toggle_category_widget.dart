@@ -9,10 +9,12 @@ class ToggleCategoryWidget extends StatefulWidget {
     super.key,
     required this.onCategoryChanged,
     required this.filters,
+    required this.enabledSlugs,
   });
 
   final Function(String selectedSlug) onCategoryChanged;
   final Map<String, String> filters;
+  final List<String> enabledSlugs;
 
   @override
   State<ToggleCategoryWidget> createState() => _ToggleCategoryWidgetState();
@@ -25,9 +27,13 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
   void initState() {
     super.initState();
     selectedDisplay = widget.filters.keys.first;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        widget.onCategoryChanged(widget.filters[selectedDisplay]!);
+        final initialSlug = widget.filters[selectedDisplay]!;
+        if (widget.enabledSlugs.contains(initialSlug)) {
+          widget.onCategoryChanged(initialSlug);
+        }
       }
     });
   }
@@ -49,6 +55,7 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
               final displayName = entry.key;
               final slug = entry.value;
               final isSelected = selectedDisplay == displayName;
+              final isEnabled = widget.enabledSlugs.contains(slug);
 
               return Expanded(
                 child: AnimatedSwitcher(
@@ -58,14 +65,7 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                   },
                   child: ChoiceChip(
                     key: ValueKey(displayName),
-                    side: BorderSide(
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.shadowBlue,
-                        darkColor: ColorManager.tertiaryBlack,
-                      ),
-                    ),
-                    labelPadding: EdgeInsets.symmetric(vertical: 4.h),
+                    labelPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
                     label: SizedBox(
                       width: double.infinity,
                       child: Text(
@@ -75,39 +75,44 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                           color:
                               isSelected
                                   ? ColorManager.pureWhite
-                                  : AdaptiveColor.adaptiveColor(
+                                  : isEnabled
+                                  ? AdaptiveColor.adaptiveColor(
                                     context: context,
                                     lightColor: ColorManager.primaryBlue,
                                     darkColor: ColorManager.iconGrey,
-                                  ),
+                                  )
+                                  : ColorManager.iconGrey,
                           fontWeight: FontWeightHelper.medium,
                         ),
                       ),
                     ),
                     selected: isSelected,
-                    onSelected: (_) {
-                      setState(() {
-                        selectedDisplay = displayName;
-                        widget.onCategoryChanged(slug);
-                      });
-                    
-                  
-                    },
+                    onSelected:
+                        isEnabled
+                            ? (_) {
+                              setState(() {
+                                selectedDisplay = displayName;
+                                widget.onCategoryChanged(slug);
+                              });
+                            }
+                            : null,
                     selectedColor: ColorManager.primaryBlue,
                     backgroundColor: AdaptiveColor.adaptiveColor(
                       context: context,
                       lightColor: ColorManager.shadowBlue,
                       darkColor: ColorManager.tertiaryBlack,
                     ),
+                    disabledColor: ColorManager.darkGrey,
+                    side: BorderSide(
+                      width: 0,
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.tertiaryBlack,
+                        darkColor: ColorManager.tertiaryBlack,
+                      ),
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100),
-                      side: BorderSide(
-                        color: AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.borderGrey,
-                          darkColor: ColorManager.tertiaryBlack,
-                        ),
-                      ),
                     ),
                     showCheckmark: false,
                   ),

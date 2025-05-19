@@ -31,14 +31,13 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
     super.didChangeDependencies();
     if (_isFirstBuild) {
       _isFirstBuild = false;
-      BlocProvider.of<MarketplaceCubit>(context);
-
-      // .fetchAndFilterListings(widget.arguments);
+      context.read<MarketplaceCubit>().fetchAndFilterListings(widget.arguments);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    print('filterArgs: ${widget.arguments.category}');
     return Scaffold(
       appBar: customSecondaryAppBar(
         context,
@@ -95,7 +94,7 @@ class ListingsListFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<MarketplaceCubit>(context);
+    final cubit = context.read<MarketplaceCubit>();
 
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {

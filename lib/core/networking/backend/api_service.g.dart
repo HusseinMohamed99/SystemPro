@@ -338,7 +338,16 @@ class _ApiService implements ApiService {
 
   @override
   Future<MarketplaceResponse> getMarketplaceListings({
-    required String listingType,
+    String? listingType,
+    int? categoryID,
+    int? subCategoryID,
+    int? bedrooms,
+    int? bathrooms,
+    num? areaMin,
+    num? areaMax,
+    num? priceMin,
+    num? priceMax,
+    List<int>? amenities,
     required String direction,
     required int cursor,
     required int limit,
@@ -346,10 +355,20 @@ class _ApiService implements ApiService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'listing_type': listingType,
+      r'category_id': categoryID,
+      r'subcategory_id': subCategoryID,
+      r'rooms': bedrooms,
+      r'bathsrooms': bathrooms,
+      r'area_min': areaMin,
+      r'area_max': areaMax,
+      r'price_min': priceMin,
+      r'price_max': priceMax,
+      r'amenities': amenities,
       r'direction': direction,
       r'cursor': cursor,
       r'limit': limit,
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<MarketplaceResponse>(

@@ -41,7 +41,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   final amenitiesKey = GlobalKey<AmenitiesWidgetState>();
   final propertyKey = GlobalKey<PropertyTypeWidgetState>();
 
-  String selectedCategory = 'residential';
+  int selectedCategoryId = 1;
   String selectedBuyRentOption = 'buy';
 
   final minPriceController = TextEditingController();
@@ -93,13 +93,19 @@ class _FilterViewBodyState extends State<FilterViewBody> {
 
         return Column(
           children: [
-            ToggleCategoryWidget(
+          ToggleCategoryWidget(
               filters: filters(context),
-              onCategoryChanged: (category) {
-                setState(() => selectedCategory = category);
-                AppLogs.successLog('Category changed to $category');
+              enabledSlugs:
+                  categories.map((e) => e.name).whereType<String>().toList(),
+              onCategoryChanged: (slug) {
+                final category = categories.firstWhere(
+                  (cat) => cat.name == slug,
+                );
+                setState(() => selectedCategoryId = category.id ?? 1);
               },
             ),
+
+
             verticalSpacing(kSpacingXXLarge),
             BuyRentToggleWidget(
               filtersToggle: filtersToggle(context),
@@ -143,19 +149,20 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                     text: context.localization.find,
                     onPressed: () {
                       final filterArgs = FilterResultArguments(
-                        category: selectedCategory,
-                        buyRentOption: selectedBuyRentOption,
-                        selectedSubcategories: propertyKey.currentState?.selectedTypes.toList() ?? [],
+                        category: selectedCategoryId ?? 0,
+                        listingType: selectedBuyRentOption,
+                        selectedSubcategories:
+                            propertyKey.currentState?.selectedTypeId,
                         bedrooms: bedroomsKey.currentState?.selectedBedrooms,
                         bathrooms: bathroomsKey.currentState?.selectedBathrooms,
                         minPrice: double.tryParse(minPriceController.text),
                         maxPrice: double.tryParse(maxPriceController.text),
                         minSize: double.tryParse(minSizeController.text),
                         maxSize: double.tryParse(maxSizeController.text),
-                        selectedAmenities: amenitiesKey.currentState?.selectedAmenityIds ?? [],
-                        // Add debug print statements
-                       
+                        selectedAmenities:
+                            amenitiesKey.currentState?.selectedAmenityIds ?? [],
                       );
+print('filterArgs: ${filterArgs.category}');
                       context.pushNamed(
                         Routes.filterResultWidget,
                         arguments: filterArgs,
@@ -175,7 +182,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
     if (categories.isEmpty) return [];
 
     final Category current = categories.firstWhere(
-      (cat) => cat.name == selectedCategory,
+      (cat) => cat.id == selectedCategoryId,
       orElse: () => categories.first,
     );
 
@@ -200,7 +207,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
         ),
       ),
       SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-      if (selectedCategory == context.localization.residentail) ...[
+      if (current.name == context.localization.residentail) ...[
         SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
         SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),

@@ -1,24 +1,24 @@
 class FilterResultArguments {
   FilterResultArguments({
     required this.category,
-    required this.buyRentOption,
-    required this.selectedSubcategories,
+    required this.listingType,
+    this.selectedSubcategories,
     this.bedrooms,
     this.bathrooms,
     this.minPrice,
     this.maxPrice,
     this.minSize,
     this.maxSize,
-    required this.selectedAmenities,
+    this.selectedAmenities,
   });
-  final String category;
-  final String buyRentOption;
-  final List<String> selectedSubcategories;
+  final int category;
+  final String listingType;
+  final int? selectedSubcategories;
   final int? bedrooms;
   final int? bathrooms;
-  final double? minPrice;
-  final double? maxPrice;
-  final double? minSize;
-  final double? maxSize;
-  final List<int> selectedAmenities;
+  final num? minPrice;
+  final num? maxPrice;
+  final num? minSize;
+  final num? maxSize;
+  final List<int>? selectedAmenities;
 }
