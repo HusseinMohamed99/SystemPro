@@ -125,9 +125,6 @@ class AppRouters {
                     (context) =>
                         getIt<RealEstateCubit>()..getListingsByCompany(
                           companyId: companyId,
-                          direction: 'next',
-                          cursor: 0,
-                          limit: 5,
                         ),
                 child: CompanyProfileView(companyID: companyId),
               ),
