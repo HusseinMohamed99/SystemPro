@@ -38,21 +38,21 @@ Easily scalable, responsive, and built with clean architecture principles.
 
 lib/
 ├── core/                     # App-wide utilities, constants, theming, extensions
-│   ├── helpers/             # Common helper functions (e.g., time, formatting)
-│   ├── theming/            # App colors, text styles, dimensions
-│   ├── routing/            # Route names and navigation helpers
-│   └── widgets/            # Reusable shared widgets (e.g., buttons, images, loaders)
-
-├── features/                # Feature-based module organization
+│   ├── helpers/              # Common helper functions (e.g., time, formatting)
+│   ├── theming/              # App colors, text styles, dimensions
+│   ├── routing/              # Route names and navigation helpers
+│   └── widgets/              # Reusable shared widgets (e.g., buttons, images, loaders)
+│
+├── features/                 # Feature-based module organization
 │   ├── Home/
-│   │   ├── data/           # Models, DTOs, API-related logic
-│   │   ├── logic/          # Cubit or BLoC + state files
-│   │   └── ui/             # Screens and widgets for Home
+│   │   ├── data/             # Models, DTOs, API-related logic
+│   │   ├── logic/            # Cubit or BLoC + state files
+│   │   └── ui/               # Screens and widgets for Home
 │   ├── Search/
 │   ├── Favorites/
-│   └── ...                 # Add more features as needed
-
-├── main.dart                # App entry point
+│   └── ...                   # Add more features as needed
+│
+├── main.dart                 # App entry point
 
 📧 Contact
 For questions, feedback, or contributions:
