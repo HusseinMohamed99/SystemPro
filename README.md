@@ -1,48 +1,61 @@
-# SystemPro
+# 🏠 SystemPro – Real Estate App
 
-A new Flutter project.
-
-## Getting Started
+A modern and feature-rich **Flutter** application designed for the real estate market.  
+Easily scalable, responsive, and built with clean architecture principles.
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-flutter.svg)](https://flutter.dev/)
 
-## Languages and Technologies
+---
 
-![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
-![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+## 🚀 Features
 
-![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+- 🌓 **Theming** – Supports both Light & Dark modes for a customizable user experience.
+- 🌍 **Localization** – Multi-language support for broader reach.
+- ❤️ **Favorites** – Users can save and manage their favorite listings.
+- 🔍 **Advanced Filters** – Filter properties by category, price, location, and amenities.
+- 🔁 **Pagination & Caching** – Smooth infinite scroll with offline-first support.
+- 🔐 **Secure Environment Config** – Using `.env` file to manage API keys and secrets.
+- 📦 **Firebase App Distribution** – Seamless app deployment and testing.
+- ⚙️ **CI/CD** – Automated builds using **Fastlane** and **GitHub Actions**.
 
-![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+---
 
-### 1. **Theming**
+## 🛠️ Tech Stack
 
-- Customize your app’s look with different themes, including:
-- **Light mode** for a vibrant interface
-- **Dark mode** for a sleek and modern experience
+| Layer | Tools |
+|-------|-------|
+| **Language** | ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white) |
+| **Framework** | ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white) |
+| **State Management** | Bloc / Cubit |
+| **Networking** | Dio + Retrofit |
+| **Design** | ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white) |
+| **Version Control** | ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) |
+| **CI/CD** | Firebase App Distribution, Fastlane, GitHub Actions |
 
-### 2. **Localization**
+---
 
-- The app supports multiple languages, making it accessible to users from different regions.
+## 📂 Folder Structure
 
-### 3. **Firebase App Distribution**
+lib/
+├── core/ # Shared helpers, themes, constants
+├── features/
+│ ├── Home/
+│ ├── Search/
+│ ├── Favorites/
+│ └── ...
+├── logic/ # Cubits, states, business logic
+├── data/ # Models, DTOs, API services
+├── ui/ # Widgets and screens
+└── main.dart # Entry point
 
-- The app is deployed using Firebase App Distribution, ensuring a seamless and reliable deployment process.
-- **Fastlane** and **GitHub Actions**: Streamlined the development process by automating workflows and deployments.
+---
 
-## 🛠️ Technologies Used
+📧 Contact
+For questions, feedback, or contributions:
 
-- **📱 Flutter**: A cross-platform framework for building natively compiled applications.
-- **👩‍💻 Dart** Programming languages used for development.
-- **🔵 Bloc/Cubit**: State management for managing app state.
-- **🌐 Dio** and **Retrofit**: For handling API requests and responses.
-- **🚀 CI/CD**: with Firebase App Distribution, Fastlane, and GitHub Actions: Streamlined the development process by automating workflows and deployments.
+Email: <hussein.mohmed1907@gmail.com>
 
-## 📞 Contact
+GitHub: SystemPro Repository
 
-For any inquiries or support, feel free to reach out:
-
-- Email: <hussein.mohmed1907@gmail.com>
-
-- GitHub: <https://github.com/HusseinMohamed99/SystemPro>
+📄 License
+This project is open-source and available under the MIT License.
