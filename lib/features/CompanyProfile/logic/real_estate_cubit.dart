@@ -58,7 +58,7 @@ class RealEstateCubit extends Cubit<RealEstateState> {
       direction: direction,
       cursor: cursor,
       limit: limit,
-      listingType: 'rent',
+      // listingType: 'rent',
     );
 
     response.when(

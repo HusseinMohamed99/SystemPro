@@ -119,6 +119,7 @@ class AppRouters {
         final int companyId = arguments as int;
 
         return MaterialPageRoute(
+           settings: const RouteSettings(name: Routes.companyProfileView), 
           builder:
               (_) => BlocProvider(
                 create:

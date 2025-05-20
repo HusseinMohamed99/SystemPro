@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
@@ -52,6 +53,9 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
 
   @override
   Widget build(BuildContext context) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+    final isFromCompanyProfile = currentRoute == Routes.companyProfileView;
+
     return Stack(
       children: [
         ClipRRect(
@@ -87,6 +91,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                     ),
           ),
         ),
+      if (!isFromCompanyProfile)
         Positioned(
           top: 16.h,
           right: 16.w,
