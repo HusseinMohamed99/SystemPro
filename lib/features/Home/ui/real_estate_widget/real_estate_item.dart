@@ -8,7 +8,7 @@ import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
-class RealEstateItem extends StatelessWidget {
+class RealEstateItem extends StatefulWidget {
   const RealEstateItem({
     super.key,
     required this.listing,
@@ -19,6 +19,16 @@ class RealEstateItem extends StatelessWidget {
   final Listing listing;
   final int index;
   final VoidCallback? onToggleFavorite;
+
+  @override
+  State<RealEstateItem> createState() => _RealEstateItemState();
+}
+
+class _RealEstateItemState extends State<RealEstateItem> {
+  void _handleFavoriteToggle() {
+    widget.onToggleFavorite?.call();
+    setState(() {}); // ✅ يجبر widget يعيد البناء وبالتالي تتحدث الأيقونة
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,21 +59,21 @@ class RealEstateItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RealEstateImageSlider(
-              images: listing.images,
-              listingId: listing.id ?? 0,
-              listing: listing,
-              onToggleFavorite: onToggleFavorite,
+              images: widget.listing.images,
+              listingId: widget.listing.id ?? 0,
+              listing: widget.listing,
+              onToggleFavorite: _handleFavoriteToggle,
             ),
             verticalSpacing(kSpacingSmall),
             RealEstateInfo(
-              price: listing.price ?? '',
-              location: listing.location ?? '',
-              title: listing.title ?? '',
-              bedroomNum: listing.rooms.toString(),
-              bathroomNum: listing.bathrooms.toString(),
-              area: listing.area.toString(),
-              dateTime: listing.createdAt.toString(),
-              company: listing.company ?? Company(),
+              price: widget.listing.price ?? '',
+              location: widget.listing.location ?? '',
+              title: widget.listing.title ?? '',
+              bedroomNum: widget.listing.rooms.toString(),
+              bathroomNum: widget.listing.bathrooms.toString(),
+              area: widget.listing.area.toString(),
+              dateTime: widget.listing.createdAt.toString(),
+              company: widget.listing.company ?? Company(),
             ),
           ],
         ),

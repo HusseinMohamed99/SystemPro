@@ -261,45 +261,54 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  Future<void> toggleFavorite(int id) async {
-    try {
-      final result = await _marketplaceRepo.toggleFavorite(id);
+Future<void> toggleFavorite(int id, {Listing? listing}) async {
+  try {
+    final result = await _marketplaceRepo.toggleFavorite(id);
 
-      await result.when(
-        success: (response) async {
-          if (response.status == 'success') {
-            final isFavorited = response.data?.isFavorited ?? false;
-            for (var listing in _visibleListings) {
-              if (listing.id == id) {
-                listing.isFavorite = isFavorited;
-                break;
-              }
+    await result.when(
+      success: (response) async {
+        if (response.status == 'success') {
+          final isFavorited = response.data?.isFavorited ?? false;
+
+          Listing? updatedListing;
+
+          for (var l in _visibleListings) {
+            if (l.id == id) {
+              l.isFavorite = isFavorited;
+              updatedListing = l;
+              break;
             }
-
-            emit(
-              MarketplaceState.success(
-                listings: List.from(_visibleListings),
-                selectedFilter: _currentFilter,
-              ),
-            );
-
-            final favoriteCubit = getIt<FavoriteCubit>();
-            // ✅ دايمًا نعمل force refresh
-            await favoriteCubit.getFavoriteListings(forceRefresh: true);
-          } else {
-            emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }
-        },
-        failure: (errorHandler) {
+
           emit(
-            MarketplaceState.error(
-              'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
+            MarketplaceState.success(
+              listings: List.from(_visibleListings),
+              selectedFilter: _currentFilter,
             ),
           );
-        },
-      );
-    } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
-    }
+
+          final favoriteCubit = getIt<FavoriteCubit>();
+
+          if (isFavorited && updatedListing != null) {
+            favoriteCubit.addToFavorites(updatedListing);
+          } else {
+            favoriteCubit.removeFromFavorites(id);
+          }
+        } else {
+          emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
+        }
+      },
+      failure: (errorHandler) {
+        emit(
+          MarketplaceState.error(
+            'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
+          ),
+        );
+      },
+    );
+  } catch (error) {
+    emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
   }
+}
+
 }

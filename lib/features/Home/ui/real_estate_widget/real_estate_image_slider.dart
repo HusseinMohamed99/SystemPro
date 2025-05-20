@@ -38,10 +38,16 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
     super.dispose();
   }
 
-  void _toggleFavorite() {
+  void _toggleFavorite() async {
+    // call the callback (which calls FavoriteCubit.toggleFavorite)
     if (widget.onToggleFavorite != null) {
       widget.onToggleFavorite!();
     }
+    setState(() {
+      widget.listing?.isFavorite = !widget.listing!.isFavorite!;
+
+    });
+    // 🔄 اجبر الـ widget يعيد البناء علشان أي تغيير فSسي isFSسavorite يتعكس
   }
 
   @override
@@ -102,13 +108,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
               child: BlocBuilder<FavoriteCubit, FavoriteState>(
                 buildWhen: (previous, current) => current is GetFavoriteSuccess,
                 builder: (context, state) {
-                  bool isFavorited = widget.listing?.isFavorite ?? false;
-
-                  if (state is GetFavoriteSuccess) {
-                    isFavorited = state.listings.any(
-                      (l) => l.id == widget.listing?.id,
-                    );
-                  }
+                  final isFavorited = widget.listing?.isFavorite ?? false;
 
                   return Icon(
                     isFavorited ? Icons.favorite : Icons.favorite_border,

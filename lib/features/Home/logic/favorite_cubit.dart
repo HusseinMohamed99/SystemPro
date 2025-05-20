@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:collection/collection.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 import 'package:system_pro/features/Home/logic/favorite_state.dart';
@@ -20,7 +19,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   bool get isCacheLoaded => _isCacheLoaded;
   bool get hasMore => _loadedCount < _favoriteListings.length;
 
-  /// 🔄 تحميل المفضلات (من الكاش أو API)
+  /// 🔄 تحميل المفضلات
   Future<void> getFavoriteListings({bool forceRefresh = false}) async {
     if (isLoading) return;
 
@@ -79,7 +78,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  /// ❤️ تبديل المفضلة (تعمل Emit دائمًا)
+  /// ❤️ تبديل حالة المفضلة
   Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _favoriteRepo.toggleFavorite(id);
@@ -88,6 +87,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         success: (response) {
           final isFavorited = response.data?.isFavorited ?? false;
 
+          // تحديث الكاش حسب الحالة
           final exists = _favoriteListings.any((e) => e.id == id);
 
           if (isFavorited) {
@@ -103,7 +103,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           _loadedCount = _visibleFavorites.length;
           _isCacheLoaded = true;
 
-          emit(const FavoriteState.getFavoriteLoading()); // لضمان التحديث
+          // ✅ اجبار التحديث حتى لو البيانات متشابهة
+          emit(const FavoriteState.getFavoriteLoading());
 
           emit(
             FavoriteState.getFavoriteSuccess(
@@ -126,7 +127,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  /// 🔁 تحميل المزيد (Pagination)
+  /// 📦 تحميل المزيد
   Future<void> loadMore() async {
     if (isLoading || !hasMore) return;
 
@@ -150,16 +151,49 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  /// 🔄 تحديث يدوي (pull to refresh)
+  /// 🔁 تحديث يدوي
   Future<void> refreshFavorites() async {
     await getFavoriteListings(forceRefresh: true);
   }
 
-  /// 🧹 مسح الكاش (مثلاً عند تسجيل الخروج)
+  /// 🧹 عند تسجيل الخروج
   void clearFavoriteCache() {
     _isCacheLoaded = false;
     _favoriteListings.clear();
     _visibleFavorites.clear();
     _loadedCount = 0;
+  }
+
+  /// 🧩 دعم مباشر للإضافة من خارج الكيوبت (مثلاً من MarketplaceCubit)
+  void addToFavorites(Listing listing) {
+    final exists = _favoriteListings.any((e) => e.id == listing.id);
+    if (!exists) {
+      _favoriteListings.insert(0, listing);
+      _visibleFavorites.insert(0, listing);
+      _loadedCount = _visibleFavorites.length;
+      _isCacheLoaded = true;
+
+      emit(
+        FavoriteState.getFavoriteSuccess(
+          listings: List.from(_visibleFavorites),
+          hasMore: hasMore,
+          isFromCache: false,
+        ),
+      );
+    }
+  }
+
+  void removeFromFavorites(int id) {
+    _favoriteListings.removeWhere((e) => e.id == id);
+    _visibleFavorites.removeWhere((e) => e.id == id);
+    _loadedCount = _visibleFavorites.length;
+
+    emit(
+      FavoriteState.getFavoriteSuccess(
+        listings: List.from(_visibleFavorites),
+        hasMore: hasMore,
+        isFromCache: false,
+      ),
+    );
   }
 }

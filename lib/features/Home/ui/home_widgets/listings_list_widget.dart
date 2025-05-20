@@ -35,11 +35,15 @@ class ListingsList extends StatelessWidget {
         slivers: [
           RealEstateSliverList(
             listings: listings,
-            onToggleFavoriteBuilder: (listing) {
+          onToggleFavoriteBuilder: (listing) {
               return () {
-                cubit.toggleFavorite(listing.id ?? 0);
+                cubit.toggleFavorite(
+                  listing.id ?? 0,
+                  listing: listing,
+                ); // ✅ مهم جدًا
               };
             },
+
           ),
         ],
       ),

@@ -47,10 +47,10 @@
                               "comment.block.documentation.cs entity.name.tag.localname.cs"
                         ],
                         "settings": {
-                              "foreground": "#00000000"
+                              "foreground": "#f50c0c00"
                         }
                   }
             ],
-            "comments": "#00000000"
+            "comments": "#00ff4c00"
       }
 }

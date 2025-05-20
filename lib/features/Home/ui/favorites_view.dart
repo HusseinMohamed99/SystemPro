@@ -4,7 +4,6 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
