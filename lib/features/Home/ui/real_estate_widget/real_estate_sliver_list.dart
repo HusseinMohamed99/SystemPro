@@ -28,6 +28,7 @@ class RealEstateSliverList extends StatelessWidget {
             context.pushNamed(Routes.realEstateDetailsView, arguments: listing);
           },
           child: RealEstateItem(
+             key: ValueKey(listing.id), 
             listing: listing,
             index: index,
             isFavorite: listing.isFavorite ?? false,
