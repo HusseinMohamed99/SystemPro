@@ -149,7 +149,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                       final filterArgs = FilterResultArguments(
                         location:
                             '${widget.locationArgument.district}, ${widget.locationArgument.city}',
-                        category: selectedCategoryId ?? 0,
+                        category: selectedCategoryId,
                         listingType: selectedBuyRentOption,
                         selectedSubcategories:
                             propertyKey.currentState?.selectedTypeId,

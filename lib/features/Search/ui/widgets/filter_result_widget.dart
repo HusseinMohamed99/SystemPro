@@ -37,7 +37,6 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('filterArgs: ${widget.arguments.category}');
     return Scaffold(
       appBar: customSecondaryAppBar(
         context,

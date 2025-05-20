@@ -67,7 +67,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
 
   Future<void> _loadRecentSearches() async {
     try {
-      final data = await CachingHelper.getListString(
+      final data = CachingHelper.getListString(
         SharedPrefKeys.recentSearchesKey,
       );
       final searches =

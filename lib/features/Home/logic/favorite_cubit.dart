@@ -59,7 +59,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
             FavoriteState.getFavoriteSuccess(
               listings: List.from(_visibleFavorites),
               hasMore: hasMore,
-              isFromCache: false,
             ),
           );
         },
@@ -110,7 +109,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
             FavoriteState.getFavoriteSuccess(
               listings: List.from(_visibleFavorites),
               hasMore: hasMore,
-              isFromCache: false,
             ),
           );
         },
@@ -177,7 +175,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         FavoriteState.getFavoriteSuccess(
           listings: List.from(_visibleFavorites),
           hasMore: hasMore,
-          isFromCache: false,
         ),
       );
     }
@@ -192,7 +189,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       FavoriteState.getFavoriteSuccess(
         listings: List.from(_visibleFavorites),
         hasMore: hasMore,
-        isFromCache: false,
       ),
     );
   }

@@ -37,7 +37,7 @@ void main() async {
 
   // 🔧 تحميل الإعدادات من التخزين
   final savedLocale =
-      CachingHelper.getString(SharedPrefKeys.selectedLanguage) ?? 'en';
+      CachingHelper.getString(SharedPrefKeys.selectedLanguage);
   final isDarkMode = CachingHelper.getBool(SharedPrefKeys.isDarkMode);
 
   AppConfig.userToken = await CachingHelper.getSecuredString(
