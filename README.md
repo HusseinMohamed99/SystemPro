@@ -37,18 +37,22 @@ Easily scalable, responsive, and built with clean architecture principles.
 ## 📂 Folder Structure
 
 lib/
-├── core/ # Shared helpers, themes, constants
-├── features/
-│ ├── Home/
-│ ├── Search/
-│ ├── Favorites/
-│ └── ...
-├── logic/ # Cubits, states, business logic
-├── data/ # Models, DTOs, API services
-├── ui/ # Widgets and screens
-└── main.dart # Entry point
+├── core/                     # App-wide utilities, constants, theming, extensions
+│   ├── helpers/             # Common helper functions (e.g., time, formatting)
+│   ├── theming/            # App colors, text styles, dimensions
+│   ├── routing/            # Route names and navigation helpers
+│   └── widgets/            # Reusable shared widgets (e.g., buttons, images, loaders)
 
----
+├── features/                # Feature-based module organization
+│   ├── Home/
+│   │   ├── data/           # Models, DTOs, API-related logic
+│   │   ├── logic/          # Cubit or BLoC + state files
+│   │   └── ui/             # Screens and widgets for Home
+│   ├── Search/
+│   ├── Favorites/
+│   └── ...                 # Add more features as needed
+
+├── main.dart                # App entry point
 
 📧 Contact
 For questions, feedback, or contributions:
