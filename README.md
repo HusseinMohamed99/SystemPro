@@ -36,6 +36,13 @@ Easily scalable, responsive, and built with clean architecture principles.
 
 ## 📂 Folder Structure
 
+![Folder Structure](https://chat.openai.com/cdn-cgi/imagedelivery/Xw4zI-yyME3w8e1j0dnH3A/file_000000004df461f88e49fb34cf7fdcb0/public)
+
+## 📁 Folder Structure
+
+The project follows a **modular and clean architecture** pattern. Below is a GitHub-friendly visual structure:
+
+```text
 lib/
 ├── core/                     # App-wide utilities, constants, theming, extensions
 │   ├── helpers/              # Common helper functions (e.g., time, formatting)
@@ -53,6 +60,7 @@ lib/
 │   └── ...                   # Add more features as needed
 │
 ├── main.dart                 # App entry point
+
 
 📧 Contact
 For questions, feedback, or contributions:
