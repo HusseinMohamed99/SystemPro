@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797301327208",
+    "project_id": "systempro-83f7b",
+    "storage_bucket": "systempro-83f7b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797301327208:android:cf0f3b5b31e441d39302dd",
+        "android_client_info": {
+          "package_name": "com.example.system_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqPFT0KPMOpNAeJrAoRMVUMiTf5tMeb2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
