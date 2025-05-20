@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/gen/assets.gen.dart';
 
 class CustomCachedNetworkImageWidget extends StatelessWidget {
   const CustomCachedNetworkImageWidget({
@@ -25,10 +23,7 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
       width: width,
       height: height,
       fit: fit ?? BoxFit.fitWidth,
-      imageUrl:
-          imageURL?.isNotEmpty == true
-              ? imageURL!
-              : '',
+      imageUrl: imageURL?.isNotEmpty == true ? imageURL! : '',
       placeholder:
           (context, url) => const Center(
             child: SpinKitDoubleBounce(
@@ -37,11 +32,11 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
             ),
           ),
       errorWidget:
-          (context, url, error) => SvgPicture.asset(
-            Assets.images.error,
-            fit: BoxFit.fitHeight,
-            width: width,
-            height: height ?? 90.h,
+          (context, url, error) => Icon(
+            Icons.error,
+            size: 40.sp,
+            // size: 50.sp,
+            color: ColorManager.primaryBlue,
           ),
     );
   }

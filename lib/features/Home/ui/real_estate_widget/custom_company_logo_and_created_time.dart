@@ -24,10 +24,10 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
     return Row(
       children: [
         Text(
-           timeAgo(context, dateTime),
+          timeAgo(context, dateTime),
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
-            color:  AdaptiveColor.adaptiveColor(
+            color: AdaptiveColor.adaptiveColor(
               context: context,
               lightColor: ColorManager.softGray,
               darkColor: ColorManager.hintGrey,
@@ -37,13 +37,16 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            context.pushNamed(Routes.companyProfileView,arguments: company.id);
+            context.pushNamed(Routes.companyProfileView, arguments: company.id);
           },
-          child: CustomCachedNetworkImageWidget(
-            height: 32.h,
-            width: 100.w,
-            fit: BoxFit.fitHeight,
-            imageURL: company.picture,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50.r),
+            child: CustomCachedNetworkImageWidget(
+              height: 40.h,
+              width: 40.w,
+              fit: BoxFit.cover,
+              imageURL: company.picture,
+            ),
           ),
         ),
       ],

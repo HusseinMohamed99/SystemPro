@@ -32,12 +32,22 @@ class ListingsList extends StatelessWidget {
         return false;
       },
       child: CustomScrollView(
-        slivers: [RealEstateSliverList(listings: listings)],
+        slivers: [
+          RealEstateSliverList(
+            listings: listings,
+            onToggleFavoriteBuilder: (listing) {
+              return () {
+                cubit.toggleFavorite(listing.id ?? 0);
+              };
+            },
+          ),
+        ],
       ),
     ).onlyPadding(
       leftPadding: kPaddingDefaultHorizontal,
       rightPadding: kPaddingDefaultHorizontal,
       topPadding: kPaddingDefaultVertical,
     );
+
   }
 }

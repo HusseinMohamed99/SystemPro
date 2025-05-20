@@ -31,7 +31,6 @@ class RealEstateSliverList extends StatelessWidget {
              key: ValueKey(listing.id), 
             listing: listing,
             index: index,
-            isFavorite: listing.isFavorite ?? false,
             onToggleFavorite: onToggleFavoriteBuilder?.call(listing), // 🆕
           ),
         );

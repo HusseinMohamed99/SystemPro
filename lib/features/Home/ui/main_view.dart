@@ -69,7 +69,7 @@ class _MainViewContentState extends State<_MainViewContent> {
           GetFavoriteLoading,
           GetFavoriteSuccess,
         ])) {
-          favCubit.getFavoriteListings();
+          favCubit.getFavoriteListings(forceRefresh: true);
         }
         break;
       case 2:

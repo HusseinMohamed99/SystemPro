@@ -22,11 +22,34 @@ class FavoritesView extends StatefulWidget {
 }
 
 class _FavoritesViewState extends State<FavoritesView> {
+  final _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
-    // Call fetch favorite listings once screen is initialized
-    context.read<FavoriteCubit>().getFavoriteListings();
+
+    _scrollController.addListener(() {
+      final cubit = context.read<FavoriteCubit>();
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent - 100 &&
+          cubit.hasMore &&
+          !cubit.isLoading) {
+        cubit.loadMore();
+      }
+    });
+  }
+
+  // ✅ هذا هو التعديل الأهم
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<FavoriteCubit>().getFavoriteListings(forceRefresh: true);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,13 +80,20 @@ class _FavoritesViewState extends State<FavoritesView> {
                 return const AdaptiveIndicator();
               } else if (state is GetFavoriteSuccess) {
                 final listings = state.listings;
-                AppLogs.debugLog('Favorite listings: ${listings.length}');
                 if (listings.isEmpty) {
                   return CustomErrorWidget(
                     errorMessage: context.localization.no_favorite_properties,
                   );
                 }
-                return FavoritesViewBody(listings: listings);
+
+                return RefreshIndicator(
+                  onRefresh:
+                      () => context.read<FavoriteCubit>().refreshFavorites(),
+                  child: FavoritesViewBody(
+                    listings: listings,
+                    scrollController: _scrollController,
+                  ),
+                );
               } else if (state is GetFavoriteError) {
                 return CustomErrorWidget(errorMessage: state.error);
               }

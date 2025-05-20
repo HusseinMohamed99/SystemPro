@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
+import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
@@ -46,16 +48,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
       await result.when(
         success: (MarketplaceResponse response) async {
-          final allItems = response.data?.listings ?? [];
-
-          final newItems =
-              allItems
-                  .where(
-                    (listing) =>
-                        listing.listingType?.toLowerCase() ==
-                        filter.toLowerCase(),
-                  )
-                  .toList();
+          final newItems = response.data?.listings ?? [];
 
           if (newItems.isEmpty || newItems.length < _limit) {
             hasMore = false;
@@ -215,7 +208,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         areaMax: args.maxSize,
         amenities: args.selectedAmenities,
         location: args.location,
-
       );
 
       await result.when(
@@ -273,11 +265,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
 
-      result.when(
-        success: (response) {
+      await result.when(
+        success: (response) async {
           if (response.status == 'success') {
             final isFavorited = response.data?.isFavorited ?? false;
-
             for (var listing in _visibleListings) {
               if (listing.id == id) {
                 listing.isFavorite = isFavorited;
@@ -291,6 +282,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
                 selectedFilter: _currentFilter,
               ),
             );
+
+            final favoriteCubit = getIt<FavoriteCubit>();
+            // ✅ دايمًا نعمل force refresh
+            await favoriteCubit.getFavoriteListings(forceRefresh: true);
           } else {
             emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
           }

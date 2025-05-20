@@ -21,21 +21,28 @@ mixin _$FavoriteState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
+    required TResult Function(
+      List<Listing> listings,
+      bool hasMore,
+      bool isFromCache,
+    )
+    getFavoriteSuccess,
     required TResult Function(String error) getFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult? Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult? Function(String error)? getFavoriteError,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -130,7 +137,12 @@ class _$FavoriteInitialImpl implements FavoriteInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
+    required TResult Function(
+      List<Listing> listings,
+      bool hasMore,
+      bool isFromCache,
+    )
+    getFavoriteSuccess,
     required TResult Function(String error) getFavoriteError,
   }) {
     return initial();
@@ -141,7 +153,8 @@ class _$FavoriteInitialImpl implements FavoriteInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult? Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult? Function(String error)? getFavoriteError,
   }) {
     return initial?.call();
@@ -152,7 +165,8 @@ class _$FavoriteInitialImpl implements FavoriteInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {
@@ -249,7 +263,12 @@ class _$GetFavoriteLoadingImpl implements GetFavoriteLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
+    required TResult Function(
+      List<Listing> listings,
+      bool hasMore,
+      bool isFromCache,
+    )
+    getFavoriteSuccess,
     required TResult Function(String error) getFavoriteError,
   }) {
     return getFavoriteLoading();
@@ -260,7 +279,8 @@ class _$GetFavoriteLoadingImpl implements GetFavoriteLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult? Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult? Function(String error)? getFavoriteError,
   }) {
     return getFavoriteLoading?.call();
@@ -271,7 +291,8 @@ class _$GetFavoriteLoadingImpl implements GetFavoriteLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {
@@ -330,7 +351,7 @@ abstract class _$$GetFavoriteSuccessImplCopyWith<$Res> {
     $Res Function(_$GetFavoriteSuccessImpl) then,
   ) = __$$GetFavoriteSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Listing> listings});
+  $Res call({List<Listing> listings, bool hasMore, bool isFromCache});
 }
 
 /// @nodoc
@@ -346,13 +367,28 @@ class __$$GetFavoriteSuccessImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? listings = null}) {
+  $Res call({
+    Object? listings = null,
+    Object? hasMore = null,
+    Object? isFromCache = null,
+  }) {
     return _then(
       _$GetFavoriteSuccessImpl(
-        null == listings
-            ? _value._listings
-            : listings // ignore: cast_nullable_to_non_nullable
-                as List<Listing>,
+        listings:
+            null == listings
+                ? _value._listings
+                : listings // ignore: cast_nullable_to_non_nullable
+                    as List<Listing>,
+        hasMore:
+            null == hasMore
+                ? _value.hasMore
+                : hasMore // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        isFromCache:
+            null == isFromCache
+                ? _value.isFromCache
+                : isFromCache // ignore: cast_nullable_to_non_nullable
+                    as bool,
       ),
     );
   }
@@ -361,8 +397,11 @@ class __$$GetFavoriteSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
-  const _$GetFavoriteSuccessImpl(final List<Listing> listings)
-    : _listings = listings;
+  const _$GetFavoriteSuccessImpl({
+    required final List<Listing> listings,
+    this.hasMore = true,
+    this.isFromCache = false,
+  }) : _listings = listings;
 
   final List<Listing> _listings;
   @override
@@ -373,8 +412,15 @@ class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
   }
 
   @override
+  @JsonKey()
+  final bool hasMore;
+  @override
+  @JsonKey()
+  final bool isFromCache;
+
+  @override
   String toString() {
-    return 'FavoriteState.getFavoriteSuccess(listings: $listings)';
+    return 'FavoriteState.getFavoriteSuccess(listings: $listings, hasMore: $hasMore, isFromCache: $isFromCache)';
   }
 
   @override
@@ -382,12 +428,19 @@ class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetFavoriteSuccessImpl &&
-            const DeepCollectionEquality().equals(other._listings, _listings));
+            const DeepCollectionEquality().equals(other._listings, _listings) &&
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            (identical(other.isFromCache, isFromCache) ||
+                other.isFromCache == isFromCache));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_listings));
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_listings),
+    hasMore,
+    isFromCache,
+  );
 
   /// Create a copy of FavoriteState
   /// with the given fields replaced by the non-null parameter values.
@@ -405,10 +458,15 @@ class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
+    required TResult Function(
+      List<Listing> listings,
+      bool hasMore,
+      bool isFromCache,
+    )
+    getFavoriteSuccess,
     required TResult Function(String error) getFavoriteError,
   }) {
-    return getFavoriteSuccess(listings);
+    return getFavoriteSuccess(listings, hasMore, isFromCache);
   }
 
   @override
@@ -416,10 +474,11 @@ class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult? Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult? Function(String error)? getFavoriteError,
   }) {
-    return getFavoriteSuccess?.call(listings);
+    return getFavoriteSuccess?.call(listings, hasMore, isFromCache);
   }
 
   @override
@@ -427,12 +486,13 @@ class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {
     if (getFavoriteSuccess != null) {
-      return getFavoriteSuccess(listings);
+      return getFavoriteSuccess(listings, hasMore, isFromCache);
     }
     return orElse();
   }
@@ -476,10 +536,15 @@ class _$GetFavoriteSuccessImpl implements GetFavoriteSuccess {
 }
 
 abstract class GetFavoriteSuccess implements FavoriteState {
-  const factory GetFavoriteSuccess(final List<Listing> listings) =
-      _$GetFavoriteSuccessImpl;
+  const factory GetFavoriteSuccess({
+    required final List<Listing> listings,
+    final bool hasMore,
+    final bool isFromCache,
+  }) = _$GetFavoriteSuccessImpl;
 
   List<Listing> get listings;
+  bool get hasMore;
+  bool get isFromCache;
 
   /// Create a copy of FavoriteState
   /// with the given fields replaced by the non-null parameter values.
@@ -563,7 +628,12 @@ class _$GetFavoriteErrorImpl implements GetFavoriteError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() getFavoriteLoading,
-    required TResult Function(List<Listing> listings) getFavoriteSuccess,
+    required TResult Function(
+      List<Listing> listings,
+      bool hasMore,
+      bool isFromCache,
+    )
+    getFavoriteSuccess,
     required TResult Function(String error) getFavoriteError,
   }) {
     return getFavoriteError(error);
@@ -574,7 +644,8 @@ class _$GetFavoriteErrorImpl implements GetFavoriteError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? getFavoriteLoading,
-    TResult? Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult? Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult? Function(String error)? getFavoriteError,
   }) {
     return getFavoriteError?.call(error);
@@ -585,7 +656,8 @@ class _$GetFavoriteErrorImpl implements GetFavoriteError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? getFavoriteLoading,
-    TResult Function(List<Listing> listings)? getFavoriteSuccess,
+    TResult Function(List<Listing> listings, bool hasMore, bool isFromCache)?
+    getFavoriteSuccess,
     TResult Function(String error)? getFavoriteError,
     required TResult orElse(),
   }) {

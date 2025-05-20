@@ -7,20 +7,19 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/data/model/listing_image.dart';
-import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
+import 'package:system_pro/features/Home/logic/favorite_state.dart';
 
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({
     super.key,
     required this.images,
-    required this.isFavorite,
     required this.listingId,
     required this.listing,
     this.onToggleFavorite,
   });
 
   final List<ListingImage>? images;
-  final bool isFavorite;
   final int listingId;
   final Listing? listing;
   final VoidCallback? onToggleFavorite;
@@ -32,38 +31,17 @@ class RealEstateImageSlider extends StatefulWidget {
 class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-  late bool localIsFavorite;
-
-  @override
-  void initState() {
-    super.initState();
-    localIsFavorite = widget.isFavorite;
-  }
-
-  void _toggleFavorite() {
-    setState(() {
-      localIsFavorite = !localIsFavorite;
-    });
-
-    if (widget.onToggleFavorite != null) {
-      widget.onToggleFavorite!();
-    } else {
-      context.read<MarketplaceCubit>().toggleFavorite(widget.listingId);
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant RealEstateImageSlider oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.isFavorite != oldWidget.isFavorite) {
-      localIsFavorite = widget.isFavorite;
-    }
-  }
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _toggleFavorite() {
+    if (widget.onToggleFavorite != null) {
+      widget.onToggleFavorite!();
+    }
   }
 
   @override
@@ -83,7 +61,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                     ? const Center(child: Text('No images available'))
                     : PageView.builder(
                       controller: _pageController,
-                      itemCount: widget.images?.length,
+                      itemCount: widget.images?.length ?? 0,
                       onPageChanged: (index) {
                         setState(() {
                           _currentIndex = index;
@@ -121,17 +99,30 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   darkColor: ColorManager.tertiaryBlack,
                 ),
               ),
-              child: Icon(
-                localIsFavorite ? Icons.favorite : Icons.favorite_border,
-                color:
-                    localIsFavorite
-                        ? ColorManager.brightRed
-                        : AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.tertiaryBlack,
-                          darkColor: ColorManager.hintGrey,
-                        ),
-                size: kIconSizeDefault.sp,
+              child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                buildWhen: (previous, current) => current is GetFavoriteSuccess,
+                builder: (context, state) {
+                  bool isFavorited = widget.listing?.isFavorite ?? false;
+
+                  if (state is GetFavoriteSuccess) {
+                    isFavorited = state.listings.any(
+                      (l) => l.id == widget.listing?.id,
+                    );
+                  }
+
+                  return Icon(
+                    isFavorited ? Icons.favorite : Icons.favorite_border,
+                    color:
+                        isFavorited
+                            ? ColorManager.brightRed
+                            : AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.tertiaryBlack,
+                              darkColor: ColorManager.hintGrey,
+                            ),
+                    size: kIconSizeDefault.sp,
+                  );
+                },
               ),
             ),
           ),

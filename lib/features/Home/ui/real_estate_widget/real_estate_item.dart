@@ -13,14 +13,12 @@ class RealEstateItem extends StatelessWidget {
     super.key,
     required this.listing,
     required this.index,
-    required this.isFavorite,
-    this.onToggleFavorite, // ✅ الجديد
+    this.onToggleFavorite,
   });
 
   final Listing listing;
   final int index;
-  final bool isFavorite;
-  final VoidCallback? onToggleFavorite; // ✅ الجديد
+  final VoidCallback? onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +50,9 @@ class RealEstateItem extends StatelessWidget {
           children: [
             RealEstateImageSlider(
               images: listing.images,
-              isFavorite: isFavorite,
               listingId: listing.id ?? 0,
               listing: listing,
-              onToggleFavorite: onToggleFavorite, // ✅ الممرر
+              onToggleFavorite: onToggleFavorite,
             ),
             verticalSpacing(kSpacingSmall),
             RealEstateInfo(

@@ -10,8 +10,11 @@ class FavoriteState with _$FavoriteState {
   const factory FavoriteState.getFavoriteLoading() = GetFavoriteLoading;
 
   /// تم تحميل أو تحديث قائمة المفضلات بنجاح
-  const factory FavoriteState.getFavoriteSuccess(List<Listing> listings) =
-      GetFavoriteSuccess;
+  const factory FavoriteState.getFavoriteSuccess({
+    required List<Listing> listings,
+    @Default(true) bool hasMore,
+    @Default(false) bool isFromCache,
+  }) = GetFavoriteSuccess;
 
   /// فشل تحميل أو تحديث المفضلات
   const factory FavoriteState.getFavoriteError(String error) = GetFavoriteError;
