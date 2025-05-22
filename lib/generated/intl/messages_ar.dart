@@ -126,6 +126,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "أدخل بريدك الإلكتروني",
     ),
     "enter_password": MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور"),
+    "failed_to_upload_image": MessageLookupByLibrary.simpleMessage(
+      "فشل تحميل الصورة",
+    ),
     "favorites": MessageLookupByLibrary.simpleMessage("المفضلة"),
     "filter": MessageLookupByLibrary.simpleMessage("تصفية"),
     "find": MessageLookupByLibrary.simpleMessage("بحث"),

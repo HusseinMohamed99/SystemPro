@@ -1444,6 +1444,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Image not available`
+  String get failed_to_upload_image {
+    return Intl.message(
+      'Image not available',
+      name: 'failed_to_upload_image',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

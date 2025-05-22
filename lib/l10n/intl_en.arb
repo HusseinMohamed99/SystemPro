@@ -353,5 +353,7 @@
   "results_search": "Results Search",
   "@results_search": {},
   "down_payment":"Down Payment",
-  "@down_payment":{}
+  "@down_payment":{},
+    "failed_to_upload_image": "Image not available",
+  "@failed_to_upload_image": {}
 }

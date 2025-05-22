@@ -357,5 +357,8 @@
   "results_search": "نتائج البحث",
   "@results_search": {},
   "down_payment": "الدفعة المقدمة",
-  "@down_payment": {}
+  "@down_payment": {},
+  "failed_to_upload_image": "فشل تحميل الصورة",
+  "@failed_to_upload_image": {}
+
 }

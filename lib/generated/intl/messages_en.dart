@@ -126,6 +126,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_password": MessageLookupByLibrary.simpleMessage(
       "Enter your password",
     ),
+    "failed_to_upload_image": MessageLookupByLibrary.simpleMessage(
+      "Image not available",
+    ),
     "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
     "find": MessageLookupByLibrary.simpleMessage("Find"),
