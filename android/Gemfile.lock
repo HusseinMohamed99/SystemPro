@@ -227,6 +227,7 @@ PLATFORMS
   x64-mingw-ucrt
 
 DEPENDENCIES
+  dotenv
   fastlane
   fastlane-plugin-firebase_app_distribution
 
