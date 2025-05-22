@@ -50,7 +50,7 @@ class ListedByWidget extends StatelessWidget {
             spacing: kSpacingDefault.h,
             children: [
               CustomCachedNetworkImageWidget(
-                imageURL: company.picture,
+                imageURL: company.pictureUrl,
                 width: 120.w,
                 height: 40.h,
                 fit: BoxFit.fitHeight,

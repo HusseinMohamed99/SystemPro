@@ -55,7 +55,7 @@ class GetProfileCompanySuccess extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(320),
                       child: CustomCachedNetworkImageWidget(
-                        imageURL: company.picture ?? '',
+                        imageURL: company.pictureUrl ?? '',
                         height: 32.h,
                         width: 100.w,
                         fit: BoxFit.fill,

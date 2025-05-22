@@ -45,7 +45,7 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
               height: 40.h,
               width: 40.w,
               fit: BoxFit.cover,
-              imageURL: company.picture,
+              imageURL: company.pictureUrl,
             ),
           ),
         ),

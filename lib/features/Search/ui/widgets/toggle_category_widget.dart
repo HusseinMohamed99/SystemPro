@@ -65,7 +65,9 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                   },
                   child: ChoiceChip(
                     key: ValueKey(displayName),
-                    labelPadding: EdgeInsetsDirectional.symmetric(vertical: 4.h),
+                    labelPadding: EdgeInsetsDirectional.symmetric(
+                      vertical: 4.h,
+                    ),
                     label: SizedBox(
                       width: double.infinity,
                       child: Text(
@@ -102,12 +104,16 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                       lightColor: ColorManager.shadowBlue,
                       darkColor: ColorManager.tertiaryBlack,
                     ),
-                    disabledColor: ColorManager.darkGrey,
+                    disabledColor: AdaptiveColor.adaptiveColor(
+                      context: context,
+                      lightColor: ColorManager.shadowBlue,
+                      darkColor: ColorManager.darkGrey,
+                    ),
                     side: BorderSide(
                       width: 0,
                       color: AdaptiveColor.adaptiveColor(
                         context: context,
-                        lightColor: ColorManager.tertiaryBlack,
+                        lightColor: ColorManager.pureWhite,
                         darkColor: ColorManager.tertiaryBlack,
                       ),
                     ),
