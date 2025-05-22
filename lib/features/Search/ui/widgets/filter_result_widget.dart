@@ -109,7 +109,6 @@ class ListingsListFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final marketplaceCubit = context.read<MarketplaceCubit>();
-    final favoriteCubit = context.read<FavoriteCubit>();
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
         if (scrollInfo.metrics.pixels >=
