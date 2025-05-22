@@ -16,14 +16,26 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
   final String? imageURL;
   final double? width, height;
   final BoxFit? fit;
-
-  @override
+@override
   Widget build(BuildContext context) {
+    if (imageURL == null || imageURL!.isEmpty) {
+      return Container(
+        width: width,
+        height: height,
+        color: Colors.grey.shade200,
+        child: Icon(
+          Icons.broken_image,
+          size: 40.sp,
+          color: ColorManager.primaryBlue,
+        ),
+      );
+    }
+
     return CachedNetworkImage(
       width: width,
       height: height,
       fit: fit ?? BoxFit.fitWidth,
-      imageUrl: imageURL?.isNotEmpty == true ? imageURL! : '',
+      imageUrl: imageURL!,
       placeholder:
           (context, url) => const Center(
             child: SpinKitDoubleBounce(
@@ -32,12 +44,9 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
             ),
           ),
       errorWidget:
-          (context, url, error) => Icon(
-            Icons.error,
-            size: 40.sp,
-            // size: 50.sp,
-            color: ColorManager.primaryBlue,
-          ),
+          (context, url, error) =>
+              Icon(Icons.error, size: 40.sp, color: ColorManager.primaryBlue),
     );
   }
+
 }
