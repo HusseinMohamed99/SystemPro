@@ -188,7 +188,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  Future<void> fetchAndFilterListings(FilterResultArguments args) async {
+ Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
 
@@ -197,6 +197,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         direction: _direction,
         cursor: _cursor,
         limit: _limit,
+        location: args.location,
         listingType: args.listingType,
         categoryID: args.category,
         subCategoryID: args.selectedSubcategories,
@@ -207,12 +208,40 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         areaMin: args.minSize,
         areaMax: args.maxSize,
         amenities: args.selectedAmenities,
-        location: args.location,
       );
 
       await result.when(
-        success: (MarketplaceResponse response) async {
-          final newItems = response.data?.listings ?? [];
+        success: (response) async {
+          var newItems = response.data?.listings ?? [];
+
+          // إذا مفيش نتائج، حاول بالفلاتر الأساسية فقط
+          if (newItems.isEmpty) {
+            final fallbackResult = await _marketplaceRepo
+                .getMarketplaceListings(
+                  direction: _direction,
+                  cursor: _cursor,
+                  limit: _limit,
+                  location: args.location,
+                  listingType: args.listingType,
+                  categoryID: args.category,
+                  subCategoryID: args.selectedSubcategories,
+                  // باقي الفلاتر ما نمررهاش
+                );
+
+            await fallbackResult.when(
+              success: (fallbackResponse) {
+                newItems = fallbackResponse.data?.listings ?? [];
+              },
+              failure: (fallbackError) {
+                emit(
+                  MarketplaceState.error(
+                    'فشل في تحميل النتائج البديلة: ${fallbackError.apiErrorModel.message}',
+                  ),
+                );
+                return;
+              },
+            );
+          }
 
           _visibleListings.addAll(newItems);
 
