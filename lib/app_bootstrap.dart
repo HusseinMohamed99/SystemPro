@@ -1,21 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:system_pro/bloc_observer.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
-import 'package:system_pro/core/helpers/constants/keys.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/localization/localization_state.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_state.dart';
-import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/app_router.dart';
-import 'package:system_pro/firebase_options.dart';
 import 'package:system_pro/system_pro.dart';
 
 class AppBootstrap extends StatefulWidget {
