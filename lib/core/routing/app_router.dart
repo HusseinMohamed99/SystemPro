@@ -36,10 +36,7 @@ class AppRouters {
     // This arguments to be passed
     // in any screen like this (arguments as ClassName)
     final arguments = settings.arguments;
-
     switch (settings.name) {
-      // case Routes.testingView:
-      //   return MaterialPageRoute(builder: (_) => const TestingView());
       case Routes.loginView:
         return MaterialPageRoute(
           builder:
@@ -86,10 +83,8 @@ class AppRouters {
         return MaterialPageRoute(
           builder: (_) => const ChangePasswordSuccessfully(),
         );
-
       case Routes.mainView:
         return MaterialPageRoute(builder: (_) => const MainView());
-
       case Routes.editProfileView:
         return MaterialPageRoute(
           builder:
@@ -103,9 +98,6 @@ class AppRouters {
       case Routes.filterView:
         return MaterialPageRoute(
           builder: (_) {
-            // الحصول على الـ CategoriesCubit من GetIt
-
-            // استخدام BlocProvider لتوفير الـ Cubit
             return BlocProvider(
               create: (context) => getIt<CategoriesCubit>()..getCategories(),
               child: FilterView(
@@ -114,29 +106,23 @@ class AppRouters {
             );
           },
         );
-
-     case Routes.companyProfileView:
+      case Routes.companyProfileView:
         final int companyId = arguments as int;
-
         return MaterialPageRoute(
-           settings: const RouteSettings(name: Routes.companyProfileView), 
+          settings: const RouteSettings(name: Routes.companyProfileView),
           builder:
               (_) => BlocProvider(
                 create:
                     (context) =>
-                        getIt<RealEstateCubit>()..getListingsByCompany(
-                          companyId: companyId,
-                        ),
+                        getIt<RealEstateCubit>()
+                          ..getListingsByCompany(companyId: companyId),
                 child: CompanyProfileView(companyID: companyId),
               ),
         );
-
-
       case Routes.realEstateDetailsView:
         return MaterialPageRoute(
           builder: (_) => RealEstateDetailsView(listing: arguments as Listing),
         );
-
       case Routes.emailVerifyView:
         return MaterialPageRoute(
           builder:
@@ -145,7 +131,6 @@ class AppRouters {
                 child: EmailVerifyView(email: arguments as String),
               ),
         );
-
       case Routes.filterResultWidget:
         return MaterialPageRoute(
           builder:
@@ -156,19 +141,7 @@ class AppRouters {
                 ),
               ),
         );
-
-      //    case Routes.productDetailsView:
-      //   return MaterialPageRoute(
-      //     builder:
-      //         (_) => BlocProvider(
-      //           create: (context) => CartCubit(getIt<CartRepo>()),
-      //           child: ProductsDetailsView(
-      //             productEntity: arguments as ProductEntity,
-      //           ),
-      //         ),
-      //   );
     }
-
     return null;
   }
 }
