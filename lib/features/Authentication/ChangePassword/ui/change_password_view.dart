@@ -4,14 +4,12 @@ import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/cha
 
 class ChangePasswordView extends StatelessWidget {
   const ChangePasswordView({super.key, required this.email});
-final String email ;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customSecondaryAppBar(context, title: ''),
-      body:  ChangePasswordBlocConsumer(
-        email:email,
-      ),
+      appBar: customSecondaryAppBar(context),
+      body: ChangePasswordBlocConsumer(email: email),
     );
   }
 }
