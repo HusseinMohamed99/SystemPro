@@ -13,7 +13,6 @@ import 'package:system_pro/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // إعداد global error UI fallback
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return InitErrorScreen(error: details.exceptionAsString());
   };
