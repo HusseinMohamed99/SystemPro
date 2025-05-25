@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/validations/validation_manager.dart';
 import 'package:system_pro/core/widgets/textFields/custom_text_form_field.dart';
 
@@ -24,7 +25,7 @@ class NameFormField extends StatelessWidget {
       children: [
         Text(
          context.localization.full_name,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.titleMedium,
         ),
         CustomTextFormField(
           focusNode: focusNode,
