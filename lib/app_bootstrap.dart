@@ -25,6 +25,7 @@ class AppBootstrap extends StatefulWidget {
 class _AppBootstrapState extends State<AppBootstrap> {
   late Locale _locale;
   late ThemeMode _themeMode;
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -34,6 +35,19 @@ class _AppBootstrapState extends State<AppBootstrap> {
             ? Locale(widget.initialLocale)
             : const Locale('en');
     _themeMode = widget.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      setupGetIt(
+        initialLocale: _locale.languageCode,
+        isDarkMode: _themeMode == ThemeMode.dark,
+        context: context,
+      );
+      _initialized = true;
+    }
   }
 
   void _updateLocale(String newLocale) {
@@ -46,12 +60,6 @@ class _AppBootstrapState extends State<AppBootstrap> {
 
   @override
   Widget build(BuildContext context) {
-    setupGetIt(
-      initialLocale: _locale.languageCode,
-      isDarkMode: _themeMode == ThemeMode.dark,
-      context: context,
-    );
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => getIt<ChangeLocalizationCubit>()),
