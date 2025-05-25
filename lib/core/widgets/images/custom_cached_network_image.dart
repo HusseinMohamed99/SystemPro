@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 class CustomCachedNetworkImageWidget extends StatelessWidget {
@@ -52,16 +51,10 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
       height: height,
       color: Colors.grey.shade200,
       alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.broken_image, size: 30.sp, color: ColorManager.hintGrey),
-          SizedBox(height: 8.h),
-          Text(
-           context.localization.failed_to_upload_image,
-            style: TextStyle(fontSize: 12.sp, color: ColorManager.hintGrey),
-          ),
-        ],
+      child: Icon(
+        Icons.broken_image,
+        size: 30.sp,
+        color: ColorManager.hintGrey,
       ),
     );
   }
