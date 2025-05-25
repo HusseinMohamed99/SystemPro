@@ -83,9 +83,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/building-apartment.svg
   String get buildingApartment => 'assets/images/building-apartment.svg';
 
-  /// File path: assets/images/error.svg
-  String get error => 'assets/images/error.svg';
-
   /// File path: assets/images/fillHeart.svg
   String get fillHeart => 'assets/images/fillHeart.svg';
 
@@ -94,16 +91,6 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/heartInActive.svg
   String get heartInActive => 'assets/images/heartInActive.svg';
-
-  /// File path: assets/images/image 1.png
-  AssetGenImage get image1 => const AssetGenImage('assets/images/image 1.png');
-
-  /// File path: assets/images/image 2.png
-  AssetGenImage get image2Png =>
-      const AssetGenImage('assets/images/image 2.png');
-
-  /// File path: assets/images/image2.svg
-  String get image2Svg => 'assets/images/image2.svg';
 
   /// File path: assets/images/logoTest.svg
   String get logoTest => 'assets/images/logoTest.svg';
@@ -131,13 +118,9 @@ class $AssetsImagesGen {
     bathroom,
     bed,
     buildingApartment,
-    error,
     fillHeart,
     heartActive,
     heartInActive,
-    image1,
-    image2Png,
-    image2Svg,
     logoTest,
     map,
     phone,
