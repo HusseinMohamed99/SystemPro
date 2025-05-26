@@ -53,7 +53,11 @@ class PropertyFiltersRow extends StatelessWidget {
                     ),
                   ),
                   selected: isSelected,
-                  onSelected: (_) => onToggleChanged(value),
+                  onSelected: (_) {
+                    if (!isSelected) {
+                      onToggleChanged(value);
+                    }
+                  },
                   selectedColor: AdaptiveColor.adaptiveColor(
                     context: context,
                     lightColor: ColorManager.shadowBlue,
