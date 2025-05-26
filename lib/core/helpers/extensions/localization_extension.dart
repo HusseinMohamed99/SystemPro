@@ -3,4 +3,5 @@ import 'package:system_pro/generated/l10n.dart';
 
 extension LocalizationExtension on BuildContext {
   S get localization => S.of(this);
+   bool get isAr => Localizations.localeOf(this).languageCode == 'ar';
 }
