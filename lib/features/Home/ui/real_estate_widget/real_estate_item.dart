@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
+import 'package:system_pro/features/Home/data/model/marketer.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
@@ -74,6 +75,7 @@ class _RealEstateItemState extends State<RealEstateItem> {
               area: widget.listing.area.toString(),
               dateTime: widget.listing.createdAt.toString(),
               company: widget.listing.company ?? Company(),
+              marketer: widget.listing.marketer?? Marketer(),
             ),
           ],
         ),

@@ -10,6 +10,7 @@ Listing _$ListingFromJson(Map<String, dynamic> json) => Listing(
   id: (json['id'] as num?)?.toInt(),
   employeeId: (json['employee_id'] as num?)?.toInt(),
   companyId: (json['company_id'] as num?)?.toInt(),
+  marketerId: (json['marketer_id'] as num?)?.toInt(),
   categoryId: (json['category_id'] as num?)?.toInt(),
   subcategoryId: (json['subcategory_id'] as num?)?.toInt(),
   title: json['title'] as String?,
@@ -38,6 +39,10 @@ Listing _$ListingFromJson(Map<String, dynamic> json) => Listing(
       json['company'] == null
           ? null
           : Company.fromJson(json['company'] as Map<String, dynamic>),
+  marketer:
+      json['marketer'] == null
+          ? null
+          : Marketer.fromJson(json['marketer'] as Map<String, dynamic>),
   images:
       (json['images'] as List<dynamic>?)
           ?.map((e) => ListingImage.fromJson(e as Map<String, dynamic>))
@@ -58,6 +63,7 @@ Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{
   'id': instance.id,
   'employee_id': instance.employeeId,
   'company_id': instance.companyId,
+  'marketer_id': instance.marketerId,
   'category_id': instance.categoryId,
   'subcategory_id': instance.subcategoryId,
   'title': instance.title,
@@ -81,6 +87,7 @@ Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{
   'release_date': instance.releaseDate,
   'employee': instance.employee,
   'company': instance.company,
+  'marketer': instance.marketer,
   'subcategory': instance.subcategory,
   'amenities': instance.amenities,
   'images': instance.images,

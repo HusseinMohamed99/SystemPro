@@ -3,6 +3,7 @@ import 'package:system_pro/features/Home/data/model/amenities.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/employee.dart';
 import 'package:system_pro/features/Home/data/model/listing_image.dart';
+import 'package:system_pro/features/Home/data/model/marketer.dart';
 import 'package:system_pro/features/Home/data/model/subcategory.dart';
 
 part 'listing.g.dart';
@@ -13,6 +14,7 @@ class Listing {
     this.id,
     this.employeeId,
     this.companyId,
+    this.marketerId,
     this.categoryId,
     this.subcategoryId,
     this.title,
@@ -35,6 +37,7 @@ class Listing {
     this.releaseDate,
     this.employee,
     this.company,
+    this.marketer,
     this.images,
     this.amenities,
     this.subcategory,
@@ -50,6 +53,8 @@ class Listing {
   final int? employeeId;
   @JsonKey(name: 'company_id')
   final int? companyId;
+  @JsonKey(name: 'marketer_id')
+  final int? marketerId;
   @JsonKey(name: 'category_id')
   final int? categoryId;
   @JsonKey(name: 'subcategory_id')
@@ -84,9 +89,10 @@ class Listing {
 
   final Employee? employee;
   final Company? company;
+  final Marketer? marketer;
   final Subcategory? subcategory;
   final List<Amenities>? amenities;
   final List<ListingImage>? images;
   @JsonKey(name: 'is_favorite')
-bool? isFavorite;
+  bool? isFavorite;
 }

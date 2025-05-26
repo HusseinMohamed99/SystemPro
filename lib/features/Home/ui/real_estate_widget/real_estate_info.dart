@@ -8,6 +8,7 @@ import 'package:system_pro/core/theming/styleManager/font_family.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
+import 'package:system_pro/features/Home/data/model/marketer.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_company_logo_and_created_time.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_count_bed_and_bathroom.dart';
@@ -23,9 +24,11 @@ class RealEstateInfo extends StatelessWidget {
     required this.area,
     required this.dateTime,
     required this.company,
+    required this.marketer,
   });
   final String price, title, location, bedroomNum, bathroomNum, area, dateTime;
   final Company company;
+  final Marketer marketer;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +90,7 @@ class RealEstateInfo extends StatelessWidget {
             ),
           ),
         ),
-        CustomCompanyLogoAndCratedTime(dateTime: dateTime, company: company),
+        CustomCompanyLogoAndCratedTime(dateTime: dateTime, company: company,marketer: marketer),
         const CustomDivider().vPadding(kSpacingSmall),
         CustomConnectionButton(
           whatsAppURL: company.phone ?? '',
