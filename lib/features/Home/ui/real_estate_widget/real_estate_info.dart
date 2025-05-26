@@ -90,7 +90,12 @@ class RealEstateInfo extends StatelessWidget {
             ),
           ),
         ),
-        CustomCompanyLogoAndCratedTime(dateTime: dateTime, company: company,marketer: marketer),
+        CustomCompanyLogoAndCratedTime(
+          dateTime: dateTime,
+          company: company,
+          marketer: marketer,
+        ),
+
         const CustomDivider().vPadding(kSpacingSmall),
         CustomConnectionButton(
           whatsAppURL: company.phone ?? '',

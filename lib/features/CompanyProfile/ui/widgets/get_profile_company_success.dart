@@ -12,21 +12,21 @@ import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
-import 'package:system_pro/features/CompanyProfile/model/profile_entity.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/about_real_estate_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/location_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/properties_widget.dart';
+import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
 class GetProfileCompanySuccess extends StatelessWidget {
   const GetProfileCompanySuccess({
     super.key,
-    required this.profile,
+    required this.company,
     required this.companyListings,
   });
 
-  final ProfileEntity profile;
+  final Company company;
   final List<Listing> companyListings;
 
   @override
@@ -55,7 +55,7 @@ class GetProfileCompanySuccess extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(320),
                       child: CustomCachedNetworkImageWidget(
-                        imageURL: profile.pictureUrl ?? '',
+                        imageURL: company.pictureUrl ?? '',
                         height: 32.h,
                         width: 100.w,
                         fit: BoxFit.fill,
@@ -64,7 +64,7 @@ class GetProfileCompanySuccess extends StatelessWidget {
                   ),
                   verticalSpacing(kSpacingDefault),
                   Text(
-                    profile.name ?? '',
+                    company.name ?? '',
                     style: context.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
                     ),
@@ -101,11 +101,11 @@ class GetProfileCompanySuccess extends StatelessWidget {
             child: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
-                  child: LocationWidget(location: profile.address ?? ''),
+                  child: LocationWidget(location: company.address ?? ''),
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
                 SliverToBoxAdapter(
-                  child: AboutRealEstateWidget(description: profile.bio ?? ''),
+                  child: AboutRealEstateWidget(description: company.bio ?? ''),
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
                 const SliverToBoxAdapter(child: CustomDivider()),
@@ -117,6 +117,8 @@ class GetProfileCompanySuccess extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
                 RealEstateSliverList(listings: companyListings),
+
+                // ✅ تحميل إضافي عند الوصول للنهاية
                 if (cubit.isLoading)
                   SliverToBoxAdapter(
                     child: Center(

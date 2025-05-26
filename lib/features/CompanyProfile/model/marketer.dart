@@ -1,5 +1,7 @@
+
+// lib/features/shared/models/marketer.dart
 import 'package:json_annotation/json_annotation.dart';
-import 'package:system_pro/features/CompanyProfile/model/profile_entity.dart';
+import 'profile_entity.dart';
 
 part 'marketer.g.dart';
 
@@ -9,6 +11,7 @@ class Marketer implements ProfileEntity {
 
   factory Marketer.fromJson(Map<String, dynamic> json) =>
       _$MarketerFromJson(json);
+
   @override
   final String? name;
   @override
