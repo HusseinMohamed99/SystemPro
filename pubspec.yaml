@@ -51,6 +51,10 @@ flutter:
     - assets/location/
     - .env
   fonts:
+    - family: SaudiRiyal
+      fonts:
+        - asset: assets/fonts/saudi_riyal.ttf
+
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Thin.ttf

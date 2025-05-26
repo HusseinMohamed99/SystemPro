@@ -39,6 +39,9 @@ class $AssetsFontsGen {
   /// File path: assets/fonts/Poppins-Thin.ttf
   String get poppinsThin => 'assets/fonts/Poppins-Thin.ttf';
 
+  /// File path: assets/fonts/saudi_riyal.ttf
+  String get saudiRiyal => 'assets/fonts/saudi_riyal.ttf';
+
   /// List of all assets
   List<String> get values => [
     poppinsBlack,
@@ -50,6 +53,7 @@ class $AssetsFontsGen {
     poppinsRegular,
     poppinsSemiBold,
     poppinsThin,
+    saudiRiyal,
   ];
 }
 
