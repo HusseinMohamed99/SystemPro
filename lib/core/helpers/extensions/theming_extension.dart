@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// Extension on [BuildContext] to simplify access to [TextTheme] styles.
+///
+/// This allows direct access to commonly used text styles without needing to call
+/// `Theme.of(context).textTheme` repeatedly.
 extension TextStyleBuildContext<T> on BuildContext {
-  //Text Style
   TextStyle? get displaySmall => Theme.of(this).textTheme.displaySmall;
   TextStyle? get headlineLarge => Theme.of(this).textTheme.headlineLarge;
   TextStyle? get headlineMedium => Theme.of(this).textTheme.headlineMedium;

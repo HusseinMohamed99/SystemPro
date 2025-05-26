@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+/// Extension on [Widget] to provide shorthand methods for common layout wrapping.
+/// Makes code cleaner by avoiding repeated boilerplate for padding,
+/// centering, and rounded clipping.
 extension WidgetExtension on Widget {
   // Padding
   Widget allPadding({required double vPadding, required double hPadding}) =>

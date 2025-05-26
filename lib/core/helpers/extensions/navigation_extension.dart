@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Extension on [BuildContext] to simplify and standardize navigation.
+/// This extension helps reduce boilerplate when navigating between routes.
 extension Navigation on BuildContext {
   Future<T?> pushNamed<T>(String routeName, {Object? arguments}) {
     return Navigator.of(this).pushNamed(routeName, arguments: arguments);

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
+/// Extension on [BuildContext] to simplify showing a styled [SnackBar].
+/// Instead of writing the full `ScaffoldMessenger.of(context).showSnackBar(...)`
 extension SnackBarExtension on BuildContext {
   void showSnackBar(String message) {
     ScaffoldMessenger.of(this).showSnackBar(
