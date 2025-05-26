@@ -27,7 +27,7 @@ class RecentSearchesScreen extends StatefulWidget {
 }
 
 class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
- final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   final List<Map<String, String>> _recentSearches = [];
   final List<Map<String, String>> _searchResults = [];
   List<Map<String, String>> _locations = [];
@@ -97,7 +97,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
 
   void _handleSearch(String query) {
     if (query.isEmpty) {
-      setState(() => _searchResults.clear());
+      setState(_searchResults.clear);
       return;
     }
     final q = query.toLowerCase();
@@ -170,12 +170,71 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     final isSearching = _searchController.text.isNotEmpty;
     final locations = isSearching ? _searchResults : _recentSearches;
     final isArabic = context.isAr;
+    final query = _searchController.text.trim();
+
+    if (locations.isEmpty && !isSearching) {
+      // لا تعرض أي حاجة لو مفيش داتا ومفيش بحث
+      return const SizedBox.shrink();
+    }
+
+    final itemCount =
+        locations.isEmpty && isSearching
+            ? 1
+            : locations.length + (isSearching ? 0 : 1); // +1 for "Clear"
 
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsetsDirectional.zero,
-        itemCount: locations.length,
+        itemCount: itemCount,
         itemBuilder: (context, index) {
+          // عرض خيار إضافة موقع مخصص
+          if (locations.isEmpty && isSearching) {
+            return ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.add_location_alt_outlined),
+              title: Text(
+                isArabic
+                    ? 'إضافة "$query" كموقع مخصص'
+                    : 'Add "$query" as a custom location',
+                style: context.titleMedium!.copyWith(
+                  fontWeight: FontWeightHelper.medium,
+                ),
+              ),
+              onTap: () {
+                final customLocation = {
+                  'district_ar': query,
+                  'district_en': query,
+                  'city_ar': '',
+                  'city_en': '',
+                };
+                _handleLocationSelect(customLocation);
+              },
+            );
+          }
+
+          // زر المسح في حالة الريسنت فقط
+          if (!isSearching && index == locations.length) {
+            return ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.delete_outline),
+              title: Text(
+                isArabic ? 'مسح عمليات البحث' : 'Clear recent searches',
+                style: context.titleMedium!.copyWith(
+                  fontWeight: FontWeightHelper.medium,
+                ),
+              ),
+              onTap: () async {
+                context.showSnackBar(
+                  isArabic ? 'تم مسح سجل البحث' : 'Recent searches cleared',
+                );
+                setState(_recentSearches.clear);
+                await CachingHelper.removeData(
+                  SharedPrefKeys.recentSearchesKey,
+                );
+              },
+            );
+          }
+
           final location = locations[index];
           return ListTile(
             contentPadding: EdgeInsets.zero,
@@ -213,18 +272,25 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSearchHeader(),
-        verticalSpacing(kSpacingXLarge),
-        Text(
-          isSearching
-              ? context.localization.result
-              : context.localization.recent_search,
-          style: context.titleMedium!.copyWith(
-            fontWeight: FontWeightHelper.medium,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSearchHeader(),
+              verticalSpacing(kSpacingXLarge),
+              Text(
+                isSearching
+                    ? context.localization.result
+                    : context.localization.recent_search,
+                style: context.titleMedium!.copyWith(
+                  fontWeight: FontWeightHelper.medium,
+                ),
+              ),
+              verticalSpacing(kSpacingSmall),
+              _buildLocationsList(),
+            ],
           ),
         ),
-        verticalSpacing(kSpacingSmall),
-        _buildLocationsList(),
         CustomButton(
           text: context.localization.done,
           onPressed: () {

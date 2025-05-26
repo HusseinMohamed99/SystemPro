@@ -11,9 +11,7 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: basicAppBar(),
-      body: const Column(
-        children: [Expanded(child: RecentSearchesScreen())],
-      ).allPadding(
+      body: const RecentSearchesScreen().allPadding(
         vPadding: kPaddingDefaultVertical,
         hPadding: kPaddingDefaultHorizontal,
       ),
