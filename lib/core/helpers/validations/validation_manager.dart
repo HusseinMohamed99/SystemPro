@@ -1,36 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/validations/validation_regex.dart';
 
+/// A utility class to validate common
+/// form inputs like name, phone, email, password, etc.
 class ValidationManager {
-  // === REGEX CONSTANTS ===
-  static final _onlyNumbersRegex = RegExp(r'^[0-9]+$');
-  static final _validCharactersRegex = RegExp(
-    r'^[\u0621-\u064Aa-zA-Z0-9 .\-]+$',
-  ); // Arabic, English, digits, space, dot, dash
-  static final _emailRegex = RegExp(
-    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-  );
-  static final _startEndSpecialRegex = RegExp(r'^[\.\-_]|[\.\-_]$');
-  static final _egyptPhoneRegex = RegExp(
-    r'^(010|011|012|015|016|017)[0-9]{8}$',
-  );
-  static final _saudiPhoneRegex = RegExp(r'^(?:\+966|00966|0)?5[0-9]{8}$');
-
-  static final _lowerCaseRegex = RegExp(r'[a-z]');
-  static final _upperCaseRegex = RegExp(r'[A-Z]');
-  static final _numberRegex = RegExp(r'[0-9]');
-  static final _specialCharRegex = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
-
-  // === DISPLAY NAME ===
+  /// Validates full name input. Ensures min/max length, valid characters, and not just numbers.
   static String? displayNameValidator(BuildContext context, String? value) {
     final t = context.localization;
     final name = value?.trim();
 
     if (name == null || name.isEmpty) return t.full_name_empty;
-    if (_onlyNumbersRegex.hasMatch(name)) {
+    if (ValidationRegex.onlyNumbers.hasMatch(name)) {
       return t.full_name_cannot_be_only_numbers;
     }
-    if (!_validCharactersRegex.hasMatch(name)) {
+    if (!ValidationRegex.validCharacters.hasMatch(name)) {
       return t.full_name_no_special_characters;
     }
     if (name.length < 3) return t.full_name_minimum_length;
@@ -39,22 +23,22 @@ class ValidationManager {
     return null;
   }
 
-  // === PHONE NUMBER ===
+  /// Validates Egyptian and Saudi phone numbers using their respective formats.
   static String? phoneValidator(BuildContext context, String? value) {
     final t = context.localization;
     final phone = value?.trim();
 
     if (phone == null || phone.isEmpty) return t.phone_empty;
 
-    final isEgyptian = _egyptPhoneRegex.hasMatch(phone);
-    final isSaudi = _saudiPhoneRegex.hasMatch(phone);
+    final isEgyptian = ValidationRegex.egyptPhone.hasMatch(phone);
+    final isSaudi = ValidationRegex.saudiPhone.hasMatch(phone);
 
     if (!isEgyptian && !isSaudi) return t.phone_invalid_format;
 
     return null;
   }
 
-  // === EMAIL ===
+  /// Validates email with standard RFC rules and formatting constraints.
   static String? emailValidator(BuildContext context, String? value) {
     final t = context.localization;
     final email = value?.trim();
@@ -63,50 +47,54 @@ class ValidationManager {
     if (email.length < 6) return t.email_too_short;
     if (email.length > 320) return t.email_too_long;
     if (email.contains('..')) return t.email_no_consecutive_dots;
-    if (_startEndSpecialRegex.hasMatch(email)) return t.email_invalid_start_end;
+    if (ValidationRegex.startEndSpecial.hasMatch(email)) {
+      return t.email_invalid_start_end;
+    }
 
     final parts = email.split('@');
     if (parts.length != 2 || parts[1].contains('..')) {
       return t.email_invalid_domain;
     }
-    if (!_emailRegex.hasMatch(email)) return t.email_invalid_format;
+    if (!ValidationRegex.email.hasMatch(email)) return t.email_invalid_format;
 
     return null;
   }
 
-  // === OTP ===
+  /// Validates numeric OTP codes only.
   static String? otpValidator(BuildContext context, String? value) {
     final t = context.localization;
     final otp = value?.trim();
 
     if (otp == null || otp.isEmpty) return t.otp_empty;
-    if (!_onlyNumbersRegex.hasMatch(otp)) return t.otp_invalid_format;
+    if (!ValidationRegex.onlyNumbers.hasMatch(otp)) return t.otp_invalid_format;
 
     return null;
   }
 
-  // === PASSWORD ===
+  /// Validates strong password: includes upper/lower, digit, special char, min 8.
   static String? passwordValidator(BuildContext context, String? value) {
     final t = context.localization;
     final password = value?.trim();
 
     if (password == null || password.isEmpty) return t.password_empty;
     if (password.length < 8) return t.password_length;
-    if (!_lowerCaseRegex.hasMatch(password)) {
+    if (!ValidationRegex.lowerCase.hasMatch(password)) {
       return t.password_missing_lowercase;
     }
-    if (!_upperCaseRegex.hasMatch(password)) {
+    if (!ValidationRegex.upperCase.hasMatch(password)) {
       return t.password_missing_uppercase;
     }
-    if (!_numberRegex.hasMatch(password)) return t.password_missing_number;
-    if (!_specialCharRegex.hasMatch(password)) {
+    if (!ValidationRegex.number.hasMatch(password)) {
+      return t.password_missing_number;
+    }
+    if (!ValidationRegex.specialChar.hasMatch(password)) {
       return t.password_missing_special;
     }
 
     return null;
   }
 
-  // === REPEAT PASSWORD ===
+  /// Compares two password fields for equality.
   static String? repeatPasswordValidator(
     BuildContext context, {
     required String? value,
