@@ -249,6 +249,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "password_missing_uppercase": MessageLookupByLibrary.simpleMessage(
       "Password must contain at least one uppercase letter",
     ),
+    "permission_required": MessageLookupByLibrary.simpleMessage(
+      "Permission is required to perform this action.",
+    ),
+    "permission_required_hint": MessageLookupByLibrary.simpleMessage(
+      "Please grant the required permission in settings.",
+    ),
     "personal_account": MessageLookupByLibrary.simpleMessage(
       "Personal Account",
     ),

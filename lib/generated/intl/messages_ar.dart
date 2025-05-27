@@ -253,6 +253,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "password_missing_uppercase": MessageLookupByLibrary.simpleMessage(
       "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
     ),
+    "permission_required": MessageLookupByLibrary.simpleMessage(
+      "يجب منح الإذن لتنفيذ هذا الإجراء.",
+    ),
+    "permission_required_hint": MessageLookupByLibrary.simpleMessage(
+      "يرجى منح الإذن المطلوب من الإعدادات.",
+    ),
     "personal_account": MessageLookupByLibrary.simpleMessage("حساب شخصي"),
     "personal_information": MessageLookupByLibrary.simpleMessage(
       "المعلومات الشخصية",

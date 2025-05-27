@@ -359,6 +359,10 @@
   "down_payment": "الدفعة المقدمة",
   "@down_payment": {},
   "failed_to_upload_image": "فشل تحميل الصورة",
-  "@failed_to_upload_image": {}
+  "@failed_to_upload_image": {},
+   "permission_required": "يجب منح الإذن لتنفيذ هذا الإجراء.",
+   "@permission_required": {},
+  "permission_required_hint": "يرجى منح الإذن المطلوب من الإعدادات.",
+  "@permission_required_hint": {}
 
 }

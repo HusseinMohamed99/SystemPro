@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
@@ -9,6 +10,7 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
+
 class LocationRealEstate extends StatelessWidget {
   const LocationRealEstate({super.key, required this.location});
 
@@ -51,9 +53,11 @@ class LocationRealEstate extends StatelessWidget {
             PositionedDirectional(
               child: GestureDetector(
                 onTap: () {
-                  urlLauncher(
-                    context,
-                    'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(location)}',
+                  launchUrlWithPermission(
+                    context: context,
+                    url:
+                        'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(location)}',
+                    requiredPermission: Permission.location,
                   );
                 },
                 child: Container(

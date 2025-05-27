@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:system_pro/generated/intl/messages_all.dart';
+import 'intl/messages_all.dart';
 
 // **************************************************************************
 // Generator: Flutter Intl IDE plugin
@@ -1450,6 +1450,26 @@ class S {
     return Intl.message(
       'Image not available',
       name: 'failed_to_upload_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permission is required to perform this action.`
+  String get permission_required {
+    return Intl.message(
+      'Permission is required to perform this action.',
+      name: 'permission_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please grant the required permission in settings.`
+  String get permission_required_hint {
+    return Intl.message(
+      'Please grant the required permission in settings.',
+      name: 'permission_required_hint',
       desc: '',
       args: [],
     );

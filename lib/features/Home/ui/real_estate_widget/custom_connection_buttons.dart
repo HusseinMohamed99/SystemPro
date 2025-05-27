@@ -40,7 +40,10 @@ class CustomConnectionButton extends StatelessWidget {
               ),
             ),
             onPressed: () async {
-              await urlLauncher(context, 'https://wa.me/+$whatsAppURL');
+              await launchUrlWithPermission(
+                context: context,
+                url: 'https://wa.me/$whatsAppURL',
+              );
             },
             icon: SvgPicture.asset(
               Assets.images.whatsapp,
@@ -79,7 +82,7 @@ class CustomConnectionButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              makePhoneCall(context, '+$phoneURL');
+              makePhoneCall(context, phoneURL);
             },
             icon: SvgPicture.asset(
               Assets.images.phone,

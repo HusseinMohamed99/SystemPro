@@ -355,5 +355,9 @@
   "down_payment":"Down Payment",
   "@down_payment":{},
     "failed_to_upload_image": "Image not available",
-  "@failed_to_upload_image": {}
+  "@failed_to_upload_image": {},
+   "permission_required": "Permission is required to perform this action.",
+  "@permission_required": {},
+  "permission_required_hint": "Please grant the required permission in settings.",
+  "@permission_required_hint": {}
 }
