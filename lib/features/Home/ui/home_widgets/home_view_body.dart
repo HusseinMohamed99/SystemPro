@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/enum/enum.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
@@ -38,14 +38,15 @@ class HomeViewBody extends StatelessWidget {
                 final listings = state.listings;
                 return Column(
                   children: [
-                    PropertyFiltersRow(selectedFilter: state.selectedFilter,
-                      filtersToggle: filtersToggle(context),
+                    PropertyFiltersRow(
+                      selectedFilter: state.selectedFilter,
+                      filtersToggle: FilterToggle.values,
                       onToggleChanged: (filter) {
                         final cubit = BlocProvider.of<MarketplaceCubit>(
                           context,
                         );
                         cubit.getListings(filter: filter);
-                      }, 
+                      },
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
                       rightPadding: kPaddingDefaultHorizontal,
@@ -71,4 +72,3 @@ class HomeViewBody extends StatelessWidget {
     );
   }
 }
-

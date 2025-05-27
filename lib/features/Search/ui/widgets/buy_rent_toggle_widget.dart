@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -11,31 +13,28 @@ class BuyRentToggleWidget extends StatefulWidget {
     required this.onToggleChanged,
   });
 
-  final Map<String, String> filtersToggle;
+  final List<FilterToggle> filtersToggle;
   final void Function(String selectedValue) onToggleChanged;
-
   @override
   State<BuyRentToggleWidget> createState() => _BuyRentToggleWidgetState();
 }
 
 class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
-  late String selectedFilter;
-
+  late String selectedValue;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedFilter = widget.filtersToggle.values.first;
+    selectedValue = filterToggleValue(widget.filtersToggle.first);
   }
 
   @override
   Widget build(BuildContext context) {
-    final allFilters = widget.filtersToggle;
-
     return Row(
       children:
-          allFilters.keys.map((filter) {
-            final value = allFilters[filter]!;
-            final isSelected = selectedFilter == value;
+          widget.filtersToggle.map((toggle) {
+            final label = filterToggleLabel(context, toggle);
+            final value = filterToggleValue(toggle);
+            final isSelected = selectedValue == value;
 
             return Expanded(
               child: Padding(
@@ -45,7 +44,7 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
                   label: SizedBox(
                     width: double.infinity,
                     child: Text(
-                      filter,
+                      label,
                       textAlign: TextAlign.center,
                       style: context.titleLarge?.copyWith(
                         color:
@@ -66,9 +65,7 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
                   ),
                   selected: isSelected,
                   onSelected: (_) {
-                    setState(() {
-                      selectedFilter = value;
-                    });
+                    setState(() => selectedValue = value);
                     widget.onToggleChanged(value);
                   },
                   selectedColor: AdaptiveColor.adaptiveColor(

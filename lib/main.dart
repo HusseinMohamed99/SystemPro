@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:system_pro/app_bootstrap.dart';
+import 'package:system_pro/core/enum/enum.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';

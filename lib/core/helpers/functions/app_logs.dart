@@ -1,9 +1,9 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
+import 'package:system_pro/core/enum/enum.dart';
 
 /// Enum to classify log types.
-enum LogType { success, debug, info, error, close }
 
 /// A utility class for structured debug logging in development mode.
 ///

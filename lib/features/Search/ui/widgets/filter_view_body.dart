@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/enum/enum.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
@@ -93,7 +94,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
         return Column(
           children: [
             ToggleCategoryWidget(
-              filters: filters(context),
+              filters: FilterType.values,
               enabledSlugs:
                   categories.map((e) => e.name).whereType<String>().toList(),
               onCategoryChanged: (slug) {
@@ -106,7 +107,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
 
             verticalSpacing(kSpacingXXLarge),
             BuyRentToggleWidget(
-              filtersToggle: filtersToggle(context),
+              filtersToggle: FilterToggle.values,
               onToggleChanged: (value) {
                 setState(() => selectedBuyRentOption = value);
               },

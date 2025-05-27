@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
@@ -12,7 +14,7 @@ class PropertyFiltersRow extends StatelessWidget {
     required this.onToggleChanged,
   });
 
-  final Map<String, String> filtersToggle;
+final List<FilterToggle> filtersToggle;
   final String selectedFilter;
   final void Function(String selectedValue) onToggleChanged;
 
@@ -20,11 +22,12 @@ class PropertyFiltersRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children:
-          filtersToggle.entries.map((entry) {
-            final filter = entry.key;
-            final value = entry.value;
+     filtersToggle.map((toggle) {
+            final label = filterToggleLabel(context, toggle); 
+            final value = filterToggleValue(
+              toggle,
+            ); 
             final isSelected = selectedFilter == value;
-
             return Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
@@ -33,7 +36,7 @@ class PropertyFiltersRow extends StatelessWidget {
                   label: SizedBox(
                     width: double.infinity,
                     child: Text(
-                      filter,
+                   label ,
                       textAlign: TextAlign.center,
                       style: context.titleLarge?.copyWith(
                         color:

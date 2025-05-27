@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/enum/enum.dart';
+import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -12,28 +14,26 @@ class ToggleCategoryWidget extends StatefulWidget {
     required this.enabledSlugs,
   });
 
-  final Function(String selectedSlug) onCategoryChanged;
-  final Map<String, String> filters;
+  final List<FilterType> filters;
   final List<String> enabledSlugs;
+  final void Function(String selectedSlug) onCategoryChanged;
 
   @override
   State<ToggleCategoryWidget> createState() => _ToggleCategoryWidgetState();
 }
 
 class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
-  late String selectedDisplay;
+  late FilterType selectedType;
 
   @override
   void initState() {
     super.initState();
-    selectedDisplay = widget.filters.keys.first;
+    selectedType = widget.filters.first;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        final initialSlug = widget.filters[selectedDisplay]!;
-        if (widget.enabledSlugs.contains(initialSlug)) {
-          widget.onCategoryChanged(initialSlug);
-        }
+      final initialSlug = filterTypeValue(selectedType);
+      if (widget.enabledSlugs.contains(initialSlug)) {
+        widget.onCategoryChanged(initialSlug);
       }
     });
   }
@@ -51,20 +51,20 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
       ),
       child: Row(
         children:
-            widget.filters.entries.map((entry) {
-              final displayName = entry.key;
-              final slug = entry.value;
-              final isSelected = selectedDisplay == displayName;
+            widget.filters.map((type) {
+              final displayName = filterTypeLabel(context, type);
+              final slug = filterTypeValue(type);
+              final isSelected = selectedType == type;
               final isEnabled = widget.enabledSlugs.contains(slug);
 
               return Expanded(
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
-                  transitionBuilder: (child, animation) {
-                    return ScaleTransition(scale: animation, child: child);
-                  },
+                  transitionBuilder:
+                      (child, animation) =>
+                          ScaleTransition(scale: animation, child: child),
                   child: ChoiceChip(
-                    key: ValueKey(displayName),
+                    key: ValueKey(type),
                     labelPadding: EdgeInsetsDirectional.symmetric(
                       vertical: 4.h,
                     ),
@@ -92,10 +92,8 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                     onSelected:
                         isEnabled
                             ? (_) {
-                              setState(() {
-                                selectedDisplay = displayName;
-                                widget.onCategoryChanged(slug);
-                              });
+                              setState(() => selectedType = type);
+                              widget.onCategoryChanged(slug);
                             }
                             : null,
                     selectedColor: ColorManager.primaryBlue,
@@ -108,14 +106,6 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                       context: context,
                       lightColor: ColorManager.shadowBlue,
                       darkColor: ColorManager.darkGrey,
-                    ),
-                    side: BorderSide(
-                      width: 0,
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.pureWhite,
-                        darkColor: ColorManager.tertiaryBlack,
-                      ),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100),

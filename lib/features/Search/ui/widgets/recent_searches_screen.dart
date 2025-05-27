@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/enum/enum.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
