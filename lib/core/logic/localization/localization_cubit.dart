@@ -11,14 +11,16 @@ class ChangeLocalizationCubit extends Cubit<ChangeLocalizationState> {
     _initLocalization();
   }
 
-  late String currentLocalization;
+  late String currentLanguageCode;
 
+  /// Loads the cached language or defaults to English.
   Future<void> _initLocalization() async {
     final savedLang =
         await CachingHelper.getData(SharedPrefKeys.selectedLanguage) ?? 'en';
     await changeLocalization(savedLang, save: false);
   }
 
+  /// Changes app language and saves it if requested.
   Future<void> changeLocalization(String localeCode, {bool save = true}) async {
     emit(const ChangeLocalizationState.loading());
 
@@ -26,25 +28,27 @@ class ChangeLocalizationCubit extends Cubit<ChangeLocalizationState> {
       (locale) => locale.languageCode == localeCode,
     );
 
-    currentLocalization = supported ? localeCode : 'en';
+    currentLanguageCode = supported ? localeCode : 'en';
 
     if (save) {
       await CachingHelper.setData(
         SharedPrefKeys.selectedLanguage,
-        currentLocalization,
+        currentLanguageCode,
       );
     }
 
-    Intl.defaultLocale = currentLocalization;
-    await S.load(Locale(currentLocalization));
+    Intl.defaultLocale = currentLanguageCode;
+    await S.load(Locale(currentLanguageCode));
 
-    emit(ChangeLocalizationState.loaded(localization: currentLocalization));
+    emit(ChangeLocalizationState.loaded(localization: currentLanguageCode));
   }
 
+  /// Toggles between Arabic and English.
   Future<void> toggleLocale() async {
-    final newLocale = currentLocalization == 'ar' ? 'en' : 'ar';
+    final newLocale = currentLanguageCode == 'ar' ? 'en' : 'ar';
     await changeLocalization(newLocale);
   }
 
-  bool get isArabic => currentLocalization == 'ar';
+  /// Returns true if the current language is Arabic.
+  bool get isArabic => currentLanguageCode == 'ar';
 }
