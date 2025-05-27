@@ -6,6 +6,7 @@ import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -65,6 +66,7 @@ class ProfileView extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             context.read<ProfileCubit>().emitLogoutStates();
+                            DioFactory.clearAuthorizationHeader();
                           },
                           child: Text(
                             context.localization.logout,

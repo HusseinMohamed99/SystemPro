@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
@@ -38,7 +39,10 @@ class EditProfileForm extends StatelessWidget {
           ),
           const Spacer(),
           TextButton(
-            onPressed: cubit.emitDeleteAccountStates,
+            onPressed: () {
+              cubit.emitDeleteAccountStates();
+              DioFactory.clearAuthorizationHeader();
+            },
             child: Text(
               context.localization.delete_my_account,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(

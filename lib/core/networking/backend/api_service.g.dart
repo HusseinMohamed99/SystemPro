@@ -360,7 +360,7 @@ class _ApiService implements ApiService {
       r'category_id': categoryID,
       r'subcategory_id': subCategoryID,
       r'rooms': bedrooms,
-      r'bathsrooms': bathrooms,
+      r'bathrooms': bathrooms,
       r'area_min': areaMin,
       r'area_max': areaMax,
       r'price_min': priceMin,
@@ -462,7 +462,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/api/mobile',
+            'api/mobile/categories',
             queryParameters: queryParameters,
             data: _data,
           )

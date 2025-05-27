@@ -17,7 +17,6 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     final response = await _profileRepo.logout();
     await response.when(
       success: (profileDataResponse) async {
-      
         await CachingHelper.clearAllSecuredData();
         await CachingHelper.clearAllData();
 
@@ -38,6 +37,7 @@ class ProfileCubit extends Cubit<ProfileDataState> {
       },
     );
   }
+
   void emitDeleteAccountStates() async {
     // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
     if (isClosed) return;
@@ -46,7 +46,6 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     final response = await _profileRepo.deleteAccount();
     await response.when(
       success: (profileDataResponse) async {
-      
         await CachingHelper.clearAllSecuredData();
         await CachingHelper.clearAllData();
 

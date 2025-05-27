@@ -29,40 +29,55 @@ part 'api_service.g.dart';
 @RestApi(baseUrl: ApiConstants.apiBaseUrl)
 abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
+
+  /// Authentication endpoints
   @POST(ApiConstants.login)
   Future<LoginResponse> login(@Body() LoginRequestBody loginRequestBody);
+
   @POST(ApiConstants.signup)
   Future<SignupResponse> signup(@Body() SignupRequestBody signupRequestBody);
+
   @POST(ApiConstants.forgotPassword)
   Future<ForgotPasswordResponse> forgotPassword(
     @Body() ForgotPasswordRequestBody forgotPasswordRequestBody,
   );
+
   @POST(ApiConstants.emailVerify)
   Future<EmailVerifyResponse> emailVerify(
     @Body() EmailVerifyRequestBody emailVerifyRequestBody,
   );
+
   @POST(ApiConstants.checkOtp)
   Future<CheckOtpResponse> checkOtp(
     @Body() CheckOtpRequestBody checkOtpRequestBody,
   );
+
   @POST(ApiConstants.resendOtp)
   Future<ResendOtpResponse> resendOtp(
     @Body() ResendOtpRequestBody resendOtpRequestBody,
   );
+
   @POST(ApiConstants.changePassword)
   Future<ChangePasswordResponse> changePassword(
     @Body() ChangePasswordRequestBody changePasswordRequestBody,
   );
+
   @POST(ApiConstants.logout)
   Future<ApiSuccessModel> logout();
+
   @POST(ApiConstants.deleteAccount)
   Future<ApiSuccessModel> deleteAccount();
+
+  /// User data endpoints
   @GET(ApiConstants.getUserData)
   Future<UserDataResponse> getUserData();
+
   @PUT(ApiConstants.editProfile)
   Future<EditProfileResponse> editProfile(
     @Body() EditProfileRequestBody editProfileRequestBody,
   );
+
+  /// Marketplace endpoints
   @GET(ApiConstants.getMarketplaceListings)
   Future<MarketplaceResponse> getMarketplaceListings({
     @Query('listing_type') String? listingType,
@@ -70,22 +85,25 @@ abstract class ApiService {
     @Query('category_id') int? categoryID,
     @Query('subcategory_id') int? subCategoryID,
     @Query('rooms') int? bedrooms,
-    @Query('bathsrooms') int? bathrooms,
+    @Query('bathrooms') int? bathrooms,
     @Query('area_min') num? areaMin,
     @Query('area_max') num? areaMax,
     @Query('price_min') num? priceMin,
-    @Query('price_max') num ?priceMax,
+    @Query('price_max') num? priceMax,
     @Query('amenities') List<int>? amenities,
     @Query('direction') required String direction,
     @Query('cursor') required int cursor,
     @Query('limit') required int limit,
   });
 
+  /// Favorites management endpoints
   @POST('${ApiConstants.addFavoriteRealEstate}/{id}')
   Future<ToggleFavoriteResponse> toggleFavorite(@Path('id') int listingId);
+
   @GET(ApiConstants.getFavoriteRealEstate)
   Future<GetFavoritesResponse> getFavoriteListings();
 
+  /// Categories endpoint
   @GET(ApiConstants.getCategories)
   Future<CategoryResponse> getCategories({
     @Query('with_subcategories') bool withSubcategories = true,

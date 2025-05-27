@@ -9,3 +9,45 @@ enum FilterToggle { buy, rent, booking }
 
 /// Represents a unit of time used in the time difference calculation.
 enum TimeUnit { days, hours, minutes, now }
+
+/// Enum representing various data source error types.
+enum DataSource {
+  /// Success with no content (HTTP 204).
+  noContent,
+
+  /// Bad request (HTTP 400).
+  badRequest,
+
+  /// Forbidden access (HTTP 403).
+  forbidden,
+
+  /// Unauthorized access (HTTP 401).
+  unauthorized,
+
+  /// Resource not found (HTTP 404).
+  notFound,
+
+  /// Internal server error (HTTP 500).
+  internalServerError,
+
+  /// Connection timeout.
+  connectTimeout,
+
+  /// Request was cancelled.
+  cancel,
+
+  /// Receive timeout.
+  receiveTimeout,
+
+  /// Send timeout.
+  sendTimeout,
+
+  /// Cache error.
+  cacheError,
+
+  /// No internet connection.
+  noInternetConnection,
+
+  /// Default error type.
+  defaultError,
+}
