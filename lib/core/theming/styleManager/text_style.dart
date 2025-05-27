@@ -5,15 +5,20 @@ import 'package:system_pro/core/theming/styleManager/font_family.dart';
 import 'package:system_pro/core/theming/styleManager/font_size.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
+/// Manages app-wide text styles supporting light and dark themes,
+/// and responsive font sizing.
 class AppTextStyleManager {
   static const _fontFamily = FontFamilyHelper.standardFont;
 
+  /// Returns the TextTheme configured for light mode.
   static TextTheme lightTextTheme(BuildContext context) =>
       _buildTextTheme(context, isDark: false);
 
+  /// Returns the TextTheme configured for dark mode.
   static TextTheme darkTextTheme(BuildContext context) =>
       _buildTextTheme(context, isDark: true);
 
+  /// Internal method to create TextTheme based on [isDark] flag.
   static TextTheme _buildTextTheme(
     BuildContext context, {
     required bool isDark,
@@ -67,6 +72,8 @@ class AppTextStyleManager {
     );
   }
 
+  /// Helper to create a [TextStyle] with responsive size
+  ///  and consistent font family.
   static TextStyle _textStyle(
     BuildContext context, {
     required double fontSize,
