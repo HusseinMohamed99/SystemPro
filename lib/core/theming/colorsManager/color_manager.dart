@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:system_pro/core/helpers/extensions/color_extension.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 
 class ColorManager {
@@ -59,6 +60,9 @@ class ColorManager {
   static const Color errorRed = Color(
     0xFFB00020,
   ); // Error text color (Material Design compliant)
+  static Color safeHex(String hex, [Color fallback = Colors.black]) {
+    return hex.toColor() ?? fallback;
+  }
 }
 
 class AdaptiveColor {
