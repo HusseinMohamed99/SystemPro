@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:system_pro/core/enum/enum.dart';
+import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 
 /// Custom BlocObserver to track and log Bloc lifecycle events.

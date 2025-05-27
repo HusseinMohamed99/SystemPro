@@ -144,7 +144,7 @@ class AboutRealEstate extends StatelessWidget {
             ),
             horizontalSpacing(kSpacingSmall),
             Text(
-              timeAgo(context, date),
+             TimeAgoHelper.timeAgo(context, date),
               style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
                 color: AdaptiveColor.adaptiveColor(

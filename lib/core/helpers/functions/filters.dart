@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:system_pro/core/enum/enum.dart';
+import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 
 

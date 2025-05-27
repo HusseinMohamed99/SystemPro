@@ -27,7 +27,7 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
     return Row(
       children: [
         Text(
-          timeAgo(context, dateTime),
+          TimeAgoHelper.timeAgo(context, dateTime),
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
             color: AdaptiveColor.adaptiveColor(
@@ -40,7 +40,7 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            if(company.id == null && marketer.id == null) return;
+            if (company.id == null && marketer.id == null) return;
             context.pushNamed(
               Routes.companyProfileView,
               arguments: company.id ?? marketer.id,

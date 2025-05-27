@@ -1,7 +1,7 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
-import 'package:system_pro/core/enum/enum.dart';
+import 'package:system_pro/core/helpers/enum/enum.dart';
 
 /// Enum to classify log types.
 
