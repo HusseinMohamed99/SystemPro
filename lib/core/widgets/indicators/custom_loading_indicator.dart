@@ -22,8 +22,8 @@ class LoadingIndicator extends StatelessWidget {
           Container(
             color: AdaptiveColor.adaptiveColor(
               context: context,
-              lightColor: HexColorExtension('#80000000').toColor(),
-              darkColor: HexColorExtension('#80FFFFFF').toColor(),
+              lightColor: '#80000000'.toColor() ?? Colors.transparent,
+              darkColor: '#80FFFFFF'.toColor() ?? Colors.transparent,
             ),
             child: const Center(
               child: SpinKitWaveSpinner(
@@ -44,7 +44,7 @@ class AdaptiveIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return Center(
       child: SpinKitThreeInOut(
         color: AdaptiveColor.adaptiveColor(
           context: context,
