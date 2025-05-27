@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
-// Core
+// Core Modules
 import 'package:system_pro/core/networking/backend/api_service.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/styleManager/text_style.dart';
@@ -16,7 +16,7 @@ import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forg
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/repo/otp_repo.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_cubit.dart';
-// Auth
+// Auth Modules
 import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
@@ -39,20 +39,21 @@ import 'package:system_pro/features/Search/logic/categories_cubit.dart';
 
 final getIt = GetIt.instance;
 
-/// Helpers
+/// Helpers to register a lazy singleton
 void _registerLazySingleton<T extends Object>(T Function() factory) {
   if (!getIt.isRegistered<T>()) {
     getIt.registerLazySingleton<T>(factory);
   }
 }
 
+// Helper to register a factory
 void _registerFactory<T extends Object>(T Function() factory) {
   if (!getIt.isRegistered<T>()) {
     getIt.registerFactory<T>(factory);
   }
 }
 
-/// Entry point
+/// Entry point to initialize all dependencies in the app
 void setupGetIt({
   required BuildContext context,
   required String initialLocale,
@@ -69,7 +70,7 @@ void setupGetIt({
   _registerCategoriesModule();
 }
 
-/// ─────────────────── CORE MODULE ───────────────────
+/// Registers core services like API service and networking layer
 void _registerCoreModule() {
   if (!getIt.isRegistered<ApiService>()) {
     final dio = DioFactory.getDio();
@@ -77,7 +78,7 @@ void _registerCoreModule() {
   }
 }
 
-/// ─────────────────── THEME MODULE ───────────────────
+/// Registers theming logic and configuration
 void _registerThemingModule(BuildContext context, bool isDarkMode) {
   final lightTextTheme = AppTextStyleManager.lightTextTheme(context);
   final darkTextTheme = AppTextStyleManager.darkTextTheme(context);
@@ -99,14 +100,14 @@ void _registerThemingModule(BuildContext context, bool isDarkMode) {
   }
 }
 
-/// ─────────────────── LOCALIZATION MODULE ───────────────────
+/// Registers localization cubit to manage app language
 void _registerLocalizationModule() {
   if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
     getIt.registerSingleton<ChangeLocalizationCubit>(ChangeLocalizationCubit());
   }
 }
 
-/// ─────────────────── AUTH MODULE ───────────────────
+/// Registers authentication-related dependencies
 void _registerAuthModule() {
   _registerLazySingleton(() => LoginRepo(getIt()));
   _registerFactory(() => LoginCubit(getIt()));
@@ -127,19 +128,19 @@ void _registerAuthModule() {
   _registerFactory(() => ChangePasswordCubit(getIt()));
 }
 
-/// ─────────────────── PROFILE MODULE ───────────────────
+/// Registers profile-related cubit and repository
 void _registerProfileModule() {
   _registerLazySingleton(() => ProfileRepo(getIt()));
   _registerFactory(() => ProfileCubit(getIt()));
 }
 
-/// ─────────────────── EDIT PROFILE MODULE ───────────────────
+/// Registers edit profile dependencies
 void _registerEditProfileModule() {
   _registerLazySingleton(() => EditProfileRepo(getIt()));
   _registerFactory(() => EditProfileCubit(getIt()));
 }
 
-/// ─────────────────── MARKETPLACE MODULE ───────────────────
+/// Registers marketplace and favorites dependencies
 void _registerMarketplaceModule() {
   _registerLazySingleton(() => MarketplaceRepo(getIt()));
   _registerFactory(() => MarketplaceCubit(getIt()));
@@ -148,12 +149,12 @@ void _registerMarketplaceModule() {
   _registerFactory(() => FavoriteCubit(getIt()));
 }
 
-/// ─────────────────── COMPANY PROFILE MODULE ───────────────────
+/// Registers real estate company profile cubit
 void _registerCompanyProfileModule() {
   _registerFactory(() => RealEstateCubit(getIt()));
 }
 
-/// ─────────────────── CATEGORIES MODULE ───────────────────
+/// Registers categories search dependencies
 void _registerCategoriesModule() {
   _registerLazySingleton(() => CategoriesRepo(getIt()));
   _registerFactory(() => CategoriesCubit(getIt()));
