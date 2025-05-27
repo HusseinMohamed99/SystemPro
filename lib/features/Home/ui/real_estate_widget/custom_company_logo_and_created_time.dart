@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/functions/time_ago.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -46,8 +45,6 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
               Routes.companyProfileView,
               arguments: company.id ?? marketer.id,
             );
-            AppLogs.closeLog(marketer.id.toString());
-            AppLogs.closeLog(company.id.toString());
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50.r),

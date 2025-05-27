@@ -42,7 +42,10 @@ class CachingHelper {
     } else if (value is List<String>) {
       await _preferences.setStringList(key, value);
     } else {
-      AppLogs.debugLog('Unsupported value type: ${value.runtimeType}');
+      AppLogs.log(
+        'Unsupported value type: ${value.runtimeType}',
+        type: LogType.error,
+      );
     }
   }
 
@@ -54,31 +57,31 @@ class CachingHelper {
 
   /// Gets a bool value from SharedPreferences with the given [key].
   static bool getBool(String key) {
-    AppLogs.debugLog('Getting bool with key: $key');
+    AppLogs.log('Getting bool with key: $key');
     return _preferences.getBool(key) ?? false;
   }
 
   /// Gets a double value from SharedPreferences with the given [key].
   static double getDouble(String key) {
-    AppLogs.debugLog('Getting double with key: $key');
+    AppLogs.log('Getting double with key: $key');
     return _preferences.getDouble(key) ?? 0.0;
   }
 
   /// Gets an int value from SharedPreferences with the given [key].
   static int getInt(String key) {
-    AppLogs.debugLog('Getting int with key: $key');
+    AppLogs.log('Getting int with key: $key');
     return _preferences.getInt(key) ?? 0;
   }
 
   /// Gets a String value from SharedPreferences with the given [key].
   static String getString(String key) {
-    AppLogs.debugLog('Getting String with key: $key');
+    AppLogs.log('Getting String with key: $key');
     return _preferences.getString(key) ?? '';
   }
 
   /// Gets a list of String values from SharedPreferences with the given [key].
   static List<String> getListString(String key) {
-    AppLogs.debugLog('Getting List<String> with key: $key');
+    AppLogs.log('Getting List<String> with key: $key');
     return _preferences.getStringList(key) ?? [];
   }
 
@@ -112,6 +115,6 @@ class CachingHelper {
         value != null
             ? 'CachingHelper: $action with key: $key and value: $value'
             : 'CachingHelper: $action with key: $key';
-    AppLogs.debugLog(message);
+    AppLogs.log(message);
   }
 }

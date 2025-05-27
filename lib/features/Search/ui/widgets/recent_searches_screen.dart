@@ -1,5 +1,5 @@
-
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,57 +49,67 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
       final jsonString = await rootBundle.loadString(Assets.location.locations);
       final List<dynamic> data = json.decode(jsonString);
 
-      _locations = data.expand((region) {
-        return (region['cities'] as List).expand<Map<String, String>>((city) {
-          return (city['districts'] as List).map<Map<String, String>>((district) => {
-            'district_en': district['name_en'],
-            'district_ar': district['name_ar'],
-            'city_en': city['name_en'],
-            'city_ar': city['name_ar'],
-          });
-        });
-      }).toList();
+      _locations =
+          data.expand((region) {
+            return (region['cities'] as List).expand<Map<String, String>>((
+              city,
+            ) {
+              return (city['districts'] as List).map<Map<String, String>>(
+                (district) => {
+                  'district_en': district['name_en'],
+                  'district_ar': district['name_ar'],
+                  'city_en': city['name_en'],
+                  'city_ar': city['name_ar'],
+                },
+              );
+            });
+          }).toList();
 
       setState(() {});
     } catch (e) {
-      AppLogs.errorLog('Error loading locations: $e');
+      AppLogs.log('Error loading locations: $e', type: LogType.error);
     }
   }
 
   Future<void> _loadRecentSearches() async {
     try {
-      final data = CachingHelper.getListString(SharedPrefKeys.recentSearchesKey);
-      final searches = data.map((e) {
-        final Map<String, dynamic> decoded = json.decode(e);
-        return {
-          'district_en': decoded['district_en'] as String,
-          'district_ar': decoded['district_ar'] as String,
-          'city_en': decoded['city_en'] as String,
-          'city_ar': decoded['city_ar'] as String,
-        };
-      }).toList();
+      final data = CachingHelper.getListString(
+        SharedPrefKeys.recentSearchesKey,
+      );
+      final searches =
+          data.map((e) {
+            final Map<String, dynamic> decoded = json.decode(e);
+            return {
+              'district_en': decoded['district_en'] as String,
+              'district_ar': decoded['district_ar'] as String,
+              'city_en': decoded['city_en'] as String,
+              'city_ar': decoded['city_ar'] as String,
+            };
+          }).toList();
 
       setState(() {
         _recentSearches.clear();
         _recentSearches.addAll(searches);
       });
     } catch (e) {
-      AppLogs.errorLog('Error loading recent searches: $e');
+      AppLogs.log('Error loading recent searches: $e', type: LogType.error);
     }
   }
 
   void _handleSearch(String query) {
     if (query.isEmpty) {
-      setState(() => _searchResults.clear());
+      setState(_searchResults.clear);
       return;
     }
     final q = query.toLowerCase();
-    final results = _locations.where((location) {
-      return (location['district_en']?.toLowerCase().contains(q) ?? false) ||
-             (location['district_ar']?.contains(query) ?? false) ||
-             (location['city_en']?.toLowerCase().contains(q) ?? false) ||
-             (location['city_ar']?.contains(query) ?? false);
-    }).toList();
+    final results =
+        _locations.where((location) {
+          return (location['district_en']?.toLowerCase().contains(q) ??
+                  false) ||
+              (location['district_ar']?.contains(query) ?? false) ||
+              (location['city_en']?.toLowerCase().contains(q) ?? false) ||
+              (location['city_ar']?.contains(query) ?? false);
+        }).toList();
 
     setState(() {
       _searchResults.clear();
@@ -108,11 +118,12 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
   }
 
   Future<void> _handleLocationSelect(Map<String, String> location) async {
-    _recentSearches.removeWhere((item) =>
-      item['district_en'] == location['district_en'] &&
-      item['district_ar'] == location['district_ar'] &&
-      item['city_en'] == location['city_en'] &&
-      item['city_ar'] == location['city_ar']
+    _recentSearches.removeWhere(
+      (item) =>
+          item['district_en'] == location['district_en'] &&
+          item['district_ar'] == location['district_ar'] &&
+          item['city_en'] == location['city_en'] &&
+          item['city_ar'] == location['city_ar'],
     );
 
     _recentSearches.insert(0, location);
@@ -124,7 +135,8 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     );
 
     setState(() {
-      _searchController.text = '${location['district_ar']}، ${location['city_ar']}';
+      _searchController.text =
+          '${location['district_ar']}، ${location['city_ar']}';
     });
   }
 
@@ -178,8 +190,12 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               ),
             ),
             title: Text(
-              isArabic ? location['district_ar'] ?? '' : location['district_en'] ?? '',
-              style: context.titleMedium!.copyWith(fontWeight: FontWeightHelper.medium),
+              isArabic
+                  ? location['district_ar'] ?? ''
+                  : location['district_en'] ?? '',
+              style: context.titleMedium!.copyWith(
+                fontWeight: FontWeightHelper.medium,
+              ),
             ),
             subtitle: Text(
               isArabic ? location['city_ar'] ?? '' : location['city_en'] ?? '',
@@ -204,7 +220,9 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
           isSearching
               ? context.localization.result
               : context.localization.recent_search,
-          style: context.titleMedium!.copyWith(fontWeight: FontWeightHelper.medium),
+          style: context.titleMedium!.copyWith(
+            fontWeight: FontWeightHelper.medium,
+          ),
         ),
         verticalSpacing(kSpacingSmall),
         _buildLocationsList(),
@@ -215,12 +233,14 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               context.pushNamed(
                 Routes.filterView,
                 arguments: LocationArgument(
-                  district: context.isAr
-                      ? _selectedLocation!['district_ar']!
-                      : _selectedLocation!['district_en']!,
-                  city: context.isAr
-                      ? _selectedLocation!['city_ar']!
-                      : _selectedLocation!['city_en']!,
+                  district:
+                      context.isAr
+                          ? _selectedLocation!['district_ar']!
+                          : _selectedLocation!['district_en']!,
+                  city:
+                      context.isAr
+                          ? _selectedLocation!['city_ar']!
+                          : _selectedLocation!['city_en']!,
                 ),
               );
             } else {

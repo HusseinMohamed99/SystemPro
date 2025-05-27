@@ -1,7 +1,7 @@
 
 // lib/features/shared/models/company.dart
 import 'package:json_annotation/json_annotation.dart';
-import 'profile_entity.dart';
+import 'package:system_pro/features/CompanyProfile/model/profile_entity.dart';
 
 part 'company.g.dart';
 

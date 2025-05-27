@@ -66,7 +66,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
 
       setState(() {});
     } catch (e) {
-      AppLogs.errorLog('Error loading locations: $e');
+      AppLogs.log('Error loading locations: $e', type: LogType.error);
     }
   }
 
@@ -91,7 +91,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
         _recentSearches.addAll(searches);
       });
     } catch (e) {
-      AppLogs.errorLog('Error loading recent searches: $e');
+      AppLogs.log('Error loading recent searches: $e', type: LogType.error);
     }
   }
 

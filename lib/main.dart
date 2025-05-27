@@ -45,7 +45,7 @@ void main() async {
               AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode),
     );
   } catch (e, stack) {
-    AppLogs.errorLog('Init error: $e');
+    AppLogs.log('Init error: $e',type: LogType.error);
     await Sentry.captureException(e, stackTrace: stack);
     app = MaterialApp(
       debugShowCheckedModeBanner: false,
