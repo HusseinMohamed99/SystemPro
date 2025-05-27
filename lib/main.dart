@@ -24,7 +24,7 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await CachingHelper.init();
-    isLoggedInUser =
+    AppConfig.isLoggedInUser =
         !(await CachingHelper.getSecuredString(
           SharedPrefKeys.userToken,
         )).isNullOrEmpty();

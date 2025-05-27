@@ -51,6 +51,6 @@ class SystemProApp extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return isLoggedInUser ? Routes.mainView : Routes.loginView;
+    return AppConfig.isLoggedInUser ? Routes.mainView : Routes.loginView;
   }
 }
