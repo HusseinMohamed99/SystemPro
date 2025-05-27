@@ -5,7 +5,8 @@ extension TextControllerSanitizer on TextEditingController {
   ///
   /// Use this inside `onChanged` to automatically clean the input.
   void removeSpaces() {
-    // Replace all whitespace characters (spaces, tabs, newlines) with an empty string
+    // Replace all whitespace characters (spaces, tabs, newlines)
+    // with an empty string
     final newValue = text.replaceAll(RegExp(r'\s+'), '');
 
     // If the cleaned value differs from the original, update the controller

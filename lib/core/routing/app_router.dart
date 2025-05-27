@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/routing/routes.dart';
+import 'package:system_pro/core/widgets/errors/init_error_screen.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/ui/change_password_view.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/change_password_successfully.dart';
@@ -31,12 +32,19 @@ import 'package:system_pro/features/Search/ui/filter_view.dart';
 import 'package:system_pro/features/Search/ui/search_view.dart';
 import 'package:system_pro/features/Search/ui/widgets/filter_result_widget.dart';
 
+// This class handles route generation and navigation within the app.
+// It uses BlocProvider with GetIt for dependency injection and ensures
+// type-safe argument passing to each screen.
 class AppRouters {
-  Route? generateRoute(RouteSettings settings) {
-    // This arguments to be passed
-    // in any screen like this (arguments as ClassName)
+  /// Generates the appropriate route based on
+  /// the route name and optional arguments.
+  /// Performs type checking on arguments to avoid runtime errors.
+  /// Returns a default error page if the route or arguments are invalid.
+  Route<dynamic> generateRoute(RouteSettings settings) {
     final arguments = settings.arguments;
+
     switch (settings.name) {
+      // Login screen with injected LoginCubit.
       case Routes.loginView:
         return MaterialPageRoute(
           builder:
@@ -45,6 +53,8 @@ class AppRouters {
                 child: const LoginView(),
               ),
         );
+
+      // Signup screen with injected SignupCubit.
       case Routes.signupView:
         return MaterialPageRoute(
           builder:
@@ -53,6 +63,8 @@ class AppRouters {
                 child: const SignupView(),
               ),
         );
+
+      // Forgot Password screen with injected ForgotPasswordCubit.
       case Routes.forgotPasswordView:
         return MaterialPageRoute(
           builder:
@@ -61,87 +73,143 @@ class AppRouters {
                 child: const ForgotPasswordView(),
               ),
         );
+
+      // Forgot Password OTP screen with type-checked arguments and OtpCubit.
       case Routes.forgotPasswordOtpView:
-        return MaterialPageRoute(
-          builder:
-              (_) => BlocProvider(
-                create: (context) => getIt<OtpCubit>(),
-                child: ForgotPasswordOtpView(
-                  arguments: arguments as ForgotPasswordRequestBody,
+        if (arguments is ForgotPasswordRequestBody) {
+          return MaterialPageRoute(
+            builder:
+                (_) => BlocProvider(
+                  create: (context) => getIt<OtpCubit>(),
+                  child: ForgotPasswordOtpView(arguments: arguments),
                 ),
-              ),
-        );
+          );
+        }
+        return _errorRoute();
+
+      // Reset Password screen with type-checked
+      // email argument and ChangePasswordCubit.
       case Routes.resetPasswordView:
-        return MaterialPageRoute(
-          builder:
-              (_) => BlocProvider(
-                create: (context) => getIt<ChangePasswordCubit>(),
-                child: ChangePasswordView(email: arguments as String),
-              ),
-        );
+        if (arguments is String) {
+          return MaterialPageRoute(
+            builder:
+                (_) => BlocProvider(
+                  create: (context) => getIt<ChangePasswordCubit>(),
+                  child: ChangePasswordView(email: arguments),
+                ),
+          );
+        }
+        return _errorRoute();
+
+      // Password Changed confirmation screen.
       case Routes.passwordChangedView:
         return MaterialPageRoute(
           builder: (_) => const ChangePasswordSuccessfully(),
         );
+
+      // Main screen without additional cubit injection.
       case Routes.mainView:
         return MaterialPageRoute(builder: (_) => const MainView());
+
+      // Edit Profile screen with type-checked
+      // username argument and ProfileCubit.
       case Routes.editProfileView:
-        return MaterialPageRoute(
-          builder:
-              (_) => BlocProvider(
-                create: (context) => getIt<ProfileCubit>(),
-                child: EditProfileView(userName: arguments as String),
-              ),
-        );
+        if (arguments is String) {
+          return MaterialPageRoute(
+            builder:
+                (_) => BlocProvider(
+                  create: (context) => getIt<ProfileCubit>(),
+                  child: EditProfileView(userName: arguments),
+                ),
+          );
+        }
+        return _errorRoute();
+
+      // Search screen without additional cubit injection.
       case Routes.searchView:
         return MaterialPageRoute(builder: (_) => const SearchView());
+
+      // Filter screen with type-checked LocationArgument and CategoriesCubit.
       case Routes.filterView:
-        return MaterialPageRoute(
-          builder: (_) {
-            return BlocProvider(
-              create: (context) => getIt<CategoriesCubit>()..getCategories(),
-              child: FilterView(
-                locationArgument: arguments as LocationArgument,
-              ),
-            );
-          },
-        );
-      case Routes.companyProfileView:
-        final int companyId = arguments as int;
-        return MaterialPageRoute(
-          settings: const RouteSettings(name: Routes.companyProfileView),
-          builder:
-              (_) => BlocProvider(
-                create:
-                    (context) =>
-                        getIt<RealEstateCubit>()
-                          ..getListingsByCompany(companyId: companyId),
-                child: CompanyProfileView(companyID: companyId),
-              ),
-        );
-      case Routes.realEstateDetailsView:
-        return MaterialPageRoute(
-          builder: (_) => RealEstateDetailsView(listing: arguments as Listing),
-        );
-      case Routes.emailVerifyView:
-        return MaterialPageRoute(
-          builder:
-              (_) => BlocProvider(
-                create: (context) => getIt<EmailVerifyCubit>(),
-                child: EmailVerifyView(email: arguments as String),
-              ),
-        );
-      case Routes.filterResultWidget:
-        return MaterialPageRoute(
-          builder:
-              (_) => BlocProvider(
-                create: (context) => getIt<MarketplaceCubit>(),
-                child: FilterResultWidget(
-                  arguments: arguments as FilterResultArguments,
+        if (arguments is LocationArgument) {
+          return MaterialPageRoute(
+            builder:
+                (_) => BlocProvider(
+                  create:
+                      (context) => getIt<CategoriesCubit>()..getCategories(),
+                  child: FilterView(locationArgument: arguments),
                 ),
-              ),
-        );
+          );
+        }
+        return _errorRoute();
+
+      // Company Profile screen with companyId argument and RealEstateCubit.
+      case Routes.companyProfileView:
+        if (arguments is int) {
+          return MaterialPageRoute(
+            settings: const RouteSettings(name: Routes.companyProfileView),
+            builder:
+                (_) => BlocProvider(
+                  create:
+                      (context) =>
+                          getIt<RealEstateCubit>()
+                            ..getListingsByCompany(companyId: arguments),
+                  child: CompanyProfileView(companyID: arguments),
+                ),
+          );
+        }
+        return _errorRoute();
+
+      // Real Estate Details screen with Listing argument.
+      case Routes.realEstateDetailsView:
+        if (arguments is Listing) {
+          return MaterialPageRoute(
+            builder: (_) => RealEstateDetailsView(listing: arguments),
+          );
+        }
+        return _errorRoute();
+
+      // Email Verification screen with
+      // email string argument and EmailVerifyCubit.
+      case Routes.emailVerifyView:
+        if (arguments is String) {
+          return MaterialPageRoute(
+            builder:
+                (_) => BlocProvider(
+                  create: (context) => getIt<EmailVerifyCubit>(),
+                  child: EmailVerifyView(email: arguments),
+                ),
+          );
+        }
+        return _errorRoute();
+
+      // Filter Result screen with FilterResultArguments and MarketplaceCubit.
+      case Routes.filterResultWidget:
+        if (arguments is FilterResultArguments) {
+          return MaterialPageRoute(
+            builder:
+                (_) => BlocProvider(
+                  create: (context) => getIt<MarketplaceCubit>(),
+                  child: FilterResultWidget(arguments: arguments),
+                ),
+          );
+        }
+        return _errorRoute();
+
+      // Default fallback route in case of invalid route name or arguments.
+      default:
+        return _errorRoute();
     }
-    return null;
+  }
+
+  /// Returns a default error route to display when navigation
+  ///  fails or arguments are invalid.
+  Route<dynamic> _errorRoute() {
+    return MaterialPageRoute(
+      builder:
+          (_) => const InitErrorScreen(
+            error: 'Page not found or invalid arguments',
+          ),
+    );
   }
 }
