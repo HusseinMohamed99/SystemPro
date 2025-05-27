@@ -36,7 +36,7 @@ class EmailFormField extends StatelessWidget {
           textInputType: TextInputType.emailAddress,
           hintText: context.localization.email,
           onChanged: (value) {
-            onTextChanged(controller: emailController, value: value);
+            emailController.removeSpaces();
           },
         ),
       ],

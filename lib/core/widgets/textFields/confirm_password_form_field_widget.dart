@@ -57,7 +57,7 @@ class ConfirmPasswordFormField extends StatelessWidget {
             size: kIconSizeDefault.sp,
           ),
           onChanged: (value) {
-            onTextChanged(controller: confirmPasswordController, value: value);
+          confirmPasswordController.removeSpaces();
           },
         ),
       ],
