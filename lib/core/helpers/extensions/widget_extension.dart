@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Extension on [Widget] to provide shorthand methods for common layout wrapping.
+///Extension on [Widget] to provide shorthand methods for common layout wrapping
 /// Makes code cleaner by avoiding repeated boilerplate for padding,
-/// centering, and rounded clipping.
+/// centering, and rounded clipping using [ScreenUtil] scaling.
 extension WidgetExtension on Widget {
-  // Padding
+  /// Wraps the widget with symmetric vertical and horizontal padding.
   Widget allPadding({required double vPadding, required double hPadding}) =>
       Padding(
         padding: EdgeInsetsDirectional.symmetric(
@@ -15,16 +15,19 @@ extension WidgetExtension on Widget {
         child: this,
       );
 
+  /// Wraps the widget with vertical-only padding.
   Widget vPadding(double padding) => Padding(
     padding: EdgeInsetsDirectional.symmetric(vertical: padding.h),
     child: this,
   );
 
+  /// Wraps the widget with horizontal-only padding.
   Widget hPadding(double padding) => Padding(
     padding: EdgeInsetsDirectional.symmetric(horizontal: padding.w),
     child: this,
   );
 
+  /// Wraps the widget with custom padding on each side.
   Widget onlyPadding({
     double topPadding = 0,
     double bottomPadding = 0,
@@ -40,10 +43,10 @@ extension WidgetExtension on Widget {
     child: this,
   );
 
-  // Center Widget
+  /// Centers the widget using [Center].
   Widget center() => Center(child: this);
 
-  // Warp the Widget with ClipRRect
+  /// Wraps the widget with a [ClipRRect] using the provided [BorderRadius].
   Widget clipRRect({BorderRadius borderRadius = BorderRadius.zero}) =>
       ClipRRect(borderRadius: borderRadius.r, child: this);
 }

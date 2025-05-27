@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Extension on `String` to convert a hexadecimal color string (e.g., "#FFFFFF")
+/// Extension on `String` to convert a hexadecimal color string ("#FFFFFF")
 /// to a [Color] object that can be used in Flutter widgets.
 ///
 /// Example:
