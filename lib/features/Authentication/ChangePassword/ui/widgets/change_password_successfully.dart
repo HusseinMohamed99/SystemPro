@@ -53,6 +53,7 @@ class ChangePasswordSuccessfully extends StatelessWidget {
               verticalSpacing(kSpacingXXLarge),
             CustomButton(
               text: context.localization.back_to_login,
+              
               onPressed: () {
                 context.pushReplacementNamed(Routes.loginView);
               },

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
@@ -15,7 +14,8 @@ import 'package:system_pro/core/widgets/texts/have_an_account.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  const LoginForm({super.key, this.isLoading = false});
+  final bool isLoading;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -23,45 +23,64 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool isPassword = true;
-  IconData? suffix = Icons.visibility_off;
+  IconData suffix = Icons.visibility_off;
+  late LoginCubit cubit;
+  bool _isFormValid = false;
 
-  void changePassword() {
-    isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility : Icons.visibility_off;
-  }
-
-  late TextEditingController passwordController;
   @override
   void initState() {
     super.initState();
-    passwordController = context.read<LoginCubit>().passwordController;
+    cubit = context.read<LoginCubit>();
+
+    cubit.emailController.addListener(_updateFormValidity);
+    cubit.passwordController.addListener(_updateFormValidity);
+  }
+
+  void _updateFormValidity() {
+    final isValid =
+        cubit.emailController.text.isNotEmpty &&
+        cubit.passwordController.text.isNotEmpty;
+    if (_isFormValid != isValid) {
+      setState(() => _isFormValid = isValid);
+    }
+  }
+
+  void togglePasswordVisibility() {
+    setState(() {
+      isPassword = !isPassword;
+      suffix = isPassword ? Icons.visibility_off : Icons.visibility;
+    });
   }
 
   @override
-  Widget build(final BuildContext context) {
+  void dispose() {
+    cubit.emailController.removeListener(_updateFormValidity);
+    cubit.passwordController.removeListener(_updateFormValidity);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
-      key: context.read<LoginCubit>().formKey,
+      key: cubit.formKey,
       child: Column(
-        spacing: kSpacingXLarge.h,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           EmailFormField(
-            emailController: context.read<LoginCubit>().emailController,
-            focusNode: context.read<LoginCubit>().emailFocusNode,
+            emailController: cubit.emailController,
+            focusNode: cubit.emailFocusNode,
           ),
+          verticalSpacing(kSpacingSmaller),
           PasswordFormField(
-            focusNode: context.read<LoginCubit>().passwordFocusNode,
-            passwordController: context.read<LoginCubit>().passwordController,
+            focusNode: cubit.passwordFocusNode,
+            passwordController: cubit.passwordController,
             isPassword: isPassword,
-            suffixIconOnTap: () {
-              setState(changePassword);
-            },
-            visibilityIcon: suffix!,
+            suffixIconOnTap: togglePasswordVisibility,
+            visibilityIcon: suffix,
           ),
+          verticalSpacing(kSpacingSmaller),
           GestureDetector(
-            onTap: () {
-              context.pushNamed(Routes.forgotPasswordView);
-            },
+            onTap: () => context.pushNamed(Routes.forgotPasswordView),
             child: Text(
               context.localization.forgot_password,
               textAlign: TextAlign.right,
@@ -74,29 +93,27 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           ),
-          verticalSpacing(kSpacingSmaller),
+          verticalSpacing(kSpacingDefault),
           CustomButton(
             text: context.localization.login,
-            onPressed: () {
-              validateThenDoLogin(context);
-            },
+            isLoading: widget.isLoading,
+            isDisabled: !_isFormValid,
+            onPressed: () => validateThenDoLogin(context),
           ),
-          const Spacer(),
+          verticalSpacing(kSpacingLarge),
           HaveAnAccountWidget(
             title1: context.localization.do_not_have_account,
             title2: context.localization.sign_up,
-            onTap: () {
-              context.pushNamed(Routes.signupView);
-            },
+            onTap: () => context.pushNamed(Routes.signupView),
           ),
         ],
       ),
     );
   }
 
-  void validateThenDoLogin(final BuildContext context) {
-    if (context.read<LoginCubit>().formKey.currentState!.validate()) {
-      context.read<LoginCubit>().emitLoginStates();
+  void validateThenDoLogin(BuildContext context) {
+    if (cubit.formKey.currentState!.validate()) {
+      cubit.emitLoginStates();
     }
   }
 }

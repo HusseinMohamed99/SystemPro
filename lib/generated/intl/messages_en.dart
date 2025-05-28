@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Please check your email",
     ),
     "clear_all": MessageLookupByLibrary.simpleMessage("Clear All"),
+    "close_app": MessageLookupByLibrary.simpleMessage("Close App"),
     "commercial": MessageLookupByLibrary.simpleMessage("Commercial"),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
@@ -162,6 +163,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "help": MessageLookupByLibrary.simpleMessage("Help"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "hoursAgo": m1,
+    "init_error_title": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while initializing the app",
+    ),
     "internal_error_message": MessageLookupByLibrary.simpleMessage(
       "An internal error occurred. Please try again later.",
     ),

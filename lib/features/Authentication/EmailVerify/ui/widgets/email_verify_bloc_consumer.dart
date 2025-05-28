@@ -38,7 +38,7 @@ class EmailVerifyBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return LoadingIndicator(
           isLoading: state is EmailVerifyLoading ? true : false,
-          child: EmailVerifyViewBody(email: email).allPadding(
+          child: EmailVerifyViewBody(email: email, isLoading: state is EmailVerifyLoading,).allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),

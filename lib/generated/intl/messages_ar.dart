@@ -61,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "الرجاء التحقق من بريدك الإلكتروني",
     ),
     "clear_all": MessageLookupByLibrary.simpleMessage("مسح الكل"),
+    "close_app": MessageLookupByLibrary.simpleMessage("إغلاق التطبيق"),
     "commercial": MessageLookupByLibrary.simpleMessage("تجاري"),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور",
@@ -164,6 +165,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "help": MessageLookupByLibrary.simpleMessage("مساعدة"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "hoursAgo": m1,
+    "init_error_title": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ أثناء تهيئة التطبيق",
+    ),
     "internal_error_message": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ داخلي، الرجاء المحاولة لاحقاً",
     ),

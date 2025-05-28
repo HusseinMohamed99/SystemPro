@@ -69,6 +69,8 @@ class CustomTextFormField extends StatelessWidget {
           lightColor: ColorManager.pureWhite,
           darkColor: ColorManager.tertiaryBlack,
         ),
+        
+        errorMaxLines: 2,
         hintText: hintText,
         hintStyle: context.titleLarge?.copyWith(
           color: AdaptiveColor.adaptiveColor(

@@ -5,6 +5,7 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/textFields/name_form_field_widget.dart';
+import 'package:system_pro/features/EditProfile/logic/edit_profile_state.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 
 class EditProfileForm extends StatelessWidget {
@@ -19,29 +20,40 @@ class EditProfileForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isFormValid = cubit.userNameController.text.isNotEmpty;
+
     return Form(
       key: cubit.formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Full Name Input
           NameFormField(
-            fullName: userName,
             nameController: cubit.userNameController,
             focusNode: cubit.userNameFocusNode,
           ),
+
           const SizedBox(height: 24),
+
+          // Save Button
           CustomButton(
             text: context.localization.save_changes,
+            isLoading: cubit.state is EditProfileLoading, // Assume loading state
+            isDisabled: !isFormValid,
             onPressed: () {
               if (cubit.formKey.currentState!.validate()) {
                 cubit.updateUserProfile();
               }
             },
           ),
-          const Spacer(),
+
+          const SizedBox(height: 32),
+
+          // Delete Account Link
           TextButton(
             onPressed: () {
               cubit.emitDeleteAccountStates();
-              DioFactory.clearAuthorizationHeader();
+              DioFactory.clearAuthorizationHeader(); // Clear auth token
             },
             child: Text(
               context.localization.delete_my_account,

@@ -10,8 +10,14 @@ import 'package:system_pro/core/widgets/textFields/password_form_field_widget.da
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
 
 class ChangePasswordForm extends StatefulWidget {
-  const ChangePasswordForm({super.key, required this.email});
+  const ChangePasswordForm({
+    super.key,
+    required this.email,
+    required this.isLoading,
+  });
+
   final String email;
+  final bool isLoading;
 
   @override
   State<ChangePasswordForm> createState() => _ChangePasswordFormState();
@@ -19,76 +25,74 @@ class ChangePasswordForm extends StatefulWidget {
 
 class _ChangePasswordFormState extends State<ChangePasswordForm> {
   bool isPassword = true;
-  IconData? suffix = Icons.visibility_off;
+  IconData suffix = Icons.visibility_off;
 
-  void changePassword() {
-    isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility : Icons.visibility_off;
-  }
+  late ChangePasswordCubit cubit;
 
-  late TextEditingController passwordController;
-  late TextEditingController confirmPasswordController;
   @override
   void initState() {
     super.initState();
-    passwordController =
-        context.read<ChangePasswordCubit>().newPasswordController;
-    confirmPasswordController =
-        context.read<ChangePasswordCubit>().confirmNewPasswordController;
+    cubit = context.read<ChangePasswordCubit>();
   }
+
+  /// Toggles the visibility of password fields
+  void togglePasswordVisibility() {
+    setState(() {
+      isPassword = !isPassword;
+      suffix = isPassword ? Icons.visibility_off : Icons.visibility;
+    });
+  }
+
+  /// Validates the form and triggers the password change logic
+  void validateThenDoChangePassword() {
+    if (cubit.formKey.currentState!.validate()) {
+      cubit.emitChangePasswordStates(email: widget.email);
+    }
+  }
+
+  /// Checks if the form is valid for enabling the button
+  bool get isFormValid =>
+      cubit.newPasswordController.text.isNotEmpty &&
+      cubit.confirmNewPasswordController.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<ChangePasswordCubit>().formKey,
+      key: cubit.formKey,
       child: Column(
         spacing: kSpacingXLarge.h,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Main Password Field
           PasswordFormField(
-            focusNode: context.read<ChangePasswordCubit>().newPasswordFocusNode,
-            passwordController:
-                context.read<ChangePasswordCubit>().newPasswordController,
+            focusNode: cubit.newPasswordFocusNode,
+            passwordController: cubit.newPasswordController,
             isPassword: isPassword,
-            suffixIconOnTap: () {
-              setState(changePassword);
-            },
-            visibilityIcon: suffix!,
+            suffixIconOnTap: togglePasswordVisibility,
+            visibilityIcon: suffix,
           ),
+
+          // Confirm Password Field
           ConfirmPasswordFormField(
-            focusNode:
-                context.read<ChangePasswordCubit>().confirmNewPasswordFocusNode,
-            passwordController:
-                context
-                    .read<ChangePasswordCubit>()
-                    .confirmNewPasswordController,
+            focusNode: cubit.confirmNewPasswordFocusNode,
+            passwordController: cubit.newPasswordController,
+            confirmPasswordController: cubit.confirmNewPasswordController,
             isPassword: isPassword,
-            suffixIconOnTap: () {
-              setState(changePassword);
-            },
-            visibilityIcon: suffix!,
-            confirmPasswordController:
-                context
-                    .read<ChangePasswordCubit>()
-                    .confirmNewPasswordController,
+            suffixIconOnTap: togglePasswordVisibility,
+            visibilityIcon: suffix,
           ),
+
           verticalSpacing(kSpacingSmaller),
+
+          // Submit Button
           CustomButton(
             text: context.localization.reset_password,
-            onPressed: () {
-               validateThenDoChangePassword(context);
-            },
+            isLoading: widget.isLoading,
+            isDisabled: !isFormValid,
+            onPressed: validateThenDoChangePassword,
           ),
         ],
       ),
     );
-  }
-
-  void validateThenDoChangePassword(BuildContext context) {
-    if (context.read<ChangePasswordCubit>().formKey.currentState!.validate()) {
-      context.read<ChangePasswordCubit>().emitChangePasswordStates(
-        email: widget.email,
-      );
-    }
   }
 }

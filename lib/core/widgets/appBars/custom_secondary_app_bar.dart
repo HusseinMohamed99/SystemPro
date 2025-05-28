@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/widgets/buttons/custom_back_button.dart';
 
+/// A reusable, adaptive secondary AppBar widget
 AppBar customSecondaryAppBar(
   BuildContext context, {
   VoidCallback? onBackPress,
   String? title,
   Color? textColor,
+  List<Widget>? actions,
 }) {
   return AppBar(
     backgroundColor: AdaptiveColor.adaptiveColor(
@@ -20,60 +21,26 @@ AppBar customSecondaryAppBar(
     ),
     elevation: 0,
     centerTitle: true,
-    leadingWidth: 100.w,
-    leading: Row(
-      children: [
-        horizontalSpacing(kSpacingLarge),
-        customAppBarBack(context, onBackPress: onBackPress),
-      ],
+    leadingWidth: 72.w, // Leading width that ensures padding + icon
+    leading: Padding(
+      padding: EdgeInsetsDirectional.only(start: kSpacingLarge.w),
+      child: CustomBackButton(context: context, onBackPress: onBackPress),
     ),
-    title: Text(
-      title ?? '',
-      textAlign: TextAlign.center,
-      style: context.headlineMedium?.copyWith(
-        color: textColor ??
-            AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.primaryBlue,
-              darkColor: ColorManager.pureWhite,
+    actions: actions,
+    title: (title?.isNotEmpty == true)
+        ? Text(
+            title!,
+            textAlign: TextAlign.center,
+            style: context.headlineMedium?.copyWith(
+              color:
+                  textColor ??
+                  AdaptiveColor.adaptiveColor(
+                    context: context,
+                    lightColor: ColorManager.primaryBlue,
+                    darkColor: ColorManager.pureWhite,
+                  ),
             ),
-      ),
-    ),
-  );
-}
-
-IconButton customAppBarBack(BuildContext context, {VoidCallback? onBackPress}) {
-  return IconButton(
-    style: IconButton.styleFrom(
-      minimumSize: Size(40.w, 40.h),
-      maximumSize: Size(40.w, 40.h),
-      backgroundColor: AdaptiveColor.adaptiveColor(
-        context: context,
-        lightColor: ColorManager.pureWhite,
-        darkColor: ColorManager.tertiaryBlack,
-      ),
-      side: BorderSide(
-        color: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.borderGrey,
-          darkColor: ColorManager.tertiaryBlack,
-        ),
-        width: 2.w,
-      ),
-    ),
-    icon: Icon(
-      Icons.arrow_back_ios_new,
-      color: AdaptiveColor.adaptiveColor(
-        context: context,
-        lightColor: ColorManager.primaryBlack,
-        darkColor: ColorManager.pureWhite,
-      ),
-      size: kIconSizeDefault.sp,
-    ),
-    onPressed:
-        onBackPress ??
-        () {
-          context.pop();
-        },
+          )
+        : null, // Title only rendered if it's not empty
   );
 }

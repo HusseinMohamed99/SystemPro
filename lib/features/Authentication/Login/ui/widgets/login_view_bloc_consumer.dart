@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
@@ -22,6 +20,9 @@ class LoginViewBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginSuccess) {
           context.showSnackBar(context.localization.sign_in_successfully);
+          context.read<LoginCubit>()
+            ..emailController.clear()
+            ..passwordController.clear();
           context.pushReplacementNamed(Routes.mainView);
         }
         if (state is LoginError) {
@@ -29,9 +30,10 @@ class LoginViewBlocConsumer extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        final isLoading = state is LoginLoading;
         return LoadingIndicator(
-          isLoading: state is LoginLoading ? true : false,
-          child: const LoginViewBody().allPadding(
+          isLoading: isLoading,
+          child: LoginViewBody(isLoading: isLoading).allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),

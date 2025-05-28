@@ -27,10 +27,14 @@ class ChangePasswordBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return LoadingIndicator(
           isLoading: state is ChangePasswordLoading ? true : false,
-          child: ChangePasswordViewBody(email: email).allPadding(
-            vPadding: kPaddingLargeVertical,
-            hPadding: kPaddingDefaultHorizontal,
-          ),
+          child:
+              ChangePasswordViewBody(
+                email: email,
+                isLoading: state is ChangePasswordLoading,
+              ).allPadding(
+                vPadding: kPaddingLargeVertical,
+                hPadding: kPaddingDefaultHorizontal,
+              ),
         );
       },
     );

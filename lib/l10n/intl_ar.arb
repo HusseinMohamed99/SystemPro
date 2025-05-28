@@ -363,6 +363,11 @@
    "permission_required": "يجب منح الإذن لتنفيذ هذا الإجراء.",
    "@permission_required": {},
   "permission_required_hint": "يرجى منح الإذن المطلوب من الإعدادات.",
-  "@permission_required_hint": {}
+  "@permission_required_hint": {},
+  "init_error_title": "حدث خطأ أثناء تهيئة التطبيق",
+  "@init_error_title": {},
+  "close_app": "إغلاق التطبيق",
+  "@close_app": {}
+
 
 }

@@ -14,14 +14,21 @@ import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verif
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/ui/widgets/custom_pinput_otp.dart';
 
 class EmailVerifyViewBody extends StatefulWidget {
-  const EmailVerifyViewBody({super.key, required this.email});
+  const EmailVerifyViewBody({
+    super.key,
+    required this.email,
+    required this.isLoading,
+  });
+
   final String email;
+  final bool isLoading;
 
   @override
   State<EmailVerifyViewBody> createState() => _EmailVerifyViewBodyState();
 }
 
 class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
+  late EmailVerifyCubit cubit;
   Timer? _timer;
   int _start = 59;
   bool _canResend = false;
@@ -29,36 +36,41 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
   @override
   void initState() {
     super.initState();
+    cubit = context.read<EmailVerifyCubit>();
     startTimer();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    cubit.validationCodeController.dispose(); // Dispose to avoid memory leaks
     super.dispose();
   }
 
+  // Timer logic for resend countdown
   void startTimer() {
     _canResend = false;
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(oneSec, (Timer timer) {
-      if (_start == 00) {
+    _start = 59;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_start == 0) {
         setState(() {
           _canResend = true;
           timer.cancel();
         });
       } else {
-        setState(() {
-          _start--;
-        });
+        setState(() => _start--);
       }
     });
   }
 
+  // Getter to enable/disable the button
+  bool get formIsValid => cubit.validationCodeController.text.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<EmailVerifyCubit>().formKey,
+      key: cubit.formKey,
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -69,6 +81,8 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
             ),
           ),
           SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+
+          // Email + "We sent code"
           SliverToBoxAdapter(
             child: FittedBox(
               child: RichText(
@@ -80,65 +94,60 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
                         color: ColorManager.softGray,
                       ),
                     ),
-                    if (widget.email.isNotEmpty)
-                      TextSpan(
-                        text: '  ${widget.email}',
-                        style: context.titleLarge?.copyWith(
-                          color: ColorManager.primaryBlue,
-                        ),
-                      )
-                    else
-                      TextSpan(
-                        text: '  ${widget.email}',
-                        style: context.titleLarge?.copyWith(
-                          color: ColorManager.primaryBlue,
-                        ),
+                    TextSpan(
+                      text: '  ${widget.email}',
+                      style: context.titleLarge?.copyWith(
+                        color: ColorManager.primaryBlue,
                       ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
+
           SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-          // PinPut
+
+          // OTP Input Field
           SliverToBoxAdapter(
             child: CustomPinputOtpCodeWidget(
-              validationCodeController:
-                  context.read<EmailVerifyCubit>().validationCodeController,
+              validationCodeController: cubit.validationCodeController,
             ),
           ),
+
           SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
+
+          // Verify Button
           SliverToBoxAdapter(
             child: CustomButton(
               text: context.localization.verify,
-              onPressed: () {
-                 validateThenDoCheckOtp(context);
-              },
+              isLoading: widget.isLoading,
+              isDisabled: !formIsValid,
+              onPressed: validateThenDoCheckOtp,
             ),
           ),
+
           SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
+
+          // Resend Section with Timer
           SliverToBoxAdapter(
             child: Text.rich(
               textAlign: TextAlign.center,
               TextSpan(
                 text: '${context.localization.send_code_again}  ',
                 style: context.titleLarge?.copyWith(
-                  color:
-                      _canResend
-                          ? ColorManager.primaryBlue
-                          : ColorManager.softGray,
+                  color: _canResend
+                      ? ColorManager.primaryBlue
+                      : ColorManager.softGray,
                   fontWeight: FontWeightHelper.semiBold,
                 ),
-                recognizer:
-                    TapGestureRecognizer()
-                      ..onTap = () {
-                        if (_canResend) {
-                          validateThenDoResendOtp(context);
-                        }
-                      },
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    if (_canResend) validateThenDoResendOtp();
+                  },
                 children: [
                   TextSpan(
-                    text: '00:${_start.toString()}',
+                    text: '00:${_start.toString().padLeft(2, '0')}',
                     style: context.titleLarge?.copyWith(
                       color: ColorManager.softGray,
                       fontWeight: FontWeightHelper.semiBold,
@@ -153,17 +162,18 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
     );
   }
 
-  void validateThenDoResendOtp(BuildContext context) {
+  // Handle OTP resend logic
+  void validateThenDoResendOtp() {
     if (widget.email.isNotEmpty) {
-      context.read<EmailVerifyCubit>().emitResendOtpStates(email: widget.email);
+      cubit.emitResendOtpStates(email: widget.email);
+      startTimer(); // Restart the timer
     }
   }
 
-  void validateThenDoCheckOtp(BuildContext context) {
-    if (context.read<EmailVerifyCubit>().formKey.currentState!.validate()) {
-      context.read<EmailVerifyCubit>().emitEmailVerifyStates(
-        email: widget.email,
-      );
+  // Handle OTP verification logic
+  void validateThenDoCheckOtp() {
+    if (cubit.formKey.currentState!.validate()) {
+      cubit.emitEmailVerifyStates(email: widget.email);
     }
   }
 }

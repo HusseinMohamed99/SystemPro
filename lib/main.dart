@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:system_pro/app_bootstrap.dart';
+import 'package:system_pro/bloc_observer.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
@@ -25,6 +27,7 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await CachingHelper.init();
+    Bloc.observer = MyBlocObserver();
     AppConfig.isLoggedInUser = !(await CachingHelper.getSecuredString(
       SharedPrefKeys.userToken,
     )).isNullOrEmpty();

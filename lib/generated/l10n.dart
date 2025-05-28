@@ -1474,6 +1474,21 @@ class S {
       args: [],
     );
   }
+
+  /// `An error occurred while initializing the app`
+  String get init_error_title {
+    return Intl.message(
+      'An error occurred while initializing the app',
+      name: 'init_error_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close App`
+  String get close_app {
+    return Intl.message('Close App', name: 'close_app', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

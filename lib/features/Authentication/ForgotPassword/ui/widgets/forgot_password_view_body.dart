@@ -7,8 +7,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/widgets/forgot_password_form.dart';
 
 class ForgotPasswordViewBody extends StatelessWidget {
-  const ForgotPasswordViewBody({super.key});
-
+  const ForgotPasswordViewBody({super.key, required this.isLoading});
+final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -34,9 +34,9 @@ class ForgotPasswordViewBody extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-        const SliverFillRemaining(
+         SliverFillRemaining(
           hasScrollBody: false,
-          child:  ForgotPasswordForm(),
+          child:  ForgotPasswordForm(isLoading: isLoading,),
         ),
       ],
     );
