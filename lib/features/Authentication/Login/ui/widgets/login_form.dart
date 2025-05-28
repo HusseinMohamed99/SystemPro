@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
@@ -64,13 +65,13 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: cubit.formKey,
       child: Column(
+        spacing: kSpacingDefault.h,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           EmailFormField(
             emailController: cubit.emailController,
             focusNode: cubit.emailFocusNode,
           ),
-          verticalSpacing(kSpacingSmaller),
           PasswordFormField(
             focusNode: cubit.passwordFocusNode,
             passwordController: cubit.passwordController,
@@ -78,7 +79,6 @@ class _LoginFormState extends State<LoginForm> {
             suffixIconOnTap: togglePasswordVisibility,
             visibilityIcon: suffix,
           ),
-          verticalSpacing(kSpacingSmaller),
           GestureDetector(
             onTap: () => context.pushNamed(Routes.forgotPasswordView),
             child: Text(
@@ -100,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
             isDisabled: !_isFormValid,
             onPressed: () => validateThenDoLogin(context),
           ),
-          verticalSpacing(kSpacingLarge),
+          const Spacer(),
           HaveAnAccountWidget(
             title1: context.localization.do_not_have_account,
             title2: context.localization.sign_up,
