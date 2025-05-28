@@ -31,7 +31,7 @@ class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return LoadingIndicator(
+        return LoadingIndicatorOverlay(
           isLoading: state is OtpLoading ? true : false,
           child: ForgotPasswordOtpViewBody(email: email).allPadding(
             vPadding: kPaddingLargeVertical,

@@ -35,7 +35,7 @@ class ForgotPasswordBlocConsumer extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return LoadingIndicator(
+        return LoadingIndicatorOverlay(
           isLoading: state is ForgotPasswordLoading ? true : false,
           child: const ForgotPasswordViewBody().allPadding(
             vPadding: kPaddingLargeVertical,

@@ -39,7 +39,7 @@ class CompanyProfileView extends StatelessWidget {
               companyListings: companyListings,
             ).hPadding(kPaddingDefaultHorizontal);
           }
-          return const AdaptiveIndicator();
+          return const CustomLoader();
         },
       ),
     );

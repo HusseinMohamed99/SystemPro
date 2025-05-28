@@ -127,7 +127,7 @@ class GetProfileCompanySuccess extends StatelessWidget {
                           horizontal: kPaddingDefaultHorizontal.w,
                           vertical: kPaddingDefaultVertical.h,
                         ),
-                        child: const AdaptiveIndicator(),
+                        child: const CustomLoader(),
                       ),
                     ),
                   ),

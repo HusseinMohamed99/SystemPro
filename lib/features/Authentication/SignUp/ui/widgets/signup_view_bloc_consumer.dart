@@ -32,9 +32,9 @@ class SignupViewBlocConsumer extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return LoadingIndicator(
+        return LoadingIndicatorOverlay(
           isLoading: state is SignupLoading ? true : false,
-          child:  SignupViewBody().allPadding(
+          child:  const SignupViewBody().allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),

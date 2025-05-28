@@ -47,7 +47,7 @@ class EditProfileView extends StatelessWidget {
             });
           }
 
-          return LoadingIndicator(
+          return LoadingIndicatorOverlay(
             isLoading:
                 state is EditProfileLoading || state is DeleteAccountLoading,
             child: EditProfileForm(userName: userName, cubit: cubit).allPadding(

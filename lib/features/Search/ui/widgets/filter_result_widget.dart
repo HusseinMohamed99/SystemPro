@@ -40,7 +40,7 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-     value: getIt<FavoriteCubit>(),
+      value: getIt<FavoriteCubit>(),
       child: Scaffold(
         appBar: customSecondaryAppBar(
           context,
@@ -54,7 +54,7 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
         body: BlocBuilder<MarketplaceCubit, MarketplaceState>(
           builder: (context, state) {
             if (state is MarketPlaceLoading) {
-              return const AdaptiveIndicator();
+              return const CustomLoader();
             }
 
             if (state is MarketPlaceError) {

@@ -47,17 +47,17 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(kBorderRadiusLarge).r,
           ),
         ),
-        child: isLoading
-            ? CircularIndicator(loadingIndicatorColor: loadingIndicatorColor)
-            : Text(
-                text,
-                textAlign: TextAlign.center,
-                style: (textStyle ?? context.titleLarge)?.copyWith(
-                  color: textStyleColor ?? ColorManager.pureWhite,
+        child:
+            isLoading
+                ? CustomLoader(color: loadingIndicatorColor)
+                : Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: (textStyle ?? context.titleLarge)?.copyWith(
+                    color: textStyleColor ?? ColorManager.pureWhite,
+                  ),
                 ),
-              ),
       ),
     );
   }
 }
-

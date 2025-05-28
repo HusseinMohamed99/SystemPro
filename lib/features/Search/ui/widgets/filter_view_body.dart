@@ -81,7 +81,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
-        if (state is Loading) return const AdaptiveIndicator();
+        if (state is Loading) return const CustomLoader();
         if (state is Error) {
           return CustomErrorTextWidget(errorMessage: state.error);
         }
