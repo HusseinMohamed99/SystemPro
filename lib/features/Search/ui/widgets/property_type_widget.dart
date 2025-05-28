@@ -32,7 +32,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
         showAll ? widget.subcategories : widget.subcategories?.take(5).toList();
 
     if (widget.subcategories == null || widget.subcategories!.isEmpty) {
-      return CustomErrorWidget(
+      return CustomErrorTextWidget(
         errorMessage: context.localization.no_data_found,
       );
     }

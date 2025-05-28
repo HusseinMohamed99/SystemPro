@@ -16,7 +16,7 @@ class ListingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (listings.isEmpty) {
-      return CustomErrorWidget(
+      return CustomErrorTextWidget(
         errorMessage: context.localization.no_available_properties,
       );
     }

@@ -80,7 +80,7 @@ class _FavoritesViewState extends State<FavoritesView> {
               } else if (state is GetFavoriteSuccess) {
                 final listings = state.listings;
                 if (listings.isEmpty) {
-                  return CustomErrorWidget(
+                  return CustomErrorTextWidget(
                     errorMessage: context.localization.no_favorite_properties,
                   );
                 }
@@ -94,10 +94,10 @@ class _FavoritesViewState extends State<FavoritesView> {
                   ),
                 );
               } else if (state is GetFavoriteError) {
-                return CustomErrorWidget(errorMessage: state.error);
+                return CustomErrorTextWidget(errorMessage: state.error);
               }
 
-              return CustomErrorWidget(
+              return CustomErrorTextWidget(
                 errorMessage: context.localization.no_favorite_properties,
               );
             },

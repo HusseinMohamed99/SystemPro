@@ -58,13 +58,13 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
             }
 
             if (state is MarketPlaceError) {
-              return CustomErrorWidget(errorMessage: state.error);
+              return CustomErrorTextWidget(errorMessage: state.error);
             }
 
             if (state is MarketPlaceSuccess) {
               final listings = state.listings;
               if (listings.isEmpty) {
-                return CustomErrorWidget(
+                return CustomErrorTextWidget(
                   errorMessage: context.localization.no_available_properties,
                 );
               }

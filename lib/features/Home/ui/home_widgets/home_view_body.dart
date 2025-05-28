@@ -32,7 +32,7 @@ class HomeViewBody extends StatelessWidget {
                 return const AdaptiveIndicator();
               }
               if (state is MarketPlaceError) {
-                return CustomErrorWidget(errorMessage: state.error);
+                return CustomErrorTextWidget(errorMessage: state.error);
               }
               if (state is MarketPlaceSuccess) {
                 final listings = state.listings;

@@ -82,12 +82,17 @@ class _FilterViewBodyState extends State<FilterViewBody> {
     return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
         if (state is Loading) return const AdaptiveIndicator();
-        if (state is Error) return CustomErrorWidget(errorMessage: state.error);
+        if (state is Error) {
+          return CustomErrorTextWidget(errorMessage: state.error);
+        }
+
         if (state is! Success) return const SizedBox.shrink();
 
         final categories = state.data.data?.categories ?? [];
         if (categories.isEmpty) {
-          return const CustomErrorWidget(errorMessage: 'لا توجد فئات متاحة');
+          return const CustomErrorTextWidget(
+            errorMessage: 'لا توجد فئات متاحة',
+          );
         }
 
         return Column(

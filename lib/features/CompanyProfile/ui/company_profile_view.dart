@@ -21,7 +21,7 @@ class CompanyProfileView extends StatelessWidget {
       body: BlocBuilder<RealEstateCubit, RealEstateState>(
         builder: (context, state) {
           if (state is FilteredListingsError) {
-            return CustomErrorWidget(errorMessage: state.error);
+            return CustomErrorTextWidget(errorMessage: state.error);
           }
           if (state is FilteredListingsSuccess) {
             final listings = state.filteredListings;
@@ -29,7 +29,7 @@ class CompanyProfileView extends StatelessWidget {
                 listings.where((l) => l.company?.id == companyID).toList();
             if (companyListings.isEmpty ||
                 companyListings.first.company == null) {
-              return CustomErrorWidget(
+              return CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
               );
             }
