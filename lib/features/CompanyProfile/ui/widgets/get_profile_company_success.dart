@@ -8,7 +8,7 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_back_button.dart';
-import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
@@ -108,7 +108,7 @@ class GetProfileCompanySuccess extends StatelessWidget {
                   child: AboutRealEstateWidget(description: company.bio ?? ''),
                 ),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
-                const SliverToBoxAdapter(child: CustomDivider()),
+                const SliverToBoxAdapter(child: AdaptiveDivider()),
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
                 SliverToBoxAdapter(
                   child: PropertiesWidget(

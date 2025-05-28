@@ -9,7 +9,7 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
-import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Search/data/model/category_response.dart';
@@ -120,7 +120,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 ],
               ),
             ),
-            const CustomDivider().onlyPadding(
+            const AdaptiveDivider().onlyPadding(
               bottomPadding: kPaddingDefaultVertical,
             ),
             Row(

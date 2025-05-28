@@ -6,7 +6,7 @@ import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_family.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/marketer.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_company_logo_and_created_time.dart';
@@ -96,7 +96,7 @@ class RealEstateInfo extends StatelessWidget {
           marketer: marketer,
         ),
 
-        const CustomDivider().vPadding(kSpacingSmall),
+        const AdaptiveDivider().vPadding(kSpacingSmall),
         CustomConnectionButton(
           whatsAppURL: company.phone ?? '',
           phoneURL: company.phone ?? '',

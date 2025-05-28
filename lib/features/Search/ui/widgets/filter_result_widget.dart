@@ -6,7 +6,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
-import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
@@ -71,7 +71,7 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
 
               return Column(
                 children: [
-                  const CustomDivider(),
+                  const AdaptiveDivider(),
                   ResultsCountAndSortButton(
                     propertyLength: listings.length.toString(),
                   ).onlyPadding(

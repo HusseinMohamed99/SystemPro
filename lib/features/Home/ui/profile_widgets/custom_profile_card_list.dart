@@ -12,7 +12,7 @@ import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/features/Home/logic/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
 
@@ -38,7 +38,7 @@ class CustomProfileCardList extends StatelessWidget {
         final profileCards = profileCardList(context);
         return SliverList.separated(
           itemCount: profileCards.length,
-          separatorBuilder: (context, index) => const CustomDivider(),
+          separatorBuilder: (context, index) => const AdaptiveDivider(),
           itemBuilder: (context, index) {
             return CustomProfileCard(
               onTap: () async {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/features/Home/data/model/company.dart';
 import 'package:system_pro/features/Home/data/model/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/about_real_estate.dart';
@@ -70,7 +70,7 @@ class RealEstateDetailsView extends StatelessWidget {
                 vPadding: kPaddingDefaultVertical,
               ),
             ),
-            const CustomDivider().vPadding(kSpacingSmall),
+            const AdaptiveDivider().vPadding(kSpacingSmall),
             CustomConnectionButton(
               whatsAppURL: listing.company?.phone ?? '',
               phoneURL: listing.company?.phone ?? '',

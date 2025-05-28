@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/widgets/dividers/custom_divider.dart';
+import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
@@ -52,7 +52,7 @@ class HomeViewBody extends StatelessWidget {
                       rightPadding: kPaddingDefaultHorizontal,
                       bottomPadding: kPaddingVertical,
                     ),
-                    const CustomDivider(),
+                    const AdaptiveDivider(),
                     ResultsCountAndSortButton(
                       propertyLength: listings.length.toString(),
                     ).onlyPadding(
