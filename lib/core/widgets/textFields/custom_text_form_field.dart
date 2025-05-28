@@ -4,6 +4,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/widgets/outlineBorder/custom_outline_border.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -106,19 +107,5 @@ class CustomTextFormField extends StatelessWidget {
     );
   }
 
-  OutlineInputBorder buildOutlineBorder(BuildContext context, {Color? color}) {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(kBorderRadiusLarge).r,
-      borderSide: BorderSide(
-        width: 1.w,
-        color:
-            color ??
-            AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.borderGrey,
-              darkColor: ColorManager.tertiaryBlack,
-            ),
-      ),
-    );
-  }
+  
 }
