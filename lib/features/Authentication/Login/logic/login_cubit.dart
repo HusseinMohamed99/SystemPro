@@ -10,20 +10,47 @@ import 'package:system_pro/features/Authentication/Login/logic/login_state.dart'
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._loginRepo) : super(const LoginState.initial()) {
-    startValidationListeners();
+    _startValidationListeners();
   }
 
   final LoginRepo _loginRepo;
 
+  // Form fields
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
 
+  // Track form validity to control button enabling/disabling
   bool _isFormValid = false;
   bool get isFormValid => _isFormValid;
 
+  // Used to show/hide password text
+  bool _isPasswordVisible = false;
+  bool get isPasswordVisible => _isPasswordVisible;
+  IconData get passwordVisibilityIcon =>
+      _isPasswordVisible ? Icons.visibility : Icons.visibility_off;
+
+  // Toggle visibility of password field
+  void togglePasswordVisibility() {
+    _isPasswordVisible = !_isPasswordVisible;
+    emit(LoginState.passwordVisibilityChanged(_isPasswordVisible));
+  }
+
+  // Listen to changes in form fields to update form validity
+  void _startValidationListeners() {
+    emailController.addListener(_validateForm);
+    passwordController.addListener(_validateForm);
+  }
+
+  // Stop listening when widget is disposed
+  void _stopValidationListeners() {
+    emailController.removeListener(_validateForm);
+    passwordController.removeListener(_validateForm);
+  }
+
+  // Validate that both fields are non-empty
   void _validateForm() {
     final isValid =
         emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
@@ -33,66 +60,56 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  bool _isPasswordVisible = false;
-  bool get isPasswordVisible => _isPasswordVisible;
-
-  IconData get passwordVisibilityIcon =>
-      _isPasswordVisible ? Icons.visibility : Icons.visibility_off;
-
-  void togglePasswordVisibility() {
-    _isPasswordVisible = !_isPasswordVisible;
-    emit(LoginState.passwordVisibilityChanged(_isPasswordVisible));
+  // Perform login only if form is valid
+  void submitIfFormValid() {
+    if (formKey.currentState?.validate() ?? false) {
+      _performLogin();
+    }
   }
 
-  void startValidationListeners() {
-    emailController.addListener(_validateForm);
-    passwordController.addListener(_validateForm);
-  }
-
-  void emitLoginStates() async {
+  // Main login logic
+  Future<void> _performLogin() async {
     emit(const LoginState.loginLoading());
+
     final response = await _loginRepo.login(
       LoginRequestBody(
         email: emailController.text,
         password: passwordController.text,
       ),
     );
+
     await response.when(
       success: (loginResponse) async {
-        await saveUserToken(loginResponse.data?.token ?? '');
-        await savedUsersData(loginResponse);
+        await _cacheUserData(loginResponse);
         emit(LoginState.loginSuccess(loginResponse));
       },
       failure: (error) {
-        emit(LoginState.loginError(error: error.apiErrorModel.message ?? ''));
+        emit(
+          LoginState.loginError(
+            error: error.apiErrorModel.message ?? 'Login failed',
+          ),
+        );
       },
     );
   }
 
-  void submitIfFormValid() {
-    if (formKey.currentState?.validate() ?? false) {
-      emitLoginStates();
-    }
-  }
-
-  Future<void> saveUserToken(String token) async {
+  // Save token and inject into Dio headers
+  Future<void> _saveUserToken(String token) async {
     await CachingHelper.setSecuredString(SharedPrefKeys.userToken, token);
     DioFactory.setTokenIntoHeaderAfterLogin(token);
   }
 
-  Future<void> savedUsersData(LoginResponse loginResponse) async {
+  // Save token + other user info
+  Future<void> _cacheUserData(LoginResponse loginResponse) async {
     final token = loginResponse.data?.token ?? '';
-    await saveUserToken(token);
-  }
-
-  void stopValidationListeners() {
-    emailController.removeListener(_validateForm);
-    passwordController.removeListener(_validateForm);
+    if (token.isNotEmpty) {
+      await _saveUserToken(token);
+    }
   }
 
   @override
   Future<void> close() {
-    stopValidationListeners();
+    _stopValidationListeners();
     emailController.dispose();
     passwordController.dispose();
     emailFocusNode.dispose();

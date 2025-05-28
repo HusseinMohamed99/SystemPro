@@ -28,9 +28,10 @@ void main() async {
     );
     await CachingHelper.init();
     Bloc.observer = MyBlocObserver();
-    AppConfig.isLoggedInUser = !(await CachingHelper.getSecuredString(
-      SharedPrefKeys.userToken,
-    )).isNullOrEmpty();
+    AppConfig.isLoggedInUser =
+        !(await CachingHelper.getSecuredString(
+          SharedPrefKeys.userToken,
+        )).isNullOrEmpty();
     final savedLocale = CachingHelper.getString(
       SharedPrefKeys.selectedLanguage,
     );
@@ -43,8 +44,9 @@ void main() async {
       designSize: const Size(393, 852),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, _) =>
-          AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode),
+      builder:
+          (_, _) =>
+              AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode),
     );
   } catch (e, stack) {
     AppLogs.log('Init error: $e', type: LogType.error);

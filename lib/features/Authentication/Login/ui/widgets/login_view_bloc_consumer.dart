@@ -11,6 +11,7 @@ import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart'
 import 'package:system_pro/features/Authentication/Login/logic/login_state.dart';
 import 'package:system_pro/features/Authentication/Login/ui/widgets/login_view_body.dart';
 
+/// Listens to LoginCubit states and handles UI reactions and login form body.
 class LoginViewBlocConsumer extends StatelessWidget {
   const LoginViewBlocConsumer({super.key});
 
@@ -20,17 +21,18 @@ class LoginViewBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginSuccess) {
           context.showSnackBar(context.localization.sign_in_successfully);
-          context.read<LoginCubit>()
-            ..emailController.clear()
-            ..passwordController.clear();
+
           context.pushReplacementNamed(Routes.mainView);
+          return;
         }
+
         if (state is LoginError) {
           context.showSnackBar(state.error);
         }
       },
       builder: (context, state) {
         final isLoading = state is LoginLoading;
+
         return LoadingIndicatorOverlay(
           isLoading: isLoading,
           child: const LoginViewBody().allPadding(
