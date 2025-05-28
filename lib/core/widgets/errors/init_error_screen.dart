@@ -9,9 +9,7 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 /// A screen that displays an initialization error message with exit option.
 class InitErrorScreen extends StatelessWidget {
   const InitErrorScreen({super.key, required this.error});
-
   final String error;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +29,7 @@ class InitErrorScreen extends StatelessWidget {
                   size: 64.sp,
                   color: ColorManager.errorRed,
                 ),
-
                 verticalSpacing(16),
-
                 // Localized error title
                 Text(
                   context.localization.init_error_title,
@@ -43,9 +39,7 @@ class InitErrorScreen extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-
                 verticalSpacing(12),
-
                 // Error message from system
                 Text(
                   error,
@@ -54,9 +48,7 @@ class InitErrorScreen extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-
                 verticalSpacing(20),
-
                 // Exit button
                 ElevatedButton(
                   onPressed: SystemNavigator.pop, // wrap as a lambda

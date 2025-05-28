@@ -13,4 +13,6 @@ class ForgotPasswordState<T> with _$ForgotPasswordState<T> {
   const factory ForgotPasswordState.forgotPasswordError({
     required String error,
   }) = ForgotPasswordError;
+  const factory ForgotPasswordState.formValidityChanged(bool isValid) =
+      FormValidityChanged;
 }

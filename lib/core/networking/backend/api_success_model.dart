@@ -8,7 +8,7 @@ part 'api_success_model.g.dart';
 /// [status]: Optional status detail from API.
 @JsonSerializable()
 class ApiSuccessModel {
-  const ApiSuccessModel({required this.message, this.status});
+  const ApiSuccessModel({required this.message, this.code, this.status});
 
   /// Creates an instance from a JSON map.
   factory ApiSuccessModel.fromJson(Map<String, dynamic> json) =>
@@ -19,6 +19,9 @@ class ApiSuccessModel {
 
   /// Optional status description provided by the API.
   final String? status;
+
+  /// Optional status code provided by the API.
+  final int? code;
 
   /// Converts this instance into a JSON map.
   Map<String, dynamic> toJson() => _$ApiSuccessModelToJson(this);

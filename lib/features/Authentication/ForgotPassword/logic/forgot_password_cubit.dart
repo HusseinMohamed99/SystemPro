@@ -6,7 +6,9 @@ import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_p
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   ForgotPasswordCubit(this._forgotPasswordRepo)
-    : super(const ForgotPasswordState.initial());
+    : super(const ForgotPasswordState.initial()){
+    emailController.addListener(_updateFormValidity);
+    }
   final ForgotPasswordRepo _forgotPasswordRepo;
 
   TextEditingController emailController = TextEditingController();
@@ -30,5 +32,25 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         );
       },
     );
+  }
+
+  bool _isFormValid = false;
+  bool get isFormValid => _isFormValid;
+
+  void _updateFormValidity() {
+    final isValid = emailController.text.trim().isNotEmpty;
+    if (_isFormValid != isValid) {
+      _isFormValid = isValid;
+      emit(ForgotPasswordState.formValidityChanged(isValid));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    emailController.removeListener(_updateFormValidity);
+    emailController.dispose();
+    emailFocusNode.dispose();
+
+    return super.close();
   }
 }

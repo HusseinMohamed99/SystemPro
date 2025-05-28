@@ -6,52 +6,54 @@ import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/textFields/email_form_field_widget.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
+import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_state.dart';
 
-/// Forgot Password Form with email input and a submit button
 class ForgotPasswordForm extends StatelessWidget {
-  const ForgotPasswordForm({super.key, required this.isLoading});
+  const ForgotPasswordForm({super.key});
 
-  final bool isLoading;
+  void _validateAndSubmit(BuildContext context) {
+    final cubit = context.read<ForgotPasswordCubit>();
+    if (cubit.formKey.currentState!.validate()) {
+      cubit.emitResetPasswordStates();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ForgotPasswordCubit>();
-    final emailController = cubit.emailController;
-    final emailFocusNode = cubit.emailFocusNode;
-
-    // Dynamically enable button if email field is filled
-    final bool isFormValid = emailController.text.trim().isNotEmpty;
 
     return Form(
       key: cubit.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Email input field
+          // Email Field
           EmailFormField(
-            emailController: emailController,
-            focusNode: emailFocusNode,
+            emailController: cubit.emailController,
+            focusNode: cubit.emailFocusNode,
           ),
 
-          verticalSpacing(kSpacingSmaller),
+          verticalSpacing(kSpacingXXLarge),
 
-          // Submit button
-          CustomButton(
-            text: context.localization.send_code,
-            isLoading: isLoading,
-            isDisabled: !isFormValid,
-            onPressed: () => _validateAndSubmit(context),
+          // Listen to changes in form state
+          BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
+            buildWhen: (previous, current) =>
+                current is ForgotPasswordLoading ||
+                current is FormValidityChanged,
+            builder: (context, state) {
+              final isDisabled = !cubit.isFormValid;
+              final isLoading = state is ForgotPasswordLoading;
+
+              return CustomButton(
+                text: context.localization.send_code,
+                isLoading: isLoading,
+                isDisabled: isDisabled,
+                onPressed: () => _validateAndSubmit(context),
+              );
+            },
           ),
         ],
       ),
     );
-  }
-
-  /// Validates the form and triggers the cubit's password reset
-  void _validateAndSubmit(BuildContext context) {
-    final cubit = context.read<ForgotPasswordCubit>();
-    if (cubit.formKey.currentState!.validate()) {
-      cubit.emitResetPasswordStates();
-    }
   }
 }

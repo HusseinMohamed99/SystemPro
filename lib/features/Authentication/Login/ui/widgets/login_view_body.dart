@@ -7,9 +7,7 @@ import 'package:system_pro/features/Authentication/Login/ui/widgets/custom_image
 import 'package:system_pro/features/Authentication/Login/ui/widgets/login_form.dart';
 
 class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key, required this.isLoading});
-
-  final bool isLoading;
+  const LoginViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +20,7 @@ class LoginViewBody extends StatelessWidget {
           child: Text(context.localization.login, style: context.headlineLarge),
         ),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: LoginForm(isLoading: isLoading),
-        ),
+        const SliverFillRemaining(hasScrollBody: false, child: LoginForm()),
       ],
     );
   }

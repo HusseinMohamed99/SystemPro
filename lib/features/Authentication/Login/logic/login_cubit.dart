@@ -9,14 +9,45 @@ import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.da
 import 'package:system_pro/features/Authentication/Login/logic/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this._loginRepo) : super(const LoginState.initial());
+  LoginCubit(this._loginRepo) : super(const LoginState.initial()) {
+    startValidationListeners();
+  }
+
   final LoginRepo _loginRepo;
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  FocusNode emailFocusNode = FocusNode();
-  FocusNode passwordFocusNode = FocusNode();
+  final emailFocusNode = FocusNode();
+  final passwordFocusNode = FocusNode();
+
+  bool _isFormValid = false;
+  bool get isFormValid => _isFormValid;
+
+  void _validateForm() {
+    final isValid =
+        emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    if (_isFormValid != isValid) {
+      _isFormValid = isValid;
+      emit(LoginState.formValidityChanged(isValid));
+    }
+  }
+
+  bool _isPasswordVisible = false;
+  bool get isPasswordVisible => _isPasswordVisible;
+
+  IconData get passwordVisibilityIcon =>
+      _isPasswordVisible ? Icons.visibility : Icons.visibility_off;
+
+  void togglePasswordVisibility() {
+    _isPasswordVisible = !_isPasswordVisible;
+    emit(LoginState.passwordVisibilityChanged(_isPasswordVisible));
+  }
+
+  void startValidationListeners() {
+    emailController.addListener(_validateForm);
+    passwordController.addListener(_validateForm);
+  }
 
   void emitLoginStates() async {
     emit(const LoginState.loginLoading());
@@ -38,15 +69,34 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  Future<void> savedUsersData(LoginResponse loginResponse) async {
-    await CachingHelper.setSecuredString(
-      SharedPrefKeys.userToken,
-      loginResponse.data?.token ?? '',
-    );
+  void submitIfFormValid() {
+    if (formKey.currentState?.validate() ?? false) {
+      emitLoginStates();
+    }
   }
 
   Future<void> saveUserToken(String token) async {
     await CachingHelper.setSecuredString(SharedPrefKeys.userToken, token);
     DioFactory.setTokenIntoHeaderAfterLogin(token);
+  }
+
+  Future<void> savedUsersData(LoginResponse loginResponse) async {
+    final token = loginResponse.data?.token ?? '';
+    await saveUserToken(token);
+  }
+
+  void stopValidationListeners() {
+    emailController.removeListener(_validateForm);
+    passwordController.removeListener(_validateForm);
+  }
+
+  @override
+  Future<void> close() {
+    stopValidationListeners();
+    emailController.dispose();
+    passwordController.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    return super.close();
   }
 }

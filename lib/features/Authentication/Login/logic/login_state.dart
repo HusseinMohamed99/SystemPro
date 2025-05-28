@@ -9,4 +9,8 @@ class LoginState<T> with _$LoginState<T> {
   const factory LoginState.loginLoading() = LoginLoading;
   const factory LoginState.loginSuccess(T data) = LoginSuccess<T>;
   const factory LoginState.loginError({required String error}) = LoginError;
+  const factory LoginState.formValidityChanged(bool isValid) =
+      FormValidityChanged;
+  const factory LoginState.passwordVisibilityChanged(bool isVisible) =
+      PasswordVisibilityChanged;
 }

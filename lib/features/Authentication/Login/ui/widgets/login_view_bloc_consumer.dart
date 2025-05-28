@@ -33,7 +33,7 @@ class LoginViewBlocConsumer extends StatelessWidget {
         final isLoading = state is LoginLoading;
         return LoadingIndicator(
           isLoading: isLoading,
-          child: LoginViewBody(isLoading: isLoading).allPadding(
+          child: const LoginViewBody().allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),
