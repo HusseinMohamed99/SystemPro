@@ -300,6 +300,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "عمليات البحث الحديثة",
     ),
     "rent": MessageLookupByLibrary.simpleMessage("إيجار"),
+    "required_field": MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب"),
     "reset_password": MessageLookupByLibrary.simpleMessage(
       "إعادة تعيين كلمة المرور",
     ),

@@ -298,6 +298,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "purpose": MessageLookupByLibrary.simpleMessage("Purpose"),
     "recent_search": MessageLookupByLibrary.simpleMessage("Recent Search"),
     "rent": MessageLookupByLibrary.simpleMessage("Rent"),
+    "required_field": MessageLookupByLibrary.simpleMessage(
+      "This field is required",
+    ),
     "reset_password": MessageLookupByLibrary.simpleMessage("Reset Password"),
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Please type something you’ll remember",

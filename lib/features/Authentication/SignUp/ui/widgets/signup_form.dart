@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
@@ -13,116 +14,83 @@ import 'package:system_pro/core/widgets/textFields/name_form_field_widget.dart';
 import 'package:system_pro/core/widgets/textFields/password_form_field_widget.dart';
 import 'package:system_pro/core/widgets/texts/have_an_account.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
+import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_state.dart';
 
-class SignupForm extends StatefulWidget {
-  const SignupForm({super.key, required this.isLoading});
-
-  final bool isLoading;
-  @override
-  State<SignupForm> createState() => _SignupFormState();
-}
-
-class _SignupFormState extends State<SignupForm> {
-  bool isPassword = true;
-  IconData? suffix = Icons.visibility_off;
-
-  void changePassword() {
-    isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility : Icons.visibility_off;
-  }
-
-  late TextEditingController passwordController;
-  late TextEditingController confirmPasswordController;
-  bool _isFormValid = false;
-
-  @override
-  void initState() {
-    super.initState();
-    final cubit = context.read<SignupCubit>();
-
-    // Attach listeners
-    cubit.nameController.addListener(_updateFormValidity);
-    cubit.emailController.addListener(_updateFormValidity);
-    cubit.passwordController.addListener(_updateFormValidity);
-    cubit.confirmPasswordController.addListener(_updateFormValidity);
-  }
-
-  void _updateFormValidity() {
-    final cubit = context.read<SignupCubit>();
-    final isValid =
-        cubit.nameController.text.isNotEmpty &&
-        cubit.emailController.text.isNotEmpty &&
-        cubit.passwordController.text.isNotEmpty &&
-        cubit.confirmPasswordController.text.isNotEmpty;
-
-    if (_isFormValid != isValid) {
-      setState(() => _isFormValid = isValid);
-    }
-  }
-
+class SignupForm extends StatelessWidget {
+  const SignupForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: context.read<SignupCubit>().formKey,
-      child: Column(
-        spacing: kSpacingXLarge.h,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          NameFormField(
-            nameController: context.read<SignupCubit>().nameController,
-            focusNode: context.read<SignupCubit>().nameFocusNode,
-          ),
-          EmailFormField(
-            emailController: context.read<SignupCubit>().emailController,
-            focusNode: context.read<SignupCubit>().emailFocusNode,
-          ),
-          PasswordFormField(
-            focusNode: context.read<SignupCubit>().passwordFocusNode,
-            passwordController: context.read<SignupCubit>().passwordController,
-            isPassword: isPassword,
-            suffixIconOnTap: () {
-              setState(changePassword);
-            },
-            visibilityIcon: suffix!,
-          ),
-          ConfirmPasswordFormField(
-            focusNode: context.read<SignupCubit>().confirmPasswordFocusNode,
-            passwordController: context.read<SignupCubit>().passwordController,
-            isPassword: isPassword,
-            suffixIconOnTap: () {
-              setState(changePassword);
-            },
-            visibilityIcon: suffix!,
-            confirmPasswordController: context
-                .read<SignupCubit>()
-                .confirmPasswordController,
-          ),
-          verticalSpacing(kSpacingSmaller),
-          CustomButton(
-            text: context.localization.sign_up,
-            isLoading: widget.isLoading,
-            isDisabled: !_isFormValid,
-            onPressed: () {
-              validateThenDoSignUp(context);
-            },
-          ),
-          const Spacer(),
-          HaveAnAccountWidget(
-            title1: context.localization.have_account,
-            title2: context.localization.login,
-            onTap: () {
-              context.pushReplacementNamed(Routes.loginView);
-            },
-          ),
-        ],
-      ),
-    );
-  }
+    return BlocConsumer<SignupCubit, SignupState>(
+      listenWhen: (prev, curr) => curr is SignupSuccess || curr is SignupError,
+      listener: (context, state) {
+        if (state is SignupSuccess) {
+          context.showSnackBar(
+            context.localization.account_created_successfully,
+          );
+          context.pushReplacementNamed(Routes.mainView);
+        } else if (state is SignupError) {
+          context.showSnackBar(state.error);
+        }
+      },
+      buildWhen:
+          (prev, curr) =>
+              curr is SignupLoading ||
+              curr is SignupFormValidityChanged ||
+              curr is SignupPasswordVisibilityChanged,
+      builder: (context, state) {
+        final cubit = context.read<SignupCubit>();
+        final isDisabled = !cubit.isFormValid;
+        final isPassword = !cubit.isPasswordVisible;
+        final suffixIcon = cubit.passwordVisibilityIcon;
+        final isLoading = state is SignupLoading;
 
-  void validateThenDoSignUp(BuildContext context) {
-    if (context.read<SignupCubit>().formKey.currentState!.validate()) {
-      context.read<SignupCubit>().emitSignupStates();
-    }
+        return Form(
+          key: cubit.formKey,
+          child: Column(
+            spacing: kSpacingXLarge.h,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              NameFormField(
+                nameController: cubit.nameController,
+                focusNode: cubit.nameFocusNode,
+              ),
+              EmailFormField(
+                emailController: cubit.emailController,
+                focusNode: cubit.emailFocusNode,
+              ),
+              PasswordFormField(
+                focusNode: cubit.passwordFocusNode,
+                passwordController: cubit.passwordController,
+                isPassword: isPassword,
+                suffixIconOnTap: cubit.togglePasswordVisibility,
+                visibilityIcon: suffixIcon,
+              ),
+              ConfirmPasswordFormField(
+                focusNode: cubit.confirmPasswordFocusNode,
+                passwordController: cubit.passwordController,
+                isPassword: isPassword,
+                suffixIconOnTap: cubit.togglePasswordVisibility,
+                visibilityIcon: suffixIcon,
+                confirmPasswordController: cubit.confirmPasswordController,
+              ),
+              verticalSpacing(kSpacingSmaller),
+              CustomButton(
+                text: context.localization.sign_up,
+                isLoading: isLoading,
+                isDisabled: isDisabled,
+                onPressed: cubit.submitIfFormValid,
+              ),
+              const Spacer(),
+              HaveAnAccountWidget(
+                title1: context.localization.have_account,
+                title2: context.localization.login,
+                onTap: () => context.pushReplacementNamed(Routes.loginView),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

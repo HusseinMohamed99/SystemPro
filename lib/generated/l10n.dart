@@ -1489,6 +1489,16 @@ class S {
   String get close_app {
     return Intl.message('Close App', name: 'close_app', desc: '', args: []);
   }
+
+  /// `This field is required`
+  String get required_field {
+    return Intl.message(
+      'This field is required',
+      name: 'required_field',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

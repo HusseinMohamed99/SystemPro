@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/remove_spacing.dart';
 import 'package:system_pro/core/helpers/validations/validation_manager.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -31,21 +32,17 @@ class ConfirmPasswordFormField extends StatelessWidget {
       spacing: kSpacingSmall.h,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          context.localization.confirm_password,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        Text(context.localization.confirm_password, style: context.titleMedium),
         CustomTextFormField(
+          autofillHints: const [AutofillHints.password],
           focusNode: focusNode,
           isPassword: isPassword,
           controller: confirmPasswordController,
-          onSaved: (value) => confirmPasswordController.text = value!,
           validator:
               (value) => ValidationManager.repeatPasswordValidator(
                 context,
-                value: value,
-                password:
-                    passwordController.text, // تمرير كلمة المرور الأصلية هنا
+                value: value ?? '',
+                password: passwordController.text,
               ),
           textInputType: TextInputType.visiblePassword,
           hintText: context.localization.confirm_password,
@@ -57,7 +54,7 @@ class ConfirmPasswordFormField extends StatelessWidget {
             size: kIconSizeDefault.sp,
           ),
           onChanged: (value) {
-          confirmPasswordController.removeSpaces();
+            confirmPasswordController.removeSpaces();
           },
         ),
       ],

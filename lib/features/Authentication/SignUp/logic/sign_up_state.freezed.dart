@@ -23,6 +23,8 @@ mixin _$SignupState<T> {
     required TResult Function() signupLoading,
     required TResult Function(T data) signupSuccess,
     required TResult Function(String error) signupError,
+    required TResult Function(bool isValid) signupFormValidityChanged,
+    required TResult Function(bool isVisible) signupPasswordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -30,6 +32,8 @@ mixin _$SignupState<T> {
     TResult? Function()? signupLoading,
     TResult? Function(T data)? signupSuccess,
     TResult? Function(String error)? signupError,
+    TResult? Function(bool isValid)? signupFormValidityChanged,
+    TResult? Function(bool isVisible)? signupPasswordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -37,6 +41,8 @@ mixin _$SignupState<T> {
     TResult Function()? signupLoading,
     TResult Function(T data)? signupSuccess,
     TResult Function(String error)? signupError,
+    TResult Function(bool isValid)? signupFormValidityChanged,
+    TResult Function(bool isVisible)? signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -45,6 +51,10 @@ mixin _$SignupState<T> {
     required TResult Function(SignupLoading<T> value) signupLoading,
     required TResult Function(SignupSuccess<T> value) signupSuccess,
     required TResult Function(SignupError<T> value) signupError,
+    required TResult Function(SignupFormValidityChanged<T> value)
+    signupFormValidityChanged,
+    required TResult Function(SignupPasswordVisibilityChanged<T> value)
+    signupPasswordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -52,6 +62,10 @@ mixin _$SignupState<T> {
     TResult? Function(SignupLoading<T> value)? signupLoading,
     TResult? Function(SignupSuccess<T> value)? signupSuccess,
     TResult? Function(SignupError<T> value)? signupError,
+    TResult? Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult? Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -59,6 +73,10 @@ mixin _$SignupState<T> {
     TResult Function(SignupLoading<T> value)? signupLoading,
     TResult Function(SignupSuccess<T> value)? signupSuccess,
     TResult Function(SignupError<T> value)? signupError,
+    TResult Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -132,6 +150,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() signupLoading,
     required TResult Function(T data) signupSuccess,
     required TResult Function(String error) signupError,
+    required TResult Function(bool isValid) signupFormValidityChanged,
+    required TResult Function(bool isVisible) signupPasswordVisibilityChanged,
   }) {
     return initial();
   }
@@ -143,6 +163,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? signupLoading,
     TResult? Function(T data)? signupSuccess,
     TResult? Function(String error)? signupError,
+    TResult? Function(bool isValid)? signupFormValidityChanged,
+    TResult? Function(bool isVisible)? signupPasswordVisibilityChanged,
   }) {
     return initial?.call();
   }
@@ -154,6 +176,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? signupLoading,
     TResult Function(T data)? signupSuccess,
     TResult Function(String error)? signupError,
+    TResult Function(bool isValid)? signupFormValidityChanged,
+    TResult Function(bool isVisible)? signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -169,6 +193,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(SignupLoading<T> value) signupLoading,
     required TResult Function(SignupSuccess<T> value) signupSuccess,
     required TResult Function(SignupError<T> value) signupError,
+    required TResult Function(SignupFormValidityChanged<T> value)
+    signupFormValidityChanged,
+    required TResult Function(SignupPasswordVisibilityChanged<T> value)
+    signupPasswordVisibilityChanged,
   }) {
     return initial(this);
   }
@@ -180,6 +208,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(SignupLoading<T> value)? signupLoading,
     TResult? Function(SignupSuccess<T> value)? signupSuccess,
     TResult? Function(SignupError<T> value)? signupError,
+    TResult? Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult? Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
   }) {
     return initial?.call(this);
   }
@@ -191,6 +223,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(SignupLoading<T> value)? signupLoading,
     TResult Function(SignupSuccess<T> value)? signupSuccess,
     TResult Function(SignupError<T> value)? signupError,
+    TResult Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -251,6 +287,8 @@ class _$SignupLoadingImpl<T> implements SignupLoading<T> {
     required TResult Function() signupLoading,
     required TResult Function(T data) signupSuccess,
     required TResult Function(String error) signupError,
+    required TResult Function(bool isValid) signupFormValidityChanged,
+    required TResult Function(bool isVisible) signupPasswordVisibilityChanged,
   }) {
     return signupLoading();
   }
@@ -262,6 +300,8 @@ class _$SignupLoadingImpl<T> implements SignupLoading<T> {
     TResult? Function()? signupLoading,
     TResult? Function(T data)? signupSuccess,
     TResult? Function(String error)? signupError,
+    TResult? Function(bool isValid)? signupFormValidityChanged,
+    TResult? Function(bool isVisible)? signupPasswordVisibilityChanged,
   }) {
     return signupLoading?.call();
   }
@@ -273,6 +313,8 @@ class _$SignupLoadingImpl<T> implements SignupLoading<T> {
     TResult Function()? signupLoading,
     TResult Function(T data)? signupSuccess,
     TResult Function(String error)? signupError,
+    TResult Function(bool isValid)? signupFormValidityChanged,
+    TResult Function(bool isVisible)? signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (signupLoading != null) {
@@ -288,6 +330,10 @@ class _$SignupLoadingImpl<T> implements SignupLoading<T> {
     required TResult Function(SignupLoading<T> value) signupLoading,
     required TResult Function(SignupSuccess<T> value) signupSuccess,
     required TResult Function(SignupError<T> value) signupError,
+    required TResult Function(SignupFormValidityChanged<T> value)
+    signupFormValidityChanged,
+    required TResult Function(SignupPasswordVisibilityChanged<T> value)
+    signupPasswordVisibilityChanged,
   }) {
     return signupLoading(this);
   }
@@ -299,6 +345,10 @@ class _$SignupLoadingImpl<T> implements SignupLoading<T> {
     TResult? Function(SignupLoading<T> value)? signupLoading,
     TResult? Function(SignupSuccess<T> value)? signupSuccess,
     TResult? Function(SignupError<T> value)? signupError,
+    TResult? Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult? Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
   }) {
     return signupLoading?.call(this);
   }
@@ -310,6 +360,10 @@ class _$SignupLoadingImpl<T> implements SignupLoading<T> {
     TResult Function(SignupLoading<T> value)? signupLoading,
     TResult Function(SignupSuccess<T> value)? signupSuccess,
     TResult Function(SignupError<T> value)? signupError,
+    TResult Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (signupLoading != null) {
@@ -401,6 +455,8 @@ class _$SignupSuccessImpl<T> implements SignupSuccess<T> {
     required TResult Function() signupLoading,
     required TResult Function(T data) signupSuccess,
     required TResult Function(String error) signupError,
+    required TResult Function(bool isValid) signupFormValidityChanged,
+    required TResult Function(bool isVisible) signupPasswordVisibilityChanged,
   }) {
     return signupSuccess(data);
   }
@@ -412,6 +468,8 @@ class _$SignupSuccessImpl<T> implements SignupSuccess<T> {
     TResult? Function()? signupLoading,
     TResult? Function(T data)? signupSuccess,
     TResult? Function(String error)? signupError,
+    TResult? Function(bool isValid)? signupFormValidityChanged,
+    TResult? Function(bool isVisible)? signupPasswordVisibilityChanged,
   }) {
     return signupSuccess?.call(data);
   }
@@ -423,6 +481,8 @@ class _$SignupSuccessImpl<T> implements SignupSuccess<T> {
     TResult Function()? signupLoading,
     TResult Function(T data)? signupSuccess,
     TResult Function(String error)? signupError,
+    TResult Function(bool isValid)? signupFormValidityChanged,
+    TResult Function(bool isVisible)? signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (signupSuccess != null) {
@@ -438,6 +498,10 @@ class _$SignupSuccessImpl<T> implements SignupSuccess<T> {
     required TResult Function(SignupLoading<T> value) signupLoading,
     required TResult Function(SignupSuccess<T> value) signupSuccess,
     required TResult Function(SignupError<T> value) signupError,
+    required TResult Function(SignupFormValidityChanged<T> value)
+    signupFormValidityChanged,
+    required TResult Function(SignupPasswordVisibilityChanged<T> value)
+    signupPasswordVisibilityChanged,
   }) {
     return signupSuccess(this);
   }
@@ -449,6 +513,10 @@ class _$SignupSuccessImpl<T> implements SignupSuccess<T> {
     TResult? Function(SignupLoading<T> value)? signupLoading,
     TResult? Function(SignupSuccess<T> value)? signupSuccess,
     TResult? Function(SignupError<T> value)? signupError,
+    TResult? Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult? Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
   }) {
     return signupSuccess?.call(this);
   }
@@ -460,6 +528,10 @@ class _$SignupSuccessImpl<T> implements SignupSuccess<T> {
     TResult Function(SignupLoading<T> value)? signupLoading,
     TResult Function(SignupSuccess<T> value)? signupSuccess,
     TResult Function(SignupError<T> value)? signupError,
+    TResult Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (signupSuccess != null) {
@@ -559,6 +631,8 @@ class _$SignupErrorImpl<T> implements SignupError<T> {
     required TResult Function() signupLoading,
     required TResult Function(T data) signupSuccess,
     required TResult Function(String error) signupError,
+    required TResult Function(bool isValid) signupFormValidityChanged,
+    required TResult Function(bool isVisible) signupPasswordVisibilityChanged,
   }) {
     return signupError(error);
   }
@@ -570,6 +644,8 @@ class _$SignupErrorImpl<T> implements SignupError<T> {
     TResult? Function()? signupLoading,
     TResult? Function(T data)? signupSuccess,
     TResult? Function(String error)? signupError,
+    TResult? Function(bool isValid)? signupFormValidityChanged,
+    TResult? Function(bool isVisible)? signupPasswordVisibilityChanged,
   }) {
     return signupError?.call(error);
   }
@@ -581,6 +657,8 @@ class _$SignupErrorImpl<T> implements SignupError<T> {
     TResult Function()? signupLoading,
     TResult Function(T data)? signupSuccess,
     TResult Function(String error)? signupError,
+    TResult Function(bool isValid)? signupFormValidityChanged,
+    TResult Function(bool isVisible)? signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (signupError != null) {
@@ -596,6 +674,10 @@ class _$SignupErrorImpl<T> implements SignupError<T> {
     required TResult Function(SignupLoading<T> value) signupLoading,
     required TResult Function(SignupSuccess<T> value) signupSuccess,
     required TResult Function(SignupError<T> value) signupError,
+    required TResult Function(SignupFormValidityChanged<T> value)
+    signupFormValidityChanged,
+    required TResult Function(SignupPasswordVisibilityChanged<T> value)
+    signupPasswordVisibilityChanged,
   }) {
     return signupError(this);
   }
@@ -607,6 +689,10 @@ class _$SignupErrorImpl<T> implements SignupError<T> {
     TResult? Function(SignupLoading<T> value)? signupLoading,
     TResult? Function(SignupSuccess<T> value)? signupSuccess,
     TResult? Function(SignupError<T> value)? signupError,
+    TResult? Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult? Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
   }) {
     return signupError?.call(this);
   }
@@ -618,6 +704,10 @@ class _$SignupErrorImpl<T> implements SignupError<T> {
     TResult Function(SignupLoading<T> value)? signupLoading,
     TResult Function(SignupSuccess<T> value)? signupSuccess,
     TResult Function(SignupError<T> value)? signupError,
+    TResult Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (signupError != null) {
@@ -638,4 +728,377 @@ abstract class SignupError<T> implements SignupState<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignupErrorImplCopyWith<T, _$SignupErrorImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SignupFormValidityChangedImplCopyWith<T, $Res> {
+  factory _$$SignupFormValidityChangedImplCopyWith(
+    _$SignupFormValidityChangedImpl<T> value,
+    $Res Function(_$SignupFormValidityChangedImpl<T>) then,
+  ) = __$$SignupFormValidityChangedImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({bool isValid});
+}
+
+/// @nodoc
+class __$$SignupFormValidityChangedImplCopyWithImpl<T, $Res>
+    extends
+        _$SignupStateCopyWithImpl<T, $Res, _$SignupFormValidityChangedImpl<T>>
+    implements _$$SignupFormValidityChangedImplCopyWith<T, $Res> {
+  __$$SignupFormValidityChangedImplCopyWithImpl(
+    _$SignupFormValidityChangedImpl<T> _value,
+    $Res Function(_$SignupFormValidityChangedImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of SignupState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? isValid = null}) {
+    return _then(
+      _$SignupFormValidityChangedImpl<T>(
+        null == isValid
+            ? _value.isValid
+            : isValid // ignore: cast_nullable_to_non_nullable
+                as bool,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$SignupFormValidityChangedImpl<T>
+    implements SignupFormValidityChanged<T> {
+  const _$SignupFormValidityChangedImpl(this.isValid);
+
+  @override
+  final bool isValid;
+
+  @override
+  String toString() {
+    return 'SignupState<$T>.signupFormValidityChanged(isValid: $isValid)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SignupFormValidityChangedImpl<T> &&
+            (identical(other.isValid, isValid) || other.isValid == isValid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isValid);
+
+  /// Create a copy of SignupState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignupFormValidityChangedImplCopyWith<
+    T,
+    _$SignupFormValidityChangedImpl<T>
+  >
+  get copyWith => __$$SignupFormValidityChangedImplCopyWithImpl<
+    T,
+    _$SignupFormValidityChangedImpl<T>
+  >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() signupLoading,
+    required TResult Function(T data) signupSuccess,
+    required TResult Function(String error) signupError,
+    required TResult Function(bool isValid) signupFormValidityChanged,
+    required TResult Function(bool isVisible) signupPasswordVisibilityChanged,
+  }) {
+    return signupFormValidityChanged(isValid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? signupLoading,
+    TResult? Function(T data)? signupSuccess,
+    TResult? Function(String error)? signupError,
+    TResult? Function(bool isValid)? signupFormValidityChanged,
+    TResult? Function(bool isVisible)? signupPasswordVisibilityChanged,
+  }) {
+    return signupFormValidityChanged?.call(isValid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? signupLoading,
+    TResult Function(T data)? signupSuccess,
+    TResult Function(String error)? signupError,
+    TResult Function(bool isValid)? signupFormValidityChanged,
+    TResult Function(bool isVisible)? signupPasswordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (signupFormValidityChanged != null) {
+      return signupFormValidityChanged(isValid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(SignupLoading<T> value) signupLoading,
+    required TResult Function(SignupSuccess<T> value) signupSuccess,
+    required TResult Function(SignupError<T> value) signupError,
+    required TResult Function(SignupFormValidityChanged<T> value)
+    signupFormValidityChanged,
+    required TResult Function(SignupPasswordVisibilityChanged<T> value)
+    signupPasswordVisibilityChanged,
+  }) {
+    return signupFormValidityChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(SignupLoading<T> value)? signupLoading,
+    TResult? Function(SignupSuccess<T> value)? signupSuccess,
+    TResult? Function(SignupError<T> value)? signupError,
+    TResult? Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult? Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
+  }) {
+    return signupFormValidityChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(SignupLoading<T> value)? signupLoading,
+    TResult Function(SignupSuccess<T> value)? signupSuccess,
+    TResult Function(SignupError<T> value)? signupError,
+    TResult Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (signupFormValidityChanged != null) {
+      return signupFormValidityChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignupFormValidityChanged<T> implements SignupState<T> {
+  const factory SignupFormValidityChanged(final bool isValid) =
+      _$SignupFormValidityChangedImpl<T>;
+
+  bool get isValid;
+
+  /// Create a copy of SignupState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SignupFormValidityChangedImplCopyWith<
+    T,
+    _$SignupFormValidityChangedImpl<T>
+  >
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SignupPasswordVisibilityChangedImplCopyWith<T, $Res> {
+  factory _$$SignupPasswordVisibilityChangedImplCopyWith(
+    _$SignupPasswordVisibilityChangedImpl<T> value,
+    $Res Function(_$SignupPasswordVisibilityChangedImpl<T>) then,
+  ) = __$$SignupPasswordVisibilityChangedImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({bool isVisible});
+}
+
+/// @nodoc
+class __$$SignupPasswordVisibilityChangedImplCopyWithImpl<T, $Res>
+    extends
+        _$SignupStateCopyWithImpl<
+          T,
+          $Res,
+          _$SignupPasswordVisibilityChangedImpl<T>
+        >
+    implements _$$SignupPasswordVisibilityChangedImplCopyWith<T, $Res> {
+  __$$SignupPasswordVisibilityChangedImplCopyWithImpl(
+    _$SignupPasswordVisibilityChangedImpl<T> _value,
+    $Res Function(_$SignupPasswordVisibilityChangedImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of SignupState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? isVisible = null}) {
+    return _then(
+      _$SignupPasswordVisibilityChangedImpl<T>(
+        null == isVisible
+            ? _value.isVisible
+            : isVisible // ignore: cast_nullable_to_non_nullable
+                as bool,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$SignupPasswordVisibilityChangedImpl<T>
+    implements SignupPasswordVisibilityChanged<T> {
+  const _$SignupPasswordVisibilityChangedImpl(this.isVisible);
+
+  @override
+  final bool isVisible;
+
+  @override
+  String toString() {
+    return 'SignupState<$T>.signupPasswordVisibilityChanged(isVisible: $isVisible)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SignupPasswordVisibilityChangedImpl<T> &&
+            (identical(other.isVisible, isVisible) ||
+                other.isVisible == isVisible));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isVisible);
+
+  /// Create a copy of SignupState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignupPasswordVisibilityChangedImplCopyWith<
+    T,
+    _$SignupPasswordVisibilityChangedImpl<T>
+  >
+  get copyWith => __$$SignupPasswordVisibilityChangedImplCopyWithImpl<
+    T,
+    _$SignupPasswordVisibilityChangedImpl<T>
+  >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() signupLoading,
+    required TResult Function(T data) signupSuccess,
+    required TResult Function(String error) signupError,
+    required TResult Function(bool isValid) signupFormValidityChanged,
+    required TResult Function(bool isVisible) signupPasswordVisibilityChanged,
+  }) {
+    return signupPasswordVisibilityChanged(isVisible);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? signupLoading,
+    TResult? Function(T data)? signupSuccess,
+    TResult? Function(String error)? signupError,
+    TResult? Function(bool isValid)? signupFormValidityChanged,
+    TResult? Function(bool isVisible)? signupPasswordVisibilityChanged,
+  }) {
+    return signupPasswordVisibilityChanged?.call(isVisible);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? signupLoading,
+    TResult Function(T data)? signupSuccess,
+    TResult Function(String error)? signupError,
+    TResult Function(bool isValid)? signupFormValidityChanged,
+    TResult Function(bool isVisible)? signupPasswordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (signupPasswordVisibilityChanged != null) {
+      return signupPasswordVisibilityChanged(isVisible);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(SignupLoading<T> value) signupLoading,
+    required TResult Function(SignupSuccess<T> value) signupSuccess,
+    required TResult Function(SignupError<T> value) signupError,
+    required TResult Function(SignupFormValidityChanged<T> value)
+    signupFormValidityChanged,
+    required TResult Function(SignupPasswordVisibilityChanged<T> value)
+    signupPasswordVisibilityChanged,
+  }) {
+    return signupPasswordVisibilityChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(SignupLoading<T> value)? signupLoading,
+    TResult? Function(SignupSuccess<T> value)? signupSuccess,
+    TResult? Function(SignupError<T> value)? signupError,
+    TResult? Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult? Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
+  }) {
+    return signupPasswordVisibilityChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(SignupLoading<T> value)? signupLoading,
+    TResult Function(SignupSuccess<T> value)? signupSuccess,
+    TResult Function(SignupError<T> value)? signupError,
+    TResult Function(SignupFormValidityChanged<T> value)?
+    signupFormValidityChanged,
+    TResult Function(SignupPasswordVisibilityChanged<T> value)?
+    signupPasswordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (signupPasswordVisibilityChanged != null) {
+      return signupPasswordVisibilityChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignupPasswordVisibilityChanged<T> implements SignupState<T> {
+  const factory SignupPasswordVisibilityChanged(final bool isVisible) =
+      _$SignupPasswordVisibilityChangedImpl<T>;
+
+  bool get isVisible;
+
+  /// Create a copy of SignupState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SignupPasswordVisibilityChangedImplCopyWith<
+    T,
+    _$SignupPasswordVisibilityChangedImpl<T>
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -363,6 +363,7 @@
     "init_error_title": "An error occurred while initializing the app",
     "@init_error_title": {},
   "close_app": "Close App",
-  "@close_app": {}
-
+  "@close_app": {},
+  "required_field":"This field is required",
+  "@required_field":{}
 }

@@ -7,9 +7,8 @@ import 'package:system_pro/features/Authentication/Login/ui/widgets/custom_image
 import 'package:system_pro/features/Authentication/SignUp/ui/widgets/signup_form.dart';
 
 class SignupViewBody extends StatelessWidget {
-  const SignupViewBody({super.key, required this.isLoading});
+  const SignupViewBody({super.key});
 
-  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -24,7 +23,7 @@ class SignupViewBody extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-         SliverFillRemaining(hasScrollBody: false, child: SignupForm(isLoading: isLoading)),
+         SliverFillRemaining(hasScrollBody: false, child: SignupForm()),
       ],
     );
   }

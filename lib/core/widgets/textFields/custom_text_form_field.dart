@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
@@ -10,7 +11,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.hintText,
     required this.focusNode,
     this.textInputType,
-    this.controller,
+    required this.controller,
     this.textInputAction,
     this.suffixIcon,
     this.isPassword,
@@ -20,10 +21,12 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.prefixIcon,
     this.onFieldSubmitted,
+    this.autofillHints,
+    this.maxLines = 1,
   });
   final String hintText;
   final TextInputType? textInputType;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final TextInputAction? textInputAction;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
@@ -34,14 +37,15 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
   final FocusNode focusNode;
-
+  final Iterable<String>? autofillHints;
+  final int maxLines;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       focusNode: focusNode,
       onChanged: onChanged,
       obscuringCharacter: '*',
-      controller: controller ?? TextEditingController(),
+      controller: controller,
       keyboardType: textInputType ?? TextInputType.text,
       textInputAction: textInputAction ?? TextInputAction.next,
       onSaved: onSaved,
@@ -51,10 +55,12 @@ class CustomTextFormField extends StatelessWidget {
           validator ??
           (v) {
             if (v == null || v.isEmpty) {
-              return 'هذا الحقل مطلوب';
+              return context.localization.required_field;
             }
             return null;
           },
+      autofillHints: autofillHints,
+      maxLines: maxLines,
       style: context.titleLarge?.copyWith(
         color: AdaptiveColor.adaptiveColor(
           context: context,
@@ -69,7 +75,6 @@ class CustomTextFormField extends StatelessWidget {
           lightColor: ColorManager.pureWhite,
           darkColor: ColorManager.tertiaryBlack,
         ),
-        
         errorMaxLines: 2,
         hintText: hintText,
         hintStyle: context.titleLarge?.copyWith(
@@ -87,10 +92,7 @@ class CustomTextFormField extends StatelessWidget {
             suffixIcon == null
                 ? null
                 : IconButton(onPressed: suffixIconOnTap, icon: suffixIcon!),
-        prefixIcon:
-            prefixIcon == null
-                ? null
-                : IconButton(onPressed: () {}, icon: prefixIcon!),
+        prefixIcon: prefixIcon,
         border: buildOutlineBorder(context),
         enabledBorder: buildOutlineBorder(context),
         focusedBorder: buildOutlineBorder(context),

@@ -367,7 +367,9 @@
   "init_error_title": "حدث خطأ أثناء تهيئة التطبيق",
   "@init_error_title": {},
   "close_app": "إغلاق التطبيق",
-  "@close_app": {}
+  "@close_app": {},
+  "required_field":"هذا الحقل مطلوب",
+  "@required_field":{}
 
 
 }
