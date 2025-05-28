@@ -4,6 +4,9 @@ import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
+/// A reusable widget that shows "Have an account?"
+///  with animated fade and slide effect.
+/// Supports adaptive theming and gesture tap detection.
 class HaveAnAccountWidget extends StatelessWidget {
   const HaveAnAccountWidget({
     super.key,
@@ -11,16 +14,22 @@ class HaveAnAccountWidget extends StatelessWidget {
     required this.title2,
     required this.onTap,
     this.animationDuration = const Duration(milliseconds: 600),
+    this.textAlign = TextAlign.center,
   });
 
   final String title1;
   final String title2;
   final VoidCallback onTap;
   final Duration animationDuration;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
-    final defaultStyle = context.titleMedium?.copyWith(
+    // Shared text style for consistency
+    final baseTextStyle = context.titleMedium;
+
+    // Default text style (gray or white depending on theme)
+    final defaultStyle = baseTextStyle?.copyWith(
       color: AdaptiveColor.adaptiveColor(
         context: context,
         lightColor: ColorManager.softGray,
@@ -28,7 +37,8 @@ class HaveAnAccountWidget extends StatelessWidget {
       ),
     );
 
-    final highlightStyle = context.titleMedium?.copyWith(
+    // Highlight style for the actionable part (blue and semi-bold)
+    final highlightStyle = baseTextStyle?.copyWith(
       color: AdaptiveColor.adaptiveColor(
         context: context,
         lightColor: ColorManager.primaryBlue,
@@ -39,9 +49,9 @@ class HaveAnAccountWidget extends StatelessWidget {
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: onTap,
+      onTap: onTap, // Execute provided tap action
       child: RichText(
-            textAlign: TextAlign.center,
+            textAlign: textAlign,
             text: TextSpan(
               children: [
                 TextSpan(text: title1, style: defaultStyle),
@@ -50,8 +60,12 @@ class HaveAnAccountWidget extends StatelessWidget {
             ),
           )
           .animate()
-          .fadeIn(duration: animationDuration)
-          .slideY(begin: 0.3, end: 0.0, duration: animationDuration),
+          .fadeIn(duration: animationDuration) // Fade in animation
+          .slideY(
+            begin: 0.3,
+            end: 0.0,
+            duration: animationDuration,
+          ), // Slide from bottom to neutral
     );
   }
 }
