@@ -42,7 +42,7 @@ void main() async {
       minTextAdapt: true,
       splitScreenMode: true,
       builder:
-          (_, __) =>
+          (_, _) =>
               AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode),
     );
   } catch (e, stack) {
