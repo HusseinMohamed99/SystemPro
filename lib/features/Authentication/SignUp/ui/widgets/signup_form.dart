@@ -15,8 +15,9 @@ import 'package:system_pro/core/widgets/texts/have_an_account.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 
 class SignupForm extends StatefulWidget {
-  const SignupForm({super.key});
+  const SignupForm({super.key, required this.isLoading});
 
+  final bool isLoading;
   @override
   State<SignupForm> createState() => _SignupFormState();
 }
@@ -32,13 +33,33 @@ class _SignupFormState extends State<SignupForm> {
 
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
+  bool _isFormValid = false;
+
   @override
   void initState() {
     super.initState();
-    passwordController = context.read<SignupCubit>().passwordController;
-    confirmPasswordController =
-        context.read<SignupCubit>().confirmPasswordController;
+    final cubit = context.read<SignupCubit>();
+
+    // Attach listeners
+    cubit.nameController.addListener(_updateFormValidity);
+    cubit.emailController.addListener(_updateFormValidity);
+    cubit.passwordController.addListener(_updateFormValidity);
+    cubit.confirmPasswordController.addListener(_updateFormValidity);
   }
+
+  void _updateFormValidity() {
+    final cubit = context.read<SignupCubit>();
+    final isValid =
+        cubit.nameController.text.isNotEmpty &&
+        cubit.emailController.text.isNotEmpty &&
+        cubit.passwordController.text.isNotEmpty &&
+        cubit.confirmPasswordController.text.isNotEmpty;
+
+    if (_isFormValid != isValid) {
+      setState(() => _isFormValid = isValid);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +94,15 @@ class _SignupFormState extends State<SignupForm> {
               setState(changePassword);
             },
             visibilityIcon: suffix!,
-            confirmPasswordController:
-                context.read<SignupCubit>().confirmPasswordController,
+            confirmPasswordController: context
+                .read<SignupCubit>()
+                .confirmPasswordController,
           ),
           verticalSpacing(kSpacingSmaller),
           CustomButton(
             text: context.localization.sign_up,
+            isLoading: widget.isLoading,
+            isDisabled: !_isFormValid,
             onPressed: () {
               validateThenDoSignUp(context);
             },
