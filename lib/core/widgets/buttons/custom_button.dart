@@ -4,6 +4,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 
 /// A customizable, scalable button with optional loading and disabled states
 class CustomButton extends StatelessWidget {
@@ -47,16 +48,7 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         child: isLoading
-            ? SizedBox(
-                width: 20.w,
-                height: 20.w,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    loadingIndicatorColor ?? ColorManager.pureWhite,
-                  ),
-                ),
-              )
+            ? CircularIndicator(loadingIndicatorColor: loadingIndicatorColor)
             : Text(
                 text,
                 textAlign: TextAlign.center,
@@ -68,3 +60,4 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+

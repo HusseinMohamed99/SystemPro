@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
@@ -49,6 +50,25 @@ class AdaptiveIndicator extends StatelessWidget {
           context: context,
           lightColor: ColorManager.primaryBlue,
           darkColor: ColorManager.secondaryBlue,
+        ),
+      ),
+    );
+  }
+}
+class CircularIndicator extends StatelessWidget {
+  const CircularIndicator({super.key, required this.loadingIndicatorColor});
+
+  final Color? loadingIndicatorColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 20.w,
+      height: 20.w,
+      child: CircularProgressIndicator.adaptive(
+        strokeWidth: 2,
+        valueColor: AlwaysStoppedAnimation<Color>(
+          loadingIndicatorColor ?? ColorManager.pureWhite,
         ),
       ),
     );
