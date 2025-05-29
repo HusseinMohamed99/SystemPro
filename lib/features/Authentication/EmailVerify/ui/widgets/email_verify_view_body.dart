@@ -30,7 +30,7 @@ class EmailVerifyViewBody extends StatelessWidget {
 
     // Start the timer only once after screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      cubit.startTimer();
+      cubit.startTimerIfNeeded();
     });
 
     return BlocBuilder<EmailVerifyCubit, EmailVerifyState>(
