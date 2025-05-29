@@ -26,6 +26,9 @@ mixin _$EmailVerifyState<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -36,6 +39,9 @@ mixin _$EmailVerifyState<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -46,6 +52,9 @@ mixin _$EmailVerifyState<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +66,10 @@ mixin _$EmailVerifyState<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -67,6 +80,9 @@ mixin _$EmailVerifyState<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -77,6 +93,9 @@ mixin _$EmailVerifyState<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -153,6 +172,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return initial();
   }
@@ -167,6 +189,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return initial?.call();
   }
@@ -181,6 +206,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -199,6 +227,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return initial(this);
   }
@@ -213,6 +245,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return initial?.call(this);
   }
@@ -227,6 +262,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -291,6 +329,9 @@ class _$EmailVerifyLoadingImpl<T> implements EmailVerifyLoading<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return emailVerifyLoading();
   }
@@ -305,6 +346,9 @@ class _$EmailVerifyLoadingImpl<T> implements EmailVerifyLoading<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return emailVerifyLoading?.call();
   }
@@ -319,6 +363,9 @@ class _$EmailVerifyLoadingImpl<T> implements EmailVerifyLoading<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (emailVerifyLoading != null) {
@@ -337,6 +384,10 @@ class _$EmailVerifyLoadingImpl<T> implements EmailVerifyLoading<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return emailVerifyLoading(this);
   }
@@ -351,6 +402,9 @@ class _$EmailVerifyLoadingImpl<T> implements EmailVerifyLoading<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return emailVerifyLoading?.call(this);
   }
@@ -365,6 +419,9 @@ class _$EmailVerifyLoadingImpl<T> implements EmailVerifyLoading<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (emailVerifyLoading != null) {
@@ -460,6 +517,9 @@ class _$EmailVerifySuccessImpl<T> implements EmailVerifySuccess<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return emailVerifySuccess(data);
   }
@@ -474,6 +534,9 @@ class _$EmailVerifySuccessImpl<T> implements EmailVerifySuccess<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return emailVerifySuccess?.call(data);
   }
@@ -488,6 +551,9 @@ class _$EmailVerifySuccessImpl<T> implements EmailVerifySuccess<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (emailVerifySuccess != null) {
@@ -506,6 +572,10 @@ class _$EmailVerifySuccessImpl<T> implements EmailVerifySuccess<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return emailVerifySuccess(this);
   }
@@ -520,6 +590,9 @@ class _$EmailVerifySuccessImpl<T> implements EmailVerifySuccess<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return emailVerifySuccess?.call(this);
   }
@@ -534,6 +607,9 @@ class _$EmailVerifySuccessImpl<T> implements EmailVerifySuccess<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (emailVerifySuccess != null) {
@@ -636,6 +712,9 @@ class _$EmailVerifyErrorImpl<T> implements EmailVerifyError<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return emailVerifyError(error);
   }
@@ -650,6 +729,9 @@ class _$EmailVerifyErrorImpl<T> implements EmailVerifyError<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return emailVerifyError?.call(error);
   }
@@ -664,6 +746,9 @@ class _$EmailVerifyErrorImpl<T> implements EmailVerifyError<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (emailVerifyError != null) {
@@ -682,6 +767,10 @@ class _$EmailVerifyErrorImpl<T> implements EmailVerifyError<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return emailVerifyError(this);
   }
@@ -696,6 +785,9 @@ class _$EmailVerifyErrorImpl<T> implements EmailVerifyError<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return emailVerifyError?.call(this);
   }
@@ -710,6 +802,9 @@ class _$EmailVerifyErrorImpl<T> implements EmailVerifyError<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (emailVerifyError != null) {
@@ -783,6 +878,9 @@ class _$ResendOtpLoadingImpl<T> implements ResendOtpLoading<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return resendOtpLoading();
   }
@@ -797,6 +895,9 @@ class _$ResendOtpLoadingImpl<T> implements ResendOtpLoading<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return resendOtpLoading?.call();
   }
@@ -811,6 +912,9 @@ class _$ResendOtpLoadingImpl<T> implements ResendOtpLoading<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (resendOtpLoading != null) {
@@ -829,6 +933,10 @@ class _$ResendOtpLoadingImpl<T> implements ResendOtpLoading<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return resendOtpLoading(this);
   }
@@ -843,6 +951,9 @@ class _$ResendOtpLoadingImpl<T> implements ResendOtpLoading<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return resendOtpLoading?.call(this);
   }
@@ -857,6 +968,9 @@ class _$ResendOtpLoadingImpl<T> implements ResendOtpLoading<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (resendOtpLoading != null) {
@@ -951,6 +1065,9 @@ class _$ResendOtpSuccessImpl<T> implements ResendOtpSuccess<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return resendOtpSuccess(data);
   }
@@ -965,6 +1082,9 @@ class _$ResendOtpSuccessImpl<T> implements ResendOtpSuccess<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return resendOtpSuccess?.call(data);
   }
@@ -979,6 +1099,9 @@ class _$ResendOtpSuccessImpl<T> implements ResendOtpSuccess<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (resendOtpSuccess != null) {
@@ -997,6 +1120,10 @@ class _$ResendOtpSuccessImpl<T> implements ResendOtpSuccess<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return resendOtpSuccess(this);
   }
@@ -1011,6 +1138,9 @@ class _$ResendOtpSuccessImpl<T> implements ResendOtpSuccess<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return resendOtpSuccess?.call(this);
   }
@@ -1025,6 +1155,9 @@ class _$ResendOtpSuccessImpl<T> implements ResendOtpSuccess<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (resendOtpSuccess != null) {
@@ -1127,6 +1260,9 @@ class _$ResendOtpErrorImpl<T> implements ResendOtpError<T> {
     required TResult Function() resendOtpLoading,
     required TResult Function(T data) resendOtpSuccess,
     required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return resendOtpError(error);
   }
@@ -1141,6 +1277,9 @@ class _$ResendOtpErrorImpl<T> implements ResendOtpError<T> {
     TResult? Function()? resendOtpLoading,
     TResult? Function(T data)? resendOtpSuccess,
     TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return resendOtpError?.call(error);
   }
@@ -1155,6 +1294,9 @@ class _$ResendOtpErrorImpl<T> implements ResendOtpError<T> {
     TResult Function()? resendOtpLoading,
     TResult Function(T data)? resendOtpSuccess,
     TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (resendOtpError != null) {
@@ -1173,6 +1315,10 @@ class _$ResendOtpErrorImpl<T> implements ResendOtpError<T> {
     required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
     required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
     required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return resendOtpError(this);
   }
@@ -1187,6 +1333,9 @@ class _$ResendOtpErrorImpl<T> implements ResendOtpError<T> {
     TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return resendOtpError?.call(this);
   }
@@ -1201,6 +1350,9 @@ class _$ResendOtpErrorImpl<T> implements ResendOtpError<T> {
     TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
     TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
     TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (resendOtpError != null) {
@@ -1221,4 +1373,553 @@ abstract class ResendOtpError<T> implements EmailVerifyState<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ResendOtpErrorImplCopyWith<T, _$ResendOtpErrorImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TimerTickingImplCopyWith<T, $Res> {
+  factory _$$TimerTickingImplCopyWith(
+    _$TimerTickingImpl<T> value,
+    $Res Function(_$TimerTickingImpl<T>) then,
+  ) = __$$TimerTickingImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({int secondsLeft});
+}
+
+/// @nodoc
+class __$$TimerTickingImplCopyWithImpl<T, $Res>
+    extends _$EmailVerifyStateCopyWithImpl<T, $Res, _$TimerTickingImpl<T>>
+    implements _$$TimerTickingImplCopyWith<T, $Res> {
+  __$$TimerTickingImplCopyWithImpl(
+    _$TimerTickingImpl<T> _value,
+    $Res Function(_$TimerTickingImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of EmailVerifyState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? secondsLeft = null}) {
+    return _then(
+      _$TimerTickingImpl<T>(
+        null == secondsLeft
+            ? _value.secondsLeft
+            : secondsLeft // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$TimerTickingImpl<T> implements TimerTicking<T> {
+  const _$TimerTickingImpl(this.secondsLeft);
+
+  @override
+  final int secondsLeft;
+
+  @override
+  String toString() {
+    return 'EmailVerifyState<$T>.timerTicking(secondsLeft: $secondsLeft)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TimerTickingImpl<T> &&
+            (identical(other.secondsLeft, secondsLeft) ||
+                other.secondsLeft == secondsLeft));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, secondsLeft);
+
+  /// Create a copy of EmailVerifyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TimerTickingImplCopyWith<T, _$TimerTickingImpl<T>> get copyWith =>
+      __$$TimerTickingImplCopyWithImpl<T, _$TimerTickingImpl<T>>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() emailVerifyLoading,
+    required TResult Function(T data) emailVerifySuccess,
+    required TResult Function(String error) emailVerifyError,
+    required TResult Function() resendOtpLoading,
+    required TResult Function(T data) resendOtpSuccess,
+    required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
+  }) {
+    return timerTicking(secondsLeft);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? emailVerifyLoading,
+    TResult? Function(T data)? emailVerifySuccess,
+    TResult? Function(String error)? emailVerifyError,
+    TResult? Function()? resendOtpLoading,
+    TResult? Function(T data)? resendOtpSuccess,
+    TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
+  }) {
+    return timerTicking?.call(secondsLeft);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? emailVerifyLoading,
+    TResult Function(T data)? emailVerifySuccess,
+    TResult Function(String error)? emailVerifyError,
+    TResult Function()? resendOtpLoading,
+    TResult Function(T data)? resendOtpSuccess,
+    TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (timerTicking != null) {
+      return timerTicking(secondsLeft);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(EmailVerifyLoading<T> value) emailVerifyLoading,
+    required TResult Function(EmailVerifySuccess<T> value) emailVerifySuccess,
+    required TResult Function(EmailVerifyError<T> value) emailVerifyError,
+    required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
+    required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
+    required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
+  }) {
+    return timerTicking(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(EmailVerifyLoading<T> value)? emailVerifyLoading,
+    TResult? Function(EmailVerifySuccess<T> value)? emailVerifySuccess,
+    TResult? Function(EmailVerifyError<T> value)? emailVerifyError,
+    TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
+    TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
+    TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+  }) {
+    return timerTicking?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(EmailVerifyLoading<T> value)? emailVerifyLoading,
+    TResult Function(EmailVerifySuccess<T> value)? emailVerifySuccess,
+    TResult Function(EmailVerifyError<T> value)? emailVerifyError,
+    TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
+    TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
+    TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (timerTicking != null) {
+      return timerTicking(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TimerTicking<T> implements EmailVerifyState<T> {
+  const factory TimerTicking(final int secondsLeft) = _$TimerTickingImpl<T>;
+
+  int get secondsLeft;
+
+  /// Create a copy of EmailVerifyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TimerTickingImplCopyWith<T, _$TimerTickingImpl<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TimerExpiredImplCopyWith<T, $Res> {
+  factory _$$TimerExpiredImplCopyWith(
+    _$TimerExpiredImpl<T> value,
+    $Res Function(_$TimerExpiredImpl<T>) then,
+  ) = __$$TimerExpiredImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$TimerExpiredImplCopyWithImpl<T, $Res>
+    extends _$EmailVerifyStateCopyWithImpl<T, $Res, _$TimerExpiredImpl<T>>
+    implements _$$TimerExpiredImplCopyWith<T, $Res> {
+  __$$TimerExpiredImplCopyWithImpl(
+    _$TimerExpiredImpl<T> _value,
+    $Res Function(_$TimerExpiredImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of EmailVerifyState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$TimerExpiredImpl<T> implements TimerExpired<T> {
+  const _$TimerExpiredImpl();
+
+  @override
+  String toString() {
+    return 'EmailVerifyState<$T>.timerExpired()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$TimerExpiredImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() emailVerifyLoading,
+    required TResult Function(T data) emailVerifySuccess,
+    required TResult Function(String error) emailVerifyError,
+    required TResult Function() resendOtpLoading,
+    required TResult Function(T data) resendOtpSuccess,
+    required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
+  }) {
+    return timerExpired();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? emailVerifyLoading,
+    TResult? Function(T data)? emailVerifySuccess,
+    TResult? Function(String error)? emailVerifyError,
+    TResult? Function()? resendOtpLoading,
+    TResult? Function(T data)? resendOtpSuccess,
+    TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
+  }) {
+    return timerExpired?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? emailVerifyLoading,
+    TResult Function(T data)? emailVerifySuccess,
+    TResult Function(String error)? emailVerifyError,
+    TResult Function()? resendOtpLoading,
+    TResult Function(T data)? resendOtpSuccess,
+    TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (timerExpired != null) {
+      return timerExpired();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(EmailVerifyLoading<T> value) emailVerifyLoading,
+    required TResult Function(EmailVerifySuccess<T> value) emailVerifySuccess,
+    required TResult Function(EmailVerifyError<T> value) emailVerifyError,
+    required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
+    required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
+    required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
+  }) {
+    return timerExpired(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(EmailVerifyLoading<T> value)? emailVerifyLoading,
+    TResult? Function(EmailVerifySuccess<T> value)? emailVerifySuccess,
+    TResult? Function(EmailVerifyError<T> value)? emailVerifyError,
+    TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
+    TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
+    TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+  }) {
+    return timerExpired?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(EmailVerifyLoading<T> value)? emailVerifyLoading,
+    TResult Function(EmailVerifySuccess<T> value)? emailVerifySuccess,
+    TResult Function(EmailVerifyError<T> value)? emailVerifyError,
+    TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
+    TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
+    TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (timerExpired != null) {
+      return timerExpired(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TimerExpired<T> implements EmailVerifyState<T> {
+  const factory TimerExpired() = _$TimerExpiredImpl<T>;
+}
+
+/// @nodoc
+abstract class _$$InputCompletionChangedImplCopyWith<T, $Res> {
+  factory _$$InputCompletionChangedImplCopyWith(
+    _$InputCompletionChangedImpl<T> value,
+    $Res Function(_$InputCompletionChangedImpl<T>) then,
+  ) = __$$InputCompletionChangedImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({bool isCompleted});
+}
+
+/// @nodoc
+class __$$InputCompletionChangedImplCopyWithImpl<T, $Res>
+    extends
+        _$EmailVerifyStateCopyWithImpl<T, $Res, _$InputCompletionChangedImpl<T>>
+    implements _$$InputCompletionChangedImplCopyWith<T, $Res> {
+  __$$InputCompletionChangedImplCopyWithImpl(
+    _$InputCompletionChangedImpl<T> _value,
+    $Res Function(_$InputCompletionChangedImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of EmailVerifyState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? isCompleted = null}) {
+    return _then(
+      _$InputCompletionChangedImpl<T>(
+        isCompleted:
+            null == isCompleted
+                ? _value.isCompleted
+                : isCompleted // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$InputCompletionChangedImpl<T> implements InputCompletionChanged<T> {
+  const _$InputCompletionChangedImpl({required this.isCompleted});
+
+  @override
+  final bool isCompleted;
+
+  @override
+  String toString() {
+    return 'EmailVerifyState<$T>.inputCompletionChanged(isCompleted: $isCompleted)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InputCompletionChangedImpl<T> &&
+            (identical(other.isCompleted, isCompleted) ||
+                other.isCompleted == isCompleted));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isCompleted);
+
+  /// Create a copy of EmailVerifyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InputCompletionChangedImplCopyWith<T, _$InputCompletionChangedImpl<T>>
+  get copyWith => __$$InputCompletionChangedImplCopyWithImpl<
+    T,
+    _$InputCompletionChangedImpl<T>
+  >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() emailVerifyLoading,
+    required TResult Function(T data) emailVerifySuccess,
+    required TResult Function(String error) emailVerifyError,
+    required TResult Function() resendOtpLoading,
+    required TResult Function(T data) resendOtpSuccess,
+    required TResult Function(String error) resendOtpError,
+    required TResult Function(int secondsLeft) timerTicking,
+    required TResult Function() timerExpired,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
+  }) {
+    return inputCompletionChanged(isCompleted);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? emailVerifyLoading,
+    TResult? Function(T data)? emailVerifySuccess,
+    TResult? Function(String error)? emailVerifyError,
+    TResult? Function()? resendOtpLoading,
+    TResult? Function(T data)? resendOtpSuccess,
+    TResult? Function(String error)? resendOtpError,
+    TResult? Function(int secondsLeft)? timerTicking,
+    TResult? Function()? timerExpired,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
+  }) {
+    return inputCompletionChanged?.call(isCompleted);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? emailVerifyLoading,
+    TResult Function(T data)? emailVerifySuccess,
+    TResult Function(String error)? emailVerifyError,
+    TResult Function()? resendOtpLoading,
+    TResult Function(T data)? resendOtpSuccess,
+    TResult Function(String error)? resendOtpError,
+    TResult Function(int secondsLeft)? timerTicking,
+    TResult Function()? timerExpired,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (inputCompletionChanged != null) {
+      return inputCompletionChanged(isCompleted);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(EmailVerifyLoading<T> value) emailVerifyLoading,
+    required TResult Function(EmailVerifySuccess<T> value) emailVerifySuccess,
+    required TResult Function(EmailVerifyError<T> value) emailVerifyError,
+    required TResult Function(ResendOtpLoading<T> value) resendOtpLoading,
+    required TResult Function(ResendOtpSuccess<T> value) resendOtpSuccess,
+    required TResult Function(ResendOtpError<T> value) resendOtpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(TimerExpired<T> value) timerExpired,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
+  }) {
+    return inputCompletionChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(EmailVerifyLoading<T> value)? emailVerifyLoading,
+    TResult? Function(EmailVerifySuccess<T> value)? emailVerifySuccess,
+    TResult? Function(EmailVerifyError<T> value)? emailVerifyError,
+    TResult? Function(ResendOtpLoading<T> value)? resendOtpLoading,
+    TResult? Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
+    TResult? Function(ResendOtpError<T> value)? resendOtpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(TimerExpired<T> value)? timerExpired,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+  }) {
+    return inputCompletionChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(EmailVerifyLoading<T> value)? emailVerifyLoading,
+    TResult Function(EmailVerifySuccess<T> value)? emailVerifySuccess,
+    TResult Function(EmailVerifyError<T> value)? emailVerifyError,
+    TResult Function(ResendOtpLoading<T> value)? resendOtpLoading,
+    TResult Function(ResendOtpSuccess<T> value)? resendOtpSuccess,
+    TResult Function(ResendOtpError<T> value)? resendOtpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(TimerExpired<T> value)? timerExpired,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (inputCompletionChanged != null) {
+      return inputCompletionChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InputCompletionChanged<T> implements EmailVerifyState<T> {
+  const factory InputCompletionChanged({required final bool isCompleted}) =
+      _$InputCompletionChangedImpl<T>;
+
+  bool get isCompleted;
+
+  /// Create a copy of EmailVerifyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InputCompletionChangedImplCopyWith<T, _$InputCompletionChangedImpl<T>>
+  get copyWith => throw _privateConstructorUsedError;
 }

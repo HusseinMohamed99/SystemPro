@@ -33,7 +33,7 @@ class SignupResponse {
 
 @JsonSerializable()
 class SignupUserData {
-  SignupUserData({this.email, this.otp});
+  SignupUserData({this.email});
 
   factory SignupUserData.fromJson(Map<String, dynamic> json) =>
       _$SignupUserDataFromJson(json);
@@ -43,9 +43,6 @@ class SignupUserData {
   /// Email of the user who signed up
   String? email;
 
-  /// One-Time Password sent to email or phone
-  String? otp;
-
   @override
-  String toString() => 'SignupUserData(email: $email, otp: $otp)';
+  String toString() => 'SignupUserData(email: $email)';
 }

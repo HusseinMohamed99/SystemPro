@@ -32,4 +32,17 @@ class EmailVerifyState<T> with _$EmailVerifyState<T> {
   /// Emitted when resending the OTP fails.
   const factory EmailVerifyState.resendOtpError({required String error}) =
       ResendOtpError;
+
+  // ====================== UI-Related States ======================
+
+  /// Emitted on every second during countdown.
+  const factory EmailVerifyState.timerTicking(int secondsLeft) = TimerTicking;
+
+  /// Emitted when countdown timer reaches 0.
+  const factory EmailVerifyState.timerExpired() = TimerExpired;
+
+  /// Emitted when input is completed or cleared.
+  const factory EmailVerifyState.inputCompletionChanged({
+    required bool isCompleted,
+  }) = InputCompletionChanged;
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/data/model/email_verify_request_body.dart';
@@ -5,7 +7,7 @@ import 'package:system_pro/features/Authentication/EmailVerify/data/repo/email_v
 import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_state.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_request_body.dart';
 
-/// Cubit responsible for handling email verification and OTP resending logic.
+/// Cubit responsible for handling email verification, resend logic, and UI states.
 class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   EmailVerifyCubit(this._emailVerifyRepo)
     : super(const EmailVerifyState.initial());
@@ -15,6 +17,41 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   final TextEditingController validationCodeController =
       TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  Timer? _timer;
+  int _secondsLeft = 59;
+
+  bool get canResend => _secondsLeft == 0;
+  int get secondsLeft => _secondsLeft;
+
+  /// Starts the countdown timer for resend OTP
+void startTimer() {
+    if (_timer != null && _timer!.isActive) return;
+
+    _secondsLeft = 59;
+    emit(EmailVerifyState.timerTicking(_secondsLeft));
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _secondsLeft--;
+      if (_secondsLeft <= 0) {
+        timer.cancel();
+        _timer = null;
+        emit(const EmailVerifyState.timerExpired());
+      } else {
+        emit(EmailVerifyState.timerTicking(_secondsLeft));
+      }
+    });
+  }
+
+
+  // Marks the completion status of the OTP input.
+  bool _isCompleted = false;
+  bool get isCompleted => _isCompleted;
+
+  void markOtpCompletion(bool value) {
+    _isCompleted = value;
+    emit(EmailVerifyState.inputCompletionChanged(isCompleted: value));
+  }
 
   /// Verifies the email using the OTP entered by the user.
   Future<void> verifyEmail({required String email}) async {
@@ -40,6 +77,8 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
 
   /// Resends the OTP to the given email.
   Future<void> resendOtp({required String email}) async {
+    if (_secondsLeft > 0) return; // 🚫 Don't resend until timer hits 0
+
     emit(const EmailVerifyState.resendOtpLoading());
 
     final response = await _emailVerifyRepo.resendOtp(
@@ -47,7 +86,10 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
     );
 
     response.when(
-      success: (data) => emit(EmailVerifyState.resendOtpSuccess(data)),
+      success: (data) {
+        emit(EmailVerifyState.resendOtpSuccess(data));
+        startTimer(); // Start again after successful resend
+      },
       failure:
           (error) => emit(
             EmailVerifyState.resendOtpError(
@@ -59,6 +101,7 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
 
   @override
   Future<void> close() {
+    _timer?.cancel();
     validationCodeController.dispose();
     return super.close();
   }

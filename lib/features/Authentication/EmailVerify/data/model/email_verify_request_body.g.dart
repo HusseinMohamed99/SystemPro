@@ -15,4 +15,4 @@ EmailVerifyRequestBody _$EmailVerifyRequestBodyFromJson(
 
 Map<String, dynamic> _$EmailVerifyRequestBodyToJson(
   EmailVerifyRequestBody instance,
-) => <String, dynamic>{'otp': instance.otp, 'email': instance.email};
+) => <String, dynamic>{'email': instance.email, 'otp': instance.otp};

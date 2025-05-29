@@ -11,8 +11,7 @@ import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verif
 import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_state.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/ui/widgets/email_verify_view_body.dart';
 
-/// BlocConsumer for Email Verification.
-/// Handles success, error, and resend OTP states.
+/// Handles state changes and UI rendering for email verification.
 class EmailVerifyBlocConsumer extends StatelessWidget {
   const EmailVerifyBlocConsumer({super.key, required this.email});
 
@@ -26,30 +25,30 @@ class EmailVerifyBlocConsumer extends StatelessWidget {
               curr is EmailVerifySuccess ||
               curr is EmailVerifyError ||
               curr is ResendOtpSuccess,
-      listener: (context, state) {
-        if (state is ResendOtpSuccess) {
-          context.showSnackBar(context.localization.send_code);
-        } else if (state is EmailVerifySuccess) {
-          context.showSnackBar(
-            context.localization.account_created_successfully,
-          );
-          context.pushReplacementNamed(Routes.loginView);
-        } else if (state is EmailVerifyError) {
-          context.showSnackBar(state.error);
-        }
-      },
+      listener: _handleState,
       builder: (context, state) {
         final isLoading = state is EmailVerifyLoading;
+
         return LoadingIndicatorOverlay(
           isLoading: isLoading,
-          child: EmailVerifyViewBody(
-            email: email,
-          ).allPadding(
+          child: EmailVerifyViewBody(email: email).allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),
         );
       },
     );
+  }
+
+  /// Extracted listener logic to improve readability and separation.
+  void _handleState(BuildContext context, EmailVerifyState state) {
+    if (state is ResendOtpSuccess) {
+      context.showSnackBar(context.localization.send_code);
+    } else if (state is EmailVerifySuccess) {
+      context.showSnackBar(context.localization.account_created_successfully);
+      context.pushReplacementNamed(Routes.loginView);
+    } else if (state is EmailVerifyError) {
+      context.showSnackBar(state.error);
+    }
   }
 }
