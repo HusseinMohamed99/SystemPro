@@ -55,7 +55,6 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
               SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
               SliverToBoxAdapter(
                 child: RichText(
-                  textAlign: TextAlign.start,
                   text: TextSpan(
                     children: [
                       TextSpan(
