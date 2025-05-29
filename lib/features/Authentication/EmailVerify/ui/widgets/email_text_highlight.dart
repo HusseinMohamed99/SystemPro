@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 class EmailTextHighlight extends StatelessWidget {
@@ -14,15 +15,11 @@ class EmailTextHighlight extends StatelessWidget {
         children: [
           TextSpan(
             text: context.localization.we_sent_code,
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(color: ColorManager.softGray),
+            style: context.titleLarge?.copyWith(color: ColorManager.softGray),
           ),
           TextSpan(
             text: '  $email',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(color: ColorManager.primaryBlue),
+            style: context.titleLarge?.copyWith(color: ColorManager.primaryBlue),
           ),
         ],
       ),

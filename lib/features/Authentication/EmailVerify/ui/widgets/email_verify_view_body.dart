@@ -11,20 +11,28 @@ import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verif
 import 'package:system_pro/features/Authentication/EmailVerify/ui/widgets/email_text_highlight.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/ui/widgets/resend_code_text.dart';
 
+/// Main body of the Email Verification screen.
 class EmailVerifyViewBody extends StatelessWidget {
-  const EmailVerifyViewBody({super.key, required this.email});
+  const EmailVerifyViewBody({
+    super.key,
+    required this.email,
+    this.vPadding = kPaddingLargeVertical,
+    this.hPadding = kPaddingDefaultHorizontal,
+  });
+
   final String email;
+  final double vPadding;
+  final double hPadding;
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<EmailVerifyCubit>();
 
-    // ✅ Start timer after the first build
+    // Start the timer only once after screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (cubit.secondsLeft == 59) {
-        cubit.startTimer();
-      }
+      cubit.startTimer();
     });
+
     return BlocBuilder<EmailVerifyCubit, EmailVerifyState>(
       buildWhen:
           (prev, curr) =>
@@ -33,74 +41,106 @@ class EmailVerifyViewBody extends StatelessWidget {
               curr is TimerTicking ||
               curr is EmailVerifyLoading,
       builder: (context, state) {
-        final isLoading = state is EmailVerifyLoading;
-        final hasError = state is EmailVerifyError;
-       final isCompleted = cubit.isCompleted;
-
-  final secondsLeft = context.select((EmailVerifyCubit cubit) {
-          final state = cubit.state;
-          if (state is TimerTicking) return state.secondsLeft;
-          if (state is TimerExpired) return 0;
-          return 59;
-        });
-
-
-        final canResend = secondsLeft == 0;
-
-        return Form(
-          key: cubit.formKey,
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Text(
-                  context.localization.check_email,
-                  style: context.headlineLarge,
-                ),
-              ),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-              SliverToBoxAdapter(child: EmailTextHighlight(email: email)),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-              SliverToBoxAdapter(
-                child: OtpAnimatedInput(
-                  controller: cubit.validationCodeController,
-                  hasError: hasError,
-                  onCompleted: (code) {
-                    if (code.length == 4) {
-                      cubit.markOtpCompletion(true);
-                    }
-                  },
-                  onChanged: (code) {
-                    if (code.length < 4) {
-                      cubit.markOtpCompletion(false);
-                    }
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-              SliverToBoxAdapter(
-                child: CustomButton(
-                  text: context.localization.verify,
-                  isLoading: isLoading,
-                  isDisabled: !isCompleted,
-                  onPressed: () {
-                    if (cubit.formKey.currentState!.validate()) {
-                      cubit.verifyEmail(email: email);
-                    }
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-              SliverToBoxAdapter(
-                child: ResendCodeText(
-                  canResend: canResend,
-                  secondsLeft: secondsLeft,
-                  onResendTap: () => cubit.resendOtp(email: email),
-                ),
-              ),
-            ],
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: hPadding,
+            vertical: vPadding,
+          ),
+          child: Form(
+            key: cubit.formKey,
+            child: CustomScrollView(
+              slivers: [
+                _buildHeader(context),
+                _buildOtpField(context, cubit, state),
+                _buildSubmitButton(context, cubit, state),
+                _buildResendSection(context, cubit),
+              ],
+            ),
           ),
         );
       },
+    );
+  }
+
+  /// Header text and email info
+  Widget _buildHeader(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(context.localization.check_email, style: context.headlineLarge),
+          verticalSpacing(kSpacingDefault),
+          EmailTextHighlight(email: email),
+          verticalSpacing(kSpacingXXLarge),
+        ],
+      ),
+    );
+  }
+
+  /// Animated OTP input
+  Widget _buildOtpField(
+    BuildContext context,
+    EmailVerifyCubit cubit,
+    EmailVerifyState state,
+  ) {
+    final hasError = state is EmailVerifyError;
+
+    return SliverToBoxAdapter(
+      child: OtpAnimatedInput(
+        controller: cubit.validationCodeController,
+        hasError: hasError,
+        onCompleted: (code) => cubit.markOtpCompletion(code.length == 4),
+        onChanged: (code) => cubit.markOtpCompletion(code.length == 4),
+      ),
+    );
+  }
+
+  /// Submit (Verify) button
+  Widget _buildSubmitButton(
+    BuildContext context,
+    EmailVerifyCubit cubit,
+    EmailVerifyState state,
+  ) {
+    final isLoading = state is EmailVerifyLoading;
+    final isCompleted = cubit.isCompleted;
+
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.only(top: kSpacingXXXLarge),
+        child: CustomButton(
+          text: context.localization.verify,
+          isLoading: isLoading,
+          isDisabled: !isCompleted,
+          onPressed: () {
+            if (cubit.formKey.currentState?.validate() ?? false) {
+              cubit.verifyEmail(email: email);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  /// Resend code timer and action
+  Widget _buildResendSection(BuildContext context, EmailVerifyCubit cubit) {
+    final secondsLeft = context.select((EmailVerifyCubit c) {
+      final state = c.state;
+      if (state is TimerTicking) return state.secondsLeft;
+      if (state is TimerExpired) return 0;
+      return 59;
+    });
+
+    final canResend = secondsLeft == 0;
+
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.only(top: kSpacingXXXLarge),
+        child: ResendCodeText(
+          canResend: canResend,
+          secondsLeft: secondsLeft,
+          onResendTap: () => cubit.resendOtp(email: email),
+        ),
+      ),
     );
   }
 }
