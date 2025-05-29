@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_cubit.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/ui/widgets/email_verify_bloc_consumer.dart';
 
 /// A screen where the user can enter the OTP to verify their email.
@@ -17,7 +19,13 @@ class EmailVerifyView extends StatelessWidget {
     assert(email.isNotEmpty, 'Email must not be empty');
 
     return Scaffold(
-      appBar: customSecondaryAppBar(context,onBackPress: () => context.pushReplacementNamed(Routes.loginView)),
+      appBar: customSecondaryAppBar(
+        context,
+        onBackPress: () {
+          getIt<EmailVerifyCubit>().close();
+          context.pushReplacementNamed(Routes.loginView);
+        },
+      ),
       body: EmailVerifyBlocConsumer(email: email),
     );
   }

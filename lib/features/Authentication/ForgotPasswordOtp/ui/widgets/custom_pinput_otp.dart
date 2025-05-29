@@ -11,10 +11,14 @@ class CustomPinputOtpCodeWidget extends StatefulWidget {
     super.key,
     required this.validationCodeController,
     required this.hasError,
+    this.onCompleted,
+    this.onChanged,
   });
 
   final TextEditingController validationCodeController;
   final bool hasError;
+  final void Function(String)? onCompleted;
+  final void Function(String)? onChanged;
 
   @override
   State<CustomPinputOtpCodeWidget> createState() =>
@@ -27,7 +31,7 @@ class _CustomPinputOtpCodeWidgetState extends State<CustomPinputOtpCodeWidget>
   late final Animation<double> _shakeAnimation;
   late final Animation<double> _fadeInAnimation;
 
-  static const double _shakeOffset = 10;
+  static const double _shakeOffset = 12;
   static const double _pinSize = 77.0;
 
   @override
@@ -58,7 +62,7 @@ class _CustomPinputOtpCodeWidgetState extends State<CustomPinputOtpCodeWidget>
 
     _fadeInAnimation = CurvedAnimation(
       parent: _controller,
-      curve: const Interval(0.0, 1.0, curve: Curves.easeIn),
+      curve: Curves.easeIn,
     );
 
     _controller.forward();
@@ -92,8 +96,11 @@ class _CustomPinputOtpCodeWidgetState extends State<CustomPinputOtpCodeWidget>
         controller: widget.validationCodeController,
         validator: (value) => ValidationManager.otpValidator(context, value),
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        keyboardType: TextInputType.number,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        onCompleted:
+            widget.onCompleted, // ✅ تنفيذ الكولباك عند إدخال الكود بالكامل
+            onChanged: widget.onChanged,
+            
         cursor: Align(
           alignment: Alignment.bottomCenter,
           child: Container(

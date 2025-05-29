@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,11 +27,13 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody>
   Timer? _timer;
   int _start = 59;
   bool _canResend = false;
+  bool _hasError = false;
+  bool _isCompleted = false;
+
   late AnimationController _shakeController;
   late Animation<double> _shakeAnimation;
   late AnimationController _fadeInController;
   late Animation<double> _fadeInAnimation;
-  bool _hasError = false;
 
   @override
   void initState() {
@@ -44,7 +45,8 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody>
       duration: const Duration(milliseconds: 400),
       vsync: this,
     );
-_shakeAnimation = TweenSequence<double>([
+
+    _shakeAnimation = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 0, end: -10), weight: 1),
       TweenSequenceItem(tween: Tween(begin: -10, end: 10), weight: 2),
       TweenSequenceItem(tween: Tween(begin: 10, end: -10), weight: 2),
@@ -73,8 +75,6 @@ _shakeAnimation = TweenSequence<double>([
     _fadeInController.dispose();
     super.dispose();
   }
-// تابع حالة الخطأ لتفعيل الاهتزاز
-  bool hasError = false;
 
   void startTimer() {
     _canResend = false;
@@ -93,21 +93,18 @@ _shakeAnimation = TweenSequence<double>([
     });
   }
 
-  bool get formIsValid =>
-      cubit.validationCodeController.text.trim().length == 4;
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<EmailVerifyCubit, EmailVerifyState>(
-   listenWhen:
+      listenWhen:
           (prev, curr) =>
               curr is EmailVerifyError || curr is EmailVerifySuccess,
       listener: (context, state) {
         if (state is EmailVerifyError) {
-          hasError = true;
+          setState(() => _hasError = true);
           _shakeController.forward(from: 0);
         } else if (state is EmailVerifySuccess) {
-          hasError = false;
+          setState(() => _hasError = false);
         }
       },
       child: Form(
@@ -124,44 +121,47 @@ _shakeAnimation = TweenSequence<double>([
             SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
             SliverToBoxAdapter(child: _buildEmailText(context)),
             SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-
-            // OTP Input with Animation
             SliverToBoxAdapter(
               child: AnimatedBuilder(
                 animation: _shakeController,
                 builder: (context, child) {
                   return Transform.translate(
-                offset: Offset(_shakeAnimation.value, 0),
+                    offset: Offset(_shakeAnimation.value, 0),
                     child: FadeTransition(
                       opacity: _fadeInAnimation,
                       child: CustomPinputOtpCodeWidget(
                         validationCodeController:
                             cubit.validationCodeController,
                         hasError: _hasError,
+                       onCompleted: (code) {
+                          if (code.length == 4) {
+                            setState(() => _isCompleted = true);
+                          }
+                        },
+                        onChanged: (code) {
+                          if (code.length < 4) {
+                            setState(() => _isCompleted = false);
+                          }
+                        },
+
                       ),
                     ),
                   );
                 },
               ),
             ),
-
             SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-
-            // Verify Button
             SliverToBoxAdapter(
               child: CustomButton(
                 text: context.localization.verify,
                 isLoading:
                     context.watch<EmailVerifyCubit>().state
                         is EmailVerifyLoading,
-                isDisabled: !formIsValid,
+                isDisabled: !_isCompleted,
                 onPressed: _handleOtpVerification,
               ),
             ),
-
             SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-
-            // Resend with Timer
             SliverToBoxAdapter(child: _buildResendLink(context)),
           ],
         ),
@@ -169,51 +169,45 @@ _shakeAnimation = TweenSequence<double>([
     );
   }
 
-  Widget _buildEmailText(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: context.localization.we_sent_code,
-            style: context.titleLarge?.copyWith(color: ColorManager.softGray),
-          ),
-          TextSpan(
-            text: '  ${widget.email}',
-            style: context.titleLarge?.copyWith(
-              color: ColorManager.primaryBlue,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildResendLink(BuildContext context) {
-    return Text.rich(
-      textAlign: TextAlign.center,
-      TextSpan(
-        text: '${context.localization.send_code_again}  ',
-        style: context.titleLarge?.copyWith(
-          color: _canResend ? ColorManager.primaryBlue : ColorManager.softGray,
-          fontWeight: FontWeightHelper.semiBold,
+  Widget _buildEmailText(BuildContext context) => RichText(
+    text: TextSpan(
+      children: [
+        TextSpan(
+          text: context.localization.we_sent_code,
+          style: context.titleLarge?.copyWith(color: ColorManager.softGray),
         ),
-        recognizer:
-            TapGestureRecognizer()
-              ..onTap = () {
-                if (_canResend) _handleResendOtp();
-              },
-        children: [
-          TextSpan(
-            text: '00:${_start.toString().padLeft(2, '0')}',
-            style: context.titleLarge?.copyWith(
-              color: ColorManager.softGray,
-              fontWeight: FontWeightHelper.semiBold,
-            ),
-          ),
-        ],
+        TextSpan(
+          text: '  ${widget.email}',
+          style: context.titleLarge?.copyWith(color: ColorManager.primaryBlue),
+        ),
+      ],
+    ),
+  );
+
+  Widget _buildResendLink(BuildContext context) => Text.rich(
+    textAlign: TextAlign.center,
+    TextSpan(
+      text: '${context.localization.send_code_again}  ',
+      style: context.titleLarge?.copyWith(
+        color: _canResend ? ColorManager.primaryBlue : ColorManager.softGray,
+        fontWeight: FontWeightHelper.semiBold,
       ),
-    );
-  }
+      recognizer:
+          TapGestureRecognizer()
+            ..onTap = () {
+              if (_canResend) _handleResendOtp();
+            },
+      children: [
+        TextSpan(
+          text: '00:${_start.toString().padLeft(2, '0')}',
+          style: context.titleLarge?.copyWith(
+            color: ColorManager.softGray,
+            fontWeight: FontWeightHelper.semiBold,
+          ),
+        ),
+      ],
+    ),
+  );
 
   void _handleOtpVerification() {
     if (cubit.formKey.currentState!.validate()) {
