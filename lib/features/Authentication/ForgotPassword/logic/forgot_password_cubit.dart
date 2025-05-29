@@ -1,48 +1,66 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forgot_password_repo.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_state.dart';
 
+/// Cubit responsible for managing the Forgot Password form state and API calls.
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   ForgotPasswordCubit(this._forgotPasswordRepo)
-    : super(const ForgotPasswordState.initial()){
+    : super(const ForgotPasswordState.initial()) {
     emailController.addListener(_updateFormValidity);
-    }
+  }
+
   final ForgotPasswordRepo _forgotPasswordRepo;
 
-  TextEditingController emailController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  FocusNode emailFocusNode = FocusNode();
+  final TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final FocusNode emailFocusNode = FocusNode();
 
-  void emitResetPasswordStates() async {
+  bool _isFormValid = false;
+  bool get isFormValid => _isFormValid;
+
+  /// Updates form validity based on email input.
+  void _updateFormValidity() {
+    final trimmed = emailController.text.trim();
+    final isValid = trimmed.isNotEmpty && _isValidEmail(trimmed);
+
+    if (_isFormValid != isValid) {
+      _isFormValid = isValid;
+      emit(ForgotPasswordState.forgotPasswordFormValidityChanged(isValid));
+    }
+  }
+
+  /// Sends forgot password request to backend.
+  Future<void> submitForgotPassword() async {
     emit(const ForgotPasswordState.forgotPasswordLoading());
+
+    final email = emailController.text.trim();
+
     final response = await _forgotPasswordRepo.forgotPassword(
-      ForgotPasswordRequestBody(email: emailController.text),
+      ForgotPasswordRequestBody(email: email),
     );
+
     response.when(
-      success: (resetPasswordResponse) {
-        emit(ForgotPasswordState.forgotPasswordSuccess(resetPasswordResponse));
+      success: (response) {
+        emit(ForgotPasswordState.forgotPasswordSuccess(response));
       },
       failure: (error) {
         emit(
           ForgotPasswordState.forgotPasswordError(
-            error: error.apiErrorModel.message ?? '',
+            error: error.apiErrorModel.message ?? 'Something went wrong.',
           ),
         );
       },
     );
   }
 
-  bool _isFormValid = false;
-  bool get isFormValid => _isFormValid;
-
-  void _updateFormValidity() {
-    final isValid = emailController.text.trim().isNotEmpty;
-    if (_isFormValid != isValid) {
-      _isFormValid = isValid;
-      emit(ForgotPasswordState.formValidityChanged(isValid));
-    }
+  /// Optional: Basic email validation
+  bool _isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
   }
 
   @override
@@ -50,7 +68,6 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     emailController.removeListener(_updateFormValidity);
     emailController.dispose();
     emailFocusNode.dispose();
-
     return super.close();
   }
 }

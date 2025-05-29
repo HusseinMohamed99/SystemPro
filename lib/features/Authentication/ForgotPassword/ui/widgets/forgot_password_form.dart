@@ -8,15 +8,9 @@ import 'package:system_pro/core/widgets/textFields/email_form_field_widget.dart'
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_cubit.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_state.dart';
 
+/// Forgot Password form with email input and send button
 class ForgotPasswordForm extends StatelessWidget {
   const ForgotPasswordForm({super.key});
-
-  void _validateAndSubmit(BuildContext context) {
-    final cubit = context.read<ForgotPasswordCubit>();
-    if (cubit.formKey.currentState!.validate()) {
-      cubit.emitResetPasswordStates();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +21,7 @@ class ForgotPasswordForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Email Field
+          // ✅ Email Input Field
           EmailFormField(
             emailController: cubit.emailController,
             focusNode: cubit.emailFocusNode,
@@ -35,20 +29,24 @@ class ForgotPasswordForm extends StatelessWidget {
 
           verticalSpacing(kSpacingXXLarge),
 
-          // Listen to changes in form state
+          // ✅ Reactive Submit Button
           BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
-            buildWhen: (previous, current) =>
-                current is ForgotPasswordLoading ||
-                current is FormValidityChanged,
+            buildWhen: (prev, curr) =>
+                curr is ForgotPasswordLoading ||
+                curr is ForgotPasswordFormValidityChanged,
             builder: (context, state) {
               final isDisabled = !cubit.isFormValid;
               final isLoading = state is ForgotPasswordLoading;
 
               return CustomButton(
                 text: context.localization.send_code,
-                isLoading: isLoading,
                 isDisabled: isDisabled,
-                onPressed: () => _validateAndSubmit(context),
+                isLoading: isLoading,
+                onPressed: () {
+                  if (cubit.formKey.currentState?.validate() ?? false) {
+                    cubit.submitForgotPassword();
+                  }
+                },
               );
             },
           ),

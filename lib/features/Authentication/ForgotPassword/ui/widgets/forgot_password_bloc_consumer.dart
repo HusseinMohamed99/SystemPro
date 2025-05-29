@@ -12,6 +12,7 @@ import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_p
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_state.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/widgets/forgot_password_view_body.dart';
 
+/// This widget combines state listener and builder for Forgot Password screen.
 class ForgotPasswordBlocConsumer extends StatelessWidget {
   const ForgotPasswordBlocConsumer({super.key});
 
@@ -20,23 +21,30 @@ class ForgotPasswordBlocConsumer extends StatelessWidget {
     return BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
       listener: (context, state) {
         if (state is ForgotPasswordSuccess) {
+          // 🎯 Show success feedback to user
           context.showSnackBar(
-            context.localization.account_created_successfully,
+            context.localization.check_email,
           );
+
+          // 🎯 Navigate to OTP screen with email from state
+          final email =
+              context.read<ForgotPasswordCubit>().emailController.text.trim();
+
           context.pushReplacementNamed(
             Routes.forgotPasswordOtpView,
-            arguments: ForgotPasswordRequestBody(
-              email: context.read<ForgotPasswordCubit>().emailController.text,
-            ),
+            arguments: ForgotPasswordRequestBody(email: email),
           );
         }
+
         if (state is ForgotPasswordError) {
           context.showSnackBar(state.error);
         }
       },
       builder: (context, state) {
+        final isLoading = state is ForgotPasswordLoading;
+
         return LoadingIndicatorOverlay(
-          isLoading: state is ForgotPasswordLoading ? true : false,
+          isLoading: isLoading,
           child: const ForgotPasswordViewBody().allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,

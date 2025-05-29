@@ -23,7 +23,7 @@ mixin _$ForgotPasswordState<T> {
     required TResult Function() forgotPasswordLoading,
     required TResult Function(T data) forgotPasswordSuccess,
     required TResult Function(String error) forgotPasswordError,
-    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isValid) forgotPasswordFormValidityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -31,7 +31,7 @@ mixin _$ForgotPasswordState<T> {
     TResult? Function()? forgotPasswordLoading,
     TResult? Function(T data)? forgotPasswordSuccess,
     TResult? Function(String error)? forgotPasswordError,
-    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isValid)? forgotPasswordFormValidityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -39,7 +39,7 @@ mixin _$ForgotPasswordState<T> {
     TResult Function()? forgotPasswordLoading,
     TResult Function(T data)? forgotPasswordSuccess,
     TResult Function(String error)? forgotPasswordError,
-    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isValid)? forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,7 +50,8 @@ mixin _$ForgotPasswordState<T> {
     required TResult Function(ForgotPasswordSuccess<T> value)
     forgotPasswordSuccess,
     required TResult Function(ForgotPasswordError<T> value) forgotPasswordError,
-    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(ForgotPasswordFormValidityChanged<T> value)
+    forgotPasswordFormValidityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -58,7 +59,8 @@ mixin _$ForgotPasswordState<T> {
     TResult? Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult? Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult? Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -66,7 +68,8 @@ mixin _$ForgotPasswordState<T> {
     TResult Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -144,7 +147,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() forgotPasswordLoading,
     required TResult Function(T data) forgotPasswordSuccess,
     required TResult Function(String error) forgotPasswordError,
-    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isValid) forgotPasswordFormValidityChanged,
   }) {
     return initial();
   }
@@ -156,7 +159,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? forgotPasswordLoading,
     TResult? Function(T data)? forgotPasswordSuccess,
     TResult? Function(String error)? forgotPasswordError,
-    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isValid)? forgotPasswordFormValidityChanged,
   }) {
     return initial?.call();
   }
@@ -168,7 +171,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? forgotPasswordLoading,
     TResult Function(T data)? forgotPasswordSuccess,
     TResult Function(String error)? forgotPasswordError,
-    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isValid)? forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -186,7 +189,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(ForgotPasswordSuccess<T> value)
     forgotPasswordSuccess,
     required TResult Function(ForgotPasswordError<T> value) forgotPasswordError,
-    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(ForgotPasswordFormValidityChanged<T> value)
+    forgotPasswordFormValidityChanged,
   }) {
     return initial(this);
   }
@@ -198,7 +202,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult? Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult? Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
   }) {
     return initial?.call(this);
   }
@@ -210,7 +215,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -277,7 +283,7 @@ class _$ForgotPasswordLoadingImpl<T> implements ForgotPasswordLoading<T> {
     required TResult Function() forgotPasswordLoading,
     required TResult Function(T data) forgotPasswordSuccess,
     required TResult Function(String error) forgotPasswordError,
-    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isValid) forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordLoading();
   }
@@ -289,7 +295,7 @@ class _$ForgotPasswordLoadingImpl<T> implements ForgotPasswordLoading<T> {
     TResult? Function()? forgotPasswordLoading,
     TResult? Function(T data)? forgotPasswordSuccess,
     TResult? Function(String error)? forgotPasswordError,
-    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isValid)? forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordLoading?.call();
   }
@@ -301,7 +307,7 @@ class _$ForgotPasswordLoadingImpl<T> implements ForgotPasswordLoading<T> {
     TResult Function()? forgotPasswordLoading,
     TResult Function(T data)? forgotPasswordSuccess,
     TResult Function(String error)? forgotPasswordError,
-    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isValid)? forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (forgotPasswordLoading != null) {
@@ -319,7 +325,8 @@ class _$ForgotPasswordLoadingImpl<T> implements ForgotPasswordLoading<T> {
     required TResult Function(ForgotPasswordSuccess<T> value)
     forgotPasswordSuccess,
     required TResult Function(ForgotPasswordError<T> value) forgotPasswordError,
-    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(ForgotPasswordFormValidityChanged<T> value)
+    forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordLoading(this);
   }
@@ -331,7 +338,8 @@ class _$ForgotPasswordLoadingImpl<T> implements ForgotPasswordLoading<T> {
     TResult? Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult? Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult? Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordLoading?.call(this);
   }
@@ -343,7 +351,8 @@ class _$ForgotPasswordLoadingImpl<T> implements ForgotPasswordLoading<T> {
     TResult Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (forgotPasswordLoading != null) {
@@ -440,7 +449,7 @@ class _$ForgotPasswordSuccessImpl<T> implements ForgotPasswordSuccess<T> {
     required TResult Function() forgotPasswordLoading,
     required TResult Function(T data) forgotPasswordSuccess,
     required TResult Function(String error) forgotPasswordError,
-    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isValid) forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordSuccess(data);
   }
@@ -452,7 +461,7 @@ class _$ForgotPasswordSuccessImpl<T> implements ForgotPasswordSuccess<T> {
     TResult? Function()? forgotPasswordLoading,
     TResult? Function(T data)? forgotPasswordSuccess,
     TResult? Function(String error)? forgotPasswordError,
-    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isValid)? forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordSuccess?.call(data);
   }
@@ -464,7 +473,7 @@ class _$ForgotPasswordSuccessImpl<T> implements ForgotPasswordSuccess<T> {
     TResult Function()? forgotPasswordLoading,
     TResult Function(T data)? forgotPasswordSuccess,
     TResult Function(String error)? forgotPasswordError,
-    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isValid)? forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (forgotPasswordSuccess != null) {
@@ -482,7 +491,8 @@ class _$ForgotPasswordSuccessImpl<T> implements ForgotPasswordSuccess<T> {
     required TResult Function(ForgotPasswordSuccess<T> value)
     forgotPasswordSuccess,
     required TResult Function(ForgotPasswordError<T> value) forgotPasswordError,
-    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(ForgotPasswordFormValidityChanged<T> value)
+    forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordSuccess(this);
   }
@@ -494,7 +504,8 @@ class _$ForgotPasswordSuccessImpl<T> implements ForgotPasswordSuccess<T> {
     TResult? Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult? Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult? Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordSuccess?.call(this);
   }
@@ -506,7 +517,8 @@ class _$ForgotPasswordSuccessImpl<T> implements ForgotPasswordSuccess<T> {
     TResult Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (forgotPasswordSuccess != null) {
@@ -609,7 +621,7 @@ class _$ForgotPasswordErrorImpl<T> implements ForgotPasswordError<T> {
     required TResult Function() forgotPasswordLoading,
     required TResult Function(T data) forgotPasswordSuccess,
     required TResult Function(String error) forgotPasswordError,
-    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isValid) forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordError(error);
   }
@@ -621,7 +633,7 @@ class _$ForgotPasswordErrorImpl<T> implements ForgotPasswordError<T> {
     TResult? Function()? forgotPasswordLoading,
     TResult? Function(T data)? forgotPasswordSuccess,
     TResult? Function(String error)? forgotPasswordError,
-    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isValid)? forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordError?.call(error);
   }
@@ -633,7 +645,7 @@ class _$ForgotPasswordErrorImpl<T> implements ForgotPasswordError<T> {
     TResult Function()? forgotPasswordLoading,
     TResult Function(T data)? forgotPasswordSuccess,
     TResult Function(String error)? forgotPasswordError,
-    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isValid)? forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (forgotPasswordError != null) {
@@ -651,7 +663,8 @@ class _$ForgotPasswordErrorImpl<T> implements ForgotPasswordError<T> {
     required TResult Function(ForgotPasswordSuccess<T> value)
     forgotPasswordSuccess,
     required TResult Function(ForgotPasswordError<T> value) forgotPasswordError,
-    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(ForgotPasswordFormValidityChanged<T> value)
+    forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordError(this);
   }
@@ -663,7 +676,8 @@ class _$ForgotPasswordErrorImpl<T> implements ForgotPasswordError<T> {
     TResult? Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult? Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult? Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
   }) {
     return forgotPasswordError?.call(this);
   }
@@ -675,7 +689,8 @@ class _$ForgotPasswordErrorImpl<T> implements ForgotPasswordError<T> {
     TResult Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
     if (forgotPasswordError != null) {
@@ -699,23 +714,27 @@ abstract class ForgotPasswordError<T> implements ForgotPasswordState<T> {
 }
 
 /// @nodoc
-abstract class _$$FormValidityChangedImplCopyWith<T, $Res> {
-  factory _$$FormValidityChangedImplCopyWith(
-    _$FormValidityChangedImpl<T> value,
-    $Res Function(_$FormValidityChangedImpl<T>) then,
-  ) = __$$FormValidityChangedImplCopyWithImpl<T, $Res>;
+abstract class _$$ForgotPasswordFormValidityChangedImplCopyWith<T, $Res> {
+  factory _$$ForgotPasswordFormValidityChangedImplCopyWith(
+    _$ForgotPasswordFormValidityChangedImpl<T> value,
+    $Res Function(_$ForgotPasswordFormValidityChangedImpl<T>) then,
+  ) = __$$ForgotPasswordFormValidityChangedImplCopyWithImpl<T, $Res>;
   @useResult
   $Res call({bool isValid});
 }
 
 /// @nodoc
-class __$$FormValidityChangedImplCopyWithImpl<T, $Res>
+class __$$ForgotPasswordFormValidityChangedImplCopyWithImpl<T, $Res>
     extends
-        _$ForgotPasswordStateCopyWithImpl<T, $Res, _$FormValidityChangedImpl<T>>
-    implements _$$FormValidityChangedImplCopyWith<T, $Res> {
-  __$$FormValidityChangedImplCopyWithImpl(
-    _$FormValidityChangedImpl<T> _value,
-    $Res Function(_$FormValidityChangedImpl<T>) _then,
+        _$ForgotPasswordStateCopyWithImpl<
+          T,
+          $Res,
+          _$ForgotPasswordFormValidityChangedImpl<T>
+        >
+    implements _$$ForgotPasswordFormValidityChangedImplCopyWith<T, $Res> {
+  __$$ForgotPasswordFormValidityChangedImplCopyWithImpl(
+    _$ForgotPasswordFormValidityChangedImpl<T> _value,
+    $Res Function(_$ForgotPasswordFormValidityChangedImpl<T>) _then,
   ) : super(_value, _then);
 
   /// Create a copy of ForgotPasswordState
@@ -724,7 +743,7 @@ class __$$FormValidityChangedImplCopyWithImpl<T, $Res>
   @override
   $Res call({Object? isValid = null}) {
     return _then(
-      _$FormValidityChangedImpl<T>(
+      _$ForgotPasswordFormValidityChangedImpl<T>(
         null == isValid
             ? _value.isValid
             : isValid // ignore: cast_nullable_to_non_nullable
@@ -736,22 +755,23 @@ class __$$FormValidityChangedImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
-  const _$FormValidityChangedImpl(this.isValid);
+class _$ForgotPasswordFormValidityChangedImpl<T>
+    implements ForgotPasswordFormValidityChanged<T> {
+  const _$ForgotPasswordFormValidityChangedImpl(this.isValid);
 
   @override
   final bool isValid;
 
   @override
   String toString() {
-    return 'ForgotPasswordState<$T>.formValidityChanged(isValid: $isValid)';
+    return 'ForgotPasswordState<$T>.forgotPasswordFormValidityChanged(isValid: $isValid)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FormValidityChangedImpl<T> &&
+            other is _$ForgotPasswordFormValidityChangedImpl<T> &&
             (identical(other.isValid, isValid) || other.isValid == isValid));
   }
 
@@ -763,12 +783,14 @@ class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FormValidityChangedImplCopyWith<T, _$FormValidityChangedImpl<T>>
-  get copyWith =>
-      __$$FormValidityChangedImplCopyWithImpl<T, _$FormValidityChangedImpl<T>>(
-        this,
-        _$identity,
-      );
+  _$$ForgotPasswordFormValidityChangedImplCopyWith<
+    T,
+    _$ForgotPasswordFormValidityChangedImpl<T>
+  >
+  get copyWith => __$$ForgotPasswordFormValidityChangedImplCopyWithImpl<
+    T,
+    _$ForgotPasswordFormValidityChangedImpl<T>
+  >(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -777,9 +799,9 @@ class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
     required TResult Function() forgotPasswordLoading,
     required TResult Function(T data) forgotPasswordSuccess,
     required TResult Function(String error) forgotPasswordError,
-    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isValid) forgotPasswordFormValidityChanged,
   }) {
-    return formValidityChanged(isValid);
+    return forgotPasswordFormValidityChanged(isValid);
   }
 
   @override
@@ -789,9 +811,9 @@ class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
     TResult? Function()? forgotPasswordLoading,
     TResult? Function(T data)? forgotPasswordSuccess,
     TResult? Function(String error)? forgotPasswordError,
-    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isValid)? forgotPasswordFormValidityChanged,
   }) {
-    return formValidityChanged?.call(isValid);
+    return forgotPasswordFormValidityChanged?.call(isValid);
   }
 
   @override
@@ -801,11 +823,11 @@ class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
     TResult Function()? forgotPasswordLoading,
     TResult Function(T data)? forgotPasswordSuccess,
     TResult Function(String error)? forgotPasswordError,
-    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isValid)? forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
-    if (formValidityChanged != null) {
-      return formValidityChanged(isValid);
+    if (forgotPasswordFormValidityChanged != null) {
+      return forgotPasswordFormValidityChanged(isValid);
     }
     return orElse();
   }
@@ -819,9 +841,10 @@ class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
     required TResult Function(ForgotPasswordSuccess<T> value)
     forgotPasswordSuccess,
     required TResult Function(ForgotPasswordError<T> value) forgotPasswordError,
-    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(ForgotPasswordFormValidityChanged<T> value)
+    forgotPasswordFormValidityChanged,
   }) {
-    return formValidityChanged(this);
+    return forgotPasswordFormValidityChanged(this);
   }
 
   @override
@@ -831,9 +854,10 @@ class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
     TResult? Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult? Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult? Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
   }) {
-    return formValidityChanged?.call(this);
+    return forgotPasswordFormValidityChanged?.call(this);
   }
 
   @override
@@ -843,25 +867,30 @@ class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
     TResult Function(ForgotPasswordLoading<T> value)? forgotPasswordLoading,
     TResult Function(ForgotPasswordSuccess<T> value)? forgotPasswordSuccess,
     TResult Function(ForgotPasswordError<T> value)? forgotPasswordError,
-    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(ForgotPasswordFormValidityChanged<T> value)?
+    forgotPasswordFormValidityChanged,
     required TResult orElse(),
   }) {
-    if (formValidityChanged != null) {
-      return formValidityChanged(this);
+    if (forgotPasswordFormValidityChanged != null) {
+      return forgotPasswordFormValidityChanged(this);
     }
     return orElse();
   }
 }
 
-abstract class FormValidityChanged<T> implements ForgotPasswordState<T> {
-  const factory FormValidityChanged(final bool isValid) =
-      _$FormValidityChangedImpl<T>;
+abstract class ForgotPasswordFormValidityChanged<T>
+    implements ForgotPasswordState<T> {
+  const factory ForgotPasswordFormValidityChanged(final bool isValid) =
+      _$ForgotPasswordFormValidityChangedImpl<T>;
 
   bool get isValid;
 
   /// Create a copy of ForgotPasswordState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FormValidityChangedImplCopyWith<T, _$FormValidityChangedImpl<T>>
+  _$$ForgotPasswordFormValidityChangedImplCopyWith<
+    T,
+    _$ForgotPasswordFormValidityChangedImpl<T>
+  >
   get copyWith => throw _privateConstructorUsedError;
 }
