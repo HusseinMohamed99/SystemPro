@@ -36,13 +36,15 @@ class CustomIconImage extends StatelessWidget {
     return SizedBox(
       width: kSizeSecondaryWidth.w,
       height: kSizeSecondaryHeight.h,
-      child: SvgPicture.asset(
-        image,
-        fit: fit,
-        alignment: alignment,
-        colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
-        semanticsLabel: semanticLabel,
-        placeholderBuilder: (context) => const CustomLoader(),
+      child: Center(
+        child: SvgPicture.asset(
+          image,
+          fit: fit,
+          alignment: alignment,
+          colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+          semanticsLabel: semanticLabel,
+          placeholderBuilder: (context) => const CustomLoader(),
+        ),
       ),
     );
   }

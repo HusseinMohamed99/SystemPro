@@ -29,8 +29,9 @@ class HomeViewBody extends StatelessWidget {
           child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
             builder: (context, state) {
               if (state is MarketPlaceLoading) {
-                return const CustomLoader();
+                return const CustomLoader(type: LoaderType.adaptive);
               }
+
               if (state is MarketPlaceError) {
                 return CustomErrorTextWidget(errorMessage: state.error);
               }

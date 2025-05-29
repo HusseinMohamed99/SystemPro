@@ -76,7 +76,7 @@ class _FavoritesViewState extends State<FavoritesView> {
             listener: (context, state) {},
             builder: (context, state) {
               if (state is GetFavoriteLoading) {
-                return const CustomLoader();
+                return const CustomLoader(type: LoaderType.adaptive);
               } else if (state is GetFavoriteSuccess) {
                 final listings = state.listings;
                 if (listings.isEmpty) {

@@ -92,7 +92,8 @@ class ProfileView extends StatelessWidget {
         }
 
         if (state is UserDataLoading) {
-          return const CustomLoader();
+                         return const CustomLoader(type: LoaderType.adaptive);
+
         }
 
         return const SizedBox.shrink();
