@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
@@ -106,7 +107,7 @@ class EmailVerifyViewBody extends StatelessWidget {
 
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.only(top: kSpacingXXXLarge),
+        padding: EdgeInsetsDirectional.only(top: kSpacingXXXLarge.h),
         child: CustomButton(
           text: context.localization.verify,
           isLoading: isLoading,
@@ -134,7 +135,7 @@ class EmailVerifyViewBody extends StatelessWidget {
 
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.only(top: kSpacingXXXLarge),
+        padding: EdgeInsetsDirectional.only(top: kSpacingXXXLarge.h),
         child: ResendCodeText(
           canResend: canResend,
           secondsLeft: secondsLeft,

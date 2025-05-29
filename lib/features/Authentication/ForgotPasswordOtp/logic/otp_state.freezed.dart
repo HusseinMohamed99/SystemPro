@@ -23,6 +23,10 @@ mixin _$OtpState<T> {
     required TResult Function() otpLoading,
     required TResult Function(T data) otpSuccess,
     required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -30,6 +34,10 @@ mixin _$OtpState<T> {
     TResult? Function()? otpLoading,
     TResult? Function(T data)? otpSuccess,
     TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -37,6 +45,10 @@ mixin _$OtpState<T> {
     TResult Function()? otpLoading,
     TResult Function(T data)? otpSuccess,
     TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -45,6 +57,11 @@ mixin _$OtpState<T> {
     required TResult Function(OtpLoading<T> value) otpLoading,
     required TResult Function(OtpSuccess<T> value) otpSuccess,
     required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -52,6 +69,10 @@ mixin _$OtpState<T> {
     TResult? Function(OtpLoading<T> value)? otpLoading,
     TResult? Function(OtpSuccess<T> value)? otpSuccess,
     TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -59,6 +80,10 @@ mixin _$OtpState<T> {
     TResult Function(OtpLoading<T> value)? otpLoading,
     TResult Function(OtpSuccess<T> value)? otpSuccess,
     TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -132,6 +157,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() otpLoading,
     required TResult Function(T data) otpSuccess,
     required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return initial();
   }
@@ -143,6 +172,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? otpLoading,
     TResult? Function(T data)? otpSuccess,
     TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return initial?.call();
   }
@@ -154,6 +187,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? otpLoading,
     TResult Function(T data)? otpSuccess,
     TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -169,6 +206,11 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(OtpLoading<T> value) otpLoading,
     required TResult Function(OtpSuccess<T> value) otpSuccess,
     required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return initial(this);
   }
@@ -180,6 +222,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(OtpLoading<T> value)? otpLoading,
     TResult? Function(OtpSuccess<T> value)? otpSuccess,
     TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return initial?.call(this);
   }
@@ -191,6 +237,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(OtpLoading<T> value)? otpLoading,
     TResult Function(OtpSuccess<T> value)? otpSuccess,
     TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -251,6 +301,10 @@ class _$OtpLoadingImpl<T> implements OtpLoading<T> {
     required TResult Function() otpLoading,
     required TResult Function(T data) otpSuccess,
     required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return otpLoading();
   }
@@ -262,6 +316,10 @@ class _$OtpLoadingImpl<T> implements OtpLoading<T> {
     TResult? Function()? otpLoading,
     TResult? Function(T data)? otpSuccess,
     TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return otpLoading?.call();
   }
@@ -273,6 +331,10 @@ class _$OtpLoadingImpl<T> implements OtpLoading<T> {
     TResult Function()? otpLoading,
     TResult Function(T data)? otpSuccess,
     TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (otpLoading != null) {
@@ -288,6 +350,11 @@ class _$OtpLoadingImpl<T> implements OtpLoading<T> {
     required TResult Function(OtpLoading<T> value) otpLoading,
     required TResult Function(OtpSuccess<T> value) otpSuccess,
     required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return otpLoading(this);
   }
@@ -299,6 +366,10 @@ class _$OtpLoadingImpl<T> implements OtpLoading<T> {
     TResult? Function(OtpLoading<T> value)? otpLoading,
     TResult? Function(OtpSuccess<T> value)? otpSuccess,
     TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return otpLoading?.call(this);
   }
@@ -310,6 +381,10 @@ class _$OtpLoadingImpl<T> implements OtpLoading<T> {
     TResult Function(OtpLoading<T> value)? otpLoading,
     TResult Function(OtpSuccess<T> value)? otpSuccess,
     TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (otpLoading != null) {
@@ -398,6 +473,10 @@ class _$OtpSuccessImpl<T> implements OtpSuccess<T> {
     required TResult Function() otpLoading,
     required TResult Function(T data) otpSuccess,
     required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return otpSuccess(data);
   }
@@ -409,6 +488,10 @@ class _$OtpSuccessImpl<T> implements OtpSuccess<T> {
     TResult? Function()? otpLoading,
     TResult? Function(T data)? otpSuccess,
     TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return otpSuccess?.call(data);
   }
@@ -420,6 +503,10 @@ class _$OtpSuccessImpl<T> implements OtpSuccess<T> {
     TResult Function()? otpLoading,
     TResult Function(T data)? otpSuccess,
     TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (otpSuccess != null) {
@@ -435,6 +522,11 @@ class _$OtpSuccessImpl<T> implements OtpSuccess<T> {
     required TResult Function(OtpLoading<T> value) otpLoading,
     required TResult Function(OtpSuccess<T> value) otpSuccess,
     required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return otpSuccess(this);
   }
@@ -446,6 +538,10 @@ class _$OtpSuccessImpl<T> implements OtpSuccess<T> {
     TResult? Function(OtpLoading<T> value)? otpLoading,
     TResult? Function(OtpSuccess<T> value)? otpSuccess,
     TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return otpSuccess?.call(this);
   }
@@ -457,6 +553,10 @@ class _$OtpSuccessImpl<T> implements OtpSuccess<T> {
     TResult Function(OtpLoading<T> value)? otpLoading,
     TResult Function(OtpSuccess<T> value)? otpSuccess,
     TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (otpSuccess != null) {
@@ -553,6 +653,10 @@ class _$OtpErrorImpl<T> implements OtpError<T> {
     required TResult Function() otpLoading,
     required TResult Function(T data) otpSuccess,
     required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
   }) {
     return otpError(error);
   }
@@ -564,6 +668,10 @@ class _$OtpErrorImpl<T> implements OtpError<T> {
     TResult? Function()? otpLoading,
     TResult? Function(T data)? otpSuccess,
     TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
   }) {
     return otpError?.call(error);
   }
@@ -575,6 +683,10 @@ class _$OtpErrorImpl<T> implements OtpError<T> {
     TResult Function()? otpLoading,
     TResult Function(T data)? otpSuccess,
     TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (otpError != null) {
@@ -590,6 +702,11 @@ class _$OtpErrorImpl<T> implements OtpError<T> {
     required TResult Function(OtpLoading<T> value) otpLoading,
     required TResult Function(OtpSuccess<T> value) otpSuccess,
     required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
   }) {
     return otpError(this);
   }
@@ -601,6 +718,10 @@ class _$OtpErrorImpl<T> implements OtpError<T> {
     TResult? Function(OtpLoading<T> value)? otpLoading,
     TResult? Function(OtpSuccess<T> value)? otpSuccess,
     TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
   }) {
     return otpError?.call(this);
   }
@@ -612,6 +733,10 @@ class _$OtpErrorImpl<T> implements OtpError<T> {
     TResult Function(OtpLoading<T> value)? otpLoading,
     TResult Function(OtpSuccess<T> value)? otpSuccess,
     TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
     required TResult orElse(),
   }) {
     if (otpError != null) {
@@ -631,4 +756,702 @@ abstract class OtpError<T> implements OtpState<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OtpErrorImplCopyWith<T, _$OtpErrorImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TimerTickingImplCopyWith<T, $Res> {
+  factory _$$TimerTickingImplCopyWith(
+    _$TimerTickingImpl<T> value,
+    $Res Function(_$TimerTickingImpl<T>) then,
+  ) = __$$TimerTickingImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({int secondsRemaining});
+}
+
+/// @nodoc
+class __$$TimerTickingImplCopyWithImpl<T, $Res>
+    extends _$OtpStateCopyWithImpl<T, $Res, _$TimerTickingImpl<T>>
+    implements _$$TimerTickingImplCopyWith<T, $Res> {
+  __$$TimerTickingImplCopyWithImpl(
+    _$TimerTickingImpl<T> _value,
+    $Res Function(_$TimerTickingImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? secondsRemaining = null}) {
+    return _then(
+      _$TimerTickingImpl<T>(
+        null == secondsRemaining
+            ? _value.secondsRemaining
+            : secondsRemaining // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$TimerTickingImpl<T> implements TimerTicking<T> {
+  const _$TimerTickingImpl(this.secondsRemaining);
+
+  @override
+  final int secondsRemaining;
+
+  @override
+  String toString() {
+    return 'OtpState<$T>.timerTicking(secondsRemaining: $secondsRemaining)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TimerTickingImpl<T> &&
+            (identical(other.secondsRemaining, secondsRemaining) ||
+                other.secondsRemaining == secondsRemaining));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, secondsRemaining);
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TimerTickingImplCopyWith<T, _$TimerTickingImpl<T>> get copyWith =>
+      __$$TimerTickingImplCopyWithImpl<T, _$TimerTickingImpl<T>>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() otpLoading,
+    required TResult Function(T data) otpSuccess,
+    required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
+  }) {
+    return timerTicking(secondsRemaining);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? otpLoading,
+    TResult? Function(T data)? otpSuccess,
+    TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
+  }) {
+    return timerTicking?.call(secondsRemaining);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? otpLoading,
+    TResult Function(T data)? otpSuccess,
+    TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (timerTicking != null) {
+      return timerTicking(secondsRemaining);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(OtpLoading<T> value) otpLoading,
+    required TResult Function(OtpSuccess<T> value) otpSuccess,
+    required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
+  }) {
+    return timerTicking(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(OtpLoading<T> value)? otpLoading,
+    TResult? Function(OtpSuccess<T> value)? otpSuccess,
+    TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+  }) {
+    return timerTicking?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(OtpLoading<T> value)? otpLoading,
+    TResult Function(OtpSuccess<T> value)? otpSuccess,
+    TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (timerTicking != null) {
+      return timerTicking(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TimerTicking<T> implements OtpState<T> {
+  const factory TimerTicking(final int secondsRemaining) =
+      _$TimerTickingImpl<T>;
+
+  int get secondsRemaining;
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TimerTickingImplCopyWith<T, _$TimerTickingImpl<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OtpResendAvailableImplCopyWith<T, $Res> {
+  factory _$$OtpResendAvailableImplCopyWith(
+    _$OtpResendAvailableImpl<T> value,
+    $Res Function(_$OtpResendAvailableImpl<T>) then,
+  ) = __$$OtpResendAvailableImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$OtpResendAvailableImplCopyWithImpl<T, $Res>
+    extends _$OtpStateCopyWithImpl<T, $Res, _$OtpResendAvailableImpl<T>>
+    implements _$$OtpResendAvailableImplCopyWith<T, $Res> {
+  __$$OtpResendAvailableImplCopyWithImpl(
+    _$OtpResendAvailableImpl<T> _value,
+    $Res Function(_$OtpResendAvailableImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$OtpResendAvailableImpl<T> implements OtpResendAvailable<T> {
+  const _$OtpResendAvailableImpl();
+
+  @override
+  String toString() {
+    return 'OtpState<$T>.otpResendAvailable()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OtpResendAvailableImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() otpLoading,
+    required TResult Function(T data) otpSuccess,
+    required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
+  }) {
+    return otpResendAvailable();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? otpLoading,
+    TResult? Function(T data)? otpSuccess,
+    TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
+  }) {
+    return otpResendAvailable?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? otpLoading,
+    TResult Function(T data)? otpSuccess,
+    TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (otpResendAvailable != null) {
+      return otpResendAvailable();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(OtpLoading<T> value) otpLoading,
+    required TResult Function(OtpSuccess<T> value) otpSuccess,
+    required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
+  }) {
+    return otpResendAvailable(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(OtpLoading<T> value)? otpLoading,
+    TResult? Function(OtpSuccess<T> value)? otpSuccess,
+    TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+  }) {
+    return otpResendAvailable?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(OtpLoading<T> value)? otpLoading,
+    TResult Function(OtpSuccess<T> value)? otpSuccess,
+    TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (otpResendAvailable != null) {
+      return otpResendAvailable(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OtpResendAvailable<T> implements OtpState<T> {
+  const factory OtpResendAvailable() = _$OtpResendAvailableImpl<T>;
+}
+
+/// @nodoc
+abstract class _$$FormValidityChangedImplCopyWith<T, $Res> {
+  factory _$$FormValidityChangedImplCopyWith(
+    _$FormValidityChangedImpl<T> value,
+    $Res Function(_$FormValidityChangedImpl<T>) then,
+  ) = __$$FormValidityChangedImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({bool isValid});
+}
+
+/// @nodoc
+class __$$FormValidityChangedImplCopyWithImpl<T, $Res>
+    extends _$OtpStateCopyWithImpl<T, $Res, _$FormValidityChangedImpl<T>>
+    implements _$$FormValidityChangedImplCopyWith<T, $Res> {
+  __$$FormValidityChangedImplCopyWithImpl(
+    _$FormValidityChangedImpl<T> _value,
+    $Res Function(_$FormValidityChangedImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? isValid = null}) {
+    return _then(
+      _$FormValidityChangedImpl<T>(
+        null == isValid
+            ? _value.isValid
+            : isValid // ignore: cast_nullable_to_non_nullable
+                as bool,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$FormValidityChangedImpl<T> implements FormValidityChanged<T> {
+  const _$FormValidityChangedImpl(this.isValid);
+
+  @override
+  final bool isValid;
+
+  @override
+  String toString() {
+    return 'OtpState<$T>.formValidityChanged(isValid: $isValid)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FormValidityChangedImpl<T> &&
+            (identical(other.isValid, isValid) || other.isValid == isValid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isValid);
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FormValidityChangedImplCopyWith<T, _$FormValidityChangedImpl<T>>
+  get copyWith =>
+      __$$FormValidityChangedImplCopyWithImpl<T, _$FormValidityChangedImpl<T>>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() otpLoading,
+    required TResult Function(T data) otpSuccess,
+    required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
+  }) {
+    return formValidityChanged(isValid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? otpLoading,
+    TResult? Function(T data)? otpSuccess,
+    TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
+  }) {
+    return formValidityChanged?.call(isValid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? otpLoading,
+    TResult Function(T data)? otpSuccess,
+    TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (formValidityChanged != null) {
+      return formValidityChanged(isValid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(OtpLoading<T> value) otpLoading,
+    required TResult Function(OtpSuccess<T> value) otpSuccess,
+    required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
+  }) {
+    return formValidityChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(OtpLoading<T> value)? otpLoading,
+    TResult? Function(OtpSuccess<T> value)? otpSuccess,
+    TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+  }) {
+    return formValidityChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(OtpLoading<T> value)? otpLoading,
+    TResult Function(OtpSuccess<T> value)? otpSuccess,
+    TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (formValidityChanged != null) {
+      return formValidityChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FormValidityChanged<T> implements OtpState<T> {
+  const factory FormValidityChanged(final bool isValid) =
+      _$FormValidityChangedImpl<T>;
+
+  bool get isValid;
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FormValidityChangedImplCopyWith<T, _$FormValidityChangedImpl<T>>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$InputCompletionChangedImplCopyWith<T, $Res> {
+  factory _$$InputCompletionChangedImplCopyWith(
+    _$InputCompletionChangedImpl<T> value,
+    $Res Function(_$InputCompletionChangedImpl<T>) then,
+  ) = __$$InputCompletionChangedImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({bool isCompleted});
+}
+
+/// @nodoc
+class __$$InputCompletionChangedImplCopyWithImpl<T, $Res>
+    extends _$OtpStateCopyWithImpl<T, $Res, _$InputCompletionChangedImpl<T>>
+    implements _$$InputCompletionChangedImplCopyWith<T, $Res> {
+  __$$InputCompletionChangedImplCopyWithImpl(
+    _$InputCompletionChangedImpl<T> _value,
+    $Res Function(_$InputCompletionChangedImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? isCompleted = null}) {
+    return _then(
+      _$InputCompletionChangedImpl<T>(
+        isCompleted:
+            null == isCompleted
+                ? _value.isCompleted
+                : isCompleted // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$InputCompletionChangedImpl<T> implements InputCompletionChanged<T> {
+  const _$InputCompletionChangedImpl({required this.isCompleted});
+
+  @override
+  final bool isCompleted;
+
+  @override
+  String toString() {
+    return 'OtpState<$T>.inputCompletionChanged(isCompleted: $isCompleted)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InputCompletionChangedImpl<T> &&
+            (identical(other.isCompleted, isCompleted) ||
+                other.isCompleted == isCompleted));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isCompleted);
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InputCompletionChangedImplCopyWith<T, _$InputCompletionChangedImpl<T>>
+  get copyWith => __$$InputCompletionChangedImplCopyWithImpl<
+    T,
+    _$InputCompletionChangedImpl<T>
+  >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() otpLoading,
+    required TResult Function(T data) otpSuccess,
+    required TResult Function(String error) otpError,
+    required TResult Function(int secondsRemaining) timerTicking,
+    required TResult Function() otpResendAvailable,
+    required TResult Function(bool isValid) formValidityChanged,
+    required TResult Function(bool isCompleted) inputCompletionChanged,
+  }) {
+    return inputCompletionChanged(isCompleted);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? otpLoading,
+    TResult? Function(T data)? otpSuccess,
+    TResult? Function(String error)? otpError,
+    TResult? Function(int secondsRemaining)? timerTicking,
+    TResult? Function()? otpResendAvailable,
+    TResult? Function(bool isValid)? formValidityChanged,
+    TResult? Function(bool isCompleted)? inputCompletionChanged,
+  }) {
+    return inputCompletionChanged?.call(isCompleted);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? otpLoading,
+    TResult Function(T data)? otpSuccess,
+    TResult Function(String error)? otpError,
+    TResult Function(int secondsRemaining)? timerTicking,
+    TResult Function()? otpResendAvailable,
+    TResult Function(bool isValid)? formValidityChanged,
+    TResult Function(bool isCompleted)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (inputCompletionChanged != null) {
+      return inputCompletionChanged(isCompleted);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(OtpLoading<T> value) otpLoading,
+    required TResult Function(OtpSuccess<T> value) otpSuccess,
+    required TResult Function(OtpError<T> value) otpError,
+    required TResult Function(TimerTicking<T> value) timerTicking,
+    required TResult Function(OtpResendAvailable<T> value) otpResendAvailable,
+    required TResult Function(FormValidityChanged<T> value) formValidityChanged,
+    required TResult Function(InputCompletionChanged<T> value)
+    inputCompletionChanged,
+  }) {
+    return inputCompletionChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(OtpLoading<T> value)? otpLoading,
+    TResult? Function(OtpSuccess<T> value)? otpSuccess,
+    TResult? Function(OtpError<T> value)? otpError,
+    TResult? Function(TimerTicking<T> value)? timerTicking,
+    TResult? Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult? Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult? Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+  }) {
+    return inputCompletionChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(OtpLoading<T> value)? otpLoading,
+    TResult Function(OtpSuccess<T> value)? otpSuccess,
+    TResult Function(OtpError<T> value)? otpError,
+    TResult Function(TimerTicking<T> value)? timerTicking,
+    TResult Function(OtpResendAvailable<T> value)? otpResendAvailable,
+    TResult Function(FormValidityChanged<T> value)? formValidityChanged,
+    TResult Function(InputCompletionChanged<T> value)? inputCompletionChanged,
+    required TResult orElse(),
+  }) {
+    if (inputCompletionChanged != null) {
+      return inputCompletionChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InputCompletionChanged<T> implements OtpState<T> {
+  const factory InputCompletionChanged({required final bool isCompleted}) =
+      _$InputCompletionChangedImpl<T>;
+
+  bool get isCompleted;
+
+  /// Create a copy of OtpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InputCompletionChangedImplCopyWith<T, _$InputCompletionChangedImpl<T>>
+  get copyWith => throw _privateConstructorUsedError;
 }

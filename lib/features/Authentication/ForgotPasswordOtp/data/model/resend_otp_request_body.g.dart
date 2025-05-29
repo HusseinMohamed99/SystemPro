@@ -9,8 +9,8 @@ part of 'resend_otp_request_body.dart';
 ResendOtpRequestBody _$ResendOtpRequestBodyFromJson(
   Map<String, dynamic> json,
 ) => ResendOtpRequestBody(
-  type: json['type'] as String?,
   email: json['email'] as String,
+  type: json['type'] as String?,
 );
 
 Map<String, dynamic> _$ResendOtpRequestBodyToJson(

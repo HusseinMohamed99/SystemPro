@@ -13,4 +13,6 @@ class ValidationRegex {
   static final upperCase = RegExp(r'[A-Z]');
   static final number = RegExp(r'[0-9]');
   static final specialChar = RegExp(r'[!@#\$%^&*(),.?":{}|<>]');
+
+  static final otpRegex = RegExp(r'^\d{4}$');
 }

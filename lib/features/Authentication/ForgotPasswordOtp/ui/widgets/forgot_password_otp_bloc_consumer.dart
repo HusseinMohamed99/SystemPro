@@ -11,6 +11,7 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_c
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_state.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/ui/widgets/forgot_password_otp_view_body.dart';
 
+/// Screen that handles OTP verification for Forgot Password flow
 class ForgotPasswordOtpBlocConsumer extends StatelessWidget {
   const ForgotPasswordOtpBlocConsumer({super.key, required this.email});
   final String email;

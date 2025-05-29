@@ -6,26 +6,31 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_response.dart';
 
-class OtpRepo {
-  OtpRepo(this._apiService);
+/// Repository responsible for handling OTP-related
+///  API operations such as check and resend.
+final class OtpRepo {
+  const OtpRepo(this._apiService);
+
   final ApiService _apiService;
 
+  /// Sends a request to resend an OTP.
   Future<ApiResult<ResendOtpResponse>> resendOtp(
-    ResendOtpRequestBody resendOtpRequestBody,
+    ResendOtpRequestBody request,
   ) async {
     try {
-      final response = await _apiService.resendOtp(resendOtpRequestBody);
+      final response = await _apiService.resendOtp(request);
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
 
+  /// Sends a request to verify a submitted OTP.
   Future<ApiResult<CheckOtpResponse>> checkOtp(
-    CheckOtpRequestBody checkOtpRequestBody,
+    CheckOtpRequestBody request,
   ) async {
     try {
-      final response = await _apiService.checkOtp(checkOtpRequestBody);
+      final response = await _apiService.checkOtp(request);
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));

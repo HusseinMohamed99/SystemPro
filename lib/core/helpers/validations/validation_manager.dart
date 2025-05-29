@@ -61,15 +61,18 @@ class ValidationManager {
   }
 
   /// Validates numeric OTP codes only.
-  static String? otpValidator(BuildContext context, String? value) {
+static String? otpValidator(BuildContext context, String? value) {
     final t = context.localization;
-    final otp = value?.trim();
+    final otp = value?.trim() ?? '';
 
-    if (otp == null || otp.isEmpty) return t.otp_empty;
-    if (!ValidationRegex.onlyNumbers.hasMatch(otp)) return t.otp_invalid_format;
+    if (otp.isEmpty) return t.otp_empty;
+
+    // Example: Accepts only 4-digit numeric OTPs
+    if (!ValidationRegex.otpRegex.hasMatch(otp)) return t.otp_invalid_format;
 
     return null;
   }
+
 
   /// Validates strong password: includes upper/lower, digit, special char, min 8.
   static String? passwordValidator(BuildContext context, String? value) {
