@@ -15,9 +15,6 @@ Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
   phone: json['phone'] as String?,
   address: json['address'] as String?,
   bio: json['bio'] as String?,
-  createdAt: json['created_at'] as String?,
-  updatedAt: json['updated_at'] as String?,
-  emailVerifiedAt: json['email_verified_at'] as String?,
   pictureUrl: json['picture_url'] as String?,
 );
 
@@ -25,11 +22,8 @@ Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
   'email': instance.email,
-  'email_verified_at': instance.emailVerifiedAt,
   'role': instance.role,
   'status': instance.status,
-  'created_at': instance.createdAt,
-  'updated_at': instance.updatedAt,
   'picture_url': instance.pictureUrl,
   'phone': instance.phone,
   'address': instance.address,

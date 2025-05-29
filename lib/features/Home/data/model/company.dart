@@ -13,9 +13,6 @@ class Company {
     this.phone,
     this.address,
     this.bio,
-    this.createdAt,
-    this.updatedAt,
-    this.emailVerifiedAt,
     this.pictureUrl,
   });
 
@@ -24,14 +21,8 @@ class Company {
   final int? id;
   final String? name;
   final String? email;
-  @JsonKey(name: 'email_verified_at')
-  final String? emailVerifiedAt;
   final String? role;
   final String? status;
-  @JsonKey(name: 'created_at')
-  final String? createdAt;
-  @JsonKey(name: 'updated_at')
-  final String? updatedAt;
   @JsonKey(name: 'picture_url')
   final String? pictureUrl;
   final String? phone;

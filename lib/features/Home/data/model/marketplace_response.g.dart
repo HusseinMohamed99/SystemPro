@@ -9,6 +9,7 @@ part of 'marketplace_response.dart';
 MarketplaceResponse _$MarketplaceResponseFromJson(Map<String, dynamic> json) =>
     MarketplaceResponse(
       status: json['status'] as String?,
+      code: (json['code'] as num?)?.toInt(),
       message: json['message'] as String?,
       data:
           json['data'] == null
@@ -22,4 +23,5 @@ Map<String, dynamic> _$MarketplaceResponseToJson(
   'status': instance.status,
   'message': instance.message,
   'data': instance.data,
+  'code': instance.code,
 };
