@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
-import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
@@ -16,30 +15,18 @@ import 'package:system_pro/core/widgets/texts/have_an_account.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_state.dart';
 
-/// Login form containing email/password fields, login button, and navigation options.
+/// Login form with email & password fields, validation, and login button.
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
-      listenWhen: (prev, curr) => curr is LoginSuccess || curr is LoginError,
-      listener: (context, state) {
-        if (state is LoginError) {
-          context.showSnackBar(state.error); // Display error message
-        }
-        if (state is LoginSuccess) {
-          context
-            ..showSnackBar(context.localization.sign_in_successfully)
-            ..pushReplacementNamed(Routes.mainView); // Navigate on success
-        }
-      },
+    return BlocBuilder<LoginCubit, LoginState>(
       buildWhen:
           (prev, curr) =>
-              curr is LoginLoading ||
-              curr is LoginError ||
               curr is FormValidityChanged ||
-              curr is PasswordVisibilityChanged,
+              curr is PasswordVisibilityChanged ||
+              curr is LoginLoading,
       builder: (context, state) {
         final cubit = context.read<LoginCubit>();
         final obscureText = !cubit.shouldShowPassword;
