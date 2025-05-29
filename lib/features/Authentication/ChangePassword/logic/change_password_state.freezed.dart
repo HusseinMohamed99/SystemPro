@@ -23,6 +23,9 @@ mixin _$ChangePasswordState<T> {
     required TResult Function() changePasswordLoading,
     required TResult Function(T data) changePasswordSuccess,
     required TResult Function(String error) changePasswordError,
+    required TResult Function() formValidationChanged,
+    required TResult Function(bool isPasswordVisible, IconData visibilityIcon)
+    passwordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -30,6 +33,9 @@ mixin _$ChangePasswordState<T> {
     TResult? Function()? changePasswordLoading,
     TResult? Function(T data)? changePasswordSuccess,
     TResult? Function(String error)? changePasswordError,
+    TResult? Function()? formValidationChanged,
+    TResult? Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -37,6 +43,9 @@ mixin _$ChangePasswordState<T> {
     TResult Function()? changePasswordLoading,
     TResult Function(T data)? changePasswordSuccess,
     TResult Function(String error)? changePasswordError,
+    TResult Function()? formValidationChanged,
+    TResult Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +56,10 @@ mixin _$ChangePasswordState<T> {
     required TResult Function(ChangePasswordSuccess<T> value)
     changePasswordSuccess,
     required TResult Function(ChangePasswordError<T> value) changePasswordError,
+    required TResult Function(FormValidationChanged<T> value)
+    formValidationChanged,
+    required TResult Function(PasswordVisibilityChanged<T> value)
+    passwordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -54,6 +67,9 @@ mixin _$ChangePasswordState<T> {
     TResult? Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult? Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult? Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult? Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult? Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -61,6 +77,9 @@ mixin _$ChangePasswordState<T> {
     TResult Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -138,6 +157,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() changePasswordLoading,
     required TResult Function(T data) changePasswordSuccess,
     required TResult Function(String error) changePasswordError,
+    required TResult Function() formValidationChanged,
+    required TResult Function(bool isPasswordVisible, IconData visibilityIcon)
+    passwordVisibilityChanged,
   }) {
     return initial();
   }
@@ -149,6 +171,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? changePasswordLoading,
     TResult? Function(T data)? changePasswordSuccess,
     TResult? Function(String error)? changePasswordError,
+    TResult? Function()? formValidationChanged,
+    TResult? Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
   }) {
     return initial?.call();
   }
@@ -160,6 +185,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? changePasswordLoading,
     TResult Function(T data)? changePasswordSuccess,
     TResult Function(String error)? changePasswordError,
+    TResult Function()? formValidationChanged,
+    TResult Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -177,6 +205,10 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(ChangePasswordSuccess<T> value)
     changePasswordSuccess,
     required TResult Function(ChangePasswordError<T> value) changePasswordError,
+    required TResult Function(FormValidationChanged<T> value)
+    formValidationChanged,
+    required TResult Function(PasswordVisibilityChanged<T> value)
+    passwordVisibilityChanged,
   }) {
     return initial(this);
   }
@@ -188,6 +220,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult? Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult? Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult? Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult? Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
   }) {
     return initial?.call(this);
   }
@@ -199,6 +234,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -265,6 +303,9 @@ class _$ChangePasswordLoadingImpl<T> implements ChangePasswordLoading<T> {
     required TResult Function() changePasswordLoading,
     required TResult Function(T data) changePasswordSuccess,
     required TResult Function(String error) changePasswordError,
+    required TResult Function() formValidationChanged,
+    required TResult Function(bool isPasswordVisible, IconData visibilityIcon)
+    passwordVisibilityChanged,
   }) {
     return changePasswordLoading();
   }
@@ -276,6 +317,9 @@ class _$ChangePasswordLoadingImpl<T> implements ChangePasswordLoading<T> {
     TResult? Function()? changePasswordLoading,
     TResult? Function(T data)? changePasswordSuccess,
     TResult? Function(String error)? changePasswordError,
+    TResult? Function()? formValidationChanged,
+    TResult? Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
   }) {
     return changePasswordLoading?.call();
   }
@@ -287,6 +331,9 @@ class _$ChangePasswordLoadingImpl<T> implements ChangePasswordLoading<T> {
     TResult Function()? changePasswordLoading,
     TResult Function(T data)? changePasswordSuccess,
     TResult Function(String error)? changePasswordError,
+    TResult Function()? formValidationChanged,
+    TResult Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (changePasswordLoading != null) {
@@ -304,6 +351,10 @@ class _$ChangePasswordLoadingImpl<T> implements ChangePasswordLoading<T> {
     required TResult Function(ChangePasswordSuccess<T> value)
     changePasswordSuccess,
     required TResult Function(ChangePasswordError<T> value) changePasswordError,
+    required TResult Function(FormValidationChanged<T> value)
+    formValidationChanged,
+    required TResult Function(PasswordVisibilityChanged<T> value)
+    passwordVisibilityChanged,
   }) {
     return changePasswordLoading(this);
   }
@@ -315,6 +366,9 @@ class _$ChangePasswordLoadingImpl<T> implements ChangePasswordLoading<T> {
     TResult? Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult? Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult? Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult? Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult? Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
   }) {
     return changePasswordLoading?.call(this);
   }
@@ -326,6 +380,9 @@ class _$ChangePasswordLoadingImpl<T> implements ChangePasswordLoading<T> {
     TResult Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (changePasswordLoading != null) {
@@ -422,6 +479,9 @@ class _$ChangePasswordSuccessImpl<T> implements ChangePasswordSuccess<T> {
     required TResult Function() changePasswordLoading,
     required TResult Function(T data) changePasswordSuccess,
     required TResult Function(String error) changePasswordError,
+    required TResult Function() formValidationChanged,
+    required TResult Function(bool isPasswordVisible, IconData visibilityIcon)
+    passwordVisibilityChanged,
   }) {
     return changePasswordSuccess(data);
   }
@@ -433,6 +493,9 @@ class _$ChangePasswordSuccessImpl<T> implements ChangePasswordSuccess<T> {
     TResult? Function()? changePasswordLoading,
     TResult? Function(T data)? changePasswordSuccess,
     TResult? Function(String error)? changePasswordError,
+    TResult? Function()? formValidationChanged,
+    TResult? Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
   }) {
     return changePasswordSuccess?.call(data);
   }
@@ -444,6 +507,9 @@ class _$ChangePasswordSuccessImpl<T> implements ChangePasswordSuccess<T> {
     TResult Function()? changePasswordLoading,
     TResult Function(T data)? changePasswordSuccess,
     TResult Function(String error)? changePasswordError,
+    TResult Function()? formValidationChanged,
+    TResult Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (changePasswordSuccess != null) {
@@ -461,6 +527,10 @@ class _$ChangePasswordSuccessImpl<T> implements ChangePasswordSuccess<T> {
     required TResult Function(ChangePasswordSuccess<T> value)
     changePasswordSuccess,
     required TResult Function(ChangePasswordError<T> value) changePasswordError,
+    required TResult Function(FormValidationChanged<T> value)
+    formValidationChanged,
+    required TResult Function(PasswordVisibilityChanged<T> value)
+    passwordVisibilityChanged,
   }) {
     return changePasswordSuccess(this);
   }
@@ -472,6 +542,9 @@ class _$ChangePasswordSuccessImpl<T> implements ChangePasswordSuccess<T> {
     TResult? Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult? Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult? Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult? Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult? Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
   }) {
     return changePasswordSuccess?.call(this);
   }
@@ -483,6 +556,9 @@ class _$ChangePasswordSuccessImpl<T> implements ChangePasswordSuccess<T> {
     TResult Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (changePasswordSuccess != null) {
@@ -585,6 +661,9 @@ class _$ChangePasswordErrorImpl<T> implements ChangePasswordError<T> {
     required TResult Function() changePasswordLoading,
     required TResult Function(T data) changePasswordSuccess,
     required TResult Function(String error) changePasswordError,
+    required TResult Function() formValidationChanged,
+    required TResult Function(bool isPasswordVisible, IconData visibilityIcon)
+    passwordVisibilityChanged,
   }) {
     return changePasswordError(error);
   }
@@ -596,6 +675,9 @@ class _$ChangePasswordErrorImpl<T> implements ChangePasswordError<T> {
     TResult? Function()? changePasswordLoading,
     TResult? Function(T data)? changePasswordSuccess,
     TResult? Function(String error)? changePasswordError,
+    TResult? Function()? formValidationChanged,
+    TResult? Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
   }) {
     return changePasswordError?.call(error);
   }
@@ -607,6 +689,9 @@ class _$ChangePasswordErrorImpl<T> implements ChangePasswordError<T> {
     TResult Function()? changePasswordLoading,
     TResult Function(T data)? changePasswordSuccess,
     TResult Function(String error)? changePasswordError,
+    TResult Function()? formValidationChanged,
+    TResult Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (changePasswordError != null) {
@@ -624,6 +709,10 @@ class _$ChangePasswordErrorImpl<T> implements ChangePasswordError<T> {
     required TResult Function(ChangePasswordSuccess<T> value)
     changePasswordSuccess,
     required TResult Function(ChangePasswordError<T> value) changePasswordError,
+    required TResult Function(FormValidationChanged<T> value)
+    formValidationChanged,
+    required TResult Function(PasswordVisibilityChanged<T> value)
+    passwordVisibilityChanged,
   }) {
     return changePasswordError(this);
   }
@@ -635,6 +724,9 @@ class _$ChangePasswordErrorImpl<T> implements ChangePasswordError<T> {
     TResult? Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult? Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult? Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult? Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult? Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
   }) {
     return changePasswordError?.call(this);
   }
@@ -646,6 +738,9 @@ class _$ChangePasswordErrorImpl<T> implements ChangePasswordError<T> {
     TResult Function(ChangePasswordLoading<T> value)? changePasswordLoading,
     TResult Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
     TResult Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
     required TResult orElse(),
   }) {
     if (changePasswordError != null) {
@@ -665,5 +760,360 @@ abstract class ChangePasswordError<T> implements ChangePasswordState<T> {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangePasswordErrorImplCopyWith<T, _$ChangePasswordErrorImpl<T>>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FormValidationChangedImplCopyWith<T, $Res> {
+  factory _$$FormValidationChangedImplCopyWith(
+    _$FormValidationChangedImpl<T> value,
+    $Res Function(_$FormValidationChangedImpl<T>) then,
+  ) = __$$FormValidationChangedImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$FormValidationChangedImplCopyWithImpl<T, $Res>
+    extends
+        _$ChangePasswordStateCopyWithImpl<
+          T,
+          $Res,
+          _$FormValidationChangedImpl<T>
+        >
+    implements _$$FormValidationChangedImplCopyWith<T, $Res> {
+  __$$FormValidationChangedImplCopyWithImpl(
+    _$FormValidationChangedImpl<T> _value,
+    $Res Function(_$FormValidationChangedImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ChangePasswordState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$FormValidationChangedImpl<T> implements FormValidationChanged<T> {
+  const _$FormValidationChangedImpl();
+
+  @override
+  String toString() {
+    return 'ChangePasswordState<$T>.formValidationChanged()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FormValidationChangedImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() changePasswordLoading,
+    required TResult Function(T data) changePasswordSuccess,
+    required TResult Function(String error) changePasswordError,
+    required TResult Function() formValidationChanged,
+    required TResult Function(bool isPasswordVisible, IconData visibilityIcon)
+    passwordVisibilityChanged,
+  }) {
+    return formValidationChanged();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? changePasswordLoading,
+    TResult? Function(T data)? changePasswordSuccess,
+    TResult? Function(String error)? changePasswordError,
+    TResult? Function()? formValidationChanged,
+    TResult? Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
+  }) {
+    return formValidationChanged?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? changePasswordLoading,
+    TResult Function(T data)? changePasswordSuccess,
+    TResult Function(String error)? changePasswordError,
+    TResult Function()? formValidationChanged,
+    TResult Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (formValidationChanged != null) {
+      return formValidationChanged();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(ChangePasswordLoading<T> value)
+    changePasswordLoading,
+    required TResult Function(ChangePasswordSuccess<T> value)
+    changePasswordSuccess,
+    required TResult Function(ChangePasswordError<T> value) changePasswordError,
+    required TResult Function(FormValidationChanged<T> value)
+    formValidationChanged,
+    required TResult Function(PasswordVisibilityChanged<T> value)
+    passwordVisibilityChanged,
+  }) {
+    return formValidationChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(ChangePasswordLoading<T> value)? changePasswordLoading,
+    TResult? Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
+    TResult? Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult? Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult? Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
+  }) {
+    return formValidationChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(ChangePasswordLoading<T> value)? changePasswordLoading,
+    TResult Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
+    TResult Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (formValidationChanged != null) {
+      return formValidationChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FormValidationChanged<T> implements ChangePasswordState<T> {
+  const factory FormValidationChanged() = _$FormValidationChangedImpl<T>;
+}
+
+/// @nodoc
+abstract class _$$PasswordVisibilityChangedImplCopyWith<T, $Res> {
+  factory _$$PasswordVisibilityChangedImplCopyWith(
+    _$PasswordVisibilityChangedImpl<T> value,
+    $Res Function(_$PasswordVisibilityChangedImpl<T>) then,
+  ) = __$$PasswordVisibilityChangedImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({bool isPasswordVisible, IconData visibilityIcon});
+}
+
+/// @nodoc
+class __$$PasswordVisibilityChangedImplCopyWithImpl<T, $Res>
+    extends
+        _$ChangePasswordStateCopyWithImpl<
+          T,
+          $Res,
+          _$PasswordVisibilityChangedImpl<T>
+        >
+    implements _$$PasswordVisibilityChangedImplCopyWith<T, $Res> {
+  __$$PasswordVisibilityChangedImplCopyWithImpl(
+    _$PasswordVisibilityChangedImpl<T> _value,
+    $Res Function(_$PasswordVisibilityChangedImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ChangePasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? isPasswordVisible = null, Object? visibilityIcon = null}) {
+    return _then(
+      _$PasswordVisibilityChangedImpl<T>(
+        isPasswordVisible:
+            null == isPasswordVisible
+                ? _value.isPasswordVisible
+                : isPasswordVisible // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        visibilityIcon:
+            null == visibilityIcon
+                ? _value.visibilityIcon
+                : visibilityIcon // ignore: cast_nullable_to_non_nullable
+                    as IconData,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PasswordVisibilityChangedImpl<T>
+    implements PasswordVisibilityChanged<T> {
+  const _$PasswordVisibilityChangedImpl({
+    required this.isPasswordVisible,
+    required this.visibilityIcon,
+  });
+
+  @override
+  final bool isPasswordVisible;
+  @override
+  final IconData visibilityIcon;
+
+  @override
+  String toString() {
+    return 'ChangePasswordState<$T>.passwordVisibilityChanged(isPasswordVisible: $isPasswordVisible, visibilityIcon: $visibilityIcon)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PasswordVisibilityChangedImpl<T> &&
+            (identical(other.isPasswordVisible, isPasswordVisible) ||
+                other.isPasswordVisible == isPasswordVisible) &&
+            (identical(other.visibilityIcon, visibilityIcon) ||
+                other.visibilityIcon == visibilityIcon));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, isPasswordVisible, visibilityIcon);
+
+  /// Create a copy of ChangePasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PasswordVisibilityChangedImplCopyWith<
+    T,
+    _$PasswordVisibilityChangedImpl<T>
+  >
+  get copyWith => __$$PasswordVisibilityChangedImplCopyWithImpl<
+    T,
+    _$PasswordVisibilityChangedImpl<T>
+  >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() changePasswordLoading,
+    required TResult Function(T data) changePasswordSuccess,
+    required TResult Function(String error) changePasswordError,
+    required TResult Function() formValidationChanged,
+    required TResult Function(bool isPasswordVisible, IconData visibilityIcon)
+    passwordVisibilityChanged,
+  }) {
+    return passwordVisibilityChanged(isPasswordVisible, visibilityIcon);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? changePasswordLoading,
+    TResult? Function(T data)? changePasswordSuccess,
+    TResult? Function(String error)? changePasswordError,
+    TResult? Function()? formValidationChanged,
+    TResult? Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
+  }) {
+    return passwordVisibilityChanged?.call(isPasswordVisible, visibilityIcon);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? changePasswordLoading,
+    TResult Function(T data)? changePasswordSuccess,
+    TResult Function(String error)? changePasswordError,
+    TResult Function()? formValidationChanged,
+    TResult Function(bool isPasswordVisible, IconData visibilityIcon)?
+    passwordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (passwordVisibilityChanged != null) {
+      return passwordVisibilityChanged(isPasswordVisible, visibilityIcon);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(ChangePasswordLoading<T> value)
+    changePasswordLoading,
+    required TResult Function(ChangePasswordSuccess<T> value)
+    changePasswordSuccess,
+    required TResult Function(ChangePasswordError<T> value) changePasswordError,
+    required TResult Function(FormValidationChanged<T> value)
+    formValidationChanged,
+    required TResult Function(PasswordVisibilityChanged<T> value)
+    passwordVisibilityChanged,
+  }) {
+    return passwordVisibilityChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(ChangePasswordLoading<T> value)? changePasswordLoading,
+    TResult? Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
+    TResult? Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult? Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult? Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
+  }) {
+    return passwordVisibilityChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(ChangePasswordLoading<T> value)? changePasswordLoading,
+    TResult Function(ChangePasswordSuccess<T> value)? changePasswordSuccess,
+    TResult Function(ChangePasswordError<T> value)? changePasswordError,
+    TResult Function(FormValidationChanged<T> value)? formValidationChanged,
+    TResult Function(PasswordVisibilityChanged<T> value)?
+    passwordVisibilityChanged,
+    required TResult orElse(),
+  }) {
+    if (passwordVisibilityChanged != null) {
+      return passwordVisibilityChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PasswordVisibilityChanged<T> implements ChangePasswordState<T> {
+  const factory PasswordVisibilityChanged({
+    required final bool isPasswordVisible,
+    required final IconData visibilityIcon,
+  }) = _$PasswordVisibilityChangedImpl<T>;
+
+  bool get isPasswordVisible;
+  IconData get visibilityIcon;
+
+  /// Create a copy of ChangePasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PasswordVisibilityChangedImplCopyWith<
+    T,
+    _$PasswordVisibilityChangedImpl<T>
+  >
   get copyWith => throw _privateConstructorUsedError;
 }

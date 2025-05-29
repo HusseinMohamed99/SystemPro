@@ -8,8 +8,9 @@ import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/textFields/confirm_password_form_field_widget.dart';
 import 'package:system_pro/core/widgets/textFields/password_form_field_widget.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
+import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_state.dart';
 
-class ChangePasswordForm extends StatefulWidget {
+class ChangePasswordForm extends StatelessWidget {
   const ChangePasswordForm({
     super.key,
     required this.email,
@@ -20,76 +21,58 @@ class ChangePasswordForm extends StatefulWidget {
   final bool isLoading;
 
   @override
-  State<ChangePasswordForm> createState() => _ChangePasswordFormState();
-}
-
-class _ChangePasswordFormState extends State<ChangePasswordForm> {
-  bool isPassword = true;
-  IconData suffix = Icons.visibility_off;
-
-  late ChangePasswordCubit cubit;
-
-  @override
-  void initState() {
-    super.initState();
-    cubit = context.read<ChangePasswordCubit>();
-  }
-
-  /// Toggles the visibility of password fields
-  void togglePasswordVisibility() {
-    setState(() {
-      isPassword = !isPassword;
-      suffix = isPassword ? Icons.visibility_off : Icons.visibility;
-    });
-  }
-
-  /// Validates the form and triggers the password change logic
-  void validateThenDoChangePassword() {
-    if (cubit.formKey.currentState!.validate()) {
-      cubit.emitChangePasswordStates(email: widget.email);
-    }
-  }
-
-  /// Checks if the form is valid for enabling the button
-  bool get isFormValid =>
-      cubit.newPasswordController.text.isNotEmpty &&
-      cubit.confirmNewPasswordController.text.isNotEmpty;
-
-  @override
   Widget build(BuildContext context) {
+    final cubit = context.read<ChangePasswordCubit>();
+
     return Form(
       key: cubit.formKey,
       child: Column(
         spacing: kSpacingXLarge.h,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Main Password Field
-          PasswordFormField(
-            focusNode: cubit.newPasswordFocusNode,
-            passwordController: cubit.newPasswordController,
-            isPassword: isPassword,
-            suffixIconOnTap: togglePasswordVisibility,
-            visibilityIcon: suffix,
-          ),
-
-          // Confirm Password Field
-          ConfirmPasswordFormField(
-            focusNode: cubit.confirmNewPasswordFocusNode,
-            passwordController: cubit.newPasswordController,
-            confirmPasswordController: cubit.confirmNewPasswordController,
-            isPassword: isPassword,
-            suffixIconOnTap: togglePasswordVisibility,
-            visibilityIcon: suffix,
-          ),
-
-          verticalSpacing(kSpacingSmaller),
-
-          // Submit Button
-          CustomButton(
-            text: context.localization.reset_password,
-            isLoading: widget.isLoading,
-            isDisabled: !isFormValid,
-            onPressed: validateThenDoChangePassword,
+          // BlocBuilder for password visibility changes
+          BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
+            buildWhen:
+                (prev, curr) =>
+                    curr is PasswordVisibilityChanged ||
+                    curr is FormValidationChanged,
+            builder: (context, state) {
+              return Column(
+                spacing: kSpacingXLarge.h,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  PasswordFormField(
+                    focusNode: cubit.newPasswordFocusNode,
+                    passwordController: cubit.newPasswordController,
+                    isPassword: cubit.isPasswordVisible,
+                    suffixIconOnTap: cubit.togglePasswordVisibility,
+                    visibilityIcon: cubit.visibilityIcon,
+                    onChanged: (_) => cubit.updateFormValidationState(),
+                  ),
+                  ConfirmPasswordFormField(
+                    focusNode: cubit.confirmPasswordFocusNode,
+                    passwordController: cubit.newPasswordController,
+                    confirmPasswordController: cubit.confirmPasswordController,
+                    isPassword: cubit.isPasswordVisible,
+                    suffixIconOnTap: cubit.togglePasswordVisibility,
+                    visibilityIcon: cubit.visibilityIcon,
+                    onChanged: (_) => cubit.updateFormValidationState(),
+                  ),
+                  verticalSpacing(kSpacingSmaller),
+                  CustomButton(
+                    text: context.localization.reset_password,
+                    isLoading: isLoading,
+                    isDisabled: !cubit.isFormValid,
+                    onPressed: () {
+                      if (cubit.formKey.currentState!.validate()) {
+                        FocusScope.of(context).unfocus();
+                        cubit.changePassword(email: email);
+                      }
+                    },
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),

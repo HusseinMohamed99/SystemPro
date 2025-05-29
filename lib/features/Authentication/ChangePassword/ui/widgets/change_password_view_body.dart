@@ -5,8 +5,14 @@ import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/ui/widgets/change_password_form.dart';
+
 class ChangePasswordViewBody extends StatelessWidget {
-  const ChangePasswordViewBody({super.key, required this.email, required this.isLoading});
+  const ChangePasswordViewBody({
+    super.key,
+    required this.email,
+    required this.isLoading,
+  });
+
   final String email;
   final bool isLoading;
   @override
@@ -14,6 +20,7 @@ class ChangePasswordViewBody extends StatelessWidget {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
+        // Header title
         SliverToBoxAdapter(
           child: Text(
             context.localization.reset_password,
@@ -21,6 +28,7 @@ class ChangePasswordViewBody extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+        // Subtitle
         SliverToBoxAdapter(
           child: Text(
             context.localization.reset_password_subtitle,
@@ -34,9 +42,10 @@ class ChangePasswordViewBody extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
+        // Form
         SliverFillRemaining(
           hasScrollBody: false,
-          child: ChangePasswordForm(email: email, isLoading: isLoading,),
+          child: ChangePasswordForm(email: email, isLoading: isLoading),
         ),
       ],
     );

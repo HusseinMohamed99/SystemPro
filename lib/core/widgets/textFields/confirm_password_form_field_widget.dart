@@ -17,6 +17,7 @@ class ConfirmPasswordFormField extends StatelessWidget {
     this.suffixIconOnTap,
     required this.isPassword,
     required this.focusNode,
+    this.onChanged,
   });
 
   final TextEditingController passwordController;
@@ -25,6 +26,7 @@ class ConfirmPasswordFormField extends StatelessWidget {
   final Function()? suffixIconOnTap;
   final bool isPassword;
   final FocusNode focusNode;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class ConfirmPasswordFormField extends StatelessWidget {
             size: kIconSizeDefault.sp,
           ),
           onChanged: (value) {
+            onChanged?.call(value);
             confirmPasswordController.removeSpaces();
           },
         ),

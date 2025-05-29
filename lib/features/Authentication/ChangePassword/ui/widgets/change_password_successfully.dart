@@ -18,43 +18,59 @@ class ChangePasswordSuccessfully extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const lightColor = ColorManager.pureBlack;
+    const darkColor = ColorManager.pureWhite;
+    final textColor = AdaptiveColor.adaptiveColor(
+      context: context,
+      lightColor: lightColor,
+      darkColor: darkColor,
+    );
+
+    final subtitleColor = AdaptiveColor.adaptiveColor(
+      context: context,
+      lightColor: ColorManager.softGray,
+      darkColor: ColorManager.hintGrey,
+    );
+
     return Scaffold(
       appBar: basicAppBar(),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Success Icon
             SvgPicture.asset(Assets.images.star),
+
             verticalSpacing(kSpacingXXLarge),
+
+            // Success Title
             Text(
               context.localization.password_changed,
               style: context.headlineLarge?.copyWith(
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.pureBlack,
-                  darkColor: ColorManager.pureWhite,
-                ),
+                color: textColor,
                 fontWeight: FontWeightHelper.semiBold,
               ),
             ),
+
             verticalSpacing(kSpacingDefault),
+
+            // Success Subtitle
             Text(
               context.localization.password_changed_subtitle,
               textAlign: TextAlign.center,
               style: context.titleLarge?.copyWith(
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.softGray,
-                  darkColor: ColorManager.hintGrey,
-                ),
+                color: subtitleColor,
                 fontWeight: FontWeightHelper.regular,
               ),
             ),
-              verticalSpacing(kSpacingXXLarge),
+
+            verticalSpacing(kSpacingXXLarge),
+
+            // Back to Login Button
             CustomButton(
               text: context.localization.back_to_login,
-              
               onPressed: () {
+                // Clears the navigation stack and navigates to login screen
                 context.pushReplacementNamed(Routes.loginView);
               },
             ),
