@@ -6,26 +6,29 @@ import 'package:system_pro/features/Authentication/EmailVerify/data/model/email_
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_response.dart';
 
+/// Repository responsible for handling email verification and OTP resending.
 class EmailVerifyRepo {
   EmailVerifyRepo(this._apiService);
   final ApiService _apiService;
 
-  Future<ApiResult<EmailVerifyResponse>> emailVerify(
-    EmailVerifyRequestBody emailVerifyRequestBody,
+  /// Verifies the email using the provided [EmailVerifyRequestBody]
+  Future<ApiResult<EmailVerifyResponse>> verifyEmail(
+    EmailVerifyRequestBody request,
   ) async {
-    try {
-      final response = await _apiService.emailVerify(emailVerifyRequestBody);
-      return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
+    return _handleApiCall(() => _apiService.emailVerify(request));
   }
 
+  /// Resends the OTP to the provided email/phone using [ResendOtpRequestBody]
   Future<ApiResult<ResendOtpResponse>> resendOtp(
-    ResendOtpRequestBody resendOtpRequestBody,
+    ResendOtpRequestBody request,
   ) async {
+    return _handleApiCall(() => _apiService.resendOtp(request));
+  }
+
+  /// Shared method to handle API calls and error catching
+  Future<ApiResult<T>> _handleApiCall<T>(Future<T> Function() apiCall) async {
     try {
-      final response = await _apiService.resendOtp(resendOtpRequestBody);
+      final response = await apiCall();
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));

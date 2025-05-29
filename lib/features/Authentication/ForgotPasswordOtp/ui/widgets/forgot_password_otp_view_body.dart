@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -122,6 +123,7 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
           SliverToBoxAdapter(
             child: CustomPinputOtpCodeWidget(
               validationCodeController: otpController,
+              hasError: false,
             ),
           ),
 
@@ -146,26 +148,28 @@ class _ForgotPasswordOtpViewBodyState extends State<ForgotPasswordOtpViewBody> {
               TextSpan(
                 text: '${context.localization.send_code_again}  ',
                 style: context.titleLarge?.copyWith(
-                  color: _canResend
-                      ? AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.primaryBlue,
-                          darkColor: ColorManager.secondaryBlue,
-                        )
-                      : AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.softGray,
-                          darkColor: ColorManager.hintGrey,
-                        ),
+                  color:
+                      _canResend
+                          ? AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.primaryBlue,
+                            darkColor: ColorManager.secondaryBlue,
+                          )
+                          : AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.softGray,
+                            darkColor: ColorManager.hintGrey,
+                          ),
                   fontWeight: FontWeightHelper.semiBold,
                 ),
-                recognizer: _resendRecognizer
-                  ..onTap = () {
-                    if (_canResend) {
-                      validateThenDoResendOtp();
-                      startTimer(); // Restart countdown
-                    }
-                  },
+                recognizer:
+                    _resendRecognizer
+                      ..onTap = () {
+                        if (_canResend) {
+                          validateThenDoResendOtp();
+                          startTimer(); // Restart countdown
+                        }
+                      },
                 children: [
                   TextSpan(
                     text: '00:${_start.toString().padLeft(2, '0')}',

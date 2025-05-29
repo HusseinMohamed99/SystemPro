@@ -11,48 +11,77 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_cubit.dart';
+import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_state.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/ui/widgets/custom_pinput_otp.dart';
 
 class EmailVerifyViewBody extends StatefulWidget {
-  const EmailVerifyViewBody({
-    super.key,
-    required this.email,
-    required this.isLoading,
-  });
-
+  const EmailVerifyViewBody({super.key, required this.email});
   final String email;
-  final bool isLoading;
 
   @override
   State<EmailVerifyViewBody> createState() => _EmailVerifyViewBodyState();
 }
 
-class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
+class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody>
+    with TickerProviderStateMixin {
   late EmailVerifyCubit cubit;
   Timer? _timer;
   int _start = 59;
   bool _canResend = false;
+  late AnimationController _shakeController;
+  late Animation<double> _shakeAnimation;
+  late AnimationController _fadeInController;
+  late Animation<double> _fadeInAnimation;
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
     cubit = context.read<EmailVerifyCubit>();
     startTimer();
+
+    _shakeController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+_shakeAnimation = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 0, end: -10), weight: 1),
+      TweenSequenceItem(tween: Tween(begin: -10, end: 10), weight: 2),
+      TweenSequenceItem(tween: Tween(begin: 10, end: -10), weight: 2),
+      TweenSequenceItem(tween: Tween(begin: -10, end: 10), weight: 2),
+      TweenSequenceItem(tween: Tween(begin: 10, end: 0), weight: 1),
+    ]).animate(
+      CurvedAnimation(parent: _shakeController, curve: Curves.easeOut),
+    );
+
+    _fadeInController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _fadeInAnimation = CurvedAnimation(
+      parent: _fadeInController,
+      curve: Curves.easeIn,
+    );
+    _fadeInController.forward();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
-    cubit.validationCodeController.dispose(); // Dispose to avoid memory leaks
+    cubit.validationCodeController.dispose();
+    _shakeController.dispose();
+    _fadeInController.dispose();
     super.dispose();
   }
+// تابع حالة الخطأ لتفعيل الاهتزاز
+  bool hasError = false;
 
-  // Timer logic for resend countdown
   void startTimer() {
     _canResend = false;
     _start = 59;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
       if (_start == 0) {
         setState(() {
           _canResend = true;
@@ -64,97 +93,94 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
     });
   }
 
-  // Getter to enable/disable the button
-  bool get formIsValid => cubit.validationCodeController.text.isNotEmpty;
+  bool get formIsValid =>
+      cubit.validationCodeController.text.trim().length == 4;
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: cubit.formKey,
-      child: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(
-            child: Text(
-              context.localization.check_email,
-              style: context.headlineLarge,
-            ),
-          ),
-          SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-
-          // Email + "We sent code"
-          SliverToBoxAdapter(
-            child: FittedBox(
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: context.localization.we_sent_code,
-                      style: context.titleLarge?.copyWith(
-                        color: ColorManager.softGray,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '  ${widget.email}',
-                      style: context.titleLarge?.copyWith(
-                        color: ColorManager.primaryBlue,
-                      ),
-                    ),
-                  ],
-                ),
+    return BlocListener<EmailVerifyCubit, EmailVerifyState>(
+   listenWhen:
+          (prev, curr) =>
+              curr is EmailVerifyError || curr is EmailVerifySuccess,
+      listener: (context, state) {
+        if (state is EmailVerifyError) {
+          hasError = true;
+          _shakeController.forward(from: 0);
+        } else if (state is EmailVerifySuccess) {
+          hasError = false;
+        }
+      },
+      child: Form(
+        key: cubit.formKey,
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Text(
+                context.localization.check_email,
+                style: context.headlineLarge,
               ),
             ),
-          ),
+            SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+            SliverToBoxAdapter(child: _buildEmailText(context)),
+            SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
 
-          SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-
-          // OTP Input Field
-          SliverToBoxAdapter(
-            child: CustomPinputOtpCodeWidget(
-              validationCodeController: cubit.validationCodeController,
-            ),
-          ),
-
-          SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-
-          // Verify Button
-          SliverToBoxAdapter(
-            child: CustomButton(
-              text: context.localization.verify,
-              isLoading: widget.isLoading,
-              isDisabled: !formIsValid,
-              onPressed: validateThenDoCheckOtp,
-            ),
-          ),
-
-          SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-
-          // Resend Section with Timer
-          SliverToBoxAdapter(
-            child: Text.rich(
-              textAlign: TextAlign.center,
-              TextSpan(
-                text: '${context.localization.send_code_again}  ',
-                style: context.titleLarge?.copyWith(
-                  color: _canResend
-                      ? ColorManager.primaryBlue
-                      : ColorManager.softGray,
-                  fontWeight: FontWeightHelper.semiBold,
-                ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    if (_canResend) validateThenDoResendOtp();
-                  },
-                children: [
-                  TextSpan(
-                    text: '00:${_start.toString().padLeft(2, '0')}',
-                    style: context.titleLarge?.copyWith(
-                      color: ColorManager.softGray,
-                      fontWeight: FontWeightHelper.semiBold,
+            // OTP Input with Animation
+            SliverToBoxAdapter(
+              child: AnimatedBuilder(
+                animation: _shakeController,
+                builder: (context, child) {
+                  return Transform.translate(
+                offset: Offset(_shakeAnimation.value, 0),
+                    child: FadeTransition(
+                      opacity: _fadeInAnimation,
+                      child: CustomPinputOtpCodeWidget(
+                        validationCodeController:
+                            cubit.validationCodeController,
+                        hasError: _hasError,
+                      ),
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
+            ),
+
+            SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
+
+            // Verify Button
+            SliverToBoxAdapter(
+              child: CustomButton(
+                text: context.localization.verify,
+                isLoading:
+                    context.watch<EmailVerifyCubit>().state
+                        is EmailVerifyLoading,
+                isDisabled: !formIsValid,
+                onPressed: _handleOtpVerification,
+              ),
+            ),
+
+            SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
+
+            // Resend with Timer
+            SliverToBoxAdapter(child: _buildResendLink(context)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmailText(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: context.localization.we_sent_code,
+            style: context.titleLarge?.copyWith(color: ColorManager.softGray),
+          ),
+          TextSpan(
+            text: '  ${widget.email}',
+            style: context.titleLarge?.copyWith(
+              color: ColorManager.primaryBlue,
             ),
           ),
         ],
@@ -162,18 +188,41 @@ class _EmailVerifyViewBodyState extends State<EmailVerifyViewBody> {
     );
   }
 
-  // Handle OTP resend logic
-  void validateThenDoResendOtp() {
-    if (widget.email.isNotEmpty) {
-      cubit.emitResendOtpStates(email: widget.email);
-      startTimer(); // Restart the timer
+  Widget _buildResendLink(BuildContext context) {
+    return Text.rich(
+      textAlign: TextAlign.center,
+      TextSpan(
+        text: '${context.localization.send_code_again}  ',
+        style: context.titleLarge?.copyWith(
+          color: _canResend ? ColorManager.primaryBlue : ColorManager.softGray,
+          fontWeight: FontWeightHelper.semiBold,
+        ),
+        recognizer:
+            TapGestureRecognizer()
+              ..onTap = () {
+                if (_canResend) _handleResendOtp();
+              },
+        children: [
+          TextSpan(
+            text: '00:${_start.toString().padLeft(2, '0')}',
+            style: context.titleLarge?.copyWith(
+              color: ColorManager.softGray,
+              fontWeight: FontWeightHelper.semiBold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleOtpVerification() {
+    if (cubit.formKey.currentState!.validate()) {
+      cubit.verifyEmail(email: widget.email);
     }
   }
 
-  // Handle OTP verification logic
-  void validateThenDoCheckOtp() {
-    if (cubit.formKey.currentState!.validate()) {
-      cubit.emitEmailVerifyStates(email: widget.email);
-    }
+  void _handleResendOtp() {
+    cubit.resendOtp(email: widget.email);
+    startTimer();
   }
 }
