@@ -8,6 +8,7 @@ import 'package:system_pro/features/Authentication/Login/data/model/login_respon
 import 'package:system_pro/features/Authentication/Login/data/repo/login_repo.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_state.dart';
 
+/// Handles login logic, form validation, and token caching
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._loginRepo) : super(const LoginState.initial()) {
     _startValidationListeners();
@@ -15,91 +16,96 @@ class LoginCubit extends Cubit<LoginState> {
 
   final LoginRepo _loginRepo;
 
-  // Form fields
+  // Controllers & FocusNodes
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
 
-  // Track form validity to control button enabling/disabling
-  bool _isFormValid = false;
-  bool get isFormValid => _isFormValid;
-
-  // Used to show/hide password text
+  // Password visibility state
   bool _isPasswordVisible = false;
-  bool get isPasswordVisible => _isPasswordVisible;
+  bool get shouldShowPassword => _isPasswordVisible;
   IconData get passwordVisibilityIcon =>
       _isPasswordVisible ? Icons.visibility : Icons.visibility_off;
 
-  // Toggle visibility of password field
+  // Form validity
+  bool _isFormValid = false;
+  bool get isFormValid => _isFormValid;
+
+  /// Toggle password visibility
   void togglePasswordVisibility() {
     _isPasswordVisible = !_isPasswordVisible;
     emit(LoginState.passwordVisibilityChanged(_isPasswordVisible));
   }
 
-  // Listen to changes in form fields to update form validity
+  /// Start validation listeners on input fields
   void _startValidationListeners() {
     emailController.addListener(_validateForm);
     passwordController.addListener(_validateForm);
   }
 
-  // Stop listening when widget is disposed
+  /// Stop listeners and dispose controllers
   void _stopValidationListeners() {
     emailController.removeListener(_validateForm);
     passwordController.removeListener(_validateForm);
   }
 
-  // Validate that both fields are non-empty
+  /// Validate form fields to determine if submit button should be enabled
   void _validateForm() {
     final isValid =
         emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+
     if (_isFormValid != isValid) {
       _isFormValid = isValid;
       emit(LoginState.formValidityChanged(isValid));
     }
   }
 
-  // Perform login only if form is valid
+  /// Validate and submit the login form
   void submitIfFormValid() {
     if (formKey.currentState?.validate() ?? false) {
       _performLogin();
     }
   }
 
-  // Main login logic
+  /// Perform login using repository and emit appropriate state
   Future<void> _performLogin() async {
     emit(const LoginState.loginLoading());
 
-    final response = await _loginRepo.login(
-      LoginRequestBody(
-        email: emailController.text,
-        password: passwordController.text,
-      ),
-    );
+    try {
+      final response = await _loginRepo.login(
+        LoginRequestBody(
+          email: emailController.text,
+          password: passwordController.text,
+        ),
+      );
 
-    await response.when(
-      success: (loginResponse) async {
-        await _cacheUserData(loginResponse);
-        emit(LoginState.loginSuccess(loginResponse));
-      },
-      failure: (error) {
-        emit(
-          LoginState.loginError(
-            error: error.apiErrorModel.message ?? 'Login failed',
-          ),
-        );
-      },
-    );
+      await response.when(
+        success: (loginResponse) async {
+          await _cacheUserData(loginResponse);
+          emit(LoginState.loginSuccess(loginResponse));
+        },
+        failure: (error) {
+          emit(
+            LoginState.loginError(
+              error: error.apiErrorModel.message ?? 'Login failed',
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      emit(const LoginState.loginError(error: 'Unexpected error occurred'));
+    }
   }
 
-  // Save token and inject into Dio headers
+  /// Save token to cache and set it in Dio headers
   Future<void> _saveUserToken(String token) async {
     await CachingHelper.setSecuredString(SharedPrefKeys.userToken, token);
     DioFactory.setTokenIntoHeaderAfterLogin(token);
   }
 
-  // Save token + other user info
+  /// Cache user data after successful login
   Future<void> _cacheUserData(LoginResponse loginResponse) async {
     final token = loginResponse.data?.token ?? '';
     if (token.isNotEmpty) {
@@ -107,6 +113,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
+  /// Dispose controllers and listeners
   @override
   Future<void> close() {
     _stopValidationListeners();

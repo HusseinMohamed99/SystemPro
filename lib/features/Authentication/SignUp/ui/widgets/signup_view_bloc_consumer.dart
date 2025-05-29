@@ -11,6 +11,8 @@ import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.da
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_state.dart';
 import 'package:system_pro/features/Authentication/SignUp/ui/widgets/signup_view_body.dart';
 
+/// Wrapper for Signup UI that listens to SignupCubit state changes
+/// and handles navigation and loading overlay globally.
 class SignupViewBlocConsumer extends StatelessWidget {
   const SignupViewBlocConsumer({super.key});
 
@@ -19,22 +21,22 @@ class SignupViewBlocConsumer extends StatelessWidget {
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {
         if (state is SignupSuccess) {
-          context.showSnackBar(
-            context.localization.account_created_successfully,
-          );
-          context.pushReplacementNamed(
-            Routes.emailVerifyView,
-            arguments: state.data.userData?.email,
-          );
+          context
+            ..showSnackBar(context.localization.account_created_successfully)
+            ..pushReplacementNamed(
+              Routes.emailVerifyView,
+              arguments: state.data.userData?.email,
+            );
         }
+
         if (state is SignupError) {
           context.showSnackBar(state.error);
         }
       },
       builder: (context, state) {
         return LoadingIndicatorOverlay(
-          isLoading: state is SignupLoading ? true : false,
-          child:  const SignupViewBody().allPadding(
+          isLoading: state is SignupLoading,
+          child: const SignupViewBody().allPadding(
             vPadding: kPaddingLargeVertical,
             hPadding: kPaddingDefaultHorizontal,
           ),

@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
-import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
@@ -16,28 +15,19 @@ import 'package:system_pro/core/widgets/texts/have_an_account.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_state.dart';
 
+/// Signup form fields and submission button.
+/// Reacts to form validity and password visibility only.
 class SignupForm extends StatelessWidget {
   const SignupForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignupCubit, SignupState>(
-      listenWhen: (prev, curr) => curr is SignupSuccess || curr is SignupError,
-      listener: (context, state) {
-        if (state is SignupSuccess) {
-          context.showSnackBar(
-            context.localization.account_created_successfully,
-          );
-          context.pushReplacementNamed(Routes.mainView);
-        } else if (state is SignupError) {
-          context.showSnackBar(state.error);
-        }
-      },
+    return BlocBuilder<SignupCubit, SignupState>(
       buildWhen:
           (prev, curr) =>
-              curr is SignupLoading ||
               curr is SignupFormValidityChanged ||
-              curr is SignupPasswordVisibilityChanged,
+              curr is SignupPasswordVisibilityChanged ||
+              curr is SignupLoading,
       builder: (context, state) {
         final cubit = context.read<SignupCubit>();
         final isDisabled = !cubit.isFormValid;
@@ -69,10 +59,10 @@ class SignupForm extends StatelessWidget {
               ConfirmPasswordFormField(
                 focusNode: cubit.confirmPasswordFocusNode,
                 passwordController: cubit.passwordController,
+                confirmPasswordController: cubit.confirmPasswordController,
                 isPassword: isPassword,
                 suffixIconOnTap: cubit.togglePasswordVisibility,
                 visibilityIcon: suffixIcon,
-                confirmPasswordController: cubit.confirmPasswordController,
               ),
               verticalSpacing(kSpacingSmaller),
               CustomButton(

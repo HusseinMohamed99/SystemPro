@@ -13,13 +13,19 @@ class LoginRepo {
   final ApiService _apiService;
 
   /// Calls the login API and returns either success or failure result.
+  /// Returns [ApiResult.success] if successful, otherwise [ApiResult.failure].
   Future<ApiResult<LoginResponse>> login(LoginRequestBody request) async {
     try {
+      // Call login API through the API service
       final response = await _apiService.login(request);
       return ApiResult.success(response);
     } catch (error, stackTrace) {
-      // You can log the error or stack trace here for debugging
-      AppLogs.log('Login error: $error\n$stackTrace', type: LogType.error);
+      // Log error with email context for better debugging
+      AppLogs.log(
+        'Login error for ${request.email}: $error\n$stackTrace',
+        type: LogType.error,
+      );
+      // Map and return a structured error
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }

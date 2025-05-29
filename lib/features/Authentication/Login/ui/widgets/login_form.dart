@@ -16,6 +16,7 @@ import 'package:system_pro/core/widgets/texts/have_an_account.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_cubit.dart';
 import 'package:system_pro/features/Authentication/Login/logic/login_state.dart';
 
+/// Login form containing email/password fields, login button, and navigation options.
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
 
@@ -25,11 +26,12 @@ class LoginForm extends StatelessWidget {
       listenWhen: (prev, curr) => curr is LoginSuccess || curr is LoginError,
       listener: (context, state) {
         if (state is LoginError) {
-          context.showSnackBar(state.error);
+          context.showSnackBar(state.error); // Display error message
         }
         if (state is LoginSuccess) {
-          context.showSnackBar(context.localization.sign_in_successfully);
-          context.pushReplacementNamed(Routes.mainView);
+          context
+            ..showSnackBar(context.localization.sign_in_successfully)
+            ..pushReplacementNamed(Routes.mainView); // Navigate on success
         }
       },
       buildWhen:
@@ -40,10 +42,10 @@ class LoginForm extends StatelessWidget {
               curr is PasswordVisibilityChanged,
       builder: (context, state) {
         final cubit = context.read<LoginCubit>();
-        final isDisabled = !cubit.isFormValid;
-        final isPassword = !cubit.isPasswordVisible;
+        final obscureText = !cubit.shouldShowPassword;
         final suffixIcon = cubit.passwordVisibilityIcon;
-        final isLoading = state is LoginLoading && state is! LoginError;
+        final isDisabled = !cubit.isFormValid;
+        final isLoading = state is LoginLoading;
 
         return Form(
           key: cubit.formKey,
@@ -51,17 +53,20 @@ class LoginForm extends StatelessWidget {
             spacing: kSpacingDefault.h,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Email input
               EmailFormField(
                 emailController: cubit.emailController,
                 focusNode: cubit.emailFocusNode,
               ),
+              // Password input
               PasswordFormField(
                 focusNode: cubit.passwordFocusNode,
                 passwordController: cubit.passwordController,
-                isPassword: isPassword,
+                isPassword: obscureText,
                 suffixIconOnTap: cubit.togglePasswordVisibility,
                 visibilityIcon: suffixIcon,
               ),
+              // Forgot password
               GestureDetector(
                 onTap: () => context.pushNamed(Routes.forgotPasswordView),
                 child: Text(
@@ -77,6 +82,7 @@ class LoginForm extends StatelessWidget {
                 ),
               ),
               verticalSpacing(kSpacingDefault),
+              // Login button
               CustomButton(
                 text: context.localization.login,
                 isLoading: isLoading,
@@ -84,6 +90,7 @@ class LoginForm extends StatelessWidget {
                 onPressed: cubit.submitIfFormValid,
               ),
               const Spacer(),
+              // Sign up redirection
               HaveAnAccountWidget(
                 title1: context.localization.do_not_have_account,
                 title2: context.localization.sign_up,
