@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
-import 'package:system_pro/features/Home/logic/profile_state.dart';
+import 'package:system_pro/features/Home/logic/Profile/profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileDataState> {
   ProfileCubit(this._profileRepo) : super(const ProfileDataState.initial());

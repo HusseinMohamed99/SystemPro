@@ -10,9 +10,9 @@ import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
-import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
-import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
-import 'package:system_pro/features/Home/logic/marketplace_state.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
 import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_button.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
@@ -122,7 +122,7 @@ class ListingsListFilter extends StatelessWidget {
           RealEstateSliverList(
             listings: listings,
             onToggleFavoriteBuilder: (listing) {
-            return () {
+              return () {
                 final updatedListing = listing.copyWith(
                   isFavorite: !listing.isFavorite,
                 );
@@ -132,7 +132,6 @@ class ListingsListFilter extends StatelessWidget {
                   listing: updatedListing,
                 );
               };
-
             },
           ),
         ],

@@ -21,8 +21,8 @@ import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart'
 import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
-import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
-import 'package:system_pro/features/Home/logic/profile_cubit.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_view.dart';
 import 'package:system_pro/features/Home/ui/real_estate_details/real_estate_details_view.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';

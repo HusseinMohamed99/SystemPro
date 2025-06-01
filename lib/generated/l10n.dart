@@ -1499,6 +1499,16 @@ class S {
       args: [],
     );
   }
+
+  /// `An unexpected error occurred. Please close the app and try again.`
+  String get unknown_error {
+    return Intl.message(
+      'An unexpected error occurred. Please close the app and try again.',
+      name: 'unknown_error',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

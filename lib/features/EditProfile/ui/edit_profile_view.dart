@@ -9,8 +9,8 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/EditProfile/ui/widgets/edit_profile_form.dart';
-import 'package:system_pro/features/Home/logic/profile_cubit.dart';
-import 'package:system_pro/features/Home/logic/profile_state.dart';
+import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
+import 'package:system_pro/features/Home/logic/Profile/profile_state.dart';
 
 class EditProfileView extends StatelessWidget {
   const EditProfileView({super.key, required this.userName});

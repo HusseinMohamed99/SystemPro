@@ -350,6 +350,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unable_to_open_link": MessageLookupByLibrary.simpleMessage(
       "تعذر فتح الرابط:",
     ),
+    "unknown_error": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ غير متوقع في التطبيق. برجاء إغلاق التطبيق وإعادة تشغيله.",
+    ),
     "user_disabled_message": MessageLookupByLibrary.simpleMessage(
       "تم تعطيل حساب المستخدم من قبل المسؤول",
     ),

@@ -7,7 +7,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
-import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
 class ListingsList extends StatelessWidget {

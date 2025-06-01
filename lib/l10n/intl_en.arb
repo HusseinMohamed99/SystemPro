@@ -365,5 +365,7 @@
   "close_app": "Close App",
   "@close_app": {},
   "required_field":"This field is required",
-  "@required_field":{}
+  "@required_field":{},
+  "unknown_error":"An unexpected error occurred. Please close the app and try again.",
+  "@unknown_error": {}
 }

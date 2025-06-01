@@ -369,7 +369,9 @@
   "close_app": "إغلاق التطبيق",
   "@close_app": {},
   "required_field":"هذا الحقل مطلوب",
-  "@required_field":{}
+  "@required_field":{},
+  "unknown_error":"حدث خطأ غير متوقع في التطبيق. برجاء إغلاق التطبيق وإعادة تشغيله.",
+  "@unknown_error": {}
 
 
 }

@@ -6,7 +6,7 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/textFields/name_form_field_widget.dart';
 import 'package:system_pro/features/EditProfile/logic/edit_profile_state.dart';
-import 'package:system_pro/features/Home/logic/profile_cubit.dart';
+import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 
 class EditProfileForm extends StatelessWidget {
   const EditProfileForm({

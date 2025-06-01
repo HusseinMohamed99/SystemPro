@@ -8,8 +8,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
-import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
-import 'package:system_pro/features/Home/logic/favorite_state.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({

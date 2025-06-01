@@ -348,6 +348,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unable_to_open_link": MessageLookupByLibrary.simpleMessage(
       "Unable to open link:",
     ),
+    "unknown_error": MessageLookupByLibrary.simpleMessage(
+      "An unexpected error occurred. Please close the app and try again.",
+    ),
     "user_disabled_message": MessageLookupByLibrary.simpleMessage(
       "This user account has been disabled by an administrator.",
     ),

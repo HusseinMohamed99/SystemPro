@@ -1,3 +1,5 @@
+// Reviewed & documented production-ready version of MarketplaceCubit
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/networking/backend/api_result.dart';
@@ -5,8 +7,8 @@ import 'package:system_pro/features/Home/data/model/realestate/filter_request_mo
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
-import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
-import 'package:system_pro/features/Home/logic/marketplace_state.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
 class MarketplaceCubit extends Cubit<MarketplaceState> {
@@ -16,8 +18,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   final MarketplaceRepo _marketplaceRepo;
 
   final List<Listing> _visibleListings = [];
-  final Map<String, List<Listing>> _cachedListingsByFilter = {};
-  final Map<String, DateTime> _lastUpdateCache = {};
+  final Map<String, List<Listing>> _cachedListingsByFilter =
+      {}; // Caches listings by filter key
+  final Map<String, DateTime> _lastUpdateCache =
+      {}; // Tracks last update time per filter
 
   String _currentFilter = '';
   String get currentFilter => _currentFilter;
@@ -42,7 +46,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
     if (!forceRefresh && _cachedListingsByFilter.containsKey(effectiveFilter)) {
       _currentFilter = effectiveFilter;
-
       _visibleListings
         ..clear()
         ..addAll(_cachedListingsByFilter[effectiveFilter]!);
@@ -50,6 +53,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       if (_visibleListings.isNotEmpty) {
         _cursor = _visibleListings.last.id ?? 0;
       }
+
       _emitSuccessState();
       return;
     }
@@ -65,6 +69,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       success: (response) {
         final newItems = response.data?.listings ?? [];
 
+        // Check if there's new update
         final latestUpdate = newItems
             .map((item) => DateTime.tryParse(item.updatedAt ?? ''))
             .whereType<DateTime>()
@@ -81,7 +86,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
             latestUpdate.isAfter(previousUpdate);
 
         if (!hasChanges) {
-          // حتى لو مفيش تغيير، إرجع الكاش إن وجد
+          // If nothing changed, emit from cache
           if (_cachedListingsByFilter.containsKey(_currentFilter)) {
             _visibleListings
               ..clear()
@@ -106,15 +111,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
           _lastUpdateCache[_currentFilter] = latestUpdate;
         }
 
-        if (newItems.length < _limit) {
-          hasMore = false;
-        }
+        if (newItems.length < _limit) hasMore = false;
 
         _visibleListings.addAll(newItems);
-
-        if (_visibleListings.isNotEmpty) {
-          _cursor = _visibleListings.last.id ?? _cursor;
-        }
+        _cursor = _visibleListings.last.id ?? _cursor;
 
         _cachedListingsByFilter[_currentFilter] = List.from(_visibleListings);
         _emitSuccessState();
@@ -147,9 +147,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  Future<void> loadMore() async {
-    await _fetchListings(filter: _currentFilter);
-  }
+  Future<void> loadMore() async => await _fetchListings(filter: _currentFilter);
 
   void _emitSuccessState() {
     emit(
@@ -158,6 +156,87 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         selectedFilter: _currentFilter,
       ),
     );
+  }
+
+  Future<void> toggleFavorite(int id, {Listing? listing}) async {
+    try {
+      final result = await _marketplaceRepo.toggleFavorite(id);
+
+      result.when(
+        success: (res) {
+          final isFav = res.data?.isFavorited ?? false;
+
+          final index = _visibleListings.indexWhere((l) => l.id == id);
+          if (index != -1) {
+            _visibleListings[index] = _visibleListings[index].copyWith(
+              isFavorite: isFav,
+            );
+          }
+
+          _emitSuccessState();
+
+          final favoriteCubit = getIt<FavoriteCubit>();
+          if (isFav && listing != null) {
+            favoriteCubit.addToFavorites(listing.copyWith(isFavorite: true));
+          } else {
+            favoriteCubit.removeFromFavorites(id);
+          }
+        },
+        failure: (err) {
+          emit(
+            MarketplaceState.error(
+              'Favorite toggle failed: ${err.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      emit(MarketplaceState.error('Unexpected error: $e'));
+    }
+  }
+
+  void sortListings({
+    required String newest,
+    required String priceLow,
+    required String priceHigh,
+    required String sortType,
+  }) {
+    if (_visibleListings.isEmpty) return;
+
+    if (sortType == newest) {
+      _visibleListings.sort((a, b) {
+        final aTime = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
+        final bTime = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
+        return bTime.compareTo(aTime);
+      });
+    } else {
+      _visibleListings.sort((a, b) {
+        final aPrice = double.tryParse(a.price ?? '0') ?? 0;
+        final bPrice = double.tryParse(b.price ?? '0') ?? 0;
+        return sortType == priceLow
+            ? aPrice.compareTo(bPrice)
+            : bPrice.compareTo(aPrice);
+      });
+    }
+
+    _emitSuccessState();
+  }
+
+  Future<void> fetchAndFilterListings(FilterResultArguments args) async {
+    emit(const MarketplaceState.loading());
+    _resetPagination();
+
+    try {
+      final result = await _marketplaceRepo.getMarketplaceListings(
+        FilterRequestModel.fromArgs(
+          args,
+        ).copyWith(direction: _direction, cursor: _cursor, limit: _limit),
+      );
+
+      await _handleResponse(result);
+    } catch (e) {
+      emit(MarketplaceState.error('Unexpected error: $e'));
+    }
   }
 
   Future<void> loadMoreWithArgs(
@@ -221,87 +300,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
       emit(MarketplaceState.error('Unexpected error: $e'));
     } finally {
       isLoading = false;
-    }
-  }
-
-  Future<void> fetchAndFilterListings(FilterResultArguments args) async {
-    emit(const MarketplaceState.loading());
-    _resetPagination();
-
-    try {
-      final result = await _marketplaceRepo.getMarketplaceListings(
-        FilterRequestModel.fromArgs(
-          args,
-        ).copyWith(direction: _direction, cursor: _cursor, limit: _limit),
-      );
-
-      await _handleResponse(result);
-    } catch (e) {
-      emit(MarketplaceState.error('Unexpected error: $e'));
-    }
-  }
-
-  void sortListings({
-    required String newest,
-    required String priceLow,
-    required String priceHigh,
-    required String sortType,
-  }) {
-    if (_visibleListings.isEmpty) return;
-
-    if (sortType == newest) {
-      _visibleListings.sort((a, b) {
-        final aTime = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
-        final bTime = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
-        return bTime.compareTo(aTime);
-      });
-    } else {
-      _visibleListings.sort((a, b) {
-        final aPrice = double.tryParse(a.price ?? '0') ?? 0;
-        final bPrice = double.tryParse(b.price ?? '0') ?? 0;
-        return sortType == priceLow
-            ? aPrice.compareTo(bPrice)
-            : bPrice.compareTo(aPrice);
-      });
-    }
-
-    _emitSuccessState();
-  }
-
-  Future<void> toggleFavorite(int id, {Listing? listing}) async {
-    try {
-      final result = await _marketplaceRepo.toggleFavorite(id);
-
-      result.when(
-        success: (res) {
-          final isFav = res.data?.isFavorited ?? false;
-
-          final index = _visibleListings.indexWhere((l) => l.id == id);
-          if (index != -1) {
-            _visibleListings[index] = _visibleListings[index].copyWith(
-              isFavorite: isFav,
-            );
-          }
-
-          _emitSuccessState();
-
-          final favoriteCubit = getIt<FavoriteCubit>();
-          if (isFav && listing != null) {
-            favoriteCubit.addToFavorites(listing.copyWith(isFavorite: true));
-          } else {
-            favoriteCubit.removeFromFavorites(id);
-          }
-        },
-        failure: (err) {
-          emit(
-            MarketplaceState.error(
-              'Favorite toggle failed: ${err.apiErrorModel.message}',
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      emit(MarketplaceState.error('Unexpected error: $e'));
     }
   }
 

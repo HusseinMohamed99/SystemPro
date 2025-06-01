@@ -7,7 +7,7 @@ import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 
 class ResultsCountAndSortButton extends StatefulWidget {
   const ResultsCountAndSortButton({super.key, required this.propertyLength});

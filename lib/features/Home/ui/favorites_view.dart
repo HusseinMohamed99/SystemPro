@@ -9,8 +9,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
-import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
-import 'package:system_pro/features/Home/logic/favorite_state.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 import 'package:system_pro/features/Home/ui/fav_widgets/favorites_view_body.dart';
 
 class FavoritesView extends StatefulWidget {

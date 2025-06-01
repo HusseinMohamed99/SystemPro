@@ -59,12 +59,20 @@ class InitErrorScreen extends StatelessWidget {
                       title ?? context.localization.init_error_title,
                       style: context.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: textColor ?? ColorManager.pureWhite,
+                        color: textColor ?? ColorManager.errorRed,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     Text(
                       error,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.titleMedium?.copyWith(
+                        color: ColorManager.errorRed,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),  Text(
+                      context.localization.unknown_error,
                       style: context.titleMedium?.copyWith(
                         color: ColorManager.errorRed,
                       ),
