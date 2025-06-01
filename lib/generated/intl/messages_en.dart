@@ -210,6 +210,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Didn\'t receive code?",
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
     "oneDayAgo": MessageLookupByLibrary.simpleMessage("1 day ago"),
     "oneHourAgo": MessageLookupByLibrary.simpleMessage("1 hour ago"),
     "oneMinuteAgo": MessageLookupByLibrary.simpleMessage("1 minute ago"),

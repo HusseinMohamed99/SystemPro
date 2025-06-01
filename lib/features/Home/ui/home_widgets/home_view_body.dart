@@ -60,9 +60,7 @@ class HomeViewBody extends StatelessWidget {
                       rightPadding: kPaddingDefaultHorizontal,
                       bottomPadding: kPaddingVertical,
                     ),
-
                     const AdaptiveDivider(),
-
                     // Display count and sort option
                     ResultsCountAndSortButton(
                       propertyLength: listings.length.toString(),

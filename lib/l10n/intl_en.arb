@@ -264,6 +264,8 @@
   "@call": {},
   "newest": "Newest",
   "@newest": {},
+  "oldest": "Oldest",
+  "@oldest": {},
   "price_low": "Price(Low)",
   "@price_low": {},
   "price_high": "Price(High)",

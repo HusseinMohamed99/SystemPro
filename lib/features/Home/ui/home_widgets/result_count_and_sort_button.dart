@@ -9,8 +9,12 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 
+/// A row widget displaying the number of results and a sort menu button.
+/// Allows the user to select how listings are sorted (newest, price low/high).
 class ResultsCountAndSortButton extends StatefulWidget {
   const ResultsCountAndSortButton({super.key, required this.propertyLength});
+
+  /// Number of property listings displayed
   final String propertyLength;
 
   @override
@@ -19,10 +23,13 @@ class ResultsCountAndSortButton extends StatefulWidget {
 }
 
 class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
+  /// Currently selected sort option
   late String selectedSort;
 
+  /// Available localized sort options
   List<String> sortOptions(BuildContext context) => [
     context.localization.newest,
+    context.localization.oldest,
     context.localization.price_low,
     context.localization.price_high,
   ];
@@ -30,12 +37,14 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
   @override
   void initState() {
     super.initState();
-    selectedSort = '';
+    selectedSort = ''; // Will be replaced in build with default if needed
   }
 
   @override
   Widget build(BuildContext context) {
-    final allsortOptions = sortOptions(context);
+    final allSortOptions = sortOptions(context);
+
+    // Fallback to default sort if not set
     if (selectedSort.isEmpty) {
       selectedSort = context.localization.newest;
     }
@@ -43,17 +52,20 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        /// Left side: result count text
         Text(
           '${widget.propertyLength} ${context.localization.properties}',
           style: context.titleMedium?.copyWith(
             color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.softGray,
-                darkColor: ColorManager.iconGrey,
-              ),
+              context: context,
+              lightColor: ColorManager.softGray,
+              darkColor: ColorManager.iconGrey,
+            ),
             fontWeight: FontWeightHelper.medium,
           ),
         ),
+
+        /// Right side: sort button with PopupMenu
         Container(
           padding: EdgeInsetsDirectional.symmetric(
             horizontal: kPaddingDefaultHorizontal.w,
@@ -81,32 +93,46 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
               lightColor: ColorManager.pureWhite,
               darkColor: ColorManager.tertiaryBlack,
             ),
-
             onSelected: (value) {
               setState(() {
                 selectedSort = value;
               });
-              if (value == context.localization.newest) {
-              } else if (value == context.localization.price_low) {
-              } else if (value == context.localization.price_high) {
-              }
+
+              // Trigger sort logic in MarketplaceCubit
               context.read<MarketplaceCubit>().sortListings(
                 sortType: value,
                 newest: context.localization.newest,
                 priceLow: context.localization.price_low,
                 priceHigh: context.localization.price_high,
+                
               );
             },
-
             itemBuilder: (context) {
-              return allsortOptions.map((option) {
+              return allSortOptions.map((option) {
                 return PopupMenuItem<String>(
                   value: option,
-                  child: Text(
-                    option,
-                    style: context.titleMedium?.copyWith(
-                      fontWeight: FontWeightHelper.regular,
-                    ),
+                  child: Row(
+                    children: [
+                      // Show checkmark if current option is selected
+                      if (option == selectedSort)
+                        Icon(
+                          Icons.check_box_sharp,
+                           size: 16.sp,
+                          color: ColorManager.primaryBlue,
+                        )
+                      else
+                        horizontalSpacing(16), // Placeholder to align text
+
+                      horizontalSpacing(8),
+
+                      // Option text
+                      Text(
+                        option,
+                        style: context.titleMedium?.copyWith(
+                          fontWeight: FontWeightHelper.regular,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }).toList();

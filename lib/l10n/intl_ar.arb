@@ -267,6 +267,8 @@
   "@call": {},
   "newest": "الأحدث",
   "@newest": {},
+  "oldest": "الأقدم",
+  "@oldest": {},
   "price_low": "السعر (منخفض)",
   "@price_low": {},
   "price_high": "السعر (مرتفع)",

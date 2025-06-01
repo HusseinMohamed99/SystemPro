@@ -210,6 +210,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_result": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
     "not_receive_code": MessageLookupByLibrary.simpleMessage("لم تستلم الرمز؟"),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
+    "oldest": MessageLookupByLibrary.simpleMessage("الأقدم"),
     "oneDayAgo": MessageLookupByLibrary.simpleMessage("منذ يوم"),
     "oneHourAgo": MessageLookupByLibrary.simpleMessage("منذ ساعة"),
     "oneMinuteAgo": MessageLookupByLibrary.simpleMessage("منذ دقيقة"),

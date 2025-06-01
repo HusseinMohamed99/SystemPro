@@ -1140,6 +1140,11 @@ class S {
     return Intl.message('Newest', name: 'newest', desc: '', args: []);
   }
 
+  /// `Oldest`
+  String get oldest {
+    return Intl.message('Oldest', name: 'oldest', desc: '', args: []);
+  }
+
   /// `Price(Low)`
   String get price_low {
     return Intl.message('Price(Low)', name: 'price_low', desc: '', args: []);
