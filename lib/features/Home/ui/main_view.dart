@@ -14,6 +14,7 @@ import 'package:system_pro/features/Home/logic/Taps/tap_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/custom_bottom_navigation_bar.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/main_view_body.dart';
 
+/// Main screen managing tabs, theming, and content loading
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
@@ -43,44 +44,52 @@ class _MainViewContentState extends State<_MainViewContent> {
   @override
   void initState() {
     super.initState();
+    _loadInitialData();
+  }
+
+  void _loadInitialData() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<MarketplaceCubit>().getListings();
     });
   }
 
-  bool _needsLoading(dynamic state, List<Type> expectedStates) {
-    return !expectedStates.any((type) => state.runtimeType == type);
+  /// Check if we need to fetch data depending on the current state
+  bool _shouldLoad(dynamic state, List<Type> loadedStates) {
+    return !loadedStates.any((type) => state.runtimeType == type);
   }
 
   void _handleTabChange(int tabIndex) {
     switch (tabIndex) {
       case 0:
-        final marketCubit = context.read<MarketplaceCubit>();
-        if (_needsLoading(marketCubit.state, [
-          MarketPlaceLoading,
-          MarketPlaceSuccess,
-        ])) {
-          marketCubit.getListings();
-        }
+        _handleMarketplaceTab();
         break;
       case 1:
-        final favCubit = context.read<FavoriteCubit>();
-        if (_needsLoading(favCubit.state, [
-          GetFavoriteLoading,
-          GetFavoriteSuccess,
-        ])) {
-          favCubit.getFavoriteListings(forceRefresh: true);
-        }
+        _handleFavoritesTab();
         break;
       case 2:
-        final profileCubit = context.read<ProfileCubit>();
-        if (_needsLoading(profileCubit.state, [
-          UserDataLoading,
-          UserDataSuccess,
-        ])) {
-          profileCubit.emitGetProfileStates();
-        }
+        _handleProfileTab();
         break;
+    }
+  }
+
+  void _handleMarketplaceTab() {
+    final cubit = context.read<MarketplaceCubit>();
+    if (_shouldLoad(cubit.state, [MarketPlaceLoading, MarketPlaceSuccess])) {
+      cubit.getListings();
+    }
+  }
+
+  void _handleFavoritesTab() {
+    final cubit = context.read<FavoriteCubit>();
+    if (_shouldLoad(cubit.state, [GetFavoriteLoading, GetFavoriteSuccess])) {
+      cubit.getFavoriteListings(forceRefresh: true);
+    }
+  }
+
+  void _handleProfileTab() {
+    final cubit = context.read<ProfileCubit>();
+    if (_shouldLoad(cubit.state, [UserDataLoading, UserDataSuccess])) {
+      cubit.emitGetProfileStates();
     }
   }
 
@@ -95,7 +104,7 @@ class _MainViewContentState extends State<_MainViewContent> {
         },
       ),
       bottomNavigationBar: BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
-        builder: (context, themeState) {
+        builder: (context, _) {
           final currentTab = context.watch<TabCubit>().state;
           return CustomBottomNavigationBar(
             currentIndex: currentTab,

@@ -4,6 +4,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Home/data/model/navBar/bottom_navigation_bar_model.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/navigation_bar_item.dart';
 
+/// A customizable bottom navigation bar with adaptive theming
+/// and support for active/inactive item states.
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({
     super.key,
@@ -54,6 +56,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   }
 }
 
+/// Wraps each navigation item with interaction logic and animation support.
 class _NavigationBarItemWrapper extends StatelessWidget {
   const _NavigationBarItemWrapper({
     required this.index,

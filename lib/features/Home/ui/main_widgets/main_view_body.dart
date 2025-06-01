@@ -4,6 +4,8 @@ import 'package:system_pro/features/Home/ui/favorites_view.dart';
 import 'package:system_pro/features/Home/ui/home_view.dart';
 import 'package:system_pro/features/Home/ui/profile_view.dart';
 
+/// Displays the currently selected view in the bottom navigation.
+/// Maintains state using IndexedStack and improves repaint performance.
 class MainViewBody extends StatelessWidget {
   const MainViewBody({super.key, required this.currentViewIndex});
 
@@ -18,7 +20,7 @@ class MainViewBody extends StatelessWidget {
         RepaintBoundary(child: FavoritesView()),
         RepaintBoundary(
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: EdgeInsetsDirectional.symmetric(
               horizontal: kPaddingDefaultHorizontal,
               vertical: kPaddingDefaultVertical,
             ),
