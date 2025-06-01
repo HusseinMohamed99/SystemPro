@@ -5,7 +5,7 @@ import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
-import 'package:system_pro/features/Home/data/model/listing_image.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
 
 class RealEstateDetailsImage extends StatefulWidget {
   const RealEstateDetailsImage({super.key, this.images});

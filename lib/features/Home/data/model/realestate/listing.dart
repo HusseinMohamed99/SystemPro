@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:system_pro/features/Home/data/model/amenities.dart';
-import 'package:system_pro/features/Home/data/model/company.dart';
-import 'package:system_pro/features/Home/data/model/employee.dart';
-import 'package:system_pro/features/Home/data/model/listing_image.dart';
-import 'package:system_pro/features/Home/data/model/marketer.dart';
-import 'package:system_pro/features/Home/data/model/subcategory.dart';
+import 'package:system_pro/features/Home/data/model/realestate/amenities.dart';
+import 'package:system_pro/features/Home/data/model/realestate/company.dart';
+import 'package:system_pro/features/Home/data/model/realestate/employee.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
+import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
+import 'package:system_pro/features/Home/data/model/realestate/subcategory.dart';
 
 part 'listing.g.dart';
 

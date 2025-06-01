@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-import 'package:system_pro/features/Home/data/model/bottom_navigation_bar_model.dart';
+import 'package:system_pro/features/Home/data/model/navBar/bottom_navigation_bar_model.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/navigation_bar_item.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {

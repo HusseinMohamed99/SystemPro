@@ -20,7 +20,7 @@ import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_response.dart';
 import 'package:system_pro/features/Home/data/model/favorites/get_favorites_response.dart';
 import 'package:system_pro/features/Home/data/model/favorites/toggle_favorite_response.dart';
-import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
+import 'package:system_pro/features/Home/data/model/realestate/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/model/user/user_data_response.dart';
 import 'package:system_pro/features/Search/data/model/category_response.dart';
 

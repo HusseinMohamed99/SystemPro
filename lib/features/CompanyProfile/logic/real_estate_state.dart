@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:system_pro/features/Home/data/model/listing.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 
 part 'real_estate_state.freezed.dart';
 

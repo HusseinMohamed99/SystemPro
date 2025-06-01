@@ -11,7 +11,7 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
-import 'package:system_pro/features/Home/data/model/company.dart';
+import 'package:system_pro/features/Home/data/model/realestate/company.dart';
 class ListedByWidget extends StatelessWidget {
   const ListedByWidget({super.key, required this.company});
   final Company company;

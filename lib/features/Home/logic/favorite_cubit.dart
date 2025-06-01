@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:system_pro/features/Home/data/model/listing.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 import 'package:system_pro/features/Home/logic/favorite_state.dart';
 

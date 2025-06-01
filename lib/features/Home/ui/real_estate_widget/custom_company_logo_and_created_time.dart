@@ -7,8 +7,8 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
-import 'package:system_pro/features/Home/data/model/company.dart';
-import 'package:system_pro/features/Home/data/model/marketer.dart';
+import 'package:system_pro/features/Home/data/model/realestate/company.dart';
+import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
 
 class CustomCompanyLogoAndCratedTime extends StatelessWidget {
   const CustomCompanyLogoAndCratedTime({

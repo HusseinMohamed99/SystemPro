@@ -9,7 +9,7 @@ import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
-import 'package:system_pro/features/Home/data/model/listing.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';

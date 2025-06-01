@@ -2,7 +2,7 @@ import 'package:system_pro/core/networking/backend/api_error_handler.dart';
 import 'package:system_pro/core/networking/backend/api_result.dart';
 import 'package:system_pro/core/networking/backend/api_service.dart';
 import 'package:system_pro/features/Home/data/model/favorites/toggle_favorite_response.dart';
-import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
+import 'package:system_pro/features/Home/data/model/realestate/marketplace_response.dart';
 
 class MarketplaceRepo {
   MarketplaceRepo(this._apiService);

@@ -5,7 +5,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
-import 'package:system_pro/features/Home/data/model/amenities.dart';
+import 'package:system_pro/features/Home/data/model/realestate/amenities.dart';
 class AmenitiesWidget extends StatelessWidget {
   const AmenitiesWidget({super.key, required this.amenities});
   final List<Amenities> amenities;

@@ -15,8 +15,8 @@ import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart'
 import 'package:system_pro/features/CompanyProfile/ui/widgets/about_real_estate_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/location_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/properties_widget.dart';
-import 'package:system_pro/features/Home/data/model/company.dart';
-import 'package:system_pro/features/Home/data/model/listing.dart';
+import 'package:system_pro/features/Home/data/model/realestate/company.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
 class GetProfileCompanySuccess extends StatelessWidget {

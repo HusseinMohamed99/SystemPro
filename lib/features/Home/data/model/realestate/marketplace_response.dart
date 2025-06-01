@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:system_pro/features/Home/data/model/marketplace_data.dart';
+import 'package:system_pro/features/Home/data/model/realestate/marketplace_data.dart';
 
 part 'marketplace_response.g.dart';
 

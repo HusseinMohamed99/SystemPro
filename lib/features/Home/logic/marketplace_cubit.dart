@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
-import 'package:system_pro/features/Home/data/model/listing.dart';
-import 'package:system_pro/features/Home/data/model/marketplace_response.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
+import 'package:system_pro/features/Home/data/model/realestate/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
