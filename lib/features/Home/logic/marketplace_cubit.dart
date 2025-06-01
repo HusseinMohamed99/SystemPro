@@ -27,7 +27,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
   bool isLoading = false;
   bool hasMore = true;
 
-  /// إعادة تعيين حالة التحميل والصفحة
+  /// Resets pagination and related flags
   void _resetPagination() {
     _visibleListings.clear();
     _cursor = 0;
@@ -37,43 +37,32 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     hasMore = true;
   }
 
-  /// تحميل أولي للإعلانات حسب الفلتر (buy/rent)
+  /// Initial fetch of listings by filter type (e.g. buy/rent)
   Future<void> getListings({String? filter}) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
+
     final effectiveFilter = filter?.isNotEmpty == true ? filter! : 'buy';
     _currentFilter = effectiveFilter;
+
     await _fetchListings(filter: effectiveFilter);
   }
 
-  /// تحميل المزيد من الإعلانات
+  /// Load more listings (used for infinite scroll)
   Future<void> loadMore() async {
     await _fetchListings(filter: _currentFilter);
   }
 
-  /// تحميل المزيد باستخدام الفلاتر المعقدة
+  /// Fetch listings with complex filters (via search screen)
   Future<void> loadMoreWithArgs(FilterResultArguments args) async {
     if (isLoading || !hasMore) return;
     isLoading = true;
 
     try {
       final result = await _marketplaceRepo.getMarketplaceListings(
-        FilterRequestModel(
-          direction: _direction,
-          cursor: _cursor,
-          limit: _limit,
-          listingType: args.listingType,
-          categoryID: args.category,
-          subCategoryID: args.selectedSubcategories,
-          bedrooms: args.bedrooms,
-          bathrooms: args.bathrooms,
-          priceMin: args.minPrice,
-          priceMax: args.maxPrice,
-          areaMin: args.minSize,
-          areaMax: args.maxSize,
-          amenities: args.selectedAmenities,
-          location: args.location,
-        ),
+        FilterRequestModel.fromArgs(
+          args,
+        ).copyWith(direction: _direction, cursor: _cursor, limit: _limit),
       );
 
       await _handleResponse(result);
@@ -84,7 +73,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  /// تنفيذ منطق تحميل الإعلانات
+  /// Internal fetch logic
   Future<void> _fetchListings({String filter = ''}) async {
     if (isLoading || !hasMore) return;
     isLoading = true;
@@ -107,7 +96,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  /// دالة موحدة للتعامل مع الاستجابة
+  /// Unified response handler
   Future<void> _handleResponse(ApiResult<MarketplaceResponse> result) async {
     result.when(
       success: (response) {
@@ -118,6 +107,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         }
 
         _visibleListings.addAll(newItems);
+
         if (_visibleListings.isNotEmpty) {
           _cursor = _visibleListings.last.id ?? _cursor;
         }
@@ -130,7 +120,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// إرسال حالة النجاح إلى الواجهة
+  /// Emits the success state with current visible listings
   void _emitSuccessState() {
     emit(
       MarketplaceState.success(
@@ -140,29 +130,16 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// تطبيق فلترة باستخدام بيانات مفصلة
+  /// Search filter logic with full args
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
 
     try {
       final result = await _marketplaceRepo.getMarketplaceListings(
-        FilterRequestModel(
-          direction: _direction,
-          cursor: _cursor,
-          limit: _limit,
-          location: args.location,
-          listingType: args.listingType,
-          categoryID: args.category,
-          subCategoryID: args.selectedSubcategories,
-          bedrooms: args.bedrooms,
-          bathrooms: args.bathrooms,
-          priceMin: args.minPrice,
-          priceMax: args.maxPrice,
-          areaMin: args.minSize,
-          areaMax: args.maxSize,
-          amenities: args.selectedAmenities,
-        ),
+        FilterRequestModel.fromArgs(
+          args,
+        ).copyWith(direction: _direction, cursor: _cursor, limit: _limit),
       );
 
       await _handleResponse(result);
@@ -171,7 +148,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  /// تبديل حالة الإعلان كمفضل أو لا
+  /// Toggles favorite state and updates both listings + FavoriteCubit
   Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
@@ -180,13 +157,12 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         success: (res) {
           final isFav = res.data?.isFavorited ?? false;
 
-          for (var i = 0; i < _visibleListings.length; i++) {
-            if (_visibleListings[i].id == id) {
-              _visibleListings[i] = _visibleListings[i].copyWith(
-                isFavorite: isFav,
-              );
-              break;
-            }
+          // update local listing
+          final index = _visibleListings.indexWhere((l) => l.id == id);
+          if (index != -1) {
+            _visibleListings[index] = _visibleListings[index].copyWith(
+              isFavorite: isFav,
+            );
           }
 
           _emitSuccessState();
@@ -211,9 +187,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  /// تطبيق فلتر بسيط على الإعلانات الظاهرة
+  /// Filters currently visible listings by type (e.g., buy/rent)
   Future<void> filterListings(String filter) async {
     _currentFilter = filter;
+
     final filtered =
         _visibleListings
             .where((l) => l.listingType?.toLowerCase() == filter.toLowerCase())
@@ -227,7 +204,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// ترتيب الإعلانات بناءً على نوع الترتيب
+  /// Sort listings based on provided criteria
   void sortListings({
     required String newest,
     required String priceLow,
@@ -237,13 +214,11 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     if (_visibleListings.isEmpty) return;
 
     if (sortType == newest) {
-      _visibleListings.sort(
-        (a, b) =>
-            DateTime.tryParse(
-              b.createdAt ?? '',
-            )?.compareTo(DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0)) ??
-            0,
-      );
+      _visibleListings.sort((a, b) {
+        final aTime = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
+        final bTime = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
+        return bTime.compareTo(aTime);
+      });
     } else {
       _visibleListings.sort((a, b) {
         final aPrice = double.tryParse(a.price ?? '0') ?? 0;
