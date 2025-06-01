@@ -56,7 +56,7 @@ Listing _$ListingFromJson(Map<String, dynamic> json) => Listing(
           ? null
           : Subcategory.fromJson(json['subcategory'] as Map<String, dynamic>),
   listingType: json['listing_type'] as String?,
-  isFavorite: json['is_favorite'] as bool?,
+  isFavorite: json['is_favorite'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{

@@ -45,7 +45,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
       widget.onToggleFavorite!();
     }
     setState(() {
-      widget.listing?.isFavorite = !widget.listing!.isFavorite!;
+      widget.listing?.isFavorite = !widget.listing!.isFavorite;
 
     });
     // 🔄 اجبر الـ widget يعيد البناء علشان أي تغيير فSسي isFSسavorite يتعكس

@@ -11,7 +11,8 @@ MarketplaceData _$MarketplaceDataFromJson(Map<String, dynamic> json) =>
       listings:
           (json['listings'] as List<dynamic>?)
               ?.map((e) => Listing.fromJson(e as Map<String, dynamic>))
-              .toList(),
+              .toList() ??
+          [],
       pagination:
           json['pagination'] == null
               ? null

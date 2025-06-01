@@ -7,12 +7,12 @@ part of 'amenities.dart';
 // **************************************************************************
 
 Amenities _$AmenitiesFromJson(Map<String, dynamic> json) => Amenities(
+  id: (json['id'] as num?)?.toInt(),
+  name: json['name'] as String?,
   pivot:
       json['pivot'] == null
           ? null
           : Pivot.fromJson(json['pivot'] as Map<String, dynamic>),
-  id: (json['id'] as num?)?.toInt(),
-  name: json['name'] as String?,
 );
 
 Map<String, dynamic> _$AmenitiesToJson(Amenities instance) => <String, dynamic>{

@@ -124,7 +124,7 @@ class ListingsListFilter extends StatelessWidget {
             onToggleFavoriteBuilder: (listing) {
               return () {
                 listing.isFavorite =
-                    !(listing.isFavorite ?? false); // تحديث مباشر
+                    !(listing.isFavorite); // تحديث مباشر
                 context.read<FavoriteCubit>().toggleFavorite(
                   listing.id!,
                   listing: listing,

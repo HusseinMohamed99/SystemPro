@@ -21,7 +21,7 @@ Map<String, dynamic> _$MarketplaceResponseToJson(
   MarketplaceResponse instance,
 ) => <String, dynamic>{
   'status': instance.status,
+  'code': instance.code,
   'message': instance.message,
   'data': instance.data,
-  'code': instance.code,
 };
