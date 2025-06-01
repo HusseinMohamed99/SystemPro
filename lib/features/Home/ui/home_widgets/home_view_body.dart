@@ -15,37 +15,44 @@ import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_b
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Top Search TextField with padding
         const CustomSearchTextField().onlyPadding(
           leftPadding: kPaddingDefaultHorizontal,
           rightPadding: kPaddingDefaultHorizontal,
           bottomPadding: kPaddingVertical,
           topPadding: kPaddingDefaultVertical,
         ),
+        // Main content area
         Expanded(
           child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
             builder: (context, state) {
+              // Loading state
               if (state is MarketPlaceLoading) {
                 return const CustomLoader(type: LoaderType.adaptive);
               }
 
+              // Error state
               if (state is MarketPlaceError) {
                 return CustomErrorTextWidget(errorMessage: state.error);
               }
+
+              // Success state with data
               if (state is MarketPlaceSuccess) {
                 final listings = state.listings;
+
                 return Column(
                   children: [
+                    // Toggle filter buttons (e.g., buy/rent)
                     PropertyFiltersRow(
                       selectedFilter: state.selectedFilter,
                       filtersToggle: FilterToggle.values,
                       onToggleChanged: (filter) {
-                        final cubit = BlocProvider.of<MarketplaceCubit>(
-                          context,
-                        );
+                        final cubit = context.read<MarketplaceCubit>();
                         cubit.getListings(filter: filter);
                       },
                     ).onlyPadding(
@@ -53,7 +60,10 @@ class HomeViewBody extends StatelessWidget {
                       rightPadding: kPaddingDefaultHorizontal,
                       bottomPadding: kPaddingVertical,
                     ),
+
                     const AdaptiveDivider(),
+
+                    // Display count and sort option
                     ResultsCountAndSortButton(
                       propertyLength: listings.length.toString(),
                     ).onlyPadding(
@@ -61,10 +71,14 @@ class HomeViewBody extends StatelessWidget {
                       rightPadding: kPaddingDefaultHorizontal,
                       topPadding: kPaddingDefaultVertical,
                     ),
+
+                    // Main listings view
                     Expanded(child: ListingsList(listings: listings)),
                   ],
                 );
               }
+
+              // Initial or unknown state
               return const SizedBox.shrink();
             },
           ),

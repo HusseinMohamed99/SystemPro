@@ -8,9 +8,9 @@ part of 'filter_request_model.dart';
 
 FilterRequestModel _$FilterRequestModelFromJson(Map<String, dynamic> json) =>
     FilterRequestModel(
-      direction: json['direction'] as String,
-      cursor: (json['cursor'] as num).toInt(),
-      limit: (json['limit'] as num).toInt(),
+      direction: json['direction'] as String? ?? 'next',
+      cursor: (json['cursor'] as num?)?.toInt() ?? 0,
+      limit: (json['limit'] as num?)?.toInt() ?? 5,
       location: json['location'] as String?,
       listingType: json['listing_type'] as String?,
       categoryID: (json['category_id'] as num?)?.toInt(),

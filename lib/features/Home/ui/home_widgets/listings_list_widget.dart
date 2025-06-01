@@ -12,38 +12,44 @@ import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_slive
 
 class ListingsList extends StatelessWidget {
   const ListingsList({super.key, required this.listings});
+
   final List<Listing> listings;
+
   @override
   Widget build(BuildContext context) {
+    final cubit = BlocProvider.of<MarketplaceCubit>(context);
+
+    // Show empty state widget if listings is empty
     if (listings.isEmpty) {
       return CustomErrorTextWidget(
         errorMessage: context.localization.no_available_properties,
       );
     }
-    final cubit = BlocProvider.of<MarketplaceCubit>(context);
+
     return NotificationListener<ScrollNotification>(
-      onNotification: (scrollInfo) {
-        if (scrollInfo.metrics.pixels >=
-                scrollInfo.metrics.maxScrollExtent - 50 &&
+      onNotification: (notification) {
+        final reachedBottom =
+            notification.metrics.pixels >=
+            notification.metrics.maxScrollExtent - 50;
+
+        if (notification is ScrollEndNotification &&
+            reachedBottom &&
             !cubit.isLoading &&
             cubit.hasMore) {
           cubit.loadMore();
         }
+
         return false;
       },
       child: CustomScrollView(
         slivers: [
           RealEstateSliverList(
             listings: listings,
-          onToggleFavoriteBuilder: (listing) {
+            onToggleFavoriteBuilder: (listing) {
               return () {
-                cubit.toggleFavorite(
-                  listing.id ?? 0,
-                  listing: listing,
-                ); // ✅ مهم جدًا
+                cubit.toggleFavorite(listing.id ?? 0, listing: listing);
               };
             },
-
           ),
         ],
       ),
@@ -52,6 +58,5 @@ class ListingsList extends StatelessWidget {
       rightPadding: kPaddingDefaultHorizontal,
       topPadding: kPaddingDefaultVertical,
     );
-
   }
 }

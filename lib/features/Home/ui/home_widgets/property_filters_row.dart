@@ -14,7 +14,7 @@ class PropertyFiltersRow extends StatelessWidget {
     required this.onToggleChanged,
   });
 
-final List<FilterToggle> filtersToggle;
+  final List<FilterToggle> filtersToggle;
   final String selectedFilter;
   final void Function(String selectedValue) onToggleChanged;
 
@@ -22,64 +22,73 @@ final List<FilterToggle> filtersToggle;
   Widget build(BuildContext context) {
     return Row(
       children:
-     filtersToggle.map((toggle) {
-            final label = filterToggleLabel(context, toggle); 
-            final value = filterToggleValue(
-              toggle,
-            ); 
+          filtersToggle.map((toggle) {
+            final label = filterToggleLabel(context, toggle);
+            final value = filterToggleValue(toggle);
             final isSelected = selectedFilter == value;
+
+            // Colors adapted to current theme
+            final selectedTextColor = AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.primaryBlue,
+              darkColor: ColorManager.pureWhite,
+            );
+
+            final unselectedTextColor = AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.softGray,
+              darkColor: ColorManager.hintGrey,
+            );
+
+            final selectedBackgroundColor = AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.shadowBlue,
+              darkColor: ColorManager.primaryBlue,
+            );
+
+            final unselectedBackgroundColor = AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.pureWhite,
+              darkColor: ColorManager.tertiaryBlack,
+            );
+
+            final borderColor = AdaptiveColor.adaptiveColor(
+              context: context,
+              lightColor: ColorManager.shadowBlue,
+              darkColor: ColorManager.tertiaryBlack,
+            );
+
             return Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                padding:  EdgeInsetsDirectional.symmetric(horizontal: 4.w),
                 child: ChoiceChip(
-                  labelPadding: EdgeInsets.symmetric(vertical: 2.h),
+                  labelPadding:  EdgeInsetsDirectional.symmetric(vertical: 2.h),
                   label: SizedBox(
                     width: double.infinity,
                     child: Text(
-                   label ,
+                      label,
                       textAlign: TextAlign.center,
                       style: context.titleLarge?.copyWith(
                         color:
                             isSelected
-                                ? AdaptiveColor.adaptiveColor(
-                                  context: context,
-                                  lightColor: ColorManager.primaryBlue,
-                                  darkColor: ColorManager.pureWhite,
-                                )
-                                : AdaptiveColor.adaptiveColor(
-                                  context: context,
-                                  lightColor: ColorManager.softGray,
-                                  darkColor: ColorManager.hintGrey,
-                                ),
+                                ? selectedTextColor
+                                : unselectedTextColor,
                         fontWeight: FontWeightHelper.medium,
                       ),
                     ),
                   ),
                   selected: isSelected,
                   onSelected: (_) {
+                    // Prevent re-triggering if already selected
                     if (!isSelected) {
                       onToggleChanged(value);
                     }
                   },
-                  selectedColor: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.shadowBlue,
-                    darkColor: ColorManager.primaryBlue,
-                  ),
-                  backgroundColor: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.pureWhite,
-                    darkColor: ColorManager.tertiaryBlack,
-                  ),
+                  selectedColor: selectedBackgroundColor,
+                  backgroundColor: unselectedBackgroundColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.shadowBlue,
-                        darkColor: ColorManager.tertiaryBlack,
-                      ),
-                    ),
+                    side: BorderSide(color: borderColor),
                   ),
                   showCheckmark: false,
                 ),
@@ -89,3 +98,4 @@ final List<FilterToggle> filtersToggle;
     );
   }
 }
+
