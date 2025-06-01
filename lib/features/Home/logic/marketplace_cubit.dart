@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
+import 'package:system_pro/core/networking/backend/api_result.dart';
+import 'package:system_pro/features/Home/data/model/realestate/filter_request_model.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/marketplace_response.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
@@ -7,179 +9,129 @@ import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/marketplace_state.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
+/// Cubit class that manages real estate marketplace listings,
+/// including filtering, pagination, sorting, and favorite toggling.
 class MarketplaceCubit extends Cubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
     : super(const MarketplaceState.initial());
 
   final MarketplaceRepo _marketplaceRepo;
-
   final List<Listing> _visibleListings = [];
+
   String _currentFilter = '';
-  bool isLoading = false;
-  bool hasMore = true;
+  String get currentFilter => _currentFilter;
 
   int _cursor = 0;
   int _limit = 5;
   String _direction = 'next';
+  bool isLoading = false;
+  bool hasMore = true;
 
-  String get currentFilter => _currentFilter;
+  /// إعادة تعيين حالة التحميل والصفحة
+  void _resetPagination() {
+    _visibleListings.clear();
+    _cursor = 0;
+    _limit = 5;
+    _direction = 'next';
+    isLoading = false;
+    hasMore = true;
+  }
 
+  /// تحميل أولي للإعلانات حسب الفلتر (buy/rent)
   Future<void> getListings({String? filter}) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
-
     final effectiveFilter = filter?.isNotEmpty == true ? filter! : 'buy';
     _currentFilter = effectiveFilter;
-
     await _fetchListings(filter: effectiveFilter);
   }
 
+  /// تحميل المزيد من الإعلانات
+  Future<void> loadMore() async {
+    await _fetchListings(filter: _currentFilter);
+  }
+
+  /// تحميل المزيد باستخدام الفلاتر المعقدة
+  Future<void> loadMoreWithArgs(FilterResultArguments args) async {
+    if (isLoading || !hasMore) return;
+    isLoading = true;
+
+    try {
+      final result = await _marketplaceRepo.getMarketplaceListings(
+        FilterRequestModel(
+          direction: _direction,
+          cursor: _cursor,
+          limit: _limit,
+          listingType: args.listingType,
+          categoryID: args.category,
+          subCategoryID: args.selectedSubcategories,
+          bedrooms: args.bedrooms,
+          bathrooms: args.bathrooms,
+          priceMin: args.minPrice,
+          priceMax: args.maxPrice,
+          areaMin: args.minSize,
+          areaMax: args.maxSize,
+          amenities: args.selectedAmenities,
+          location: args.location,
+        ),
+      );
+
+      await _handleResponse(result);
+    } catch (e) {
+      emit(MarketplaceState.error('Unexpected error: $e'));
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  /// تنفيذ منطق تحميل الإعلانات
   Future<void> _fetchListings({String filter = ''}) async {
     if (isLoading || !hasMore) return;
     isLoading = true;
 
     try {
       final result = await _marketplaceRepo.getMarketplaceListings(
-        direction: _direction,
-        cursor: _cursor,
-        limit: _limit,
-        listingType: filter,
+        FilterRequestModel(
+          direction: _direction,
+          cursor: _cursor,
+          limit: _limit,
+          listingType: filter,
+        ),
       );
 
-      await result.when(
-        success: (MarketplaceResponse response) async {
-          final newItems = response.data?.listings ?? [];
-
-          if (newItems.isEmpty || newItems.length < _limit) {
-            hasMore = false;
-          }
-
-          _visibleListings.addAll(newItems);
-
-          if (_visibleListings.isNotEmpty) {
-            _cursor = _visibleListings.last.id ?? _cursor;
-          }
-
-          emit(
-            MarketplaceState.success(
-              listings: List.from(_visibleListings),
-              selectedFilter: _currentFilter,
-            ),
-          );
-        },
-        failure: (errorHandler) {
-          emit(
-            MarketplaceState.error(
-              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
-            ),
-          );
-        },
-      );
-    } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+      await _handleResponse(result);
+    } catch (e) {
+      emit(MarketplaceState.error('Unexpected error: $e'));
     } finally {
       isLoading = false;
     }
   }
 
-  Future<void> loadMore() async {
-    await _fetchListings(filter: _currentFilter);
+  /// دالة موحدة للتعامل مع الاستجابة
+  Future<void> _handleResponse(ApiResult<MarketplaceResponse> result) async {
+    result.when(
+      success: (response) {
+        final newItems = response.data?.listings ?? [];
+
+        if (newItems.isEmpty || newItems.length < _limit) {
+          hasMore = false;
+        }
+
+        _visibleListings.addAll(newItems);
+        if (_visibleListings.isNotEmpty) {
+          _cursor = _visibleListings.last.id ?? _cursor;
+        }
+
+        _emitSuccessState();
+      },
+      failure: (error) {
+        emit(MarketplaceState.error('Error: ${error.apiErrorModel.message}'));
+      },
+    );
   }
 
-  Future<void> loadMoreWithArgs(FilterResultArguments args) async {
-    if (isLoading || !hasMore) return;
-    isLoading = true;
-    _limit += 5;
-
-    try {
-      final result = await _marketplaceRepo.getMarketplaceListings(
-        direction: _direction,
-        cursor: _cursor,
-        limit: _limit,
-        listingType: args.listingType,
-        categoryID: args.category,
-        subCategoryID: args.selectedSubcategories,
-        bedrooms: args.bedrooms,
-        bathrooms: args.bathrooms,
-        priceMin: args.minPrice,
-        priceMax: args.maxPrice,
-        areaMin: args.minSize,
-        areaMax: args.maxSize,
-        amenities: args.selectedAmenities,
-        location: args.location,
-      );
-
-      await result.when(
-        success: (MarketplaceResponse response) async {
-          final newItems = response.data?.listings ?? [];
-
-          _visibleListings.addAll(newItems);
-
-          if (_visibleListings.isNotEmpty) {
-            _cursor = _visibleListings.last.id ?? _cursor;
-          }
-
-          hasMore = newItems.length >= _limit;
-
-          emit(
-            MarketplaceState.success(
-              listings: List.from(_visibleListings),
-              selectedFilter: _currentFilter,
-            ),
-          );
-        },
-        failure: (errorHandler) {
-          emit(
-            MarketplaceState.error(
-              'حدث خطأ في تحميل المزيد: ${errorHandler.apiErrorModel.message}',
-            ),
-          );
-        },
-      );
-    } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  void _resetPagination() {
-    _visibleListings.clear();
-    _cursor = 0;
-    _limit = 5;
-    hasMore = true;
-    isLoading = false;
-    _direction = 'next';
-  }
-
-  void sortListings({
-    required String newest,
-    required String priceLow,
-    required String priceHigh,
-    required String sortType,
-  }) {
-    if (_visibleListings.isEmpty) return;
-
-    if (sortType == newest) {
-      _visibleListings.sort((a, b) {
-        final aTime = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
-        final bTime = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
-        return bTime.compareTo(aTime);
-      });
-    } else if (sortType == priceLow) {
-      _visibleListings.sort((a, b) {
-        final aPrice = double.tryParse(a.price ?? '0.0') ?? 0.0;
-        final bPrice = double.tryParse(b.price ?? '0.0') ?? 0.0;
-        return aPrice.compareTo(bPrice);
-      });
-    } else if (sortType == priceHigh) {
-      _visibleListings.sort((a, b) {
-        final aPrice = double.tryParse(a.price ?? '0.0') ?? 0.0;
-        final bPrice = double.tryParse(b.price ?? '0.0') ?? 0.0;
-        return bPrice.compareTo(aPrice);
-      });
-    }
-
+  /// إرسال حالة النجاح إلى الواجهة
+  void _emitSuccessState() {
     emit(
       MarketplaceState.success(
         listings: List.from(_visibleListings),
@@ -188,99 +140,83 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
+  /// تطبيق فلترة باستخدام بيانات مفصلة
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
     _resetPagination();
 
     try {
       final result = await _marketplaceRepo.getMarketplaceListings(
-        direction: _direction,
-        cursor: _cursor,
-        limit: _limit,
-        location: args.location,
-        listingType: args.listingType,
-        categoryID: args.category,
-        subCategoryID: args.selectedSubcategories,
-        bedrooms: args.bedrooms,
-        bathrooms: args.bathrooms,
-        priceMin: args.minPrice,
-        priceMax: args.maxPrice,
-        areaMin: args.minSize,
-        areaMax: args.maxSize,
-        amenities: args.selectedAmenities,
+        FilterRequestModel(
+          direction: _direction,
+          cursor: _cursor,
+          limit: _limit,
+          location: args.location,
+          listingType: args.listingType,
+          categoryID: args.category,
+          subCategoryID: args.selectedSubcategories,
+          bedrooms: args.bedrooms,
+          bathrooms: args.bathrooms,
+          priceMin: args.minPrice,
+          priceMax: args.maxPrice,
+          areaMin: args.minSize,
+          areaMax: args.maxSize,
+          amenities: args.selectedAmenities,
+        ),
       );
 
-      await result.when(
-        success: (response) async {
-          var newItems = response.data?.listings ?? [];
-
-          // إذا مفيش نتائج، حاول بالفلاتر الأساسية فقط
-          if (newItems.isEmpty) {
-            final fallbackResult = await _marketplaceRepo
-                .getMarketplaceListings(
-                  direction: _direction,
-                  cursor: _cursor,
-                  limit: _limit,
-                  location: args.location,
-                  listingType: args.listingType,
-                  categoryID: args.category,
-                  subCategoryID: args.selectedSubcategories,
-                  // باقي الفلاتر ما نمررهاش
-                );
-
-            fallbackResult.when(
-              success: (fallbackResponse) {
-                newItems = fallbackResponse.data?.listings ?? [];
-              },
-
-              failure: (fallbackError) {
-                emit(
-                  MarketplaceState.error(
-                    'فشل في تحميل النتائج البديلة: ${fallbackError.apiErrorModel.message}',
-                  ),
-                );
-                return;
-              },
-            );
-          }
-
-          _visibleListings.addAll(newItems);
-
-          if (_visibleListings.isNotEmpty) {
-            _cursor = _visibleListings.last.id ?? _cursor;
-          }
-
-          hasMore = newItems.length >= _limit;
-
-          emit(
-            MarketplaceState.success(
-              listings: List.from(_visibleListings),
-              selectedFilter: _currentFilter,
-            ),
-          );
-        },
-        failure: (errorHandler) {
-          emit(
-            MarketplaceState.error(
-              'حدث خطأ في تحميل البيانات: ${errorHandler.apiErrorModel.message}',
-            ),
-          );
-        },
-      );
-    } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+      await _handleResponse(result);
+    } catch (e) {
+      emit(MarketplaceState.error('Unexpected error: $e'));
     }
   }
 
+  /// تبديل حالة الإعلان كمفضل أو لا
+  Future<void> toggleFavorite(int id, {Listing? listing}) async {
+    try {
+      final result = await _marketplaceRepo.toggleFavorite(id);
+
+      result.when(
+        success: (res) {
+          final isFav = res.data?.isFavorited ?? false;
+
+          for (var i = 0; i < _visibleListings.length; i++) {
+            if (_visibleListings[i].id == id) {
+              _visibleListings[i] = _visibleListings[i].copyWith(
+                isFavorite: isFav,
+              );
+              break;
+            }
+          }
+
+          _emitSuccessState();
+
+          final favoriteCubit = getIt<FavoriteCubit>();
+          if (isFav && listing != null) {
+            favoriteCubit.addToFavorites(listing.copyWith(isFavorite: true));
+          } else {
+            favoriteCubit.removeFromFavorites(id);
+          }
+        },
+        failure: (err) {
+          emit(
+            MarketplaceState.error(
+              'Favorite toggle failed: ${err.apiErrorModel.message}',
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      emit(MarketplaceState.error('Unexpected error: $e'));
+    }
+  }
+
+  /// تطبيق فلتر بسيط على الإعلانات الظاهرة
   Future<void> filterListings(String filter) async {
     _currentFilter = filter;
-
     final filtered =
         _visibleListings
-            .where(
-              (listing) =>
-                  listing.listingType?.toLowerCase() == filter.toLowerCase(),
-            )
+            .where((l) => l.listingType?.toLowerCase() == filter.toLowerCase())
             .toList();
 
     emit(
@@ -291,53 +227,33 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  Future<void> toggleFavorite(int id, {Listing? listing}) async {
-    try {
-      final result = await _marketplaceRepo.toggleFavorite(id);
+  /// ترتيب الإعلانات بناءً على نوع الترتيب
+  void sortListings({
+    required String newest,
+    required String priceLow,
+    required String priceHigh,
+    required String sortType,
+  }) {
+    if (_visibleListings.isEmpty) return;
 
-      await result.when(
-        success: (response) async {
-          if (response.status == 'success') {
-            final isFavorited = response.data?.isFavorited ?? false;
-
-            Listing? updatedListing;
-
-            for (var l in _visibleListings) {
-              if (l.id == id) {
-                l.isFavorite = isFavorited;
-                updatedListing = l;
-                break;
-              }
-            }
-
-            emit(
-              MarketplaceState.success(
-                listings: List.from(_visibleListings),
-                selectedFilter: _currentFilter,
-              ),
-            );
-
-            final favoriteCubit = getIt<FavoriteCubit>();
-
-            if (isFavorited && updatedListing != null) {
-              favoriteCubit.addToFavorites(updatedListing);
-            } else {
-              favoriteCubit.removeFromFavorites(id);
-            }
-          } else {
-            emit(const MarketplaceState.error('فشل في تبديل المفضلة'));
-          }
-        },
-        failure: (errorHandler) {
-          emit(
-            MarketplaceState.error(
-              'فشل في التبديل: ${errorHandler.apiErrorModel.message}',
-            ),
-          );
-        },
+    if (sortType == newest) {
+      _visibleListings.sort(
+        (a, b) =>
+            DateTime.tryParse(
+              b.createdAt ?? '',
+            )?.compareTo(DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0)) ??
+            0,
       );
-    } catch (error) {
-      emit(MarketplaceState.error('حدث خطأ غير متوقع: $error'));
+    } else {
+      _visibleListings.sort((a, b) {
+        final aPrice = double.tryParse(a.price ?? '0') ?? 0;
+        final bPrice = double.tryParse(b.price ?? '0') ?? 0;
+        return sortType == priceLow
+            ? aPrice.compareTo(bPrice)
+            : bPrice.compareTo(aPrice);
+      });
     }
+
+    _emitSuccessState();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_state.dart';
+import 'package:system_pro/features/Home/data/model/realestate/filter_request_model.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 
@@ -55,9 +56,12 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     isLoading = true;
 
     final response = await _marketplaceRepo.getMarketplaceListings(
-      direction: direction,
+      FilterRequestModel(
+         direction: direction,
       cursor: cursor,
-      limit: limit,
+      limit: limit, 
+      ),
+    
       // listingType: 'rent',
     );
 

@@ -122,14 +122,17 @@ class ListingsListFilter extends StatelessWidget {
           RealEstateSliverList(
             listings: listings,
             onToggleFavoriteBuilder: (listing) {
-              return () {
-                listing.isFavorite =
-                    !(listing.isFavorite); // تحديث مباشر
+            return () {
+                final updatedListing = listing.copyWith(
+                  isFavorite: !listing.isFavorite,
+                );
+
                 context.read<FavoriteCubit>().toggleFavorite(
                   listing.id!,
-                  listing: listing,
+                  listing: updatedListing,
                 );
               };
+
             },
           ),
         ],

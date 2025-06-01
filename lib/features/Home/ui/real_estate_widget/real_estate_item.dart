@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
@@ -6,6 +7,7 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Home/data/model/realestate/company.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
+import 'package:system_pro/features/Home/logic/favorite_cubit.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
@@ -26,10 +28,13 @@ class RealEstateItem extends StatefulWidget {
 }
 
 class _RealEstateItemState extends State<RealEstateItem> {
-  void _handleFavoriteToggle() {
-    widget.onToggleFavorite?.call();
-    setState(() {}); // ✅ يجبر widget يعيد البناء وبالتالي تتحدث الأيقونة
+ void _handleFavoriteToggle(Listing updatedListing) {
+    context.read<FavoriteCubit>().toggleFavorite(
+      updatedListing.id!,
+      listing: updatedListing,
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {

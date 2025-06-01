@@ -23,7 +23,7 @@ class RealEstateImageSlider extends StatefulWidget {
   final List<ListingImage>? images;
   final int listingId;
   final Listing? listing;
-  final VoidCallback? onToggleFavorite;
+final void Function(Listing updatedListing)? onToggleFavorite; // ✅
 
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
@@ -38,18 +38,19 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
     _pageController.dispose();
     super.dispose();
   }
+void _toggleFavorite() {
+    if (widget.listing == null) return;
 
-  void _toggleFavorite() async {
-    // call the callback (which calls FavoriteCubit.toggleFavorite)
-    if (widget.onToggleFavorite != null) {
-      widget.onToggleFavorite!();
-    }
-    setState(() {
-      widget.listing?.isFavorite = !widget.listing!.isFavorite;
+    final updatedListing = widget.listing!.copyWith(
+      isFavorite: !widget.listing!.isFavorite,
+    );
 
-    });
-    // 🔄 اجبر الـ widget يعيد البناء علشان أي تغيير فSسي isFSسavorite يتعكس
+    widget.onToggleFavorite?.call(updatedListing); // ✅ يعمل الآن
+
+    setState(() {});
   }
+
+
 
   @override
   Widget build(BuildContext context) {
