@@ -34,13 +34,13 @@ class ListingsList extends StatelessWidget {
       },
       child: CustomScrollView(
         slivers: [
-          RealEstateSliverList(
+       RealEstateSliverList(
             listings: listings,
             onToggleFavoriteBuilder: (listing) {
               cubit.toggleFavorite(listing.id ?? 0, listing: listing);
             },
-
           ),
+
           SliverToBoxAdapter(child: verticalSpacing(20)),
           if (cubit.pagination.hasMore || cubit.pagination.isLoading)
             const SliverToBoxAdapter(child: Center(child: CustomLoader())),

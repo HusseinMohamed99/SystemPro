@@ -103,4 +103,3 @@ class RealEstateItem extends StatelessWidget {
     );
   }
 }
-

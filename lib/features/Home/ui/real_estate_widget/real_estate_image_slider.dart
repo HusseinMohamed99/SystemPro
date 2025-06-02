@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,7 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
 
@@ -42,24 +42,26 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
     super.dispose();
   }
 
-  void _toggleFavorite() {
+  void _toggleFavorite() async {
     if (widget.listing == null) return;
 
-    final currentListing = context.read<MarketplaceCubit>().state.maybeWhen(
-      success:
-          (listings, _) => listings.firstWhere(
-            (e) => e.id == widget.listingId,
-            orElse: () => widget.listing!,
-          ),
-      orElse: () => widget.listing!,
+    final cubit = context.read<MarketplaceCubit>();
+    final updated = await cubit.toggleFavorite(
+      widget.listingId,
+      listing: widget.listing,
     );
 
-    final updatedListing = currentListing.copyWith(
-      isFavorite: !currentListing.isFavorite,
-    );
+    if (updated != null) {
+      final favCubit = context.read<FavoriteCubit>();
 
-    // ✅ Execute toggle callback with updated listing
-    widget.onToggleFavorite?.call(updatedListing);
+      if (updated.isFavorite) {
+        favCubit.addToFavorites(updated); // ✅ أضف للمفضلة يدويًا
+      } else {
+        favCubit.removeFromFavorites(updated.id!); // ✅ إحذف منها يدويًا
+      }
+
+      setState(() {}); // ✅ لتحديث الأيقونة
+    }
   }
 
   @override
@@ -79,22 +81,25 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           child: SizedBox(
             height: 150.h,
             width: context.width,
-            child: imageCount == 0
-                ? const Center(child: Text('No images available'))
-                : PageView.builder(
-                    controller: _pageController,
-                    itemCount: imageCount,
-                    onPageChanged: (index) => setState(() => _currentIndex = index),
-                    itemBuilder: (context, index) {
-                      final imageUrl = widget.images?[index].imageUrl ?? fallbackImage;
-                      return CustomCachedNetworkImageWidget(
-                        fit: BoxFit.fitWidth,
-                        width: context.width,
-                        height: 150.h,
-                        imageURL: imageUrl,
-                      );
-                    },
-                  ),
+            child:
+                imageCount == 0
+                    ? const Center(child: Text('No images available'))
+                    : PageView.builder(
+                      controller: _pageController,
+                      itemCount: imageCount,
+                      onPageChanged:
+                          (index) => setState(() => _currentIndex = index),
+                      itemBuilder: (context, index) {
+                        final imageUrl =
+                            widget.images?[index].imageUrl ?? fallbackImage;
+                        return CustomCachedNetworkImageWidget(
+                          fit: BoxFit.fitWidth,
+                          width: context.width,
+                          height: 150.h,
+                          imageURL: imageUrl,
+                        );
+                      },
+                    ),
           ),
         ),
 
@@ -122,8 +127,12 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   buildWhen: (prev, curr) => curr is MarketPlaceSuccess,
                   builder: (context, state) {
                     final updatedListing = state.maybeWhen(
-                      success: (listings, _) =>
-                          listings.firstWhere((l) => l.id == widget.listingId, orElse: () => widget.listing!),
+                      success:
+                          (listings, _) => listings.firstWhere(
+                            (l) => l.id == widget.listingId,
+                            orElse: () => widget.listing!,
+                          ),
+
                       orElse: () => widget.listing!,
                     );
 
@@ -131,13 +140,14 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
 
                     return Icon(
                       isFavorited ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorited
-                          ? ColorManager.brightRed
-                          : AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.tertiaryBlack,
-                              darkColor: ColorManager.hintGrey,
-                            ),
+                      color:
+                          isFavorited
+                              ? ColorManager.brightRed
+                              : AdaptiveColor.adaptiveColor(
+                                context: context,
+                                lightColor: ColorManager.tertiaryBlack,
+                                darkColor: ColorManager.hintGrey,
+                              ),
                       size: kIconSizeDefault.sp,
                     );
                   },
@@ -162,17 +172,18 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: isActive
-                        ? AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.primaryBlue,
-                            darkColor: ColorManager.secondaryBlue,
-                          )
-                        : AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.softWhite,
-                            darkColor: ColorManager.pureWhite,
-                          ),
+                    color:
+                        isActive
+                            ? AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.primaryBlue,
+                              darkColor: ColorManager.secondaryBlue,
+                            )
+                            : AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.softWhite,
+                              darkColor: ColorManager.pureWhite,
+                            ),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 );

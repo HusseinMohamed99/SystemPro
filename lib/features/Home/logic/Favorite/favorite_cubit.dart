@@ -82,7 +82,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   /// Toggle favorite status and update internal cache accordingly
-  Future<void> toggleFavorite(int id, {Listing? listing}) async {
+Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _favoriteRepo.toggleFavorite(id);
 
@@ -96,17 +96,21 @@ class FavoriteCubit extends Cubit<FavoriteState> {
               final updated = listing.copyWith(isFavorite: true);
               _favoriteListings.insert(0, updated);
               _visibleFavorites.insert(0, updated);
+
+              // ✅ Sync with MarketplaceCubit
+              final marketplaceCubit = getIt<MarketplaceCubit>();
+              marketplaceCubit.updateListingFavoriteStatus(updated.id!, true);
             }
           } else {
             _favoriteListings.removeWhere((e) => e.id == id);
             _visibleFavorites.removeWhere((e) => e.id == id);
-            AppLogs.log('message');
-            // ✅ تحديث Marketplace عند الإلغاء
-            // ✅ تحديث Marketplace لحذف الكاش المخزن
+
+            // ✅ Sync with MarketplaceCubit
             final marketplaceCubit = getIt<MarketplaceCubit>();
             marketplaceCubit.updateListingFavoriteStatus(id, false);
-            marketplaceCubit.clearHydratedCache(); // ✅ هذا السطر مهم
+            marketplaceCubit.clearHydratedCache(); // مهم لمسح الكاش
           }
+
           _loadedCount = _visibleFavorites.length;
           _isCacheLoaded = true;
 
@@ -169,7 +173,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     _loadedCount = 0;
   }
 
-  /// External injection support: add to favorites manually
+ /// External injection support: add to favorites manually
   void addToFavorites(Listing listing) {
     final exists = _favoriteListings.any((e) => e.id == listing.id);
     if (!exists) {
@@ -178,6 +182,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       _visibleFavorites.insert(0, updated);
       _loadedCount = _visibleFavorites.length;
       _isCacheLoaded = true;
+
+      emit(const FavoriteState.getFavoriteLoading()); // ⬅️ refresh trigger
 
       emit(
         FavoriteState.getFavoriteSuccess(
@@ -194,6 +200,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     _visibleFavorites.removeWhere((e) => e.id == id);
     _loadedCount = _visibleFavorites.length;
 
+    emit(const FavoriteState.getFavoriteLoading()); // ⬅️ refresh trigger
+
     emit(
       FavoriteState.getFavoriteSuccess(
         listings: List.from(_visibleFavorites),
@@ -201,4 +209,5 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       ),
     );
   }
+
 }

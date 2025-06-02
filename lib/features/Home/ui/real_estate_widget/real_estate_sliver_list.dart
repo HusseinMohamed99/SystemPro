@@ -11,54 +11,15 @@ class RealEstateSliverList extends StatelessWidget {
     super.key,
     required this.listings,
     this.onToggleFavoriteBuilder,
-    this.isGrid = false,
   });
 
   final List<Listing> listings;
 
-  /// ✅ تم تعديل النوع من VoidCallback Function(...) إلى void Function(...)
+  /// A function to handle favorite toggle from parent
   final void Function(Listing listing)? onToggleFavoriteBuilder;
-
-  final bool isGrid;
 
   @override
   Widget build(BuildContext context) {
-    if (isGrid) {
-      return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        sliver: SliverGrid(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            final listing = listings[index];
-            return GestureDetector(
-              onTap: () {
-                context.pushNamed(
-                  Routes.realEstateDetailsView,
-                  arguments: listing,
-                );
-              },
-              child: RealEstateItem(
-                key: ValueKey(listing.id),
-                listing: listing,
-                index: index,
-                // ✅ نمرر الـ callback مباشرة مع البيانات
-                onToggleFavorite:
-                    onToggleFavoriteBuilder != null
-                        ? (updated) => onToggleFavoriteBuilder!(updated)
-                        : null,
-                useGridLayout: true,
-              ),
-            );
-          }, childCount: listings.length),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 0.85,
-          ),
-        ),
-      );
-    }
-
     return SliverList.separated(
       itemBuilder: (context, index) {
         final listing = listings[index];
@@ -67,7 +28,8 @@ class RealEstateSliverList extends StatelessWidget {
             context.pushNamed(Routes.realEstateDetailsView, arguments: listing);
           },
           child: RealEstateItem(
-            key: ValueKey(listing.id),
+            // ✅ Use dynamic key to trigger rebuild when favorite changes
+            key: ValueKey('${listing.id}-${listing.isFavorite}'),
             listing: listing,
             index: index,
             onToggleFavorite:
