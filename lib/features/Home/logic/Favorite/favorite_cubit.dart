@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
@@ -81,7 +82,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   /// Toggle favorite status and update internal cache accordingly
-Future<void> toggleFavorite(int id, {Listing? listing}) async {
+  Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _favoriteRepo.toggleFavorite(id);
 
@@ -99,13 +100,13 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
           } else {
             _favoriteListings.removeWhere((e) => e.id == id);
             _visibleFavorites.removeWhere((e) => e.id == id);
-
+            AppLogs.log('message');
             // ✅ تحديث Marketplace عند الإلغاء
-   final marketplaceCubit = getIt<MarketplaceCubit>();
+            // ✅ تحديث Marketplace لحذف الكاش المخزن
+            final marketplaceCubit = getIt<MarketplaceCubit>();
             marketplaceCubit.updateListingFavoriteStatus(id, false);
-
+            marketplaceCubit.clearHydratedCache(); // ✅ هذا السطر مهم
           }
-
           _loadedCount = _visibleFavorites.length;
           _isCacheLoaded = true;
 
@@ -192,7 +193,6 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
     _favoriteListings.removeWhere((e) => e.id == id);
     _visibleFavorites.removeWhere((e) => e.id == id);
     _loadedCount = _visibleFavorites.length;
-    
 
     emit(
       FavoriteState.getFavoriteSuccess(

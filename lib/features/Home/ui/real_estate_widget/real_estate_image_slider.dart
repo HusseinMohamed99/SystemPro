@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,8 +9,8 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
-import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
-import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
+import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
 
 /// Slider widget that displays listing images with pagination and favorite button.
 /// Includes Hero animation and adaptive layout support.
@@ -44,12 +45,21 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   void _toggleFavorite() {
     if (widget.listing == null) return;
 
-    final updatedListing = widget.listing!.copyWith(
-      isFavorite: !widget.listing!.isFavorite,
+    final currentListing = context.read<MarketplaceCubit>().state.maybeWhen(
+      success:
+          (listings, _) => listings.firstWhere(
+            (e) => e.id == widget.listingId,
+            orElse: () => widget.listing!,
+          ),
+      orElse: () => widget.listing!,
     );
 
+    final updatedListing = currentListing.copyWith(
+      isFavorite: !currentListing.isFavorite,
+    );
+
+    // ✅ Execute toggle callback with updated listing
     widget.onToggleFavorite?.call(updatedListing);
-    setState(() {});
   }
 
   @override
@@ -69,28 +79,26 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
           child: SizedBox(
             height: 150.h,
             width: context.width,
-            child:
-                imageCount == 0
-                    ? Center(child: Text('No images available'))
-                    : PageView.builder(
-                      controller: _pageController,
-                      itemCount: imageCount,
-                      onPageChanged:
-                          (index) => setState(() => _currentIndex = index),
-                      itemBuilder: (context, index) {
-                        final imageUrl =
-                            widget.images?[index].imageUrl ?? fallbackImage;
-                        return CustomCachedNetworkImageWidget(
-                          fit: BoxFit.fitWidth,
-                          width: context.width,
-                          height: 150.h,
-                          imageURL: imageUrl,
-                        );
-                      },
-                    ),
+            child: imageCount == 0
+                ? const Center(child: Text('No images available'))
+                : PageView.builder(
+                    controller: _pageController,
+                    itemCount: imageCount,
+                    onPageChanged: (index) => setState(() => _currentIndex = index),
+                    itemBuilder: (context, index) {
+                      final imageUrl = widget.images?[index].imageUrl ?? fallbackImage;
+                      return CustomCachedNetworkImageWidget(
+                        fit: BoxFit.fitWidth,
+                        width: context.width,
+                        height: 150.h,
+                        imageURL: imageUrl,
+                      );
+                    },
+                  ),
           ),
         ),
 
+        // ❤️ Favorite Icon Button
         if (!isFromCompanyProfile)
           Positioned(
             top: 16.h,
@@ -110,20 +118,26 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                     darkColor: ColorManager.tertiaryBlack,
                   ),
                 ),
-                child: BlocBuilder<FavoriteCubit, FavoriteState>(
-                  buildWhen: (prev, curr) => curr is GetFavoriteSuccess,
+                child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
+                  buildWhen: (prev, curr) => curr is MarketPlaceSuccess,
                   builder: (context, state) {
-                    final isFavorited = widget.listing?.isFavorite ?? false;
+                    final updatedListing = state.maybeWhen(
+                      success: (listings, _) =>
+                          listings.firstWhere((l) => l.id == widget.listingId, orElse: () => widget.listing!),
+                      orElse: () => widget.listing!,
+                    );
+
+                    final isFavorited = updatedListing.isFavorite;
+
                     return Icon(
                       isFavorited ? Icons.favorite : Icons.favorite_border,
-                      color:
-                          isFavorited
-                              ? ColorManager.brightRed
-                              : AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.tertiaryBlack,
-                                darkColor: ColorManager.hintGrey,
-                              ),
+                      color: isFavorited
+                          ? ColorManager.brightRed
+                          : AdaptiveColor.adaptiveColor(
+                              context: context,
+                              lightColor: ColorManager.tertiaryBlack,
+                              darkColor: ColorManager.hintGrey,
+                            ),
                       size: kIconSizeDefault.sp,
                     );
                   },
@@ -132,6 +146,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             ),
           ),
 
+        // 🔘 Image Indicators
         if (imageCount > 1)
           Positioned(
             bottom: 8.h,
@@ -147,18 +162,17 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color:
-                        isActive
-                            ? AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.primaryBlue,
-                              darkColor: ColorManager.secondaryBlue,
-                            )
-                            : AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.softWhite,
-                              darkColor: ColorManager.pureWhite,
-                            ),
+                    color: isActive
+                        ? AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.primaryBlue,
+                            darkColor: ColorManager.secondaryBlue,
+                          )
+                        : AdaptiveColor.adaptiveColor(
+                            context: context,
+                            lightColor: ColorManager.softWhite,
+                            darkColor: ColorManager.pureWhite,
+                          ),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 );

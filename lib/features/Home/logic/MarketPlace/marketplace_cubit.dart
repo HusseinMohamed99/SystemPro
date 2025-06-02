@@ -183,6 +183,11 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     }
   }
 
+  void clearHydratedCache() {
+    // يمسح الداتا المتخزنة تلقائيًا في HydratedBloc
+    clear();
+  }
+
   /// Toggle favorite and sync with favorite cubit and UI
   Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
     try {
@@ -228,7 +233,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// Refresh current listings with force refresh (used by FavoriteCubit)
-/// Update a single listing's favorite status by ID without re-fetching
+  /// Update a single listing's favorite status by ID without re-fetching
   void updateListingFavoriteStatus(int listingId, bool isFavorite) {
     final index = _visibleListings.indexWhere((e) => e.id == listingId);
     if (index != -1) {
@@ -245,7 +250,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       );
     }
   }
-
 
   /// Apply sorting to listings and emit new state
   void sortListings(SortType sortType, {bool shouldEmit = true}) {

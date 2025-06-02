@@ -24,12 +24,12 @@ class FavoritesViewBody extends StatelessWidget {
         RealEstateSliverList(
           listings: listings,
           onToggleFavoriteBuilder: (listing) {
-            return () {
+          
               context.read<FavoriteCubit>().toggleFavorite(
                 listing.id ?? 0,
                 listing: listing,
               );
-            };
+            
           },
         ),
       ],

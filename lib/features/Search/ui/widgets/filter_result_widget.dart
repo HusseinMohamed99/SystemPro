@@ -122,7 +122,7 @@ class ListingsListFilter extends StatelessWidget {
           RealEstateSliverList(
             listings: listings,
             onToggleFavoriteBuilder: (listing) {
-              return () {
+        
                 final updatedListing = listing.copyWith(
                   isFavorite: !listing.isFavorite,
                 );
@@ -131,7 +131,7 @@ class ListingsListFilter extends StatelessWidget {
                   listing.id!,
                   listing: updatedListing,
                 );
-              };
+              
             },
           ),
         ],

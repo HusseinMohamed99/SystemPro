@@ -10,8 +10,6 @@ import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
-/// Widget that displays a list of real estate listings inside a scrollable sliver list.
-/// Supports infinite scrolling and handles empty list state.
 class ListingsList extends StatelessWidget {
   const ListingsList({super.key, required this.listings});
 
@@ -21,7 +19,6 @@ class ListingsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<MarketplaceCubit>();
 
-    // If the listings list is empty, display a friendly error message.
     if (listings.isEmpty) {
       return CustomErrorTextWidget(
         errorMessage: context.localization.no_available_properties,
@@ -29,7 +26,6 @@ class ListingsList extends StatelessWidget {
     }
 
     return NotificationListener<ScrollNotification>(
-      // Listen for scroll notifications to trigger pagination when reaching the bottom.
       onNotification: (notification) {
         if (_shouldLoadMore(notification, cubit)) {
           cubit.loadMore();
@@ -40,18 +36,15 @@ class ListingsList extends StatelessWidget {
         slivers: [
           RealEstateSliverList(
             listings: listings,
-            // Build the favorite toggle callback per listing item.
             onToggleFavoriteBuilder: (listing) {
-              return () {
-                cubit.toggleFavorite(listing.id ?? 0, listing: listing);
-              };
+              cubit.toggleFavorite(listing.id ?? 0, listing: listing);
             },
+
           ),
-          SliverToBoxAdapter(child: verticalSpacing(20),),
-          // Display a loading indicator when pagination is in progress.
-          if (cubit.pagination.hasMore|| cubit.pagination.isLoading)
+          SliverToBoxAdapter(child: verticalSpacing(20)),
+          if (cubit.pagination.hasMore || cubit.pagination.isLoading)
             const SliverToBoxAdapter(child: Center(child: CustomLoader())),
-           if (cubit.pagination.hasMore || cubit.pagination.isLoading)
+          if (cubit.pagination.hasMore || cubit.pagination.isLoading)
             SliverToBoxAdapter(child: verticalSpacing(40)),
         ],
       ),
@@ -62,8 +55,6 @@ class ListingsList extends StatelessWidget {
     );
   }
 
-  /// Helper method to check whether the user has scrolled to the bottom of the list
-  /// and whether more data should be fetched.
   bool _shouldLoadMore(
     ScrollNotification notification,
     MarketplaceCubit cubit,

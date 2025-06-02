@@ -24,8 +24,6 @@ class RealEstateItem extends StatelessWidget {
   final Listing listing;
   final int index;
   final bool useGridLayout;
-
-  /// External handler to toggle favorite; fallback provided if null.
   final void Function(Listing updatedListing)? onToggleFavorite;
 
   void _defaultFavoriteToggle(BuildContext context, Listing updatedListing) {
@@ -45,6 +43,7 @@ class RealEstateItem extends StatelessWidget {
     );
 
     return Card(
+      key: ValueKey('${listing.id}-${listing.isFavorite}'),
       margin: useGridLayout ? EdgeInsets.zero : EdgeInsets.only(bottom: 12.h),
       color: backgroundColor,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
@@ -65,18 +64,19 @@ class RealEstateItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// ✅ Hero animation applied to first image
             Hero(
               tag: 'listing-image-${listing.id}',
               child: RealEstateImageSlider(
                 images: listing.images,
                 listingId: listing.id ?? 0,
                 listing: listing,
-                onToggleFavorite:
-                    onToggleFavorite != null
-                        ? (updatedListing) => onToggleFavorite!(updatedListing)
-                        : (updatedListing) =>
-                            _defaultFavoriteToggle(context, updatedListing),
+                onToggleFavorite: (updatedListing) {
+                  if (onToggleFavorite != null) {
+                    onToggleFavorite!(updatedListing);
+                  } else {
+                    _defaultFavoriteToggle(context, updatedListing);
+                  }
+                },
               ),
             ),
             verticalSpacing(kSpacingSmall),
@@ -103,3 +103,4 @@ class RealEstateItem extends StatelessWidget {
     );
   }
 }
+
