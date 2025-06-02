@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
-import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
 class FavoritesViewBody extends StatelessWidget {
@@ -20,19 +18,7 @@ class FavoritesViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       controller: scrollController,
-      slivers: [
-        RealEstateSliverList(
-          listings: listings,
-          onToggleFavoriteBuilder: (listing) {
-          
-              context.read<FavoriteCubit>().toggleFavorite(
-                listing.id ?? 0,
-                listing: listing,
-              );
-            
-          },
-        ),
-      ],
+      slivers: [RealEstateSliverList(listings: listings)],
     ).hPadding(kPaddingDefaultHorizontal);
   }
 }

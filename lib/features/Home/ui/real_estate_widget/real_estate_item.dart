@@ -17,21 +17,16 @@ class RealEstateItem extends StatelessWidget {
     super.key,
     required this.listing,
     required this.index,
-    this.onToggleFavorite,
-    this.useGridLayout = false,
+    this.heroTag,
+    this.showImage = true,
   });
 
   final Listing listing;
   final int index;
-  final bool useGridLayout;
-  final void Function(Listing updatedListing)? onToggleFavorite;
+  final bool showImage;
+  final String? heroTag;
 
-  void _defaultFavoriteToggle(BuildContext context, Listing updatedListing) {
-    context.read<FavoriteCubit>().toggleFavorite(
-      updatedListing.id!,
-      listing: updatedListing,
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +38,9 @@ class RealEstateItem extends StatelessWidget {
     );
 
     return Card(
-      key: ValueKey('${listing.id}-${listing.isFavorite}'),
-      margin: useGridLayout ? EdgeInsets.zero : EdgeInsets.only(bottom: 12.h),
+      // ✅ Key includes listing.id only (not isFavorite) to reduce rebuild noise
+      key: ValueKey(listing.id),
+      margin: EdgeInsets.only(bottom: 12.h),
       color: backgroundColor,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       elevation: 2,
@@ -64,26 +60,17 @@ class RealEstateItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Hero(
-              tag: 'listing-image-${listing.id}',
-              child: RealEstateImageSlider(
-                images: listing.images,
-                listingId: listing.id ?? 0,
-                listing: listing,
-                onToggleFavorite: (updatedListing) {
-                  if (onToggleFavorite != null) {
-                    onToggleFavorite!(updatedListing);
-                  } else {
-                    _defaultFavoriteToggle(context, updatedListing);
-                  }
-                },
-              ),
-            ),
+            // 🖼️ Image Section (Hero optional)
+            if (showImage)
+              (heroTag != null)
+                  ? Hero(tag: heroTag!, child: _buildImageSlider(context))
+                  : _buildImageSlider(context),
+
             verticalSpacing(kSpacingSmall),
+
+            // ℹ️ Real estate details (info block)
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: useGridLayout ? 8.w : 12.w,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: RealEstateInfo(
                 price: listing.price ?? '',
                 location: listing.location ?? '',
@@ -96,10 +83,22 @@ class RealEstateItem extends StatelessWidget {
                 marketer: listing.marketer ?? const Marketer(),
               ),
             ),
+
             verticalSpacing(kSpacingSmall),
           ],
         ),
       ),
     );
   }
+
+  /// Builds the real estate image slider with toggle callback
+  Widget _buildImageSlider(BuildContext context) {
+    return RealEstateImageSlider(
+      images: listing.images,
+      listingId: listing.id ?? 0,
+      listing: listing,
+      
+    );
+  }
+
 }

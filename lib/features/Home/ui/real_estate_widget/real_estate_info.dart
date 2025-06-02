@@ -13,6 +13,8 @@ import 'package:system_pro/features/Home/ui/real_estate_widget/custom_company_lo
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_count_bed_and_bathroom.dart';
 
+/// Displays detailed real estate info including price, title, location,
+/// specs, company and contact options.
 class RealEstateInfo extends StatelessWidget {
   const RealEstateInfo({
     super.key,
@@ -26,6 +28,7 @@ class RealEstateInfo extends StatelessWidget {
     required this.company,
     required this.marketer,
   });
+
   final String price, title, location, bedroomNum, bathroomNum, area, dateTime;
   final Company company;
   final Marketer marketer;
@@ -36,6 +39,7 @@ class RealEstateInfo extends StatelessWidget {
       spacing: kSpacingSmall.h,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Price with currency icon
         RichText(
           text: TextSpan(
             children: [
@@ -63,6 +67,8 @@ class RealEstateInfo extends StatelessWidget {
             ],
           ),
         ),
+
+        // Title / Name
         Text(
           title,
           style: context.titleMedium?.copyWith(
@@ -74,11 +80,15 @@ class RealEstateInfo extends StatelessWidget {
             ),
           ),
         ),
+
+        // Property specs: bedrooms, bathrooms, area
         RealEstateCountBedAndBathRoom(
           bedroomNum: bedroomNum,
           bathroomNum: bathroomNum,
           area: area,
         ),
+
+        // Location info
         Text(
           location,
           style: context.titleMedium?.copyWith(
@@ -90,13 +100,18 @@ class RealEstateInfo extends StatelessWidget {
             ),
           ),
         ),
+
+        // Company + time
         CustomCompanyLogoAndCratedTime(
           dateTime: dateTime,
           company: company,
           marketer: marketer,
         ),
 
+        // Divider
         const AdaptiveDivider().vPadding(kSpacingSmall),
+
+        // Contact Buttons
         CustomConnectionButton(
           whatsAppURL: company.phone ?? '',
           phoneURL: company.phone ?? '',

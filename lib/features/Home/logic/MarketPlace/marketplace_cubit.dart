@@ -36,8 +36,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   final MarketplaceRepo _marketplaceRepo;
 
   final List<Listing> _visibleListings = [];
-  final Map<String, List<Listing>> _cachedListingsByFilter =
-      {}; // key = listingType or hash(filterArgs)
+  final Map<String, List<Listing>> _cachedListingsByFilter = {};
   final PaginationState pagination = PaginationState();
 
   String _currentFilter = '';
@@ -59,7 +58,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     emit(MarketplaceState.error(message));
   }
 
-  /// Fetch initial listings or return cached ones
   Future<void> getListings({String? filter, bool forceRefresh = false}) async {
     final effectiveFilter = (filter?.isNotEmpty ?? false) ? filter! : 'buy';
 
@@ -99,7 +97,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     );
   }
 
-  /// Load more listings for pagination
   Future<void> loadMore() async {
     await _fetchAndHandleListings(
       request: FilterRequestModel(
@@ -112,12 +109,11 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     );
   }
 
-  /// Fetch listings based on advanced filter arguments
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
     pagination.reset();
     _visibleListings.clear();
-    final key = args.hashCode.toString(); // unique key per filter
+    final key = args.hashCode.toString();
 
     await _fetchAndHandleListings(
       request: FilterRequestModel.fromArgs(args).copyWith(
@@ -141,7 +137,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     );
   }
 
-  /// Handle fetching listings and caching results
   Future<void> _fetchAndHandleListings({
     required FilterRequestModel request,
     required String cacheKey,
@@ -184,11 +179,9 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   void clearHydratedCache() {
-    // يمسح الداتا المتخزنة تلقائيًا في HydratedBloc
     clear();
   }
 
-  /// Toggle favorite and sync with favorite cubit and UI
   Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
@@ -197,7 +190,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
         success: (res) {
           final isFav = res.data?.isFavorited ?? false;
 
-          // ✅ Update local _visibleListings with new isFavorite value
           final index = _visibleListings.indexWhere((l) => l.id == id);
           if (index != -1) {
             _visibleListings[index] = _visibleListings[index].copyWith(
@@ -205,13 +197,10 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
             );
           }
 
-          // ✅ Emit updated state with new favorite status
           _emitSuccessState();
 
-          // ✅ Build updated listing to share with FavoriteCubit
           final updated = listing?.copyWith(isFavorite: isFav);
 
-          // ✅ Sync with FavoriteCubit
           final favoriteCubit = getIt<FavoriteCubit>();
           if (isFav && updated != null) {
             favoriteCubit.addToFavorites(updated);
@@ -232,8 +221,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     }
   }
 
-  /// Refresh current listings with force refresh (used by FavoriteCubit)
-  /// Update a single listing's favorite status by ID without re-fetching
   void updateListingFavoriteStatus(int listingId, bool isFavorite) {
     final index = _visibleListings.indexWhere((e) => e.id == listingId);
     if (index != -1) {
@@ -241,7 +228,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
         isFavorite: isFavorite,
       );
 
-      // ✅ إعادة إرسال الحالة بعد التحديث
       emit(
         MarketplaceState.success(
           listings: List.from(_visibleListings),
@@ -251,7 +237,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     }
   }
 
-  /// Apply sorting to listings and emit new state
   void sortListings(SortType sortType, {bool shouldEmit = true}) {
     _currentSort = sortType;
     _sortListings(sortType);
@@ -293,7 +278,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     }
   }
 
-  /// Apply filter to listings already fetched
   Future<void> filterListings(String filter) async {
     _currentFilter = filter;
     final filtered =
@@ -309,7 +293,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     );
   }
 
-  /// Persist cached listings and filter state
   @override
   Map<String, dynamic>? toJson(MarketplaceState state) {
     return state.whenOrNull(
@@ -326,7 +309,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     );
   }
 
-  /// Restore state from persisted storage
   @override
   MarketplaceState? fromJson(Map<String, dynamic> json) {
     try {

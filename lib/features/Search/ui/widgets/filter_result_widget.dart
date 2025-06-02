@@ -118,23 +118,7 @@ class ListingsListFilter extends StatelessWidget {
         return false;
       },
       child: CustomScrollView(
-        slivers: [
-          RealEstateSliverList(
-            listings: listings,
-            onToggleFavoriteBuilder: (listing) {
-        
-                final updatedListing = listing.copyWith(
-                  isFavorite: !listing.isFavorite,
-                );
-
-                context.read<FavoriteCubit>().toggleFavorite(
-                  listing.id!,
-                  listing: updatedListing,
-                );
-              
-            },
-          ),
-        ],
+        slivers: [RealEstateSliverList(listings: listings)],
       ),
     ).onlyPadding(
       leftPadding: kPaddingDefaultHorizontal,

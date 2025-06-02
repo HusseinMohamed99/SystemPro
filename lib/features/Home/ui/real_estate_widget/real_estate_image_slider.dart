@@ -13,7 +13,7 @@ import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dar
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
 
 /// Slider widget that displays listing images with pagination and favorite button.
-/// Includes Hero animation and adaptive layout support.
+/// Includes optional Hero animation and layout adaptivity.
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({
     super.key,
@@ -21,12 +21,14 @@ class RealEstateImageSlider extends StatefulWidget {
     required this.listingId,
     required this.listing,
     this.onToggleFavorite,
+    this.heroTag,
   });
 
   final List<ListingImage>? images;
   final int listingId;
   final Listing? listing;
   final void Function(Listing updatedListing)? onToggleFavorite;
+  final String? heroTag; // Optional tag for Hero animation
 
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
@@ -35,6 +37,7 @@ class RealEstateImageSlider extends StatefulWidget {
 class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
+  bool _isToggling = false; // ✅ Prevent double taps
 
   @override
   void dispose() {
@@ -43,7 +46,9 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   }
 
   void _toggleFavorite() async {
-    if (widget.listing == null) return;
+    if (widget.listing == null || _isToggling) return;
+
+    setState(() => _isToggling = true); // ✅ Lock button
 
     final cubit = context.read<MarketplaceCubit>();
     final updated = await cubit.toggleFavorite(
@@ -53,15 +58,14 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
 
     if (updated != null) {
       final favCubit = context.read<FavoriteCubit>();
+      updated.isFavorite
+          ? favCubit.addToFavorites(updated)
+          : favCubit.removeFromFavorites(updated.id!);
 
-      if (updated.isFavorite) {
-        favCubit.addToFavorites(updated); // ✅ أضف للمفضلة يدويًا
-      } else {
-        favCubit.removeFromFavorites(updated.id!); // ✅ إحذف منها يدويًا
-      }
-
-      setState(() {}); // ✅ لتحديث الأيقونة
+      widget.onToggleFavorite?.call(updated);
     }
+
+    setState(() => _isToggling = false); // ✅ Unlock
   }
 
   @override
@@ -71,39 +75,42 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
     final imageCount = widget.images?.length ?? 0;
     final fallbackImage = widget.listing?.pictureUrl ?? '';
 
+    final imageSlider = ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+      ),
+      child: SizedBox(
+        height: 150.h,
+        width: context.width,
+        child:
+            imageCount == 0
+                ? const Center(child: Text('No images available'))
+                : PageView.builder(
+                  controller: _pageController,
+                  itemCount: imageCount,
+                  onPageChanged:
+                      (index) => setState(() => _currentIndex = index),
+                  itemBuilder: (context, index) {
+                    final imageUrl =
+                        widget.images?[index].imageUrl ?? fallbackImage;
+                    return CustomCachedNetworkImageWidget(
+                      fit: BoxFit.fitWidth,
+                      width: context.width,
+                      height: 150.h,
+                      imageURL: imageUrl,
+                    );
+                  },
+                ),
+      ),
+    );
+
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          ),
-          child: SizedBox(
-            height: 150.h,
-            width: context.width,
-            child:
-                imageCount == 0
-                    ? const Center(child: Text('No images available'))
-                    : PageView.builder(
-                      controller: _pageController,
-                      itemCount: imageCount,
-                      onPageChanged:
-                          (index) => setState(() => _currentIndex = index),
-                      itemBuilder: (context, index) {
-                        final imageUrl =
-                            widget.images?[index].imageUrl ?? fallbackImage;
-                        return CustomCachedNetworkImageWidget(
-                          fit: BoxFit.fitWidth,
-                          width: context.width,
-                          height: 150.h,
-                          imageURL: imageUrl,
-                        );
-                      },
-                    ),
-          ),
-        ),
+        widget.heroTag != null
+            ? Hero(tag: widget.heroTag!, child: imageSlider)
+            : imageSlider,
 
-        // ❤️ Favorite Icon Button
         if (!isFromCompanyProfile)
           Positioned(
             top: 16.h,
@@ -123,40 +130,55 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                     darkColor: ColorManager.tertiaryBlack,
                   ),
                 ),
-                child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
-                  buildWhen: (prev, curr) => curr is MarketPlaceSuccess,
-                  builder: (context, state) {
-                    final updatedListing = state.maybeWhen(
-                      success:
-                          (listings, _) => listings.firstWhere(
-                            (l) => l.id == widget.listingId,
-                            orElse: () => widget.listing!,
+                child:
+                    _isToggling
+                        ? SizedBox(
+                          width: 20.w,
+                          height: 20.h,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 2,
                           ),
-
-                      orElse: () => widget.listing!,
-                    );
-
-                    final isFavorited = updatedListing.isFavorite;
-
-                    return Icon(
-                      isFavorited ? Icons.favorite : Icons.favorite_border,
-                      color:
-                          isFavorited
-                              ? ColorManager.brightRed
-                              : AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.tertiaryBlack,
-                                darkColor: ColorManager.hintGrey,
-                              ),
-                      size: kIconSizeDefault.sp,
-                    );
-                  },
-                ),
+                        )
+                        : BlocSelector<
+                          MarketplaceCubit,
+                          MarketplaceState,
+                          bool
+                        >(
+                          selector: (state) {
+                            return state.maybeWhen(
+                              success: (listings, _) {
+                                return listings
+                                    .firstWhere(
+                                      (l) => l.id == widget.listingId,
+                                      orElse:
+                                          () => Listing(id: widget.listingId),
+                                    )
+                                    .isFavorite;
+                              },
+                              orElse: () => false,
+                            );
+                          },
+                          builder: (context, isFavorited) {
+                            return Icon(
+                              isFavorited
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color:
+                                  isFavorited
+                                      ? ColorManager.brightRed
+                                      : AdaptiveColor.adaptiveColor(
+                                        context: context,
+                                        lightColor: ColorManager.tertiaryBlack,
+                                        darkColor: ColorManager.hintGrey,
+                                      ),
+                              size: kIconSizeDefault.sp,
+                            );
+                          },
+                        ),
               ),
             ),
           ),
 
-        // 🔘 Image Indicators
         if (imageCount > 1)
           Positioned(
             bottom: 8.h,
