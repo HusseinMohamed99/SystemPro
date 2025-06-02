@@ -78,7 +78,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   /// ❤️ تبديل حالة المفضلة
-  Future<void> toggleFavorite(int id, {Listing? listing}) async {
+Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _favoriteRepo.toggleFavorite(id);
 
@@ -86,13 +86,13 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         success: (response) {
           final isFavorited = response.data?.isFavorited ?? false;
 
-          // تحديث الكاش حسب الحالة
           final exists = _favoriteListings.any((e) => e.id == id);
 
           if (isFavorited) {
             if (!exists && listing != null) {
-              _favoriteListings.insert(0, listing);
-              _visibleFavorites.insert(0, listing);
+              final updatedListing = listing.copyWith(isFavorite: true);
+              _favoriteListings.insert(0, updatedListing);
+              _visibleFavorites.insert(0, updatedListing);
             }
           } else {
             _favoriteListings.removeWhere((e) => e.id == id);
@@ -102,15 +102,15 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           _loadedCount = _visibleFavorites.length;
           _isCacheLoaded = true;
 
-          // ✅ اجبار التحديث حتى لو البيانات متشابهة
-          emit(const FavoriteState.getFavoriteLoading());
-
-          emit(
-            FavoriteState.getFavoriteSuccess(
-              listings: List.from(_visibleFavorites),
-              hasMore: hasMore,
-            ),
-          );
+          if (!isClosed) {
+            emit(const FavoriteState.getFavoriteLoading());
+            emit(
+              FavoriteState.getFavoriteSuccess(
+                listings: List.from(_visibleFavorites),
+                hasMore: hasMore,
+              ),
+            );
+          }
         },
         failure: (error) {
           emit(
@@ -124,6 +124,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       emit(FavoriteState.getFavoriteError('حدث خطأ غير متوقع: $e'));
     }
   }
+
 
   /// 📦 تحميل المزيد
   Future<void> loadMore() async {

@@ -1,7 +1,7 @@
-// Updated MarketplaceCubit with pagination, caching,
-// sorting improvements, and better state management
+// ✅ Refactored MarketplaceCubit with hydrated_bloc,
+// offline cache, smart filter switching, and favorite syncing
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/features/Home/data/model/realestate/filter_request_model.dart';
@@ -27,7 +27,7 @@ class PaginationState {
   }
 }
 
-class MarketplaceCubit extends Cubit<MarketplaceState> {
+class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
     : super(const MarketplaceState.initial());
 
@@ -42,7 +42,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
   String get currentFilter => _currentFilter;
 
-  /// Emit success state and apply current sort before emission
   void _emitSuccessState() {
     _sortListings(_currentSort);
     emit(
@@ -53,14 +52,20 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// Emit a standardized error state with message
   void _emitError(String message) {
     emit(MarketplaceState.error(message));
   }
 
-  /// Fetch listings by basic type with optional force refresh
   Future<void> getListings({String? filter, bool forceRefresh = false}) async {
     final effectiveFilter = (filter?.isNotEmpty ?? false) ? filter! : 'buy';
+
+    // ✅ Prevent refetching if data already exists
+    if (!forceRefresh &&
+        _currentFilter == effectiveFilter &&
+        _visibleListings.isNotEmpty) {
+      _emitSuccessState();
+      return;
+    }
 
     if (!forceRefresh && _cachedListingsByFilter.containsKey(effectiveFilter)) {
       _currentFilter = effectiveFilter;
@@ -91,7 +96,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// Load the next page of listings for current filter
   Future<void> loadMore() async {
     await _fetchAndHandleListings(
       request: FilterRequestModel(
@@ -104,7 +108,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// Fetch listings using advanced filters from [FilterResultArguments]
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
     pagination.reset();
@@ -121,7 +124,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// Load more listings with advanced filters
   Future<void> loadMoreWithArgs(FilterResultArguments args) async {
     final key = args.hashCode.toString();
     await _fetchAndHandleListings(
@@ -134,7 +136,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     );
   }
 
-  /// Central handler to fetch data and update state
   Future<void> _fetchAndHandleListings({
     required FilterRequestModel request,
     required String cacheKey,
@@ -155,16 +156,11 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
             return;
           }
 
-          if (newItems.length < pagination.limit) {
-            pagination.hasMore = false;
-          }
+          if (newItems.length < pagination.limit) pagination.hasMore = false;
 
           _visibleListings.addAll(newItems);
-
           final lastId = newItems.last.id;
-          if (lastId != null) {
-            pagination.cursor = lastId;
-          }
+          if (lastId != null) pagination.cursor = lastId;
 
           if (pagination.cursor == pagination.limit || pagination.cursor == 0) {
             _cachedListingsByFilter[cacheKey] = List.from(_visibleListings);
@@ -172,9 +168,7 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
           _emitSuccessState();
         },
-        failure: (error) {
-          _emitError('Error: ${error.apiErrorModel.message}');
-        },
+        failure: (err) => _emitError('Error: ${err.apiErrorModel.message}'),
       );
     } catch (e) {
       _emitError('Unexpected error: $e');
@@ -183,11 +177,10 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  /// Toggle favorite status and update FavoriteCubit accordingly
-  Future<void> toggleFavorite(int id, {Listing? listing}) async {
+  Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
-      result.when(
+      return result.when(
         success: (res) {
           final isFav = res.data?.isFavorited ?? false;
 
@@ -200,23 +193,28 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
 
           _emitSuccessState();
 
+          final updated = listing?.copyWith(isFavorite: isFav);
+
           final favoriteCubit = getIt<FavoriteCubit>();
-          if (isFav && listing != null) {
-            favoriteCubit.addToFavorites(listing.copyWith(isFavorite: true));
+          if (isFav && updated != null) {
+            favoriteCubit.addToFavorites(updated);
           } else {
             favoriteCubit.removeFromFavorites(id);
           }
+
+          return updated;
         },
         failure: (err) {
           _emitError('Favorite toggle failed: ${err.apiErrorModel.message}');
+          return null;
         },
       );
     } catch (e) {
       _emitError('Unexpected error: $e');
+      return null;
     }
   }
 
-  /// Apply sorting to listings list based on selected type
   void sortListings(SortType sortType, {bool shouldEmit = true}) {
     _currentSort = sortType;
     _sortListings(sortType);
@@ -231,7 +229,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  /// Internal helper to sort list (used also in emitSuccess)
   void _sortListings(SortType sortType) {
     if (_visibleListings.isEmpty) return;
 
@@ -246,7 +243,6 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
               : aTime.compareTo(bTime);
         });
         break;
-
       case SortType.priceLow:
       case SortType.priceHigh:
         _visibleListings.sort((a, b) {
@@ -260,10 +256,8 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
     }
   }
 
-  /// Filter listings by type (buy, rent, etc.)
   Future<void> filterListings(String filter) async {
     _currentFilter = filter;
-
     final filtered =
         _visibleListings
             .where((l) => l.listingType?.toLowerCase() == filter.toLowerCase())
@@ -275,5 +269,54 @@ class MarketplaceCubit extends Cubit<MarketplaceState> {
         selectedFilter: _currentFilter,
       ),
     );
+  }
+
+  // ✅ Offline caching - persist state
+  @override
+  Map<String, dynamic>? toJson(MarketplaceState state) {
+    return state.whenOrNull(
+      success:
+          (listings, selectedFilter) => {
+            'listings': listings.map((e) => e.toJson()).toList(),
+            'filter': selectedFilter,
+            'sort': _currentSort.name,
+            'cachedListings': _cachedListingsByFilter.map(
+              (key, value) =>
+                  MapEntry(key, value.map((e) => e.toJson()).toList()),
+            ),
+          },
+    );
+  }
+
+  @override
+  MarketplaceState? fromJson(Map<String, dynamic> json) {
+    try {
+      final listingsJson =
+          (json['listings'] as List).cast<Map<String, dynamic>>();
+      final cachedJson = (json['cachedListings'] as Map<String, dynamic>);
+
+      _cachedListingsByFilter.clear();
+      cachedJson.forEach((key, val) {
+        _cachedListingsByFilter[key] =
+            (val as List).map((e) => Listing.fromJson(e)).toList();
+      });
+
+      _visibleListings
+        ..clear()
+        ..addAll(listingsJson.map(Listing.fromJson));
+
+      _currentFilter = json['filter'] ?? 'buy';
+      _currentSort = SortType.values.firstWhere(
+        (e) => e.name == json['sort'],
+        orElse: () => SortType.newest,
+      );
+
+      return MarketplaceState.success(
+        listings: _visibleListings,
+        selectedFilter: _currentFilter,
+      );
+    } catch (_) {
+      return null;
+    }
   }
 }
