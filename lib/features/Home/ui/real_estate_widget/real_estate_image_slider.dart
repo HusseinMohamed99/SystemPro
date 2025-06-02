@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
@@ -7,8 +8,9 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
+import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 
-/// A slider that displays real estate listing images with a favorite button.
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({
     super.key,
@@ -21,7 +23,7 @@ class RealEstateImageSlider extends StatefulWidget {
   final List<ListingImage>? images;
   final int listingId;
   final Listing? listing;
-  final void Function(Listing updatedListing)? onToggleFavorite;
+  final void Function(Listing updatedListing)? onToggleFavorite; // ✅
 
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
@@ -31,39 +33,31 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
 
-  /// Local state copy of the listing to track favorite changes visually
-  late Listing _localListing;
-
-  @override
-  void initState() {
-    super.initState();
-    _localListing = widget.listing ?? Listing(); // fallback if null
-  }
-
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
   }
 
-  /// Toggles favorite status locally and notifies parent
   void _toggleFavorite() {
-    final updated = _localListing.copyWith(
-      isFavorite: !_localListing.isFavorite,
+    if (widget.listing == null) return;
+
+    final updatedListing = widget.listing!.copyWith(
+      isFavorite: !widget.listing!.isFavorite,
     );
-    widget.onToggleFavorite?.call(updated);
-    setState(() => _localListing = updated);
+
+    widget.onToggleFavorite?.call(updatedListing); // ✅ يعمل الآن
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final images = widget.images ?? [];
-    final isFromCompanyProfile =
-        ModalRoute.of(context)?.settings.name == Routes.companyProfileView;
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+    final isFromCompanyProfile = currentRoute == Routes.companyProfileView;
 
     return Stack(
       children: [
-        // Main image slider
         ClipRRect(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(16),
@@ -73,29 +67,30 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             height: 150.h,
             width: context.width,
             child:
-                images.isEmpty
+                widget.images == null || widget.images!.isEmpty
                     ? const Center(child: Text('No images available'))
                     : PageView.builder(
                       controller: _pageController,
-                      itemCount: images.length,
+                      itemCount: widget.images?.length ?? 0,
                       onPageChanged: (index) {
-                        setState(() => _currentIndex = index);
+                        setState(() {
+                          _currentIndex = index;
+                        });
                       },
-                      itemBuilder:
-                          (context, index) => CustomCachedNetworkImageWidget(
-                            fit: BoxFit.fitWidth,
-                            width: context.width,
-                            height: 150.h,
-                            imageURL:
-                                images[index].imageUrl ??
-                                _localListing.pictureUrl ??
-                                '',
-                          ),
+                      itemBuilder: (context, index) {
+                        return CustomCachedNetworkImageWidget(
+                          fit: BoxFit.fitWidth,
+                          width: context.width,
+                          height: 150.h,
+                          imageURL:
+                              widget.images?[index].imageUrl ??
+                              widget.listing?.pictureUrl ??
+                              '',
+                        );
+                      },
                     ),
           ),
         ),
-
-        // Favorite icon (unless we're in company profile view)
         if (!isFromCompanyProfile)
           Positioned(
             top: 16.h,
@@ -103,7 +98,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             child: GestureDetector(
               onTap: _toggleFavorite,
               child: Container(
-                padding: EdgeInsets.symmetric(
+                padding: EdgeInsetsDirectional.symmetric(
                   horizontal: kPaddingSmallHorizontal.w,
                   vertical: kPaddingSmallVertical.h,
                 ),
@@ -115,37 +110,41 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                     darkColor: ColorManager.tertiaryBlack,
                   ),
                 ),
-                child: Icon(
-                  _localListing.isFavorite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color:
-                      _localListing.isFavorite
-                          ? ColorManager.brightRed
-                          : AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.tertiaryBlack,
-                            darkColor: ColorManager.hintGrey,
-                          ),
-                  size: kIconSizeDefault.sp,
+                child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                  buildWhen:
+                      (previous, current) => current is GetFavoriteSuccess,
+                  builder: (context, state) {
+                    final isFavorited = widget.listing?.isFavorite ?? false;
+
+                    return Icon(
+                      isFavorited ? Icons.favorite : Icons.favorite_border,
+                      color:
+                          isFavorited
+                              ? ColorManager.brightRed
+                              : AdaptiveColor.adaptiveColor(
+                                context: context,
+                                lightColor: ColorManager.tertiaryBlack,
+                                darkColor: ColorManager.hintGrey,
+                              ),
+                      size: kIconSizeDefault.sp,
+                    );
+                  },
                 ),
               ),
             ),
           ),
-
-        // Pagination dots (if more than 1 image)
-        if (images.length > 1)
+        if ((widget.images?.length ?? 0) > 1)
           Positioned(
             bottom: 8.h,
             left: 0,
             right: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(images.length, (index) {
+              children: List.generate(widget.images?.length ?? 0, (index) {
                 final isActive = index == _currentIndex;
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  margin: const EdgeInsetsDirectional.symmetric(horizontal: 4),
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(

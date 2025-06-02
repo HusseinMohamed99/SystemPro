@@ -3,6 +3,7 @@ import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 
+/// FavoriteCubit manages the state of favorite listings including toggle, pagination and cache
 class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit(this._favoriteRepo) : super(const FavoriteState.initial());
 
@@ -19,7 +20,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   bool get isCacheLoaded => _isCacheLoaded;
   bool get hasMore => _loadedCount < _favoriteListings.length;
 
-  /// 🔄 تحميل المفضلات
+  /// Load favorite listings either from cache or API
   Future<void> getFavoriteListings({bool forceRefresh = false}) async {
     if (isLoading) return;
 
@@ -77,22 +78,21 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  /// ❤️ تبديل حالة المفضلة
-Future<void> toggleFavorite(int id, {Listing? listing}) async {
+  /// Toggle favorite status and update internal cache accordingly
+  Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _favoriteRepo.toggleFavorite(id);
 
       result.when(
         success: (response) {
           final isFavorited = response.data?.isFavorited ?? false;
-
           final exists = _favoriteListings.any((e) => e.id == id);
 
           if (isFavorited) {
             if (!exists && listing != null) {
-              final updatedListing = listing.copyWith(isFavorite: true);
-              _favoriteListings.insert(0, updatedListing);
-              _visibleFavorites.insert(0, updatedListing);
+              final updated = listing.copyWith(isFavorite: true);
+              _favoriteListings.insert(0, updated);
+              _visibleFavorites.insert(0, updated);
             }
           } else {
             _favoriteListings.removeWhere((e) => e.id == id);
@@ -102,15 +102,14 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
           _loadedCount = _visibleFavorites.length;
           _isCacheLoaded = true;
 
-          if (!isClosed) {
-            emit(const FavoriteState.getFavoriteLoading());
-            emit(
-              FavoriteState.getFavoriteSuccess(
-                listings: List.from(_visibleFavorites),
-                hasMore: hasMore,
-              ),
-            );
-          }
+          emit(const FavoriteState.getFavoriteLoading()); // force UI update
+
+          emit(
+            FavoriteState.getFavoriteSuccess(
+              listings: List.from(_visibleFavorites),
+              hasMore: hasMore,
+            ),
+          );
         },
         failure: (error) {
           emit(
@@ -125,8 +124,7 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
     }
   }
 
-
-  /// 📦 تحميل المزيد
+  /// Load more visible items from internal cache
   Future<void> loadMore() async {
     if (isLoading || !hasMore) return;
 
@@ -150,12 +148,12 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
     }
   }
 
-  /// 🔁 تحديث يدوي
+  /// Manually refresh all favorites from server
   Future<void> refreshFavorites() async {
     await getFavoriteListings(forceRefresh: true);
   }
 
-  /// 🧹 عند تسجيل الخروج
+  /// Clear local cache, useful on logout
   void clearFavoriteCache() {
     _isCacheLoaded = false;
     _favoriteListings.clear();
@@ -163,12 +161,13 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
     _loadedCount = 0;
   }
 
-  /// 🧩 دعم مباشر للإضافة من خارج الكيوبت (مثلاً من MarketplaceCubit)
+  /// External injection support: add to favorites manually
   void addToFavorites(Listing listing) {
     final exists = _favoriteListings.any((e) => e.id == listing.id);
     if (!exists) {
-      _favoriteListings.insert(0, listing);
-      _visibleFavorites.insert(0, listing);
+      final updated = listing.copyWith(isFavorite: true);
+      _favoriteListings.insert(0, updated);
+      _visibleFavorites.insert(0, updated);
       _loadedCount = _visibleFavorites.length;
       _isCacheLoaded = true;
 
@@ -181,6 +180,7 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
     }
   }
 
+  /// External injection support: remove from favorites manually
   void removeFromFavorites(int id) {
     _favoriteListings.removeWhere((e) => e.id == id);
     _visibleFavorites.removeWhere((e) => e.id == id);
