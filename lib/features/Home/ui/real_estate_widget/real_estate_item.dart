@@ -11,42 +11,47 @@ import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
-class RealEstateItem extends StatefulWidget {
+/// Widget that displays a real estate item, supporting grid/list layout and hero animation.
+class RealEstateItem extends StatelessWidget {
   const RealEstateItem({
     super.key,
     required this.listing,
     required this.index,
     this.onToggleFavorite,
+    this.useGridLayout = false,
   });
 
   final Listing listing;
   final int index;
-  final VoidCallback? onToggleFavorite;
+  final bool useGridLayout;
 
-  @override
-  State<RealEstateItem> createState() => _RealEstateItemState();
-}
+  /// External handler to toggle favorite; fallback provided if null.
+  final void Function(Listing updatedListing)? onToggleFavorite;
 
-class _RealEstateItemState extends State<RealEstateItem> {
- void _handleFavoriteToggle(Listing updatedListing) {
+  void _defaultFavoriteToggle(BuildContext context, Listing updatedListing) {
     context.read<FavoriteCubit>().toggleFavorite(
       updatedListing.id!,
       listing: updatedListing,
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final borderRadius = BorderRadius.circular(16);
+    final backgroundColor = AdaptiveColor.adaptiveColor(
+      context: context,
+      lightColor: ColorManager.pureWhite,
+      darkColor: ColorManager.tertiaryBlack,
+    );
+
     return Card(
-      color: AdaptiveColor.adaptiveColor(
-        context: context,
-        lightColor: ColorManager.borderGrey,
-        darkColor: ColorManager.tertiaryBlack,
-      ),
+      margin: useGridLayout ? EdgeInsets.zero : EdgeInsets.only(bottom: 12.h),
+      color: backgroundColor,
+      shape: RoundedRectangleBorder(borderRadius: borderRadius),
+      elevation: 2,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: borderRadius,
           border: Border.all(
             color: AdaptiveColor.adaptiveColor(
               context: context,
@@ -55,33 +60,43 @@ class _RealEstateItemState extends State<RealEstateItem> {
             ),
             width: 1.5.w,
           ),
-          color: AdaptiveColor.adaptiveColor(
-            context: context,
-            lightColor: ColorManager.pureWhite,
-            darkColor: ColorManager.tertiaryBlack,
-          ),
+          color: backgroundColor,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RealEstateImageSlider(
-              images: widget.listing.images,
-              listingId: widget.listing.id ?? 0,
-              listing: widget.listing,
-              onToggleFavorite: _handleFavoriteToggle,
+            /// ✅ Hero animation applied to first image
+            Hero(
+              tag: 'listing-image-${listing.id}',
+              child: RealEstateImageSlider(
+                images: listing.images,
+                listingId: listing.id ?? 0,
+                listing: listing,
+                onToggleFavorite:
+                    onToggleFavorite != null
+                        ? (updatedListing) => onToggleFavorite!(updatedListing)
+                        : (updatedListing) =>
+                            _defaultFavoriteToggle(context, updatedListing),
+              ),
             ),
             verticalSpacing(kSpacingSmall),
-            RealEstateInfo(
-              price: widget.listing.price ?? '',
-              location: widget.listing.location ?? '',
-              title: widget.listing.title ?? '',
-              bedroomNum: widget.listing.rooms.toString(),
-              bathroomNum: widget.listing.bathrooms.toString(),
-              area: widget.listing.area.toString(),
-              dateTime: widget.listing.createdAt.toString(),
-              company: widget.listing.company ?? const Company(),
-              marketer: widget.listing.marketer?? const Marketer(),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: useGridLayout ? 8.w : 12.w,
+              ),
+              child: RealEstateInfo(
+                price: listing.price ?? '',
+                location: listing.location ?? '',
+                title: listing.title ?? '',
+                bedroomNum: listing.rooms.toString(),
+                bathroomNum: listing.bathrooms.toString(),
+                area: listing.area.toString(),
+                dateTime: listing.createdAt.toString(),
+                company: listing.company ?? const Company(),
+                marketer: listing.marketer ?? const Marketer(),
+              ),
             ),
+            verticalSpacing(kSpacingSmall),
           ],
         ),
       ),

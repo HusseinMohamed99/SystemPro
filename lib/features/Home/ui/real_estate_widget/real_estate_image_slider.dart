@@ -11,6 +11,8 @@ import 'package:system_pro/features/Home/data/model/realestate/listing_image.dar
 import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 
+/// Slider widget that displays listing images with pagination and favorite button.
+/// Includes Hero animation and adaptive layout support.
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({
     super.key,
@@ -23,7 +25,7 @@ class RealEstateImageSlider extends StatefulWidget {
   final List<ListingImage>? images;
   final int listingId;
   final Listing? listing;
-  final void Function(Listing updatedListing)? onToggleFavorite; // ✅
+  final void Function(Listing updatedListing)? onToggleFavorite;
 
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
@@ -46,8 +48,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
       isFavorite: !widget.listing!.isFavorite,
     );
 
-    widget.onToggleFavorite?.call(updatedListing); // ✅ يعمل الآن
-
+    widget.onToggleFavorite?.call(updatedListing);
     setState(() {});
   }
 
@@ -55,6 +56,8 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
     final isFromCompanyProfile = currentRoute == Routes.companyProfileView;
+    final imageCount = widget.images?.length ?? 0;
+    final fallbackImage = widget.listing?.pictureUrl ?? '';
 
     return Stack(
       children: [
@@ -67,30 +70,27 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             height: 150.h,
             width: context.width,
             child:
-                widget.images == null || widget.images!.isEmpty
-                    ? const Center(child: Text('No images available'))
+                imageCount == 0
+                    ? Center(child: Text('No images available'))
                     : PageView.builder(
                       controller: _pageController,
-                      itemCount: widget.images?.length ?? 0,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
+                      itemCount: imageCount,
+                      onPageChanged:
+                          (index) => setState(() => _currentIndex = index),
                       itemBuilder: (context, index) {
+                        final imageUrl =
+                            widget.images?[index].imageUrl ?? fallbackImage;
                         return CustomCachedNetworkImageWidget(
                           fit: BoxFit.fitWidth,
                           width: context.width,
                           height: 150.h,
-                          imageURL:
-                              widget.images?[index].imageUrl ??
-                              widget.listing?.pictureUrl ??
-                              '',
+                          imageURL: imageUrl,
                         );
                       },
                     ),
           ),
         ),
+
         if (!isFromCompanyProfile)
           Positioned(
             top: 16.h,
@@ -98,7 +98,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
             child: GestureDetector(
               onTap: _toggleFavorite,
               child: Container(
-                padding: EdgeInsetsDirectional.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: kPaddingSmallHorizontal.w,
                   vertical: kPaddingSmallVertical.h,
                 ),
@@ -111,11 +111,9 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                   ),
                 ),
                 child: BlocBuilder<FavoriteCubit, FavoriteState>(
-                  buildWhen:
-                      (previous, current) => current is GetFavoriteSuccess,
+                  buildWhen: (prev, curr) => curr is GetFavoriteSuccess,
                   builder: (context, state) {
                     final isFavorited = widget.listing?.isFavorite ?? false;
-
                     return Icon(
                       isFavorited ? Icons.favorite : Icons.favorite_border,
                       color:
@@ -133,18 +131,19 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
               ),
             ),
           ),
-        if ((widget.images?.length ?? 0) > 1)
+
+        if (imageCount > 1)
           Positioned(
             bottom: 8.h,
             left: 0,
             right: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(widget.images?.length ?? 0, (index) {
+              children: List.generate(imageCount, (index) {
                 final isActive = index == _currentIndex;
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsetsDirectional.symmetric(horizontal: 4),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(

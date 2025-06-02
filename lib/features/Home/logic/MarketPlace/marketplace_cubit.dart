@@ -184,7 +184,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// Toggle favorite and sync with favorite cubit and UI
-Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
+  Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
 
@@ -226,6 +226,26 @@ Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
       return null;
     }
   }
+
+  /// Refresh current listings with force refresh (used by FavoriteCubit)
+/// Update a single listing's favorite status by ID without re-fetching
+  void updateListingFavoriteStatus(int listingId, bool isFavorite) {
+    final index = _visibleListings.indexWhere((e) => e.id == listingId);
+    if (index != -1) {
+      _visibleListings[index] = _visibleListings[index].copyWith(
+        isFavorite: isFavorite,
+      );
+
+      // ✅ إعادة إرسال الحالة بعد التحديث
+      emit(
+        MarketplaceState.success(
+          listings: List.from(_visibleListings),
+          selectedFilter: _currentFilter,
+        ),
+      );
+    }
+  }
+
 
   /// Apply sorting to listings and emit new state
   void sortListings(SortType sortType, {bool shouldEmit = true}) {
