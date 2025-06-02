@@ -462,7 +462,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/categories',
+            'api/mobile',
             queryParameters: queryParameters,
             data: _data,
           )

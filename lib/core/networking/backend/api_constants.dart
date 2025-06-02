@@ -24,5 +24,5 @@ class ApiConstants {
       'api/marketplace/listings/cursor';
   static const String getFavoriteRealEstate = 'api/mobile/favorites';
   static const String addFavoriteRealEstate = 'api/mobile/favorites';
-  static const String getCategories = 'api/mobile/categories';
+  static const String getCategories = 'api/mobile';
 }
