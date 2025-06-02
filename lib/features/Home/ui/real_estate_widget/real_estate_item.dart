@@ -7,7 +7,6 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Home/data/model/realestate/company.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
-import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
