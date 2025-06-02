@@ -10,6 +10,9 @@ enum FilterToggle { buy, rent, booking }
 /// Represents a unit of time used in the time difference calculation.
 enum TimeUnit { days, hours, minutes, now }
 
+/// Enum representing the different types of user roles.
+enum SortType { newest, oldest, priceLow, priceHigh }
+
 /// Enum representing various data source error types.
 enum DataSource {
   /// Success with no content (HTTP 204).

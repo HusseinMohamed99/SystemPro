@@ -34,8 +34,8 @@ class ListingsList extends StatelessWidget {
 
         if (notification is ScrollEndNotification &&
             reachedBottom &&
-            !cubit.isLoading &&
-            cubit.hasMore) {
+            !cubit.pagination.isLoading &&
+            cubit.pagination.hasMore) {
           cubit.loadMore();
         }
 

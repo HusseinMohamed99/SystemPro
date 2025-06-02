@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
@@ -13,8 +14,6 @@ import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dar
 /// Allows the user to select how listings are sorted (newest, price low/high).
 class ResultsCountAndSortButton extends StatefulWidget {
   const ResultsCountAndSortButton({super.key, required this.propertyLength});
-
-  /// Number of property listings displayed
   final String propertyLength;
 
   @override
@@ -23,36 +22,22 @@ class ResultsCountAndSortButton extends StatefulWidget {
 }
 
 class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
-  /// Currently selected sort option
-  late String selectedSort;
-
-  /// Available localized sort options
-  List<String> sortOptions(BuildContext context) => [
-    context.localization.newest,
-    context.localization.oldest,
-    context.localization.price_low,
-    context.localization.price_high,
-  ];
+  /// النوع الحالي المختار للفرز
+  late SortType selectedSort;
 
   @override
   void initState() {
     super.initState();
-    selectedSort = ''; // Will be replaced in build with default if needed
+    selectedSort = SortType.newest; // Default
   }
 
   @override
   Widget build(BuildContext context) {
-    final allSortOptions = sortOptions(context);
-
-    // Fallback to default sort if not set
-    if (selectedSort.isEmpty) {
-      selectedSort = context.localization.newest;
-    }
+    final sortLabels = getSortLabels(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        /// Left side: result count text
         Text(
           '${widget.propertyLength} ${context.localization.properties}',
           style: context.titleMedium?.copyWith(
@@ -64,8 +49,6 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-
-        /// Right side: sort button with PopupMenu
         Container(
           padding: EdgeInsetsDirectional.symmetric(
             horizontal: kPaddingDefaultHorizontal.w,
@@ -87,7 +70,7 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
               darkColor: ColorManager.tertiaryBlack,
             ),
           ),
-          child: PopupMenuButton<String>(
+          child: PopupMenuButton<SortType>(
             color: AdaptiveColor.adaptiveColor(
               context: context,
               lightColor: ColorManager.pureWhite,
@@ -98,36 +81,28 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
                 selectedSort = value;
               });
 
-              // Trigger sort logic in MarketplaceCubit
-              context.read<MarketplaceCubit>().sortListings(
-                sortType: value,
-                newest: context.localization.newest,
-                priceLow: context.localization.price_low,
-                priceHigh: context.localization.price_high,
-                
-              );
+              // نفذ الفرز حسب النوع المختار
+              context.read<MarketplaceCubit>().sortListings(value);
             },
             itemBuilder: (context) {
-              return allSortOptions.map((option) {
-                return PopupMenuItem<String>(
+              return SortType.values.map((option) {
+                return PopupMenuItem<SortType>(
                   value: option,
                   child: Row(
                     children: [
-                      // Show checkmark if current option is selected
                       if (option == selectedSort)
                         Icon(
                           Icons.check_box_sharp,
-                           size: 16.sp,
+                          size: 16.sp,
                           color: ColorManager.primaryBlue,
                         )
                       else
-                        horizontalSpacing(16), // Placeholder to align text
+                        horizontalSpacing(16),
 
                       horizontalSpacing(8),
 
-                      // Option text
                       Text(
-                        option,
+                        sortLabels[option]!,
                         style: context.titleMedium?.copyWith(
                           fontWeight: FontWeightHelper.regular,
                         ),
@@ -150,7 +125,7 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
                 ),
                 horizontalSpacing(4),
                 Text(
-                  selectedSort,
+                  sortLabels[selectedSort]!,
                   style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.regular,
                     color: AdaptiveColor.adaptiveColor(
@@ -167,4 +142,11 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
       ],
     );
   }
+
+  Map<SortType, String> getSortLabels(BuildContext context) => {
+    SortType.newest: context.localization.newest,
+    SortType.oldest: context.localization.oldest,
+    SortType.priceLow: context.localization.price_low,
+    SortType.priceHigh: context.localization.price_high,
+  };
 }
