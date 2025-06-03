@@ -344,6 +344,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "too_many_requests_message": MessageLookupByLibrary.simpleMessage(
       "طلبات كثيرة جداً، الرجاء المحاولة لاحقاً",
     ),
+    "try_again": MessageLookupByLibrary.simpleMessage("حاول مرة اخرى"),
     "unable_to_call": MessageLookupByLibrary.simpleMessage("تعذر الاتصال"),
     "unable_to_call_message": MessageLookupByLibrary.simpleMessage(
       "الرجاء منح صلاحية الاتصال من الإعدادات",

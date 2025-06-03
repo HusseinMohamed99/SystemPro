@@ -78,7 +78,7 @@ abstract class ApiService {
   );
 
   /// Marketplace endpoints
-  @GET(ApiConstants.getMarketplaceListings)
+@GET(ApiConstants.getMarketplaceListings)
   Future<MarketplaceResponse> getMarketplaceListings({
     @Query('listing_type') String? listingType,
     @Query('location') String? location,
@@ -94,7 +94,10 @@ abstract class ApiService {
     @Query('direction') required String direction,
     @Query('cursor') required int cursor,
     @Query('limit') required int limit,
+    @Query('company_id') int? companyId,
+    @Query('marketer_id') int? marketerId,
   });
+
 
   /// Favorites management endpoints
   @POST('${ApiConstants.addFavoriteRealEstate}/{id}')

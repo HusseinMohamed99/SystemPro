@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
@@ -11,7 +10,6 @@ import 'package:system_pro/core/widgets/buttons/custom_back_button.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
-import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/about_real_estate_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/location_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/properties_widget.dart';
@@ -24,20 +22,23 @@ class GetProfileCompanySuccess extends StatelessWidget {
     super.key,
     required this.company,
     required this.companyListings,
-    required this.isCompanyProfile, // ✅ أضفنا هذا
+    required this.isCompanyProfile,
+    required this.scrollController,
+    this.isLoadingMore = false,
   });
 
   final Company company;
   final List<Listing> companyListings;
   final bool isCompanyProfile;
+  final ScrollController scrollController;
+  final bool isLoadingMore;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<RealEstateCubit>(context);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // ✅ Header
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -89,56 +90,47 @@ class GetProfileCompanySuccess extends StatelessWidget {
           ],
         ),
         verticalSpacing(kSpacingXLarge),
-        Expanded(
-          child: NotificationListener<ScrollNotification>(
-            onNotification: (scrollInfo) {
-              if (scrollInfo.metrics.pixels >=
-                      scrollInfo.metrics.maxScrollExtent - 50 &&
-                  !cubit.isLoading &&
-                  cubit.hasMore) {
-                cubit.loadMoreListingsBySource(
-                );
-              }
-              return false;
-            },
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: LocationWidget(location: company.address ?? ''),
-                ),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-                SliverToBoxAdapter(
-                  child: AboutRealEstateWidget(description: company.bio ?? ''),
-                ),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
-                const SliverToBoxAdapter(child: AdaptiveDivider()),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-                SliverToBoxAdapter(
-                  child: PropertiesWidget(
-                    propertyLength: companyListings.length.toString(),
-                  ),
-                ),
-                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-                RealEstateSliverList(listings: companyListings),
 
-                if (cubit.isLoading)
-                  SliverToBoxAdapter(
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.symmetric(
-                          horizontal: kPaddingDefaultHorizontal.w,
-                          vertical: kPaddingDefaultVertical.h,
-                        ),
-                        child: const CustomLoader(),
+        // ✅ Main content
+        Expanded(
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: LocationWidget(location: company.address ?? ''),
+              ),
+              SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+              SliverToBoxAdapter(
+                child: AboutRealEstateWidget(description: company.bio ?? ''),
+              ),
+              SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
+              const SliverToBoxAdapter(child: AdaptiveDivider()),
+              SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+              SliverToBoxAdapter(
+                child: PropertiesWidget(
+                  propertyLength: companyListings.length.toString(),
+                ),
+              ),
+              SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+              RealEstateSliverList(listings: companyListings),
+
+              // ✅ Indicator at bottom if loading more
+              if (isLoadingMore)
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: kPaddingDefaultHorizontal.w,
+                        vertical: kPaddingDefaultVertical.h,
                       ),
+                      child: const CustomLoader(type: LoaderType.adaptive),
                     ),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ],
     );
   }
 }
-

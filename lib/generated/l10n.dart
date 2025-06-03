@@ -1514,6 +1514,11 @@ class S {
       args: [],
     );
   }
+
+  /// `Try Again`
+  String get try_again {
+    return Intl.message('Try Again', name: 'try_again', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

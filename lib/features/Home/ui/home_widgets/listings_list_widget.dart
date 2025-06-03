@@ -55,10 +55,9 @@ class _ListingsListState extends State<ListingsList> {
       child: CustomScrollView(
         slivers: [
           // Listings content
-          RealEstateSliverList(listings: widget.listings, onTap: (context, listing) {
-            context.pushNamed(Routes.realEstateDetailsView, arguments: listing);
-            
-          },),
+          RealEstateSliverList(
+            listings: widget.listings,
+          ),
 
           // Spacing and loader
           SliverToBoxAdapter(child: verticalSpacing(20)),

@@ -369,5 +369,7 @@
   "required_field":"This field is required",
   "@required_field":{},
   "unknown_error":"An unexpected error occurred. Please close the app and try again.",
-  "@unknown_error": {}
+  "@unknown_error": {},
+  "try_again":"Try Again",
+  "@try_again": {}
 }

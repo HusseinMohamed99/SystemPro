@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
+import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_item.dart';
 
@@ -9,7 +11,6 @@ class RealEstateSliverList extends StatelessWidget {
   const RealEstateSliverList({
     super.key,
     required this.listings,
-    this.onTap,
     this.heroTagBuilder,
     this.showImage = true,
   });
@@ -18,8 +19,6 @@ class RealEstateSliverList extends StatelessWidget {
   final List<Listing> listings;
 
 
-  /// Optional custom onTap callback (default navigation logic removed)
-  final void Function(BuildContext context, Listing listing)? onTap;
 
   /// Optional builder for Hero tag support
   final String Function(Listing listing)? heroTagBuilder;
@@ -38,7 +37,9 @@ class RealEstateSliverList extends StatelessWidget {
         final listing = listings[index];
 
         return GestureDetector(
-          onTap: () => onTap?.call(context, listing),
+          onTap: () {
+              context.pushNamed(Routes.realEstateDetailsView, arguments: listing);
+          },
           child: RealEstateItem(
             key: ValueKey('${listing.id}_${listing.isFavorite}'),
             listing: listing,

@@ -352,6 +352,8 @@ class _ApiService implements ApiService {
     required String direction,
     required int cursor,
     required int limit,
+    int? companyId,
+    int? marketerId,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -369,6 +371,8 @@ class _ApiService implements ApiService {
       r'direction': direction,
       r'cursor': cursor,
       r'limit': limit,
+      r'company_id': companyId,
+      r'marketer_id': marketerId,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

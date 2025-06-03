@@ -11,6 +11,8 @@ class FilterResultArguments {
     this.maxSize,
     this.selectedAmenities,
     required this.location,
+    this.companyId,
+    this.marketerId,
   });
   final int category;
   final String listingType;
@@ -23,4 +25,6 @@ class FilterResultArguments {
   final num? minSize;
   final num? maxSize;
   final List<int>? selectedAmenities;
+  final int? companyId;
+  final int? marketerId;
 }

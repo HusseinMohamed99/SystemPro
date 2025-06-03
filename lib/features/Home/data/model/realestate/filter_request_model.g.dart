@@ -25,6 +25,8 @@ FilterRequestModel _$FilterRequestModelFromJson(Map<String, dynamic> json) =>
           (json['amenities'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
               .toList(),
+      companyId: (json['company_id'] as num?)?.toInt(),
+      marketerId: (json['marketer_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$FilterRequestModelToJson(FilterRequestModel instance) =>
@@ -43,4 +45,6 @@ Map<String, dynamic> _$FilterRequestModelToJson(FilterRequestModel instance) =>
       if (instance.priceMin case final value?) 'price_min': value,
       if (instance.priceMax case final value?) 'price_max': value,
       if (instance.amenities case final value?) 'amenities': value,
+      'company_id': instance.companyId,
+      'marketer_id': instance.marketerId,
     };

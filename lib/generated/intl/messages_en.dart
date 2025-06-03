@@ -342,6 +342,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "too_many_requests_message": MessageLookupByLibrary.simpleMessage(
       "Too many requests. Please try again later.",
     ),
+    "try_again": MessageLookupByLibrary.simpleMessage("Try Again"),
     "unable_to_call": MessageLookupByLibrary.simpleMessage("Unable to Call"),
     "unable_to_call_message": MessageLookupByLibrary.simpleMessage(
       "Please allow call permission from settings",

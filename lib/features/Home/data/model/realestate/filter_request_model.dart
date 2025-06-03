@@ -22,6 +22,8 @@ class FilterRequestModel {
     this.priceMin,
     this.priceMax,
     this.amenities,
+    this.companyId,
+    this.marketerId,
   });
 
   /// Factory constructor to generate a FilterRequestModel from FilterResultArguments.
@@ -38,6 +40,8 @@ class FilterRequestModel {
       priceMin: args.minPrice,
       priceMax: args.maxPrice,
       amenities: args.selectedAmenities,
+      companyId: args.companyId,
+      marketerId: args.marketerId,
     );
   }
 
@@ -101,6 +105,14 @@ class FilterRequestModel {
   @JsonKey(includeIfNull: false)
   final List<int>? amenities;
 
+  /// Company ID for company listings
+  @JsonKey(name: 'company_id')
+  final int? companyId;
+
+  /// Marketer ID for marketer listings
+  @JsonKey(name: 'marketer_id')
+  final int? marketerId;
+
   /// Returns a copy of this model with updated fields.
   FilterRequestModel copyWith({
     String? direction,
@@ -117,6 +129,8 @@ class FilterRequestModel {
     num? priceMin,
     num? priceMax,
     List<int>? amenities,
+    int? companyId,
+    int? marketerId,
   }) {
     return FilterRequestModel(
       direction: direction ?? this.direction,
@@ -133,6 +147,8 @@ class FilterRequestModel {
       priceMin: priceMin ?? this.priceMin,
       priceMax: priceMax ?? this.priceMax,
       amenities: amenities ?? this.amenities,
+      companyId: companyId ?? this.companyId,
+      marketerId: marketerId ?? this.marketerId,
     );
   }
 }
