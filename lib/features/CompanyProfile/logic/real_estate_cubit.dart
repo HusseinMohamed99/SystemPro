@@ -1,34 +1,38 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_state.dart';
 import 'package:system_pro/features/Home/data/model/realestate/filter_request_model.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 
-/// Cubit responsible for fetching and paginating real estate listings
-/// filtered by companyId or marketerId.
-class RealEstateCubit extends Cubit<RealEstateState> {
+/// Cache object to store listings and cursor per source ID
+class _CachedData {
+  List<Listing> listings = [];
+  DateTime lastUpdated = DateTime.now();
+  int cursor = 0;
+}
+
+/// Cubit responsible for fetching, caching, and paginating real estate listings
+/// based on companyId or marketerId.
+/// Supports HydratedBloc for offline persistence.
+class RealEstateCubit extends HydratedCubit<RealEstateState> {
   RealEstateCubit(this._marketplaceRepo)
     : super(const RealEstateState.initial());
 
   final MarketplaceRepo _marketplaceRepo;
 
   final Map<int, _CachedData> _cachedListingsBySource = {};
-  int _cursor = 0;
-  bool isLoading = false;
-  bool hasMore = true;
-  final int _limit = 5;
-  String _direction = 'next';
   int _currentSourceId = 0;
   bool _currentIsCompany = false;
+  final int _limit = 5;
+  bool isLoading = false;
+  bool hasMore = true;
   int _apiCallCount = 0;
 
   List<Listing> get _currentListings =>
       _cachedListingsBySource[_currentSourceId]?.listings ?? [];
-
   int get apiCallCount => _apiCallCount;
 
+  /// Load listings by source (companyId or marketerId)
   Future<void> getListingsBySource({int? companyId, int? marketerId}) async {
     final int? sourceId = companyId ?? marketerId;
     final bool isCompany = companyId != null;
@@ -46,6 +50,7 @@ class RealEstateCubit extends Cubit<RealEstateState> {
         cache != null &&
         cache.listings.isNotEmpty &&
         now.difference(cache.lastUpdated).inMinutes < 10) {
+      emit(RealEstateState.filtered(cache.listings));
       return;
     }
 
@@ -57,75 +62,54 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     await _fetchListings();
   }
 
+  /// Load more listings (pagination)
   Future<void> loadMoreListingsBySource() async {
     if (isLoading || !hasMore) return;
     emit(RealEstateState.loadingMore(_currentListings));
     await _fetchListings();
   }
 
+  /// Retry last failed request
   Future<void> retry() async {
     await _fetchListings();
   }
 
+  /// Fetch listings from backend and update cache/state
   Future<void> _fetchListings() async {
     isLoading = true;
     _apiCallCount++;
 
     final sourceId = _currentSourceId;
     final isCompany = _currentIsCompany;
-
-    debugPrint('📡 API Call #$_apiCallCount for source $sourceId');
+    final cache = _cachedListingsBySource[sourceId] ??= _CachedData();
 
     final response = await _marketplaceRepo.getMarketplaceListings(
       FilterRequestModel(
-        direction: _direction,
-        cursor: _cursor,
+        cursor: cache.cursor,
         limit: _limit,
         companyId: isCompany ? sourceId : null,
         marketerId: !isCompany ? sourceId : null,
       ),
     );
 
-    AppLogs.log(isCompany ? 'Company $sourceId' : 'Marketer $sourceId');
-
     response.when(
       success: (data) {
         final listings = data.data?.listings ?? [];
-
-        listings.sort(
-          (a, b) => DateTime.parse(
-            b.createdAt ?? '',
-          ).compareTo(DateTime.parse(a.createdAt ?? '')),
-        );
-
-        _cachedListingsBySource[sourceId] ??= _CachedData();
-
-        final existingIds =
-            _cachedListingsBySource[sourceId]!.listings
-                .map((e) => e.id)
-                .toSet();
-        final newListings =
-            listings.where((e) => !existingIds.contains(e.id)).toList();
-
-        if (newListings.isEmpty || newListings.length < _limit) {
+        if (listings.isEmpty) {
           hasMore = false;
-        }
-
-        _cachedListingsBySource[sourceId]!.listings.addAll(newListings);
-        _cachedListingsBySource[sourceId]!.lastUpdated = DateTime.now();
-
-        final lastId = newListings.lastOrNull?.id;
-        if (lastId != null && lastId != _cursor) {
-          _cursor = lastId;
         } else {
-          hasMore = false;
+          final lastId = listings.last.id;
+          if (lastId != null && lastId != cache.cursor) {
+            cache.cursor = lastId;
+          } else {
+            hasMore = false;
+          }
         }
 
-        emit(
-          RealEstateState.filtered(
-            List.from(_cachedListingsBySource[sourceId]!.listings),
-          ),
-        );
+        cache.listings.addAll(listings);
+        cache.lastUpdated = DateTime.now();
+
+        emit(RealEstateState.filtered(List.from(cache.listings)));
       },
       failure: (error) {
         emit(
@@ -139,18 +123,57 @@ class RealEstateCubit extends Cubit<RealEstateState> {
 
   void _resetPagination() {
     _cachedListingsBySource[_currentSourceId] = _CachedData();
-    _cursor = 0;
     hasMore = true;
     isLoading = false;
-    _direction = 'next';
   }
-}
 
-class _CachedData {
-  List<Listing> listings = [];
-  DateTime lastUpdated = DateTime.now();
-}
+  /// Save cubit state to local storage (hydrated)
+  @override
+  Map<String, dynamic>? toJson(RealEstateState state) {
+    if (state is FilteredListingsSuccess) {
+      return {
+        'sourceId': _currentSourceId,
+        'isCompany': _currentIsCompany,
+        'cached': _cachedListingsBySource.map(
+          (key, value) => MapEntry(key.toString(), {
+            'listings': value.listings.map((e) => e.toJson()).toList(),
+            'lastUpdated': value.lastUpdated.toIso8601String(),
+            'cursor': value.cursor,
+          }),
+        ),
+      };
+    }
+    return null;
+  }
 
-extension NullableLast<T> on List<T> {
-  T? get lastOrNull => isEmpty ? null : last;
+  /// Restore cubit state from local storage (hydrated)
+  @override
+  RealEstateState? fromJson(Map<String, dynamic> json) {
+    try {
+      final Map<int, _CachedData> restoredCache = {};
+      final cached = json['cached'] as Map<String, dynamic>;
+
+      cached.forEach((key, value) {
+        restoredCache[int.parse(key)] =
+            _CachedData()
+              ..listings =
+                  (value['listings'] as List)
+                      .map((e) => Listing.fromJson(e))
+                      .toList()
+              ..lastUpdated = DateTime.parse(value['lastUpdated'])
+              ..cursor = value['cursor'] ?? 0;
+      });
+
+      _cachedListingsBySource.clear();
+      _cachedListingsBySource.addAll(restoredCache);
+      _currentSourceId = json['sourceId'];
+      _currentIsCompany = json['isCompany'];
+
+      return RealEstateState.filtered(
+        _cachedListingsBySource[_currentSourceId]?.listings ?? [],
+      );
+    } catch (_) {
+      return const RealEstateState.initial();
+    }
+  }
 }
