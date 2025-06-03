@@ -24,10 +24,12 @@ class GetProfileCompanySuccess extends StatelessWidget {
     super.key,
     required this.company,
     required this.companyListings,
+    required this.isCompanyProfile, // ✅ أضفنا هذا
   });
 
   final Company company;
   final List<Listing> companyListings;
+  final bool isCompanyProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,8 @@ class GetProfileCompanySuccess extends StatelessWidget {
                       scrollInfo.metrics.maxScrollExtent - 50 &&
                   !cubit.isLoading &&
                   cubit.hasMore) {
-                cubit.loadMoreListingsByCompany();
+                cubit.loadMoreListingsBySource(
+                );
               }
               return false;
             },
@@ -118,7 +121,6 @@ class GetProfileCompanySuccess extends StatelessWidget {
                 SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
                 RealEstateSliverList(listings: companyListings),
 
-                // ✅ تحميل إضافي عند الوصول للنهاية
                 if (cubit.isLoading)
                   SliverToBoxAdapter(
                     child: Center(
@@ -139,3 +141,4 @@ class GetProfileCompanySuccess extends StatelessWidget {
     );
   }
 }
+

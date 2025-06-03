@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/functions/time_ago.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -40,11 +41,18 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            if (company.id == null && marketer.id == null) return;
-            context.pushNamed(
-              Routes.companyProfileView,
-              arguments: company.id ?? marketer.id,
-            );
+            if (company.id != null) {
+              context.pushNamed(
+                Routes.companyProfileView,
+                arguments: company.id,
+              );
+              AppLogs.log(company.id.toString());
+            } else if (marketer.id != null) {
+              context.pushNamed(
+                Routes.companyProfileView,
+                arguments: marketer.id,
+              );
+            }
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50.r),

@@ -40,7 +40,7 @@ class AppRouters {
   /// the route name and optional arguments.
   /// Performs type checking on arguments to avoid runtime errors.
   /// Returns a default error page if the route or arguments are invalid.
-  Route<dynamic> generateRoute(RouteSettings settings) {
+  Route? generateRoute(RouteSettings settings) {
     final arguments = settings.arguments;
 
     switch (settings.name) {
@@ -153,7 +153,7 @@ class AppRouters {
                   create:
                       (context) =>
                           getIt<RealEstateCubit>()
-                            ..getListingsByCompany(companyId: arguments),
+                            ..getListingsBySource(companyId: arguments),
                   child: CompanyProfileView(companyID: arguments),
                 ),
           );
@@ -198,7 +198,7 @@ class AppRouters {
 
       // Default fallback route in case of invalid route name or arguments.
       default:
-        return _errorRoute();
+        return null;
     }
   }
 

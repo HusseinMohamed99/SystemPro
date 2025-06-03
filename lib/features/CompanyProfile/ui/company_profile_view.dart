@@ -16,6 +16,13 @@ class CompanyProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<RealEstateCubit>();
+
+    // ✅ استدعاء تحميل البيانات بعد بناء الواجهة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      cubit.getListingsBySource(companyId: companyID);
+    });
+
     return Scaffold(
       appBar: basicAppBar(),
       body: BlocBuilder<RealEstateCubit, RealEstateState>(
@@ -23,22 +30,28 @@ class CompanyProfileView extends StatelessWidget {
           if (state is FilteredListingsError) {
             return CustomErrorTextWidget(errorMessage: state.error);
           }
+
           if (state is FilteredListingsSuccess) {
             final listings = state.filteredListings;
             final companyListings =
                 listings.where((l) => l.company?.id == companyID).toList();
+
             if (companyListings.isEmpty ||
                 companyListings.first.company == null) {
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
               );
             }
+
             final company = companyListings.first.company!;
+
             return GetProfileCompanySuccess(
               company: company,
               companyListings: companyListings,
+              isCompanyProfile: true, // ✅ ضروري للتحميل التلقائي لاحقًا
             ).hPadding(kPaddingDefaultHorizontal);
           }
+
           return const CustomLoader();
         },
       ),

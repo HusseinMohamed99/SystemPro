@@ -1,13 +1,11 @@
+import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
-/// A flexible, reusable image widget that
-///  loads network images with caching support.
-/// Includes default loading and error widgets,
-///  with the ability to customize both.
 class CustomCachedNetworkImageWidget extends StatelessWidget {
   const CustomCachedNetworkImageWidget({
     super.key,
@@ -19,22 +17,11 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
     this.customLoadingWidget,
   });
 
-  /// URL of the image to load.
   final String? imageURL;
-
-  /// Desired width of the image.
   final double? width;
-
-  /// Desired height of the image.
   final double? height;
-
-  /// BoxFit strategy for the image.
   final BoxFit? fit;
-
-  /// Optional widget to show while the image is loading.
   final Widget? customLoadingWidget;
-
-  /// Optional widget to show when the image fails to load.
   final Widget? customErrorWidget;
 
   @override
@@ -48,16 +35,36 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
       fit: fit ?? BoxFit.cover,
       placeholder:
           (context, url) => customLoadingWidget ?? _buildLoadingIndicator(),
-      errorWidget:
-          (context, url, error) =>
-              customErrorWidget ?? _buildErrorWidget(context),
+      errorWidget: (context, url, error) {
+        // Fallback to Image.memory if CachedNetworkImage fails
+        return FutureBuilder<Uint8List?>(
+          future: _fetchImageBytes(url),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return customLoadingWidget ?? _buildLoadingIndicator();
+            }
+
+            if (snapshot.hasData && snapshot.data != null) {
+              return Image.memory(
+                snapshot.data!,
+                fit: fit ?? BoxFit.cover,
+                width: width,
+                height: height,
+                errorBuilder:
+                    (_, _, _) =>
+                        customErrorWidget ?? _buildErrorWidget(context),
+              );
+            }
+
+            return customErrorWidget ?? _buildErrorWidget(context);
+          },
+        );
+      },
     );
   }
 
-  /// Checks if the imageURL is null or empty.
   bool get _isImageUrlEmpty => imageURL == null || imageURL!.trim().isEmpty;
 
-  /// Default loading spinner widget.
   Widget _buildLoadingIndicator() {
     return Center(
       child: SpinKitDoubleBounce(
@@ -68,7 +75,6 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
     );
   }
 
-  /// Default error widget with fallback icon and background.
   Widget _buildErrorWidget(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
@@ -82,5 +88,21 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
         color: ColorManager.hintGrey,
       ),
     );
+  }
+
+  Future<Uint8List?> _fetchImageBytes(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200 && response.bodyBytes.isNotEmpty) {
+        return response.bodyBytes;
+      } else {
+        debugPrint('Image fetch failed: HTTP ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Exception while fetching image: $e');
+    }
+
+    return null;
   }
 }
