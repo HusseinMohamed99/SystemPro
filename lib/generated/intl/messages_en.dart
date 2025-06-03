@@ -298,6 +298,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "property_size": MessageLookupByLibrary.simpleMessage("Property Size"),
     "property_type": MessageLookupByLibrary.simpleMessage("Property Type"),
     "purpose": MessageLookupByLibrary.simpleMessage("Purpose"),
+    "read_less": MessageLookupByLibrary.simpleMessage("Read Less"),
     "recent_search": MessageLookupByLibrary.simpleMessage("Recent Search"),
     "rent": MessageLookupByLibrary.simpleMessage("Rent"),
     "required_field": MessageLookupByLibrary.simpleMessage(

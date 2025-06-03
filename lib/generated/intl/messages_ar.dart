@@ -298,6 +298,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "property_size": MessageLookupByLibrary.simpleMessage("مساحة العقار"),
     "property_type": MessageLookupByLibrary.simpleMessage("نوع العقار"),
     "purpose": MessageLookupByLibrary.simpleMessage("الغرض"),
+    "read_less": MessageLookupByLibrary.simpleMessage("عرض أقل"),
     "recent_search": MessageLookupByLibrary.simpleMessage(
       "عمليات البحث الحديثة",
     ),

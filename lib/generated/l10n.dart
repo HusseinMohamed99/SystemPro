@@ -1250,6 +1250,11 @@ class S {
     return Intl.message('See More', name: 'see_more', desc: '', args: []);
   }
 
+  /// `Read Less`
+  String get read_less {
+    return Intl.message('Read Less', name: 'read_less', desc: '', args: []);
+  }
+
   /// `Booking`
   String get book {
     return Intl.message('Booking', name: 'book', desc: '', args: []);
