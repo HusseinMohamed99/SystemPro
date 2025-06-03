@@ -18,7 +18,7 @@ import 'package:system_pro/features/Authentication/Login/ui/login_view.dart';
 import 'package:system_pro/features/Authentication/SignUp/logic/sign_up_cubit.dart';
 import 'package:system_pro/features/Authentication/SignUp/ui/signup_view.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
-import 'package:system_pro/features/CompanyProfile/ui/company_profile_view.dart';
+import 'package:system_pro/features/CompanyProfile/ui/source_profile_view.dart';
 import 'package:system_pro/features/EditProfile/ui/edit_profile_view.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
@@ -144,17 +144,17 @@ class AppRouters {
         return _errorRoute();
 
       // Company Profile screen with companyId argument and RealEstateCubit.
-      case Routes.companyProfileView:
+      case Routes.sourceProfileView:
         if (arguments is int) {
           return MaterialPageRoute(
-            settings: const RouteSettings(name: Routes.companyProfileView),
+            settings: const RouteSettings(name: Routes.sourceProfileView),
             builder:
                 (_) => BlocProvider(
-                  create:
-                      (context) =>
-                          getIt<RealEstateCubit>()
-                          ,
-                  child: CompanyProfileView(companyID: arguments),
+                  create: (context) => getIt<RealEstateCubit>(),
+                  child: SourceProfileView(
+                    companyId: arguments,
+                    marketerId: arguments,
+                  ),
                 ),
           );
         }

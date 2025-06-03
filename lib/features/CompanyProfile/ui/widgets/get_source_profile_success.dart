@@ -10,25 +10,26 @@ import 'package:system_pro/core/widgets/buttons/custom_back_button.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
+import 'package:system_pro/features/CompanyProfile/data/model/realestate_source.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/about_real_estate_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/location_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/properties_widget.dart';
-import 'package:system_pro/features/Home/data/model/realestate/company.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
-class GetProfileCompanySuccess extends StatelessWidget {
-  const GetProfileCompanySuccess({
+/// Widget to display a source profile view for either a company or marketer
+class GetSourceProfileSuccess extends StatelessWidget {
+  const GetSourceProfileSuccess({
     super.key,
-    required this.company,
-    required this.companyListings,
+    required this.realEstateSource,
+    required this.realEstateSourceListings,
     required this.isCompanyProfile,
     required this.scrollController,
     this.isLoadingMore = false,
   });
 
-  final Company company;
-  final List<Listing> companyListings;
+  final RealEstateSource realEstateSource;
+  final List<Listing> realEstateSourceListings;
   final bool isCompanyProfile;
   final ScrollController scrollController;
   final bool isLoadingMore;
@@ -38,7 +39,7 @@ class GetProfileCompanySuccess extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ✅ Header
+        // Profile header
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +59,7 @@ class GetProfileCompanySuccess extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(320),
                       child: CustomCachedNetworkImageWidget(
-                        imageURL: company.pictureUrl ?? '',
+                        imageURL: realEstateSource.pictureUrl ?? '',
                         height: 32.h,
                         width: 100.w,
                         fit: BoxFit.fill,
@@ -67,14 +68,14 @@ class GetProfileCompanySuccess extends StatelessWidget {
                   ),
                   verticalSpacing(kSpacingDefault),
                   Text(
-                    company.name ?? '',
+                    realEstateSource.name ?? '',
                     style: context.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
                     ),
                   ),
                   verticalSpacing(kSpacingSmall),
                   Text(
-                    '${companyListings.length} ${context.localization.properties}',
+                    '${realEstateSourceListings.length} ${context.localization.properties}',
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
                       color: AdaptiveColor.adaptiveColor(
@@ -91,30 +92,30 @@ class GetProfileCompanySuccess extends StatelessWidget {
         ),
         verticalSpacing(kSpacingXLarge),
 
-        // ✅ Main content
+        // Scrollable content including location, about, and listings
         Expanded(
           child: CustomScrollView(
             controller: scrollController,
             slivers: [
               SliverToBoxAdapter(
-                child: LocationWidget(location: company.address ?? ''),
+                child: LocationWidget(location: realEstateSource.address ?? ''),
               ),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
               SliverToBoxAdapter(
-                child: AboutRealEstateWidget(description: company.bio ?? ''),
+                child: AboutRealEstateWidget(description: realEstateSource.bio ?? ''),
               ),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
               const SliverToBoxAdapter(child: AdaptiveDivider()),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
               SliverToBoxAdapter(
                 child: PropertiesWidget(
-                  propertyLength: companyListings.length.toString(),
+                  propertyLength: realEstateSourceListings.length.toString(),
                 ),
               ),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-              RealEstateSliverList(listings: companyListings),
+              RealEstateSliverList(listings: realEstateSourceListings),
 
-              // ✅ Indicator at bottom if loading more
+              // Loading indicator when fetching more results
               if (isLoadingMore)
                 SliverToBoxAdapter(
                   child: Center(

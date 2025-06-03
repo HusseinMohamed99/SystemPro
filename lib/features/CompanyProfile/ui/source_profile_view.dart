@@ -6,32 +6,43 @@ import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
+import 'package:system_pro/features/CompanyProfile/data/model/realestate_source.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_cubit.dart';
 import 'package:system_pro/features/CompanyProfile/logic/real_estate_state.dart';
-import 'package:system_pro/features/CompanyProfile/ui/widgets/get_profile_company_success.dart';
+import 'package:system_pro/features/CompanyProfile/ui/widgets/get_source_profile_success.dart';
 
-class CompanyProfileView extends StatefulWidget {
-  const CompanyProfileView({super.key, required this.companyID});
-  final int companyID;
+/// Screen to display either a company or marketer profile with their listings
+class SourceProfileView extends StatefulWidget {
+  const SourceProfileView({super.key, this.companyId, this.marketerId})
+    : assert(companyId != null || marketerId != null);
+
+  /// Optional company ID (only one of companyId or marketerId must be passed)
+  final int? companyId;
+
+  /// Optional marketer ID (only one of companyId or marketerId must be passed)
+  final int? marketerId;
 
   @override
-  State<CompanyProfileView> createState() => _CompanyProfileViewState();
+  State<SourceProfileView> createState() => _SourceProfileViewState();
 }
 
-class _CompanyProfileViewState extends State<CompanyProfileView> {
+class _SourceProfileViewState extends State<SourceProfileView> {
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
 
-    // ✅ تحميل البيانات فقط لو مش متخزنة بالفعل
+    // Trigger data load after first build frame
     final cubit = context.read<RealEstateCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      cubit.getListingsBySource(companyId: widget.companyID);
+      cubit.getListingsBySource(
+        companyId: widget.companyId,
+        marketerId: widget.marketerId,
+      );
     });
 
-    // ✅ مراقبة السحب لأسفل لعمل loadMore
+    // Scroll listener for loading more listings when near the bottom
     _scrollController.addListener(() {
       final cubit = context.read<RealEstateCubit>();
       if (_scrollController.position.pixels >=
@@ -55,6 +66,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
       appBar: basicAppBar(),
       body: BlocConsumer<RealEstateCubit, RealEstateState>(
         listener: (context, state) {
+          // Display error messages as snackbars
           if (state is FilteredListingsError) {
             ScaffoldMessenger.of(
               context,
@@ -62,19 +74,22 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           }
         },
         builder: (context, state) {
+          // Handle error UI
           if (state is FilteredListingsError) {
             return Center(
               child: CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
                 onRetry: () {
                   context.read<RealEstateCubit>().getListingsBySource(
-                    companyId: widget.companyID,
+                    companyId: widget.companyId,
+                    marketerId: widget.marketerId,
                   );
                 },
               ),
             );
           }
 
+          // Handle success or paginated loading
           if (state is FilteredListingsSuccess ||
               state is FilteredListingsLoadingMore) {
             final listings =
@@ -88,22 +103,32 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
               );
             }
 
+            // Extract current source based on listing (company or marketer)
+            final sourceId = widget.companyId ?? widget.marketerId;
             final company = listings.first.company;
-            if (company == null) {
+            final marketer = listings.first.marketer;
+
+            final isValidSource =
+                (company?.id == sourceId) || (marketer?.id == sourceId);
+
+            if (!isValidSource) {
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
               );
             }
 
-            return GetProfileCompanySuccess(
-              company: company,
-              companyListings: listings,
-              isCompanyProfile: true,
-              scrollController: _scrollController,
-              isLoadingMore: state is FilteredListingsLoadingMore,
-            ).hPadding(kPaddingDefaultHorizontal);
+       final source = (company ?? marketer) as RealEstateSource;
+
+return GetSourceProfileSuccess(
+  realEstateSource: source,
+  realEstateSourceListings: listings,
+  isCompanyProfile: widget.companyId != null,
+  scrollController: _scrollController,
+  isLoadingMore: state is FilteredListingsLoadingMore,
+).hPadding(kPaddingDefaultHorizontal);
           }
 
+          // Show loader during initial fetch
           return const CustomLoader(type: LoaderType.adaptive);
         },
       ),

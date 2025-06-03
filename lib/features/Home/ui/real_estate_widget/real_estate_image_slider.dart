@@ -72,7 +72,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
-    final isFromCompanyProfile = currentRoute == Routes.companyProfileView;
+    final isFromCompanyProfile = currentRoute == Routes.sourceProfileView;
     final imageCount = widget.images?.length ?? 0;
     final fallbackImage = widget.listing?.pictureUrl ?? '';
 

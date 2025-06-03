@@ -51,7 +51,7 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
         if (id != null)
           GestureDetector(
             onTap: () {
-              context.pushNamed(Routes.companyProfileView, arguments: id);
+              context.pushNamed(Routes.sourceProfileView, arguments: id);
               AppLogs.log('Navigated to profile with ID: $id');
             },
             child: ClipRRect(

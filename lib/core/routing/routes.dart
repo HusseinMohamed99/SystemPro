@@ -33,7 +33,7 @@ class Routes {
   static const String filterView = '/filterView';
 
   /// Route for the company profile screen
-  static const String companyProfileView = '/companyProfileView';
+  static const String sourceProfileView = '/companyProfileView';
 
   /// Route for the real estate details screen
   static const String realEstateDetailsView = '/realEstateDetailsView';
