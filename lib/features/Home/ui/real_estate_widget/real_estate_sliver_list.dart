@@ -6,7 +6,8 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_item.dart';
 
-/// A reusable sliver list for displaying real estate listings with custom interactions.
+/// A reusable sliver list for displaying real estate
+///  listings with custom interactions.
 class RealEstateSliverList extends StatelessWidget {
   const RealEstateSliverList({
     super.key,
@@ -17,8 +18,6 @@ class RealEstateSliverList extends StatelessWidget {
 
   /// List of real estate listings to display
   final List<Listing> listings;
-
-
 
   /// Optional builder for Hero tag support
   final String Function(Listing listing)? heroTagBuilder;
@@ -38,7 +37,7 @@ class RealEstateSliverList extends StatelessWidget {
 
         return GestureDetector(
           onTap: () {
-              context.pushNamed(Routes.realEstateDetailsView, arguments: listing);
+            context.pushNamed(Routes.realEstateDetailsView, arguments: listing);
           },
           child: RealEstateItem(
             key: ValueKey('${listing.id}_${listing.isFavorite}'),

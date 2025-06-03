@@ -337,44 +337,12 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<MarketplaceResponse> getMarketplaceListings({
-    String? listingType,
-    String? location,
-    int? categoryID,
-    int? subCategoryID,
-    int? bedrooms,
-    int? bathrooms,
-    num? areaMin,
-    num? areaMax,
-    num? priceMin,
-    num? priceMax,
-    List<int>? amenities,
-    required String direction,
-    required int cursor,
-    required int limit,
-    int? companyId,
-    int? marketerId,
-  }) async {
+  Future<MarketplaceResponse> getMarketplaceListings(
+    Map<String, dynamic> queryParams,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'listing_type': listingType,
-      r'location': location,
-      r'category_id': categoryID,
-      r'subcategory_id': subCategoryID,
-      r'rooms': bedrooms,
-      r'bathrooms': bathrooms,
-      r'area_min': areaMin,
-      r'area_max': areaMax,
-      r'price_min': priceMin,
-      r'price_max': priceMax,
-      r'amenities': amenities,
-      r'direction': direction,
-      r'cursor': cursor,
-      r'limit': limit,
-      r'company_id': companyId,
-      r'marketer_id': marketerId,
-    };
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(queryParams);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<MarketplaceResponse>(

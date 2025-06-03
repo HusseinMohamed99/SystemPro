@@ -38,7 +38,8 @@ class EditProfileForm extends StatelessWidget {
           // Save Button
           CustomButton(
             text: context.localization.save_changes,
-            isLoading: cubit.state is EditProfileLoading, // Assume loading state
+            isLoading:
+                cubit.state is EditProfileLoading, // Assume loading state
             isDisabled: !isFormValid,
             onPressed: () {
               if (cubit.formKey.currentState!.validate()) {

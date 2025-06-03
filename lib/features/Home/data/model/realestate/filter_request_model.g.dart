@@ -45,6 +45,6 @@ Map<String, dynamic> _$FilterRequestModelToJson(FilterRequestModel instance) =>
       if (instance.priceMin case final value?) 'price_min': value,
       if (instance.priceMax case final value?) 'price_max': value,
       if (instance.amenities case final value?) 'amenities': value,
-      'company_id': instance.companyId,
-      'marketer_id': instance.marketerId,
+      if (instance.companyId case final value?) 'company_id': value,
+      if (instance.marketerId case final value?) 'marketer_id': value,
     };

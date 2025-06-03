@@ -26,7 +26,8 @@ class FilterRequestModel {
     this.marketerId,
   });
 
-  /// Factory constructor to generate a FilterRequestModel from FilterResultArguments.
+  /// Factory constructor to generate a FilterRequestModel
+  ///  from FilterResultArguments.
   factory FilterRequestModel.fromArgs(FilterResultArguments args) {
     return FilterRequestModel(
       location: args.location,
@@ -106,11 +107,11 @@ class FilterRequestModel {
   final List<int>? amenities;
 
   /// Company ID for company listings
-  @JsonKey(name: 'company_id')
+  @JsonKey(name: 'company_id', includeIfNull: false)
   final int? companyId;
 
   /// Marketer ID for marketer listings
-  @JsonKey(name: 'marketer_id')
+  @JsonKey(name: 'marketer_id', includeIfNull: false)
   final int? marketerId;
 
   /// Returns a copy of this model with updated fields.

@@ -78,26 +78,10 @@ abstract class ApiService {
   );
 
   /// Marketplace endpoints
-@GET(ApiConstants.getMarketplaceListings)
-  Future<MarketplaceResponse> getMarketplaceListings({
-    @Query('listing_type') String? listingType,
-    @Query('location') String? location,
-    @Query('category_id') int? categoryID,
-    @Query('subcategory_id') int? subCategoryID,
-    @Query('rooms') int? bedrooms,
-    @Query('bathrooms') int? bathrooms,
-    @Query('area_min') num? areaMin,
-    @Query('area_max') num? areaMax,
-    @Query('price_min') num? priceMin,
-    @Query('price_max') num? priceMax,
-    @Query('amenities') List<int>? amenities,
-    @Query('direction') required String direction,
-    @Query('cursor') required int cursor,
-    @Query('limit') required int limit,
-    @Query('company_id') int? companyId,
-    @Query('marketer_id') int? marketerId,
-  });
-
+  @GET(ApiConstants.getMarketplaceListings)
+  Future<MarketplaceResponse> getMarketplaceListings(
+    @Queries() Map<String, dynamic> queryParams,
+  );
 
   /// Favorites management endpoints
   @POST('${ApiConstants.addFavoriteRealEstate}/{id}')

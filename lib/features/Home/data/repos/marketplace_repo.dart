@@ -21,26 +21,14 @@ Future<ApiResult<MarketplaceResponse>> getMarketplaceListings(
   ) async {
     try {
       final response = await _apiService.getMarketplaceListings(
-        direction: filter.direction,
-        cursor: filter.cursor,
-        limit: filter.limit,
-        location: filter.location,
-        listingType: filter.listingType,
-        categoryID: filter.categoryID,
-        subCategoryID: filter.subCategoryID,
-        bedrooms: filter.bedrooms,
-        bathrooms: filter.bathrooms,
-        areaMin: filter.areaMin,
-        areaMax: filter.areaMax,
-        priceMin: filter.priceMin,
-        priceMax: filter.priceMax,
-        amenities: filter.amenities,
+        filter.toJson(),
       );
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
+
 
 
   /// Toggles the favorite state of a listing by its [id].

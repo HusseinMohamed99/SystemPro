@@ -19,7 +19,9 @@ class EmailTextHighlight extends StatelessWidget {
           ),
           TextSpan(
             text: '  $email',
-            style: context.titleLarge?.copyWith(color: ColorManager.primaryBlue),
+            style: context.titleLarge?.copyWith(
+              color: ColorManager.primaryBlue,
+            ),
           ),
         ],
       ),

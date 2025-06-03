@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 
-/// FavoriteCubit manages the state of favorite listings including toggle, pagination and cache
+/// FavoriteCubit manages the state of favorite
+/// listings including toggle, pagination and cache
 class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit(this._favoriteRepo) : super(const FavoriteState.initial());
 
@@ -82,7 +82,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   /// Toggle favorite status and update internal cache accordingly
-Future<void> toggleFavorite(int id, {Listing? listing}) async {
+  Future<void> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _favoriteRepo.toggleFavorite(id);
 
@@ -173,7 +173,7 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
     _loadedCount = 0;
   }
 
- /// External injection support: add to favorites manually
+  /// External injection support: add to favorites manually
   void addToFavorites(Listing listing) {
     final exists = _favoriteListings.any((e) => e.id == listing.id);
     if (!exists) {
@@ -209,5 +209,4 @@ Future<void> toggleFavorite(int id, {Listing? listing}) async {
       ),
     );
   }
-
 }

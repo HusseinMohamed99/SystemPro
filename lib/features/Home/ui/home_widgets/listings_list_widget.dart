@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
-/// Widget that displays the list of real estate items with infinite scroll and debounce control.
+/// Widget that displays the list of real estate items
+///  with infinite scroll and debounce control.
 class ListingsList extends StatefulWidget {
   const ListingsList({super.key, required this.listings});
 
@@ -55,9 +54,7 @@ class _ListingsListState extends State<ListingsList> {
       child: CustomScrollView(
         slivers: [
           // Listings content
-          RealEstateSliverList(
-            listings: widget.listings,
-          ),
+          RealEstateSliverList(listings: widget.listings),
 
           // Spacing and loader
           SliverToBoxAdapter(child: verticalSpacing(20)),

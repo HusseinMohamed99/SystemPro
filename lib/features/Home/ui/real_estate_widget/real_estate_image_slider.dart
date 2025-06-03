@@ -12,7 +12,8 @@ import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
 
-/// Slider widget that displays listing images with pagination and favorite button.
+/// Slider widget that displays listing images
+///  with pagination and favorite button.
 /// Includes optional Hero animation and layout adaptivity.
 class RealEstateImageSlider extends StatefulWidget {
   const RealEstateImageSlider({

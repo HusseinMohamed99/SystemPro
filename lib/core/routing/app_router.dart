@@ -153,7 +153,7 @@ class AppRouters {
                   create:
                       (context) =>
                           getIt<RealEstateCubit>()
-                            ..getListingsBySource(companyId: arguments),
+                          ,
                   child: CompanyProfileView(companyID: arguments),
                 ),
           );

@@ -8,7 +8,8 @@ import 'package:system_pro/features/Home/data/model/realestate/subcategory.dart'
 
 part 'listing.g.dart';
 
-/// Represents a real estate listing, including all related metadata and relationships.
+/// Represents a real estate listing,
+/// including all related metadata and relationships.
 @JsonSerializable()
 class Listing {
   /// Main constructor for Listing model.
@@ -221,5 +222,4 @@ class Listing {
       isFavorite: isFavorite ?? this.isFavorite,
     );
   }
-
 }
