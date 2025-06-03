@@ -133,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "favorites": MessageLookupByLibrary.simpleMessage("المفضلة"),
     "filter": MessageLookupByLibrary.simpleMessage("تصفية"),
     "find": MessageLookupByLibrary.simpleMessage("بحث"),
+    "for_to": MessageLookupByLibrary.simpleMessage("ل"),
     "forgot_password": MessageLookupByLibrary.simpleMessage(
       "نسيت كلمة المرور؟",
     ),
@@ -311,6 +312,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "residentail": MessageLookupByLibrary.simpleMessage("سكني"),
     "result": MessageLookupByLibrary.simpleMessage("النتائج"),
     "results_search": MessageLookupByLibrary.simpleMessage("نتائج البحث"),
+    "sale": MessageLookupByLibrary.simpleMessage("البيع"),
     "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "search": MessageLookupByLibrary.simpleMessage("بحث"),

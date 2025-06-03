@@ -133,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
     "find": MessageLookupByLibrary.simpleMessage("Find"),
+    "for_to": MessageLookupByLibrary.simpleMessage("For"),
     "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "forgot_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Don’t worry! It happens. Please enter the email associated with your account.",
@@ -309,6 +310,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "residentail": MessageLookupByLibrary.simpleMessage("Residential"),
     "result": MessageLookupByLibrary.simpleMessage("Result"),
     "results_search": MessageLookupByLibrary.simpleMessage("Results Search"),
+    "sale": MessageLookupByLibrary.simpleMessage("Sale"),
     "sar": MessageLookupByLibrary.simpleMessage("SAR"),
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),

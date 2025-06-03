@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:system_pro/generated/intl/messages_all.dart';
+import 'intl/messages_all.dart';
 
 // **************************************************************************
 // Generator: Flutter Intl IDE plugin
@@ -1518,6 +1518,16 @@ class S {
   /// `Try Again`
   String get try_again {
     return Intl.message('Try Again', name: 'try_again', desc: '', args: []);
+  }
+
+  /// `For`
+  String get for_to {
+    return Intl.message('For', name: 'for_to', desc: '', args: []);
+  }
+
+  /// `Sale`
+  String get sale {
+    return Intl.message('Sale', name: 'sale', desc: '', args: []);
   }
 }
 

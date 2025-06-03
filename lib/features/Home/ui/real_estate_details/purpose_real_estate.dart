@@ -20,13 +20,20 @@ class PurposeWidget extends StatelessWidget {
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-
-        Text(
-          'For $purpose',
-          style: context.titleMedium?.copyWith(
-            fontWeight: FontWeightHelper.regular,
+        if (purpose == 'buy')
+          Text(
+            '${context.localization.for_to} ${context.localization.sale}',
+            style: context.titleMedium?.copyWith(
+              fontWeight: FontWeightHelper.regular,
+            ),
+          )
+        else
+          Text(
+            '${context.localization.for_to} $purpose',
+            style: context.titleMedium?.copyWith(
+              fontWeight: FontWeightHelper.regular,
+            ),
           ),
-        ),
       ],
     );
   }

@@ -371,5 +371,9 @@
   "unknown_error":"An unexpected error occurred. Please close the app and try again.",
   "@unknown_error": {},
   "try_again":"Try Again",
-  "@try_again": {}
+  "@try_again": {},
+  "for_to": "For",
+  "@for_to": {},
+  "sale":"Sale",
+  "@sale": {}
 }

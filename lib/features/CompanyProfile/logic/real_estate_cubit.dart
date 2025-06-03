@@ -6,13 +6,15 @@ import 'package:system_pro/features/Home/data/model/realestate/filter_request_mo
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 
+/// Cubit responsible for fetching and paginating real estate listings
+/// filtered by companyId or marketerId.
 class RealEstateCubit extends Cubit<RealEstateState> {
   RealEstateCubit(this._marketplaceRepo)
     : super(const RealEstateState.initial());
 
   final MarketplaceRepo _marketplaceRepo;
 
-  final Map<int, List<Listing>> _cachedListingsBySource = {};
+  final Map<int, _CachedData> _cachedListingsBySource = {};
   int _cursor = 0;
   bool isLoading = false;
   bool hasMore = true;
@@ -23,7 +25,7 @@ class RealEstateCubit extends Cubit<RealEstateState> {
   int _apiCallCount = 0;
 
   List<Listing> get _currentListings =>
-      _cachedListingsBySource[_currentSourceId] ?? [];
+      _cachedListingsBySource[_currentSourceId]?.listings ?? [];
 
   int get apiCallCount => _apiCallCount;
 
@@ -36,9 +38,14 @@ class RealEstateCubit extends Cubit<RealEstateState> {
       return;
     }
 
+    final cache = _cachedListingsBySource[sourceId];
+    final now = DateTime.now();
+
     if (_currentSourceId == sourceId &&
         _currentIsCompany == isCompany &&
-        _cachedListingsBySource[sourceId]?.isNotEmpty == true) {
+        cache != null &&
+        cache.listings.isNotEmpty &&
+        now.difference(cache.lastUpdated).inMinutes < 10) {
       return;
     }
 
@@ -53,6 +60,10 @@ class RealEstateCubit extends Cubit<RealEstateState> {
   Future<void> loadMoreListingsBySource() async {
     if (isLoading || !hasMore) return;
     emit(RealEstateState.loadingMore(_currentListings));
+    await _fetchListings();
+  }
+
+  Future<void> retry() async {
     await _fetchListings();
   }
 
@@ -81,23 +92,38 @@ class RealEstateCubit extends Cubit<RealEstateState> {
       success: (data) {
         final listings = data.data?.listings ?? [];
 
-        if (listings.isEmpty || listings.length < _limit) {
+        listings.sort(
+          (a, b) => DateTime.parse(
+            b.createdAt ?? '',
+          ).compareTo(DateTime.parse(a.createdAt ?? '')),
+        );
+
+        _cachedListingsBySource[sourceId] ??= _CachedData();
+
+        final existingIds =
+            _cachedListingsBySource[sourceId]!.listings
+                .map((e) => e.id)
+                .toSet();
+        final newListings =
+            listings.where((e) => !existingIds.contains(e.id)).toList();
+
+        if (newListings.isEmpty || newListings.length < _limit) {
           hasMore = false;
         }
 
-        _cachedListingsBySource[sourceId] ??= [];
-        _cachedListingsBySource[sourceId]!.addAll(listings);
+        _cachedListingsBySource[sourceId]!.listings.addAll(newListings);
+        _cachedListingsBySource[sourceId]!.lastUpdated = DateTime.now();
 
-        if (_cachedListingsBySource[sourceId]!.isNotEmpty) {
-          final lastId = _cachedListingsBySource[sourceId]!.last.id;
-          if (lastId != null && lastId != _cursor) {
-            _cursor = lastId;
-          }
+        final lastId = newListings.lastOrNull?.id;
+        if (lastId != null && lastId != _cursor) {
+          _cursor = lastId;
+        } else {
+          hasMore = false;
         }
 
         emit(
           RealEstateState.filtered(
-            List.from(_cachedListingsBySource[sourceId]!),
+            List.from(_cachedListingsBySource[sourceId]!.listings),
           ),
         );
       },
@@ -112,10 +138,19 @@ class RealEstateCubit extends Cubit<RealEstateState> {
   }
 
   void _resetPagination() {
-    _cachedListingsBySource[_currentSourceId] = [];
+    _cachedListingsBySource[_currentSourceId] = _CachedData();
     _cursor = 0;
     hasMore = true;
     isLoading = false;
     _direction = 'next';
   }
+}
+
+class _CachedData {
+  List<Listing> listings = [];
+  DateTime lastUpdated = DateTime.now();
+}
+
+extension NullableLast<T> on List<T> {
+  T? get lastOrNull => isEmpty ? null : last;
 }

@@ -15,15 +15,14 @@ class AmenitiesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: kSpacingDefault.h,
       children: [
-        Text(
+      
+            Text(
           context.localization.amenities,
           style: context.titleLarge?.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-        if (amenities.isEmpty)
-          const SizedBox.shrink()
-        else
+        
           Wrap(
             spacing: kSpacingXLarge.w,
             runSpacing: kSpacingSmall.h,

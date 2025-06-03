@@ -127,7 +127,7 @@ class AboutRealEstate extends StatelessWidget {
               ),
               size: kIconSizeDefault.sp,
             ),
-            Flexible(
+            Expanded(
               child: Text(
                 location,
                 maxLines: 1,
