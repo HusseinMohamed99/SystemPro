@@ -6,8 +6,6 @@ import 'package:system_pro/features/Home/data/model/realestate/filter_request_mo
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 
-/// Cubit responsible for fetching and paginating real estate listings
-/// filtered by companyId or marketerId.
 class RealEstateCubit extends Cubit<RealEstateState> {
   RealEstateCubit(this._marketplaceRepo)
     : super(const RealEstateState.initial());
@@ -29,7 +27,6 @@ class RealEstateCubit extends Cubit<RealEstateState> {
 
   int get apiCallCount => _apiCallCount;
 
-  /// تحميل أول مجموعة بيانات
   Future<void> getListingsBySource({int? companyId, int? marketerId}) async {
     final int? sourceId = companyId ?? marketerId;
     final bool isCompany = companyId != null;
@@ -39,7 +36,6 @@ class RealEstateCubit extends Cubit<RealEstateState> {
       return;
     }
 
-    // تجاهل إعادة التحميل إذا كانت البيانات بالفعل موجودة
     if (_currentSourceId == sourceId &&
         _currentIsCompany == isCompany &&
         _cachedListingsBySource[sourceId]?.isNotEmpty == true) {
@@ -54,17 +50,16 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     await _fetchListings();
   }
 
-  /// تحميل الصفحة التالية من البيانات
   Future<void> loadMoreListingsBySource() async {
     if (isLoading || !hasMore) return;
     emit(RealEstateState.loadingMore(_currentListings));
     await _fetchListings();
   }
 
-  /// جلب البيانات من الـ API وتحديث الكاش
   Future<void> _fetchListings() async {
     isLoading = true;
     _apiCallCount++;
+
     final sourceId = _currentSourceId;
     final isCompany = _currentIsCompany;
 
@@ -99,6 +94,7 @@ class RealEstateCubit extends Cubit<RealEstateState> {
             _cursor = lastId;
           }
         }
+
         emit(
           RealEstateState.filtered(
             List.from(_cachedListingsBySource[sourceId]!),
@@ -115,7 +111,6 @@ class RealEstateCubit extends Cubit<RealEstateState> {
     isLoading = false;
   }
 
-  /// إعادة تعيين بيانات التصفح
   void _resetPagination() {
     _cachedListingsBySource[_currentSourceId] = [];
     _cursor = 0;
