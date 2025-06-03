@@ -14,7 +14,7 @@ import 'package:system_pro/features/Home/logic/Taps/tap_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/custom_bottom_navigation_bar.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/main_view_body.dart';
 
-/// Main screen managing tabs, theming, and content loading
+/// The main screen containing bottom navigation, app bar, and tab switching logic.
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
@@ -47,17 +47,19 @@ class _MainViewContentState extends State<_MainViewContent> {
     _loadInitialData();
   }
 
+  /// Load marketplace listings on first frame
   void _loadInitialData() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<MarketplaceCubit>().getListings();
     });
   }
 
-  /// Check if we need to fetch data depending on the current state
+  /// Checks if the current state is already loaded to avoid duplicate API calls
   bool _shouldLoad(dynamic state, List<Type> loadedStates) {
     return !loadedStates.any((type) => state.runtimeType == type);
   }
 
+  /// Handles tab change by loading data based on the selected tab
   void _handleTabChange(int tabIndex) {
     switch (tabIndex) {
       case 0:
@@ -95,23 +97,22 @@ class _MainViewContentState extends State<_MainViewContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: basicAppBar(),
-      body: BlocConsumer<TabCubit, int>(
-        listener: (context, tabIndex) => _handleTabChange(tabIndex),
-        builder: (context, currentTab) {
-          return MainViewBody(currentViewIndex: currentTab);
-        },
-      ),
-      bottomNavigationBar: BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
-        builder: (context, _) {
-          final currentTab = context.watch<TabCubit>().state;
-          return CustomBottomNavigationBar(
-            currentIndex: currentTab,
+    return BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
+      builder: (context, themeState) {
+        return Scaffold(
+          appBar: basicAppBar(),
+          body: BlocConsumer<TabCubit, int>(
+            listener: (context, tabIndex) => _handleTabChange(tabIndex),
+            builder: (context, currentTab) {
+              return MainTabsView(currentViewIndex: currentTab);
+            },
+          ),
+          bottomNavigationBar: CustomBottomNavigationBar(
+            currentIndex: context.watch<TabCubit>().state,
             onItemTapped: (index) => context.read<TabCubit>().setTab(index),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

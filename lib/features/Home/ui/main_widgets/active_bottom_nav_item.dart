@@ -30,7 +30,6 @@ class BottomNavItemActive extends StatelessWidget {
           SvgPicture.asset(
             icon,
             colorFilter: ColorFilter.mode(activeColor, BlendMode.srcIn),
-            // Optional: semanticsLabel: title,
           ),
           Text(title, style: context.titleSmall?.copyWith(color: activeColor)),
         ],

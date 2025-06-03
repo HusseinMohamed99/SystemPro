@@ -13,11 +13,10 @@ import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart
 import 'package:system_pro/features/CompanyProfile/data/model/realestate_source.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/about_real_estate_widget.dart';
 import 'package:system_pro/features/CompanyProfile/ui/widgets/location_widget.dart';
-import 'package:system_pro/features/CompanyProfile/ui/widgets/properties_widget.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
-/// Widget to display a source profile view for either a company or marketer
+/// Widget to display a source profile (either company or marketer)
 class GetSourceProfileSuccess extends StatelessWidget {
   const GetSourceProfileSuccess({
     super.key,
@@ -39,7 +38,7 @@ class GetSourceProfileSuccess extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Profile header
+        // 🟦 Profile Header Section
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,6 +48,7 @@ class GetSourceProfileSuccess extends StatelessWidget {
               child: Column(
                 children: [
                   verticalSpacing(kSpacingLarge),
+                  // Profile Picture Circle
                   Container(
                     width: 100.w,
                     height: 100.h,
@@ -60,13 +60,14 @@ class GetSourceProfileSuccess extends StatelessWidget {
                       borderRadius: BorderRadius.circular(320),
                       child: CustomCachedNetworkImageWidget(
                         imageURL: realEstateSource.pictureUrl ?? '',
-                        height: 32.h,
+                        height: 100.h,
                         width: 100.w,
                         fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   verticalSpacing(kSpacingDefault),
+                  // Name Text
                   Text(
                     realEstateSource.name ?? '',
                     style: context.titleLarge?.copyWith(
@@ -74,6 +75,7 @@ class GetSourceProfileSuccess extends StatelessWidget {
                     ),
                   ),
                   verticalSpacing(kSpacingSmall),
+                  // Property count Text
                   Text(
                     '${realEstateSourceListings.length} ${context.localization.properties}',
                     style: context.titleMedium?.copyWith(
@@ -90,32 +92,39 @@ class GetSourceProfileSuccess extends StatelessWidget {
             ),
           ],
         ),
-        verticalSpacing(kSpacingXLarge),
 
-        // Scrollable content including location, about, and listings
+        verticalSpacing(kSpacingXLarge),
+        // 📍 Location Info
+        LocationWidget(location: realEstateSource.address ?? ''),
+
+        verticalSpacing(kSpacingDefault),
+
+        // 📄 About/Bio
+        AboutRealEstateWidget(description: realEstateSource.bio ?? ''),
+        verticalSpacing(kSpacingLarge),
+
+        // ─ Divider
+        const AdaptiveDivider(),
+        verticalSpacing(kSpacingDefault),
+
+        // 🏠 Properties Count
+        Text(
+          context.localization.properties,
+          style: context.titleLarge?.copyWith(
+            fontWeight: FontWeightHelper.medium,
+          ),
+        ),
+        const AdaptiveDivider(), verticalSpacing(kSpacingDefault),
+
+        // 🟦 Scrollable Profile Details Section
         Expanded(
           child: CustomScrollView(
             controller: scrollController,
             slivers: [
-              SliverToBoxAdapter(
-                child: LocationWidget(location: realEstateSource.address ?? ''),
-              ),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-              SliverToBoxAdapter(
-                child: AboutRealEstateWidget(description: realEstateSource.bio ?? ''),
-              ),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
-              const SliverToBoxAdapter(child: AdaptiveDivider()),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
-              SliverToBoxAdapter(
-                child: PropertiesWidget(
-                  propertyLength: realEstateSourceListings.length.toString(),
-                ),
-              ),
-              SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+              // 🏘 Real Estate Listings
               RealEstateSliverList(listings: realEstateSourceListings),
 
-              // Loading indicator when fetching more results
+              // 🔄 Loader if loading more items
               if (isLoadingMore)
                 SliverToBoxAdapter(
                   child: Center(

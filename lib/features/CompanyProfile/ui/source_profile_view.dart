@@ -117,15 +117,15 @@ class _SourceProfileViewState extends State<SourceProfileView> {
               );
             }
 
-       final source = (company ?? marketer) as RealEstateSource;
+            final source = (company ?? marketer) as RealEstateSource;
 
-return GetSourceProfileSuccess(
-  realEstateSource: source,
-  realEstateSourceListings: listings,
-  isCompanyProfile: widget.companyId != null,
-  scrollController: _scrollController,
-  isLoadingMore: state is FilteredListingsLoadingMore,
-).hPadding(kPaddingDefaultHorizontal);
+            return GetSourceProfileSuccess(
+              realEstateSource: source,
+              realEstateSourceListings: listings,
+              isCompanyProfile: widget.companyId != null,
+              scrollController: _scrollController,
+              isLoadingMore: state is FilteredListingsLoadingMore,
+            ).hPadding(kPaddingDefaultHorizontal);
           }
 
           // Show loader during initial fetch
