@@ -310,6 +310,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "الرجاء إدخال كلمة مرور جديدة",
     ),
+    "reset_sort": MessageLookupByLibrary.simpleMessage("اعادة ترتيب"),
     "residentail": MessageLookupByLibrary.simpleMessage("سكني"),
     "result": MessageLookupByLibrary.simpleMessage("النتائج"),
     "results_search": MessageLookupByLibrary.simpleMessage("نتائج البحث"),

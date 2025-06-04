@@ -381,5 +381,7 @@
   "for_to": "ل",
   "@for_to": {},
   "sale":"البيع",
-  "@sale": {}
+  "@sale": {},
+  "reset_sort":"اعادة ترتيب",
+  "@reset_sort": {}
 }

@@ -1,34 +1,24 @@
-// ✅ Refactored MarketplaceCubit with hydrated_bloc,
-// offline cache, smart filter switching, and favorite syncing
-
+import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/features/Home/data/model/realestate/filter_request_model.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
+import 'package:system_pro/features/Home/logic/Paginations/pagination_state.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
-/// Helper class to manage pagination state
-class PaginationState {
-  int cursor = 0;
-  final int limit = 5;
-  String direction = 'next';
-  bool isLoading = false;
-  bool hasMore = true;
-
-  void reset() {
-    cursor = 0;
-    direction = 'next';
-    isLoading = false;
-    hasMore = true;
-  }
+class SortOptionModel {
+  SortOptionModel({required this.label, required this.sortType});
+  final String label;
+  final SortType sortType;
 }
 
-/// MarketplaceCubit handles listings state, pagination,
-///  filtering, sorting and favorite sync
+
+
 class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
     : super(const MarketplaceState.initial());
@@ -42,7 +32,60 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   String _currentFilter = '';
   SortType _currentSort = SortType.newest;
 
+  bool _hasLoadedOnce = false;
+
+  SortType get selectedSort => _currentSort;
+
+  /// ✅ تم التهيئة بقيمة افتراضية لتجنب LateInitializationError
+  List<SortOptionModel> sortOptions = [];
+
   String get currentFilter => _currentFilter;
+
+  void initIfNeeded() {
+    if (!_hasLoadedOnce) {
+      getListings();
+      _hasLoadedOnce = true;
+    }
+  }
+
+  void loadListingsOnce() {
+    if (_hasLoadedOnce) return;
+    getListings();
+    _hasLoadedOnce = true;
+  }
+
+
+
+void initSortOptionsIfNeeded(BuildContext context) {
+    if (sortOptions.isEmpty) {
+      sortOptions = [
+        SortOptionModel(
+          label: context.localization.newest,
+          sortType: SortType.newest,
+        ),
+        SortOptionModel(
+          label: context.localization.oldest,
+          sortType: SortType.oldest,
+        ),
+        SortOptionModel(
+          label: context.localization.price_low,
+          sortType: SortType.priceLow,
+        ),
+        SortOptionModel(
+          label: context.localization.price_high,
+          sortType: SortType.priceHigh,
+        ),
+      ];
+    }
+  }
+
+  String getLabelForSort(SortType sortType) {
+    try {
+      return sortOptions.firstWhere((e) => e.sortType == sortType).label;
+    } catch (_) {
+      return '';
+    }
+  }
 
   void _emitSuccessState() {
     _sortListings(_currentSort);
@@ -73,7 +116,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       _visibleListings
         ..clear()
         ..addAll(_cachedListingsByFilter[effectiveFilter]!);
-
       if (_visibleListings.isNotEmpty) {
         pagination.cursor = _visibleListings.last.id ?? 0;
       }
@@ -178,68 +220,9 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     }
   }
 
-  void clearHydratedCache() {
-    clear();
-  }
-
-  Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
-    try {
-      final result = await _marketplaceRepo.toggleFavorite(id);
-
-      return result.when(
-        success: (res) {
-          final isFav = res.data?.isFavorited ?? false;
-
-          final index = _visibleListings.indexWhere((l) => l.id == id);
-          if (index != -1) {
-            _visibleListings[index] = _visibleListings[index].copyWith(
-              isFavorite: isFav,
-            );
-          }
-
-          _emitSuccessState();
-
-          final updated = listing?.copyWith(isFavorite: isFav);
-
-          final favoriteCubit = getIt<FavoriteCubit>();
-          if (isFav && updated != null) {
-            favoriteCubit.addToFavorites(updated);
-          } else {
-            favoriteCubit.removeFromFavorites(id);
-          }
-
-          return updated;
-        },
-        failure: (err) {
-          _emitError('Favorite toggle failed: ${err.apiErrorModel.message}');
-          return null;
-        },
-      );
-    } catch (e) {
-      _emitError('Unexpected error: $e');
-      return null;
-    }
-  }
-
-  void updateListingFavoriteStatus(int listingId, bool isFavorite) {
-    final index = _visibleListings.indexWhere((e) => e.id == listingId);
-    if (index != -1) {
-      _visibleListings[index] = _visibleListings[index].copyWith(
-        isFavorite: isFavorite,
-      );
-
-      emit(
-        MarketplaceState.success(
-          listings: List.from(_visibleListings),
-          selectedFilter: _currentFilter,
-        ),
-      );
-    }
-  }
-
   void sortListings(SortType sortType, {bool shouldEmit = true}) {
-    _currentSort = sortType;
-    _sortListings(sortType);
+    _currentSort = (sortType == SortType.reset) ? SortType.newest : sortType;
+    _sortListings(_currentSort);
 
     if (shouldEmit) {
       emit(
@@ -275,10 +258,64 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
               : bPrice.compareTo(aPrice);
         });
         break;
+      case SortType.reset:
+        break;
     }
   }
 
-  Future<void> filterListings(String filter) async {
+  Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
+    try {
+      final result = await _marketplaceRepo.toggleFavorite(id);
+
+      return result.when(
+        success: (res) {
+          final isFav = res.data?.isFavorited ?? false;
+          final index = _visibleListings.indexWhere((l) => l.id == id);
+          if (index != -1) {
+            _visibleListings[index] = _visibleListings[index].copyWith(
+              isFavorite: isFav,
+            );
+          }
+
+          _emitSuccessState();
+
+          final updated = listing?.copyWith(isFavorite: isFav);
+          final favoriteCubit = getIt<FavoriteCubit>();
+          if (isFav && updated != null) {
+            favoriteCubit.addToFavorites(updated);
+          } else {
+            favoriteCubit.removeFromFavorites(id);
+          }
+
+          return updated;
+        },
+        failure: (err) {
+          _emitError('Favorite toggle failed: ${err.apiErrorModel.message}');
+          return null;
+        },
+      );
+    } catch (e) {
+      _emitError('Unexpected error: $e');
+      return null;
+    }
+  }
+
+  void updateListingFavoriteStatus(int listingId, bool isFavorite) {
+    final index = _visibleListings.indexWhere((e) => e.id == listingId);
+    if (index != -1) {
+      _visibleListings[index] = _visibleListings[index].copyWith(
+        isFavorite: isFavorite,
+      );
+      emit(
+        MarketplaceState.success(
+          listings: List.from(_visibleListings),
+          selectedFilter: _currentFilter,
+        ),
+      );
+    }
+  }
+
+  void filterListings(String filter) async {
     _currentFilter = filter;
     final filtered =
         _visibleListings
@@ -291,6 +328,10 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
         selectedFilter: _currentFilter,
       ),
     );
+  }
+
+  void clearHydratedCache() {
+    clear();
   }
 
   @override
@@ -340,21 +381,4 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       return null;
     }
   }
-  bool _hasLoadedOnce = false;
-
-  /// Public method to load listings only once
-  void loadListingsOnce() {
-    if (_hasLoadedOnce) return;
-    getListings();
-    _hasLoadedOnce = true;
-  }
-
-  /// If needed, load initial data during `MultiBlocProvider`
-  void initIfNeeded() {
-    if (!_hasLoadedOnce) {
-      getListings();
-      _hasLoadedOnce = true;
-    }
-  }
-
 }

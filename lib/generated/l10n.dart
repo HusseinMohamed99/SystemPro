@@ -1534,6 +1534,11 @@ class S {
   String get sale {
     return Intl.message('Sale', name: 'sale', desc: '', args: []);
   }
+
+  /// `Reset Sort`
+  String get reset_sort {
+    return Intl.message('Reset Sort', name: 'reset_sort', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

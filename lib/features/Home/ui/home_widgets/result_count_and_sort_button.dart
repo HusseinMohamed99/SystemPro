@@ -10,36 +10,28 @@ import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 
-/// A row widget displaying the number of results and a sort menu button.
-/// Allows the user to select how listings are sorted (newest, price low/high).
-class ResultsCountAndSortButton extends StatefulWidget {
+/// A widget to display results count and a sort button with options
+class ResultsCountAndSortButton extends StatelessWidget {
   const ResultsCountAndSortButton({super.key, required this.propertyLength});
   final String propertyLength;
 
   @override
-  State<ResultsCountAndSortButton> createState() =>
-      _ResultsCountAndSortButtonState();
-}
-
-class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
-  /// النوع الحالي المختار للفرز
-  late SortType selectedSort;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedSort = SortType.newest; // Default
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final sortLabels = getSortLabels(context);
+    final cubit = context.watch<MarketplaceCubit>();
+
+    // ✅ Ensure sort options are initialized before accessing them
+    cubit.initSortOptionsIfNeeded(context);
+
+    final currentSort = cubit.selectedSort;
+    final sortOptions = cubit.sortOptions;
+    final localization = context.localization;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // Display count of properties found
         Text(
-          '${widget.propertyLength} ${context.localization.properties}',
+          '$propertyLength ${localization.properties}',
           style: context.titleMedium?.copyWith(
             color: AdaptiveColor.adaptiveColor(
               context: context,
@@ -49,6 +41,8 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
             fontWeight: FontWeightHelper.medium,
           ),
         ),
+
+        // Sort dropdown with options
         Container(
           padding: EdgeInsetsDirectional.symmetric(
             horizontal: kPaddingDefaultHorizontal.w,
@@ -71,47 +65,57 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
             ),
           ),
           child: PopupMenuButton<SortType>(
+            // Background color for the popup
             color: AdaptiveColor.adaptiveColor(
               context: context,
               lightColor: ColorManager.pureWhite,
               darkColor: ColorManager.tertiaryBlack,
             ),
-            onSelected: (value) {
-              setState(() {
-                selectedSort = value;
-              });
 
-              // نفذ الفرز حسب النوع المختار
-              context.read<MarketplaceCubit>().sortListings(value);
-            },
+            // When an item is selected
+            onSelected: cubit.sortListings,
+
+            // Menu items
             itemBuilder: (context) {
-              return SortType.values.map((option) {
-                return PopupMenuItem<SortType>(
-                  value: option,
-                  child: Row(
-                    children: [
-                      if (option == selectedSort)
-                        Icon(
-                          Icons.check_box_sharp,
-                          size: 16.sp,
-                          color: ColorManager.primaryBlue,
-                        )
-                      else
-                        horizontalSpacing(16),
+              if (sortOptions.isEmpty) return []; // 🧯 أمان ضد التفريغ
 
-                      horizontalSpacing(8),
+              return [
+                PopupMenuItem<SortType>(
+                  value: SortType.reset,
+                  child: Text(localization.reset_sort),
+                ),
+                ...sortOptions.map((option) {
+                  final isSelected = currentSort == option.sortType;
 
-                      Text(
-                        sortLabels[option]!,
-                        style: context.titleMedium?.copyWith(
-                          fontWeight: FontWeightHelper.regular,
+                  return PopupMenuItem<SortType>(
+                    value: option.sortType,
+                    child: Row(
+                      children: [
+                        if (isSelected)
+                          Icon(
+                            Icons.radio_button_checked,
+                            size: 16.sp,
+                            color: ColorManager.primaryBlue,
+                          )
+                        else
+                          horizontalSpacing(kSpacingDefault),
+
+                        horizontalSpacing(kSpacingSmall),
+
+                        Text(
+                          option.label,
+                          style: context.titleMedium?.copyWith(
+                            fontWeight: FontWeightHelper.regular,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList();
+                      ],
+                    ),
+                  );
+                }),
+              ];
             },
+
+            // Displayed child widget for button
             child: Row(
               children: [
                 Icon(
@@ -123,9 +127,9 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
                     darkColor: ColorManager.hintGrey,
                   ),
                 ),
-                horizontalSpacing(4),
+                const SizedBox(width: 4),
                 Text(
-                  sortLabels[selectedSort]!,
+                  cubit.getLabelForSort(currentSort),
                   style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.regular,
                     color: AdaptiveColor.adaptiveColor(
@@ -142,11 +146,4 @@ class _ResultsCountAndSortButtonState extends State<ResultsCountAndSortButton> {
       ],
     );
   }
-
-  Map<SortType, String> getSortLabels(BuildContext context) => {
-    SortType.newest: context.localization.newest,
-    SortType.oldest: context.localization.oldest,
-    SortType.priceLow: context.localization.price_low,
-    SortType.priceHigh: context.localization.price_high,
-  };
 }

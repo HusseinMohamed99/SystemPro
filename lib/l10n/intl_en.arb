@@ -377,5 +377,7 @@
   "for_to": "For",
   "@for_to": {},
   "sale":"Sale",
-  "@sale": {}
+  "@sale": {},
+  "reset_sort":"Reset Sort",
+  "@reset_sort": {}
 }

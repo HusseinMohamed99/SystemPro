@@ -308,6 +308,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reset_password_subtitle": MessageLookupByLibrary.simpleMessage(
       "Please type something you’ll remember",
     ),
+    "reset_sort": MessageLookupByLibrary.simpleMessage("Reset Sort"),
     "residentail": MessageLookupByLibrary.simpleMessage("Residential"),
     "result": MessageLookupByLibrary.simpleMessage("Result"),
     "results_search": MessageLookupByLibrary.simpleMessage("Results Search"),
