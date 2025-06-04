@@ -46,7 +46,9 @@ class ResultsCountAndSortButton extends StatelessWidget {
             vertical: kPaddingSmallVertical.h,
           ),
           decoration: BoxDecoration(
-            border: Border.all(color: customBorderGreyAndBlackColor(context)),
+            border: Border.all(
+              color: customBorderGreyAndTertiaryBlackColor(context),
+            ),
             borderRadius: BorderRadius.circular(kBorderRadiusMedium.r),
             color: customWhiteAndTertiaryBlackColor(context),
           ),

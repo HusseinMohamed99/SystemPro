@@ -35,7 +35,9 @@ class RealEstateItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: borderRadius,
-          border: Border.all(color: customBorderGreyAndBlackColor(context)),
+          border: Border.all(
+            color: customBorderGreyAndTertiaryBlackColor(context),
+          ),
           color: customWhiteAndTertiaryBlackColor(context),
         ),
         child: Column(

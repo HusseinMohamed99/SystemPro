@@ -6,11 +6,12 @@ import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
+import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_state.dart';
@@ -46,11 +47,7 @@ class ProfileView extends StatelessWidget {
                   context.localization.profile,
                   textAlign: TextAlign.center,
                   style: context.headlineMedium?.copyWith(
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.primaryBlue,
-                      darkColor: ColorManager.pureWhite,
-                    ),
+                    color: customPrimaryBlueAndWhiteColor(context),
                   ),
                 ),
               ),
@@ -71,14 +68,10 @@ class ProfileView extends StatelessWidget {
                           },
                           child: Text(
                             context.localization.logout,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleLarge?.copyWith(
+                            style: context.titleLarge?.copyWith(
                               fontWeight: FontWeightHelper.medium,
-                              color: AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.primaryBlue,
-                                darkColor: ColorManager.secondaryBlue,
+                              color: customPrimaryAndSecondaryBlueColor(
+                                context,
                               ),
                             ),
                           ),
@@ -94,8 +87,12 @@ class ProfileView extends StatelessWidget {
 
         if (state is UserDataLoading) {
           return const CustomLoader(type: LoaderType.adaptive);
+        } else if (state is UserDataError) {
+          return CustomErrorTextWidget(
+            errorMessage: state.error,
+            onRetry: () => context.read<ProfileCubit>().emitGetProfileStates(),
+          );
         }
-
         return const SizedBox.shrink();
       },
     ).allPadding(

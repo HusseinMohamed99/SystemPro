@@ -7,6 +7,12 @@ Color customWhiteAndTertiaryBlackColor(BuildContext context) {
     lightColor: ColorManager.pureWhite,
     darkColor: ColorManager.tertiaryBlack,
   );
+}Color customBlackWhiteColor(BuildContext context) {
+  return AdaptiveColor.adaptiveColor(
+    context: context,
+    lightColor: ColorManager.primaryBlack,
+    darkColor: ColorManager.pureWhite,
+  );
 }
 
 Color customWhiteAndBlackColor(BuildContext context) {
@@ -17,7 +23,7 @@ Color customWhiteAndBlackColor(BuildContext context) {
   );
 }
 
-Color customBorderGreyAndBlackColor(BuildContext context) {
+Color customBorderGreyAndTertiaryBlackColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.borderGrey,

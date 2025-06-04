@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
@@ -65,28 +66,16 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.pureWhite,
-                  darkColor: ColorManager.tertiaryBlack,
-                ),
+                color: customWhiteAndTertiaryBlackColor(context),
                 border: Border.all(
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.borderGrey,
-                    darkColor: ColorManager.tertiaryBlack,
-                  ),
+                  color: customBorderGreyAndTertiaryBlackColor(context),
                   width: 1.5,
                 ),
               ),
               child: Icon(
                 Icons.arrow_back_ios_new,
                 size: 16.sp,
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlack,
-                  darkColor: ColorManager.pureWhite,
-                ),
+                color: customBlackWhiteColor(context),
               ),
             ),
           ),
