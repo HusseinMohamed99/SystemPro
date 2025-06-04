@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
@@ -125,18 +126,14 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                 ),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.softWhite,
-                    darkColor: ColorManager.tertiaryBlack,
-                  ),
+                  color: customWhiteAndTertiaryBlackColor(context),
                 ),
                 child:
                     _isToggling
                         ? SizedBox(
                           width: 20.w,
                           height: 20.h,
-                          child: const CircularProgressIndicator(
+                          child: const CircularProgressIndicator.adaptive(
                             strokeWidth: 2,
                           ),
                         )
@@ -164,11 +161,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                             final color =
                                 isFavorited == true
                                     ? ColorManager.brightRed
-                                    : AdaptiveColor.adaptiveColor(
-                                      context: context,
-                                      lightColor: ColorManager.tertiaryBlack,
-                                      darkColor: ColorManager.hintGrey,
-                                    );
+                                    : customHintGreyAndBlackColor(context);
 
                             return Icon(
                               isFavorited == true
@@ -194,23 +187,17 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                 final isActive = index == _currentIndex;
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: 8,
-                  height: 8,
+                  margin: EdgeInsetsDirectional.symmetric(
+                    horizontal: kPaddingSmallerHorizontal.w,
+                  ),
+                  width: 8.w,
+                  height: 8.h,
                   decoration: BoxDecoration(
                     color:
                         isActive
-                            ? AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.primaryBlue,
-                              darkColor: ColorManager.secondaryBlue,
-                            )
-                            : AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.softWhite,
-                              darkColor: ColorManager.pureWhite,
-                            ),
-                    borderRadius: BorderRadius.circular(4),
+                            ? customPrimaryAndSecondaryBlueColor(context)
+                            : ColorManager.softWhite,
+                    borderRadius: BorderRadius.circular(kBorderRadiusRounded).r,
                   ),
                 );
               }),

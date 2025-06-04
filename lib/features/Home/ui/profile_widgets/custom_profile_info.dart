@@ -57,7 +57,7 @@ class CustomProfileInfo extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AdaptiveColor.adaptiveColor(
                     context: context,
-                    lightColor: ColorManager.softGray,
+                    lightColor: ColorManager.softGrey,
                     darkColor: ColorManager.hintGrey,
                   ),
                   fontWeight: FontWeightHelper.regular,

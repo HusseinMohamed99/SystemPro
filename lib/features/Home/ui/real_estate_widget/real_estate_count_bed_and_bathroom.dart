@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
 
@@ -32,11 +33,7 @@ class RealEstateCountBedAndBathRoom extends StatelessWidget {
                   SvgPicture.asset(
                     images[index],
                     colorFilter: ColorFilter.mode(
-                      AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.softGray,
-                        darkColor: ColorManager.iconGrey,
-                      ),
+                      customIconAndSoftGreyColor(context),
                       BlendMode.srcIn,
                     ),
                   ),
@@ -44,13 +41,9 @@ class RealEstateCountBedAndBathRoom extends StatelessWidget {
                   horizontalSpacing(kSpacingSmall.w),
                   Text(
                     values[index],
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                      color:  AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.softGray,
-                        darkColor: ColorManager.iconGrey,
-                      ),
+                      color: customIconAndSoftGreyColor(context),
                     ),
                   ),
                 ],

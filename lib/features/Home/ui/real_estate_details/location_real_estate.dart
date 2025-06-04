@@ -49,7 +49,11 @@ class LocationRealEstate extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Image.asset(Assets.images.map.path, height: 200.h, width: context.width),
+            Image.asset(
+              Assets.images.map.path,
+              height: 200.h,
+              width: context.width,
+            ),
             PositionedDirectional(
               child: GestureDetector(
                 onTap: () {
@@ -80,7 +84,7 @@ class LocationRealEstate extends StatelessWidget {
                         Icons.place_outlined,
                         color: AdaptiveColor.adaptiveColor(
                           context: context,
-                          lightColor: ColorManager.softGray,
+                          lightColor: ColorManager.softGrey,
                           darkColor: ColorManager.iconGrey,
                         ),
                         size: kIconSizeDefault.sp,

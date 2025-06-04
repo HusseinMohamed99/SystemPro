@@ -4,6 +4,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -35,11 +36,7 @@ class ResultsCountAndSortButton extends StatelessWidget {
         Text(
           '$propertiesCount ${localization.properties}',
           style: context.titleMedium?.copyWith(
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.softGray,
-              darkColor: ColorManager.iconGrey,
-            ),
+            color: customIconAndSoftGreyColor(context),
             fontWeight: FontWeightHelper.medium,
           ),
         ),
@@ -49,26 +46,12 @@ class ResultsCountAndSortButton extends StatelessWidget {
             vertical: kPaddingSmallVertical.h,
           ),
           decoration: BoxDecoration(
-            border: Border.all(
-              color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.borderGrey,
-                darkColor: ColorManager.tertiaryBlack,
-              ),
-            ),
+            border: Border.all(color: customBorderGreyAndBlackColor(context)),
             borderRadius: BorderRadius.circular(kBorderRadiusMedium.r),
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.pureWhite,
-              darkColor: ColorManager.tertiaryBlack,
-            ),
+            color: customWhiteAndTertiaryBlackColor(context),
           ),
           child: PopupMenuButton<SortType>(
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.pureWhite,
-              darkColor: ColorManager.tertiaryBlack,
-            ),
+            color: customWhiteAndTertiaryBlackColor(context),
             onSelected: onSortSelected,
             itemBuilder:
                 (context) => [
@@ -102,11 +85,7 @@ class ResultsCountAndSortButton extends StatelessWidget {
                 Icon(
                   Icons.swap_vert,
                   size: kIconSizeDefault.sp,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.softGray,
-                    darkColor: ColorManager.hintGrey,
-                  ),
+                  color: customHintAndSoftGreyColor(context),
                 ),
                 horizontalSpacing(kSpacingSmaller),
                 Text(
@@ -122,11 +101,7 @@ class ResultsCountAndSortButton extends StatelessWidget {
                       .label,
                   style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.regular,
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.softGray,
-                      darkColor: ColorManager.hintGrey,
-                    ),
+                    color: customHintAndSoftGreyColor(context),
                   ),
                 ),
               ],

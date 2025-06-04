@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/styleManager/font_family.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
@@ -46,22 +46,14 @@ class RealEstateInfo extends StatelessWidget {
               TextSpan(
                 text: price,
                 style: context.titleLarge?.copyWith(
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.primaryBlue,
-                    darkColor: ColorManager.secondaryBlue,
-                  ),
+                  color: customPrimaryAndSecondaryBlueColor(context),
                 ),
               ),
               TextSpan(
                 text: ' \ue900',
                 style: context.titleLarge?.copyWith(
                   fontFamily: FontFamilyHelper.saudiRiyal,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.primaryBlue,
-                    darkColor: ColorManager.secondaryBlue,
-                  ),
+                  color: customPrimaryAndSecondaryBlueColor(context),
                 ),
               ),
             ],
@@ -73,11 +65,7 @@ class RealEstateInfo extends StatelessWidget {
           title,
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.medium,
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.pureBlack,
-              darkColor: ColorManager.hintGrey,
-            ),
+            color: customHintGreyAndBlackColor(context),
           ),
         ),
 
@@ -93,11 +81,7 @@ class RealEstateInfo extends StatelessWidget {
           location,
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.softGray,
-              darkColor: ColorManager.hintGrey,
-            ),
+            color: customHintAndSoftGreyColor(context),
           ),
         ),
 

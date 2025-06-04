@@ -46,7 +46,7 @@ class ColorManager {
 
   // === Text & Icon Greys ===
   /// Dark text or hint text color.
-  static const Color softGray = Color(0xFF666666);
+  static const Color softGrey = Color(0xFF666666);
 
   /// Primary body text color for light mode.
   static const Color grey = Color(0xFF999CA1);

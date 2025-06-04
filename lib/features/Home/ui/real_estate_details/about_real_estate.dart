@@ -96,7 +96,7 @@ class AboutRealEstate extends StatelessWidget {
                   fontWeight: FontWeightHelper.medium,
                   color: AdaptiveColor.adaptiveColor(
                     context: context,
-                    lightColor: ColorManager.softGray,
+                    lightColor: ColorManager.softGrey,
                     darkColor: ColorManager.hintGrey,
                   ),
                 ),
@@ -122,7 +122,7 @@ class AboutRealEstate extends StatelessWidget {
               Icons.place_outlined,
               color: AdaptiveColor.adaptiveColor(
                 context: context,
-                lightColor: ColorManager.softGray,
+                lightColor: ColorManager.softGrey,
                 darkColor: ColorManager.iconGrey,
               ),
               size: kIconSizeDefault.sp,
@@ -136,7 +136,7 @@ class AboutRealEstate extends StatelessWidget {
                   fontWeight: FontWeightHelper.regular,
                   color: AdaptiveColor.adaptiveColor(
                     context: context,
-                    lightColor: ColorManager.softGray,
+                    lightColor: ColorManager.softGrey,
                     darkColor: ColorManager.iconGrey,
                   ),
                 ),
@@ -144,12 +144,12 @@ class AboutRealEstate extends StatelessWidget {
             ),
             horizontalSpacing(kSpacingSmall),
             Text(
-             TimeAgoHelper.timeAgo(context, date),
+              TimeAgoHelper.timeAgo(context, date),
               style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
                 color: AdaptiveColor.adaptiveColor(
                   context: context,
-                  lightColor: ColorManager.softGray,
+                  lightColor: ColorManager.softGrey,
                   darkColor: ColorManager.iconGrey,
                 ),
               ),
@@ -175,7 +175,7 @@ class AboutRealEstate extends StatelessWidget {
                   colorFilter: ColorFilter.mode(
                     AdaptiveColor.adaptiveColor(
                       context: context,
-                      lightColor: ColorManager.softGray,
+                      lightColor: ColorManager.softGrey,
                       darkColor: ColorManager.iconGrey,
                     ),
                     BlendMode.srcIn,
@@ -188,7 +188,7 @@ class AboutRealEstate extends StatelessWidget {
                     fontWeight: FontWeightHelper.medium,
                     color: AdaptiveColor.adaptiveColor(
                       context: context,
-                      lightColor: ColorManager.softGray,
+                      lightColor: ColorManager.softGrey,
                       darkColor: ColorManager.iconGrey,
                     ),
                   ),

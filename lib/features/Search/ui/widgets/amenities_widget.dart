@@ -64,7 +64,7 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                               )
                               : AdaptiveColor.adaptiveColor(
                                 context: context,
-                                lightColor: ColorManager.softGray,
+                                lightColor: ColorManager.softGrey,
                                 darkColor: ColorManager.iconGrey,
                               ),
                     ),

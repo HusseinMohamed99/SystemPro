@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/features/Home/data/model/realestate/company.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
@@ -18,43 +18,25 @@ class RealEstateItem extends StatelessWidget {
     this.heroTag,
     this.showImage = true,
   });
-
   final Listing listing;
   final int index;
   final bool showImage;
   final String? heroTag;
-
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(16);
-
+    final borderRadius = BorderRadius.circular(kBorderRadiusDefault).r;
     return Card(
       // ✅ Key includes listing.id only (not isFavorite) to reduce rebuild noise
       key: ValueKey(listing.id),
-      margin: EdgeInsets.only(bottom: 12.h),
-      color:AdaptiveColor.adaptiveColor(
-      context: context,
-      lightColor: ColorManager.pureWhite,
-      darkColor: ColorManager.tertiaryBlack,
-    ) ,
+      margin: EdgeInsetsDirectional.only(bottom: kPaddingSmallVertical.h),
+      color: customWhiteAndTertiaryBlackColor(context),
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       elevation: 2,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: borderRadius,
-          border: Border.all(
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.borderGrey,
-              darkColor: ColorManager.tertiaryBlack,
-            ),
-            width: 1.5.w,
-          ),
-          color: AdaptiveColor.adaptiveColor(
-            context: context,
-            lightColor: ColorManager.pureWhite,
-            darkColor: ColorManager.tertiaryBlack,
-          ),
+          border: Border.all(color: customBorderGreyAndBlackColor(context)),
+          color: customWhiteAndTertiaryBlackColor(context),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,26 +46,21 @@ class RealEstateItem extends StatelessWidget {
               (heroTag != null)
                   ? Hero(tag: heroTag!, child: _buildImageSlider(context))
                   : _buildImageSlider(context),
-
-            verticalSpacing(kSpacingSmall),
-
             // ℹ️ Real estate details (info block)
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: RealEstateInfo(
-                price: listing.price ?? '',
-                location: listing.location ?? '',
-                title: listing.title ?? '',
-                bedroomNum: listing.rooms.toString(),
-                bathroomNum: listing.bathrooms.toString(),
-                area: listing.area.toString(),
-                dateTime: listing.createdAt.toString(),
-                company: listing.company ?? const Company(),
-                marketer: listing.marketer ?? const Marketer(),
-              ),
+            RealEstateInfo(
+              price: listing.price ?? '',
+              location: listing.location ?? '',
+              title: listing.title ?? '',
+              bedroomNum: listing.rooms?.toString() ?? '0',
+              bathroomNum: listing.bathrooms?.toString() ?? '0',
+              area: listing.area?.toString() ?? '0',
+              dateTime: listing.createdAt?.toString() ?? '',
+              company: listing.company ?? const Company(),
+              marketer: listing.marketer ?? const Marketer(),
+            ).allPadding(
+              vPadding: kPaddingSmallVertical,
+              hPadding: kPaddingMediumHorizontal,
             ),
-
-            verticalSpacing(kSpacingSmall),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 enum LoaderType { circular, adaptive, wave }
@@ -27,11 +28,7 @@ class CustomLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     final loaderColor =
         color ??
-        AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.primaryBlue,
-          darkColor: ColorManager.secondaryBlue,
-        );
+        customPrimaryAndSecondaryBlueColor(context);
 
     switch (type) {
       case LoaderType.adaptive:

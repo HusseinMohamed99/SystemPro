@@ -16,7 +16,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
-           SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
+        SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
         const SliverFillRemaining(
           hasScrollBody: false,
           child: ForgotPasswordForm(),
@@ -40,7 +40,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
           style: context.titleLarge?.copyWith(
             color: AdaptiveColor.adaptiveColor(
               context: context,
-              lightColor: ColorManager.softGray,
+              lightColor: ColorManager.softGrey,
               darkColor: ColorManager.hintGrey,
             ),
           ),

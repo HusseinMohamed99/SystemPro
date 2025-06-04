@@ -26,7 +26,7 @@ class InactiveNavigationItem extends StatelessWidget {
             colorFilter: ColorFilter.mode(
               AdaptiveColor.adaptiveColor(
                 context: context,
-                lightColor: ColorManager.softGray,
+                lightColor: ColorManager.softGrey,
                 darkColor: ColorManager.iconGrey,
               ),
               BlendMode.srcIn,
@@ -38,7 +38,7 @@ class InactiveNavigationItem extends StatelessWidget {
             style: context.titleSmall?.copyWith(
               color: AdaptiveColor.adaptiveColor(
                 context: context,
-                lightColor: ColorManager.softGray,
+                lightColor: ColorManager.softGrey,
                 darkColor: ColorManager.hintGrey,
               ),
             ),

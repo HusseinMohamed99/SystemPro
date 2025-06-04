@@ -63,7 +63,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                               ? ColorManager.pureWhite
                               : AdaptiveColor.adaptiveColor(
                                 context: context,
-                                lightColor: ColorManager.softGray,
+                                lightColor: ColorManager.softGrey,
                                 darkColor: ColorManager.hintGrey,
                               ),
                     ),

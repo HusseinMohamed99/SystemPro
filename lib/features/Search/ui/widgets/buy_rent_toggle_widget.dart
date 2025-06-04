@@ -56,7 +56,7 @@ class _BuyRentToggleWidgetState extends State<BuyRentToggleWidget> {
                                 )
                                 : AdaptiveColor.adaptiveColor(
                                   context: context,
-                                  lightColor: ColorManager.softGray,
+                                  lightColor: ColorManager.softGrey,
                                   darkColor: ColorManager.hintGrey,
                                 ),
                         fontWeight: FontWeightHelper.medium,

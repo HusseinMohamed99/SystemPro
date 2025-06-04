@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/functions/filters.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 /// A responsive filter row using ChoiceChips.
@@ -63,36 +64,22 @@ class PropertyFiltersRow extends StatelessWidget {
                 final isSelected = selectedFilter == value;
 
                 // Define theme-aware colors
-                final selectedTextColor = AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.pureWhite,
+                final selectedTextColor = customPrimaryBlueAndWhiteColor(
+                  context,
                 );
 
-                final unselectedTextColor = AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.softGray,
-                  darkColor: ColorManager.hintGrey,
+                final unselectedTextColor = customHintAndSoftGreyColor(context);
+
+                final selectedBackgroundColor = customPrimaryAndShadowBlueColor(
+                  context,
                 );
 
-                final selectedBackgroundColor = AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.shadowBlue,
-                  darkColor: ColorManager.primaryBlue,
-                );
+                final unselectedBackgroundColor =
+                    customWhiteAndTertiaryBlackColor(context);
 
-                final unselectedBackgroundColor = AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.pureWhite,
-                  darkColor: ColorManager.tertiaryBlack,
+                final borderColor = customShowBlueAndTertiaryBlackColor(
+                  context,
                 );
-
-                final borderColor = AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.shadowBlue,
-                  darkColor: ColorManager.tertiaryBlack,
-                );
-
                 return SizedBox(
                   width: itemWidth,
                   child: ChoiceChip(
@@ -128,7 +115,7 @@ class PropertyFiltersRow extends StatelessWidget {
                     selectedColor: selectedBackgroundColor,
                     backgroundColor: unselectedBackgroundColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(kBorderRadiusMedium),
                       side: BorderSide(color: borderColor),
                     ),
                     showCheckmark: false,

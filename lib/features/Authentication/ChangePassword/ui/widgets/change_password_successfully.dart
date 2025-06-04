@@ -28,7 +28,7 @@ class ChangePasswordSuccessfully extends StatelessWidget {
 
     final subtitleColor = AdaptiveColor.adaptiveColor(
       context: context,
-      lightColor: ColorManager.softGray,
+      lightColor: ColorManager.softGrey,
       darkColor: ColorManager.hintGrey,
     );
 

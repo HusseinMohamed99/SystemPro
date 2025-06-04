@@ -108,13 +108,13 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
                   color:
                       isActive
                           ? AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.primaryBlue,
-                      darkColor: ColorManager.secondaryBlue,
-                    )
+                            context: context,
+                            lightColor: ColorManager.primaryBlue,
+                            darkColor: ColorManager.secondaryBlue,
+                          )
                           : AdaptiveColor.adaptiveColor(
                             context: context,
-                            lightColor: ColorManager.softGray,
+                            lightColor: ColorManager.softGrey,
                             darkColor: ColorManager.pureWhite,
                           ),
                   borderRadius: BorderRadius.circular(4),

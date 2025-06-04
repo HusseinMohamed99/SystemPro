@@ -150,7 +150,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
             size: kIconSizeDefault.sp,
             color: AdaptiveColor.adaptiveColor(
               context: context,
-              lightColor: ColorManager.softGray,
+              lightColor: ColorManager.softGrey,
               darkColor: ColorManager.iconGrey,
             ),
           ),
@@ -244,7 +244,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               size: kIconSizeDefault.sp,
               color: AdaptiveColor.adaptiveColor(
                 context: context,
-                lightColor: ColorManager.softGray,
+                lightColor: ColorManager.softGrey,
                 darkColor: ColorManager.iconGrey,
               ),
             ),

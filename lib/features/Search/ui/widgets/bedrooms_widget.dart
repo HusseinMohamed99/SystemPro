@@ -62,7 +62,7 @@ class BedroomsWidgetState extends State<BedroomsWidget> {
                               ? ColorManager.pureWhite
                               : AdaptiveColor.adaptiveColor(
                                 context: context,
-                                lightColor: ColorManager.softGray,
+                                lightColor: ColorManager.softGrey,
                                 darkColor: ColorManager.pureWhite,
                               ),
                     ),

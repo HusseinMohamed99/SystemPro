@@ -43,7 +43,7 @@ class CustomErrorTextWidget extends StatelessWidget {
                         textColor ??
                         AdaptiveColor.adaptiveColor(
                           context: context,
-                          lightColor: ColorManager.softGray,
+                          lightColor: ColorManager.softGrey,
                           darkColor: ColorManager.hintGrey,
                         ),
                   ),

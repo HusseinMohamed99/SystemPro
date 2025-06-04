@@ -35,7 +35,7 @@ class ChangePasswordViewBody extends StatelessWidget {
             style: context.titleLarge?.copyWith(
               color: AdaptiveColor.adaptiveColor(
                 context: context,
-                lightColor: ColorManager.softGray,
+                lightColor: ColorManager.softGrey,
                 darkColor: ColorManager.hintGrey,
               ),
             ),

@@ -23,7 +23,7 @@ class ResendCodeText extends StatelessWidget {
       TextSpan(
         text: context.localization.send_code_again,
         style: context.titleLarge?.copyWith(
-          color: canResend ? ColorManager.primaryBlue : ColorManager.softGray,
+          color: canResend ? ColorManager.primaryBlue : ColorManager.softGrey,
           fontWeight: FontWeightHelper.semiBold,
         ),
         recognizer:
@@ -31,7 +31,7 @@ class ResendCodeText extends StatelessWidget {
         children: [
           TextSpan(
             text: '  00:${secondsLeft.toString().padLeft(2, '0')}',
-            style: context.titleLarge?.copyWith(color: ColorManager.softGray),
+            style: context.titleLarge?.copyWith(color: ColorManager.softGrey),
           ),
         ],
       ),

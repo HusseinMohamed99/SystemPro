@@ -32,7 +32,7 @@ class HaveAnAccountWidget extends StatelessWidget {
     final defaultStyle = baseTextStyle?.copyWith(
       color: AdaptiveColor.adaptiveColor(
         context: context,
-        lightColor: ColorManager.softGray,
+        lightColor: ColorManager.softGrey,
         darkColor: ColorManager.pureWhite,
       ),
     );

@@ -62,7 +62,7 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                         style: context.titleLarge?.copyWith(
                           color: AdaptiveColor.adaptiveColor(
                             context: context,
-                            lightColor: ColorManager.softGray,
+                            lightColor: ColorManager.softGrey,
                             darkColor: ColorManager.hintGrey,
                           ),
                         ),
@@ -133,7 +133,7 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                               )
                               : AdaptiveColor.adaptiveColor(
                                 context: context,
-                                lightColor: ColorManager.softGray,
+                                lightColor: ColorManager.softGrey,
                                 darkColor: ColorManager.hintGrey,
                               ),
                       fontWeight: FontWeightHelper.semiBold,
@@ -156,7 +156,7 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                         style: context.titleLarge?.copyWith(
                           color: AdaptiveColor.adaptiveColor(
                             context: context,
-                            lightColor: ColorManager.softGray,
+                            lightColor: ColorManager.softGrey,
                             darkColor: ColorManager.hintGrey,
                           ),
                           fontWeight: FontWeightHelper.semiBold,

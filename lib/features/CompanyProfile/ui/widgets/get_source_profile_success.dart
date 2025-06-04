@@ -82,7 +82,7 @@ class GetSourceProfileSuccess extends StatelessWidget {
                       fontWeight: FontWeightHelper.regular,
                       color: AdaptiveColor.adaptiveColor(
                         context: context,
-                        lightColor: ColorManager.softGray,
+                        lightColor: ColorManager.softGrey,
                         darkColor: ColorManager.hintGrey,
                       ),
                     ),

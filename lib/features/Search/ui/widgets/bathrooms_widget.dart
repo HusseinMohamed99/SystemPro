@@ -62,7 +62,7 @@ class BathroomsWidgetState extends State<BathroomsWidget> {
                               ? ColorManager.pureWhite
                               : AdaptiveColor.adaptiveColor(
                                 context: context,
-                                lightColor: ColorManager.softGray,
+                                lightColor: ColorManager.softGrey,
                                 darkColor: ColorManager.pureWhite,
                               ),
                     ),

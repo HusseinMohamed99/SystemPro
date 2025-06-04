@@ -81,7 +81,7 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: context.titleLarge?.copyWith(
           color: AdaptiveColor.adaptiveColor(
             context: context,
-            lightColor: ColorManager.softGray,
+            lightColor: ColorManager.softGrey,
             darkColor: ColorManager.hintGrey,
           ),
         ),
@@ -106,6 +106,4 @@ class CustomTextFormField extends StatelessWidget {
       ),
     );
   }
-
-  
 }

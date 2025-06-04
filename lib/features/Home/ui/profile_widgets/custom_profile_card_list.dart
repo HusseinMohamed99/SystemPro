@@ -128,14 +128,13 @@ class CustomProfileCardList extends StatelessWidget {
     );
   }
 
-Future<void> _updateTheme(BuildContext context, bool isDarkMode) async {
+  Future<void> _updateTheme(BuildContext context, bool isDarkMode) async {
     final cubit = context.read<ChangeThemingCubit>();
     if (cubit.isClosed) return;
 
     await CachingHelper.setData(SharedPrefKeys.isDarkMode, isDarkMode);
     cubit.toggleTheme();
   }
-
 
   Future<dynamic> customBottomSheet({
     required BuildContext context,
@@ -171,7 +170,7 @@ Future<void> _updateTheme(BuildContext context, bool isDarkMode) async {
                     height: 4.h,
                     color: AdaptiveColor.adaptiveColor(
                       context: context,
-                      lightColor: ColorManager.softGray,
+                      lightColor: ColorManager.softGrey,
                       darkColor: ColorManager.iconGrey,
                     ),
                   ),

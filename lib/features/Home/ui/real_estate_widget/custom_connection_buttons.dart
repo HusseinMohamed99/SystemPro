@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/functions/make_call.dart';
 import 'package:system_pro/core/helpers/functions/url_launcher.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -29,14 +30,10 @@ class CustomConnectionButton extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(
                 vertical: kPaddingMediumVertical.h,
               ),
-              backgroundColor: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.shadowBlue,
-                darkColor: ColorManager.fourthBlack,
-              ),
+              backgroundColor: customShowBlueAndFourthBlackColor(context),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(kBorderRadiusMedium).r,
               ),
             ),
             onPressed: () async {
@@ -48,11 +45,7 @@ class CustomConnectionButton extends StatelessWidget {
             icon: SvgPicture.asset(
               Assets.images.whatsapp,
               colorFilter: ColorFilter.mode(
-                AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.secondaryBlue,
-                ),
+                customPrimaryAndSecondaryBlueColor(context),
                 BlendMode.srcIn,
               ),
             ),
@@ -71,11 +64,7 @@ class CustomConnectionButton extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(
                 vertical: kPaddingMediumVertical.h,
               ),
-              backgroundColor: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.shadowBlue,
-                darkColor: ColorManager.fourthBlack,
-              ),
+              backgroundColor: customShowBlueAndFourthBlackColor(context),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -87,11 +76,7 @@ class CustomConnectionButton extends StatelessWidget {
             icon: SvgPicture.asset(
               Assets.images.phone,
               colorFilter: ColorFilter.mode(
-                AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.secondaryBlue,
-                ),
+                customPrimaryAndSecondaryBlueColor(context),
                 BlendMode.srcIn,
               ),
             ),
