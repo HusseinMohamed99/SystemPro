@@ -7,7 +7,6 @@ import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/functions/make_call.dart';
 import 'package:system_pro/core/helpers/functions/url_launcher.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/gen/assets.gen.dart';
 
@@ -30,7 +29,7 @@ class CustomConnectionButton extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(
                 vertical: kPaddingMediumVertical.h,
               ),
-              backgroundColor: customShowBlueAndFourthBlackColor(context),
+              backgroundColor: customShowdBlueAndFourthBlackColor(context),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(kBorderRadiusMedium).r,
@@ -64,7 +63,7 @@ class CustomConnectionButton extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(
                 vertical: kPaddingMediumVertical.h,
               ),
-              backgroundColor: customShowBlueAndFourthBlackColor(context),
+              backgroundColor: customShowdBlueAndFourthBlackColor(context),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),

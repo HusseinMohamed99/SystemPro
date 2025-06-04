@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -45,11 +46,7 @@ class DescriptionWidget extends StatelessWidget {
                         context: context,
                         builder:
                             (context) => AlertDialog(
-                              backgroundColor: AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.pureWhite,
-                                darkColor: ColorManager.tertiaryBlack,
-                              ),
+                              backgroundColor: customWhiteAndTertiaryBlackColor(context),
                               content: SingleChildScrollView(
                                 child: Text(
                                   textController.text,
@@ -65,11 +62,7 @@ class DescriptionWidget extends StatelessWidget {
                       context.localization.see_more,
                       style: context.titleMedium?.copyWith(
                         fontWeight: FontWeightHelper.regular,
-                        color: AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.primaryBlue,
-                          darkColor: ColorManager.secondaryBlue,
-                        ),
+                        color: customPrimaryAndSecondaryBlueColor(context),
                       ),
                     ),
                   ),

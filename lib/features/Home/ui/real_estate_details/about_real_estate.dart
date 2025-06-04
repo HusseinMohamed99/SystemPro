@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/functions/time_ago.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -49,23 +50,14 @@ class AboutRealEstate extends StatelessWidget {
                     TextSpan(
                       text: price,
                       style: context.headlineMedium?.copyWith(
-                        color: AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.primaryBlue,
-                          darkColor: ColorManager.secondaryBlue,
-                        ),
+                        color: customPrimaryAndSecondaryBlueColor(context),
                       ),
                     ),
                     TextSpan(
                       text: ' \ue900',
                       style: context.titleLarge?.copyWith(
                         fontFamily: FontFamilyHelper.saudiRiyal,
-
-                        color: AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.primaryBlue,
-                          darkColor: ColorManager.secondaryBlue,
-                        ),
+                        color: customPrimaryAndSecondaryBlueColor(context),
                       ),
                     ),
                   ],
@@ -75,18 +67,10 @@ class AboutRealEstate extends StatelessWidget {
             Container(
               padding: const EdgeInsetsDirectional.all(6),
               decoration: BoxDecoration(
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.pureWhite,
-                  darkColor: ColorManager.tertiaryBlack,
-                ),
+                color: customWhiteAndTertiaryBlackColor(context),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.borderGrey,
-                    darkColor: ColorManager.tertiaryBlack,
-                  ),
+                  color: customBorderGreyAndTertiaryBlackColor(context),
                   width: 1.5.w,
                 ),
               ),
@@ -94,11 +78,7 @@ class AboutRealEstate extends StatelessWidget {
                 '% $downPayment ${context.localization.down_payment}',
                 style: context.titleSmall?.copyWith(
                   fontWeight: FontWeightHelper.medium,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.softGrey,
-                    darkColor: ColorManager.hintGrey,
-                  ),
+               color: customSoftAndHintGreyColor(context),
                 ),
               ),
             ),
@@ -109,22 +89,14 @@ class AboutRealEstate extends StatelessWidget {
           textAlign: TextAlign.start,
           style: context.titleLarge?.copyWith(
             fontWeight: FontWeightHelper.medium,
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.primaryBlack,
-              darkColor: ColorManager.hintGrey,
-            ),
+            color: customBlackAndHintGreyColor(context),
           ),
         ),
         Row(
           children: [
             Icon(
               Icons.place_outlined,
-              color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.softGrey,
-                darkColor: ColorManager.iconGrey,
-              ),
+              color: customSoftAndIconGreyColor(context),
               size: kIconSizeDefault.sp,
             ),
             Expanded(
@@ -134,11 +106,7 @@ class AboutRealEstate extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: context.titleMedium?.copyWith(
                   fontWeight: FontWeightHelper.regular,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.softGrey,
-                    darkColor: ColorManager.iconGrey,
-                  ),
+                  color: customSoftAndIconGreyColor(context),
                 ),
               ),
             ),
@@ -147,11 +115,7 @@ class AboutRealEstate extends StatelessWidget {
               TimeAgoHelper.timeAgo(context, date),
               style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.regular,
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.softGrey,
-                  darkColor: ColorManager.iconGrey,
-                ),
+                color: customSoftAndIconGreyColor(context),
               ),
             ),
           ],
@@ -173,11 +137,7 @@ class AboutRealEstate extends StatelessWidget {
                 SvgPicture.asset(
                   images[index],
                   colorFilter: ColorFilter.mode(
-                    AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.softGrey,
-                      darkColor: ColorManager.iconGrey,
-                    ),
+                    customSoftAndIconGreyColor(context),
                     BlendMode.srcIn,
                   ),
                 ),
@@ -186,11 +146,7 @@ class AboutRealEstate extends StatelessWidget {
                   values[index],
                   style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.medium,
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.softGrey,
-                      darkColor: ColorManager.iconGrey,
-                    ),
+                    color: customSoftAndIconGreyColor(context),
                   ),
                 ),
               ],

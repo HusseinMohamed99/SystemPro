@@ -161,7 +161,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                             final color =
                                 isFavorited == true
                                     ? ColorManager.brightRed
-                                    : customHintGreyAndBlackColor(context);
+                                    : customBlackAndHintGreyColor(context);
 
                             return Icon(
                               isFavorited == true

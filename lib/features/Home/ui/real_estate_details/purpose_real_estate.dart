@@ -20,21 +20,27 @@ class PurposeWidget extends StatelessWidget {
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-        if (purpose == 'buy')
-          Text(
-            '${context.localization.for_to} ${context.localization.sale}',
-            style: context.titleMedium?.copyWith(
-              fontWeight: FontWeightHelper.regular,
-            ),
-          )
-        else
-          Text(
-            '${context.localization.for_to} $purpose',
-            style: context.titleMedium?.copyWith(
-              fontWeight: FontWeightHelper.regular,
-            ),
+
+        Text(
+          '${context.localization.for_to} ${_localizedPurpose(context, purpose)}',
+          style: context.titleMedium?.copyWith(
+            fontWeight: FontWeightHelper.regular,
           ),
+        ),
       ],
     );
+  }
+
+  String _localizedPurpose(BuildContext context, String purpose) {
+    switch (purpose) {
+      case 'buy':
+        return context.localization.sale;
+      case 'rent':
+        return context.localization.rent;
+      case 'booking':
+        return context.localization.book;
+      default:
+        return purpose; // fallback in case of unexpected value
+    }
   }
 }

@@ -65,7 +65,7 @@ class RealEstateInfo extends StatelessWidget {
           title,
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.medium,
-            color: customHintGreyAndBlackColor(context),
+            color: customBlackAndHintGreyColor(context),
           ),
         ),
 
@@ -81,7 +81,7 @@ class RealEstateInfo extends StatelessWidget {
           location,
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
-            color: customHintAndSoftGreyColor(context),
+            color: customSoftAndHintGreyColor(context),
           ),
         ),
 

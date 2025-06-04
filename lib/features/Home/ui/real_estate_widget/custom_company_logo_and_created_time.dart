@@ -36,7 +36,7 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
           TimeAgoHelper.timeAgo(context, dateTime),
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
-            color: customHintAndSoftGreyColor(context),
+            color: customSoftAndHintGreyColor(context),
           ),
         ),
         const Spacer(),
@@ -47,7 +47,7 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
             onTap: () {
               context.pushNamed(Routes.sourceProfileView, arguments: id);
             },
-            child: ImageWithDottedBorder(imageUrl: imageUrl,),
+            child: ImageWithDottedBorder(imageUrl: imageUrl),
           ),
       ],
     );

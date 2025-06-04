@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class CustomProfileCard extends StatelessWidget {
@@ -47,17 +47,13 @@ class CustomProfileCard extends StatelessWidget {
                   children: [
                     Text(
                       isLocalization ? language : themeMode,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: context.titleMedium?.copyWith(
                         fontWeight: FontWeightHelper.regular,
                       ),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.pureBlack,
-                        darkColor: ColorManager.pureWhite,
-                      ),
+                      color: customBlackAndWhiteColor(context),
                       size: 20.sp,
                     ),
                   ],
@@ -65,11 +61,7 @@ class CustomProfileCard extends StatelessWidget {
               else
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.pureBlack,
-                    darkColor: ColorManager.pureWhite,
-                  ),
+                  color: customBlackAndWhiteColor(context),
                   size: 20.sp,
                 ),
             ],

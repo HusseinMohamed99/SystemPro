@@ -4,7 +4,6 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
 
@@ -75,7 +74,7 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
               child: Icon(
                 Icons.arrow_back_ios_new,
                 size: 16.sp,
-                color: customBlackWhiteColor(context),
+                color: customBlackAndWhiteColor(context),
               ),
             ),
           ),
@@ -96,17 +95,9 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
                 decoration: BoxDecoration(
                   color:
                       isActive
-                          ? AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.primaryBlue,
-                            darkColor: ColorManager.secondaryBlue,
-                          )
-                          : AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.softGrey,
-                            darkColor: ColorManager.pureWhite,
-                          ),
-                  borderRadius: BorderRadius.circular(4),
+                          ? customPrimaryAndSecondaryBlueColor(context)
+                          : customSoftGreyAndWhiteColor(context),
+                  borderRadius: BorderRadius.circular(kBorderRadiusRounded),
                 ),
               );
             }),

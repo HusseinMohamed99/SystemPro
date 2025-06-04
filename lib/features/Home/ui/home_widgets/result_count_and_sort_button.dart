@@ -36,7 +36,7 @@ class ResultsCountAndSortButton extends StatelessWidget {
         Text(
           '$propertiesCount ${localization.properties}',
           style: context.titleMedium?.copyWith(
-            color: customIconAndSoftGreyColor(context),
+            color: customSoftAndIconGreyColor(context),
             fontWeight: FontWeightHelper.medium,
           ),
         ),
@@ -87,7 +87,7 @@ class ResultsCountAndSortButton extends StatelessWidget {
                 Icon(
                   Icons.swap_vert,
                   size: kIconSizeDefault.sp,
-                  color: customHintAndSoftGreyColor(context),
+                  color: customSoftAndHintGreyColor(context),
                 ),
                 horizontalSpacing(kSpacingSmaller),
                 Text(
@@ -103,7 +103,7 @@ class ResultsCountAndSortButton extends StatelessWidget {
                       .label,
                   style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.regular,
-                    color: customHintAndSoftGreyColor(context),
+                    color: customSoftAndHintGreyColor(context),
                   ),
                 ),
               ],

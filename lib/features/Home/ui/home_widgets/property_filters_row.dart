@@ -68,16 +68,16 @@ class PropertyFiltersRow extends StatelessWidget {
                   context,
                 );
 
-                final unselectedTextColor = customHintAndSoftGreyColor(context);
+                final unselectedTextColor = customSoftAndHintGreyColor(context);
 
-                final selectedBackgroundColor = customPrimaryAndShadowBlueColor(
+                final selectedBackgroundColor = customShadowAndPrimaryBlueColor(
                   context,
                 );
 
                 final unselectedBackgroundColor =
                     customWhiteAndTertiaryBlackColor(context);
 
-                final borderColor = customShowBlueAndTertiaryBlackColor(
+                final borderColor = customShadowBlueAndTertiaryBlackColor(
                   context,
                 );
                 return SizedBox(

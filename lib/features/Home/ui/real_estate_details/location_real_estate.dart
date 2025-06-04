@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/functions/url_launcher.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -70,11 +71,7 @@ class LocationRealEstate extends StatelessWidget {
                   alignment: Alignment.center,
 
                   decoration: BoxDecoration(
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.pureWhite,
-                      darkColor: ColorManager.tertiaryBlack,
-                    ),
+                    color: customWhiteAndTertiaryBlackColor(context),
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Row(
@@ -82,11 +79,7 @@ class LocationRealEstate extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.place_outlined,
-                        color: AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.softGrey,
-                          darkColor: ColorManager.iconGrey,
-                        ),
+                        color: customSoftAndIconGreyColor(context),
                         size: kIconSizeDefault.sp,
                       ),
                       Text(

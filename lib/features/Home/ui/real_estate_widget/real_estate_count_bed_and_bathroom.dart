@@ -33,7 +33,7 @@ class RealEstateCountBedAndBathRoom extends StatelessWidget {
                   SvgPicture.asset(
                     images[index],
                     colorFilter: ColorFilter.mode(
-                      customIconAndSoftGreyColor(context),
+                      customSoftAndIconGreyColor(context),
                       BlendMode.srcIn,
                     ),
                   ),
@@ -43,7 +43,7 @@ class RealEstateCountBedAndBathRoom extends StatelessWidget {
                     values[index],
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                      color: customIconAndSoftGreyColor(context),
+                      color: customSoftAndIconGreyColor(context),
                     ),
                   ),
                 ],

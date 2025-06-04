@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -17,11 +19,7 @@ class CustomProfileInfo extends StatelessWidget {
           width: 88.w,
           height: 88.h,
           decoration: BoxDecoration(
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.shadowBlue,
-              darkColor: ColorManager.secondaryShadowBlue,
-            ),
+            color: customShadowAndSecondaryBlueColor(context),
             borderRadius: BorderRadius.circular(50),
           ),
           child: Center(
@@ -29,12 +27,8 @@ class CustomProfileInfo extends StatelessWidget {
               userName != null && userName!.isNotEmpty
                   ? userName!.substring(0, 1).toUpperCase()
                   : '?',
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.pureWhite,
-                ),
+              style: context.displaySmall?.copyWith(
+                color: customPrimaryBlueAndWhiteColor(context),
               ),
             ),
           ),
@@ -48,18 +42,14 @@ class CustomProfileInfo extends StatelessWidget {
                 userName ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: context.headlineSmall,
               ),
               Text(
                 email ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.softGrey,
-                    darkColor: ColorManager.hintGrey,
-                  ),
+                style: context.titleMedium?.copyWith(
+                  color: customSoftAndHintGreyColor(context),
                   fontWeight: FontWeightHelper.regular,
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -32,18 +33,10 @@ class ListedByWidget extends StatelessWidget {
           padding: EdgeInsetsDirectional.symmetric(vertical: kSpacingXLarge.h),
           width: context.width,
           decoration: BoxDecoration(
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.pureWhite,
-              darkColor: ColorManager.tertiaryBlack,
-            ),
+            color: customWhiteAndTertiaryBlackColor(context),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.borderGrey,
-                darkColor: ColorManager.tertiaryBlack,
-              ),
+              color: customBorderGreyAndTertiaryBlackColor(context),
               width: 1.5.w,
             ),
           ),
@@ -74,11 +67,7 @@ class ListedByWidget extends StatelessWidget {
                   context.localization.view_profile,
                   style: context.titleMedium?.copyWith(
                     fontWeight: FontWeightHelper.medium,
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.primaryBlue,
-                      darkColor: ColorManager.secondaryBlue,
-                    ),
+                    color: customPrimaryAndSecondaryBlueColor(context),
                   ),
                 ),
               ),

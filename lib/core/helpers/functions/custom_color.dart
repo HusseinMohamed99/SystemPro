@@ -7,7 +7,9 @@ Color customWhiteAndTertiaryBlackColor(BuildContext context) {
     lightColor: ColorManager.pureWhite,
     darkColor: ColorManager.tertiaryBlack,
   );
-}Color customBlackWhiteColor(BuildContext context) {
+}
+
+Color customBlackAndWhiteColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.primaryBlack,
@@ -15,7 +17,7 @@ Color customWhiteAndTertiaryBlackColor(BuildContext context) {
   );
 }
 
-Color customWhiteAndBlackColor(BuildContext context) {
+Color customPureWhiteAndBlackColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.pureWhite,
@@ -39,7 +41,7 @@ Color customPrimaryAndSecondaryBlueColor(BuildContext context) {
   );
 }
 
-Color customPrimaryAndShadowBlueColor(BuildContext context) {
+Color customShadowAndPrimaryBlueColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.shadowBlue,
@@ -47,7 +49,7 @@ Color customPrimaryAndShadowBlueColor(BuildContext context) {
   );
 }
 
-Color customHintGreyAndBlackColor(BuildContext context) {
+Color customBlackAndHintGreyColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.pureBlack,
@@ -55,7 +57,7 @@ Color customHintGreyAndBlackColor(BuildContext context) {
   );
 }
 
-Color customHintAndSoftGreyColor(BuildContext context) {
+Color customSoftAndHintGreyColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.softGrey,
@@ -71,7 +73,7 @@ Color customPrimaryBlueAndWhiteColor(BuildContext context) {
   );
 }
 
-Color customIconAndSoftGreyColor(BuildContext context) {
+Color customSoftAndIconGreyColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.softGrey,
@@ -79,7 +81,15 @@ Color customIconAndSoftGreyColor(BuildContext context) {
   );
 }
 
-Color customShowBlueAndFourthBlackColor(BuildContext context) {
+Color customSoftGreyAndWhiteColor(BuildContext context) {
+  return AdaptiveColor.adaptiveColor(
+    context: context,
+    lightColor: ColorManager.softGrey,
+    darkColor: ColorManager.pureWhite,
+  );
+}
+
+Color customShowdBlueAndFourthBlackColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.shadowBlue,
@@ -87,10 +97,18 @@ Color customShowBlueAndFourthBlackColor(BuildContext context) {
   );
 }
 
-Color customShowBlueAndTertiaryBlackColor(BuildContext context) {
+Color customShadowBlueAndTertiaryBlackColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.shadowBlue,
     darkColor: ColorManager.tertiaryBlack,
+  );
+}
+
+Color customShadowAndSecondaryBlueColor(BuildContext context) {
+  return AdaptiveColor.adaptiveColor(
+    context: context,
+    lightColor: ColorManager.shadowBlue,
+    darkColor: ColorManager.secondaryShadowBlue,
   );
 }

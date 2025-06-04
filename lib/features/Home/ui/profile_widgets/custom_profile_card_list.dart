@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/localization/localization_state.dart';
@@ -145,13 +148,8 @@ class CustomProfileCardList extends StatelessWidget {
     required VoidCallback secondOnTap,
   }) {
     final localization = context.localization;
-    final textTheme = Theme.of(context).textTheme;
     return showModalBottomSheet(
-      backgroundColor: AdaptiveColor.adaptiveColor(
-        context: context,
-        lightColor: ColorManager.pureWhite,
-        darkColor: ColorManager.tertiaryBlack,
-      ),
+      backgroundColor: customWhiteAndTertiaryBlackColor(context),
       context: context,
       builder:
           (context) => Container(
@@ -168,56 +166,40 @@ class CustomProfileCardList extends StatelessWidget {
                   child: Container(
                     width: 40.w,
                     height: 4.h,
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.softGrey,
-                      darkColor: ColorManager.iconGrey,
-                    ),
+                    color: customSoftAndIconGreyColor(context),
                   ),
                 ),
                 verticalSpacing(kSpacingDefault),
                 Text(
                   '${localization.change} $title',
-                  style: textTheme.titleLarge?.copyWith(
+                  style: context.titleLarge?.copyWith(
                     fontWeight: FontWeightHelper.medium,
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.pureBlack,
-                      darkColor: ColorManager.hintGrey,
-                    ),
+                    color: customBlackAndHintGreyColor(context),
                   ),
                 ),
                 ListTile(
                   title: Text(
                     firstTitle,
-                    style: textTheme.titleLarge?.copyWith(
+                    style: context.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.pureBlack,
-                        darkColor: ColorManager.hintGrey,
-                      ),
+                      color: customBlackAndHintGreyColor(context),
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop();
+                    context.pop();
                     firstOnTap();
                   },
                 ),
                 ListTile(
                   title: Text(
                     secondTitle,
-                    style: textTheme.titleLarge?.copyWith(
+                    style: context.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.pureBlack,
-                        darkColor: ColorManager.hintGrey,
-                      ),
+                      color: customBlackAndHintGreyColor(context),
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop();
+                   context.pop();
                     secondOnTap();
                   },
                 ),
