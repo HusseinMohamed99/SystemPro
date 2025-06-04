@@ -27,17 +27,16 @@ class RealEstateItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(16);
-    final backgroundColor = AdaptiveColor.adaptiveColor(
-      context: context,
-      lightColor: ColorManager.pureWhite,
-      darkColor: ColorManager.tertiaryBlack,
-    );
 
     return Card(
       // ✅ Key includes listing.id only (not isFavorite) to reduce rebuild noise
       key: ValueKey(listing.id),
       margin: EdgeInsets.only(bottom: 12.h),
-      color: backgroundColor,
+      color:AdaptiveColor.adaptiveColor(
+      context: context,
+      lightColor: ColorManager.pureWhite,
+      darkColor: ColorManager.tertiaryBlack,
+    ) ,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       elevation: 2,
       child: Container(
@@ -51,7 +50,11 @@ class RealEstateItem extends StatelessWidget {
             ),
             width: 1.5.w,
           ),
-          color: backgroundColor,
+          color: AdaptiveColor.adaptiveColor(
+            context: context,
+            lightColor: ColorManager.pureWhite,
+            darkColor: ColorManager.tertiaryBlack,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

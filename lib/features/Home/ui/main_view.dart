@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
-import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
-import 'package:system_pro/core/logic/theming/change_theming_state.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
@@ -27,7 +25,6 @@ class MainView extends StatelessWidget {
         BlocProvider(create: (_) => getIt<MarketplaceCubit>()..initIfNeeded()),
         BlocProvider(create: (_) => getIt<FavoriteCubit>()),
         BlocProvider(create: (_) => getIt<ProfileCubit>()),
-        BlocProvider(create: (_) => getIt<ChangeThemingCubit>()),
       ],
       child: const _MainViewContent(),
     );
@@ -64,6 +61,7 @@ class _MainViewContentState extends State<_MainViewContent> {
     // Trigger first-time data load for the initial tab (Marketplace)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _tabLoaders[0]?.call();
+      // Validate session after initial render
       profileCubit.checkSessionValidity(); // Check session validity
     });
   }
@@ -75,31 +73,27 @@ class _MainViewContentState extends State<_MainViewContent> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChangeThemingCubit, ChangeThemingState>(
-      builder: (context, themeState) {
-        return BlocListener<ProfileCubit, ProfileDataState>(
-          listenWhen: (_, state) => state is SessionExpired,
-          listener: (context, state) {
-            context.pushNamedAndRemoveUntil(
-              Routes.loginView,
-              predicate: (route) => false,
-            );
-          },
-          child: Scaffold(
-            appBar: basicAppBar(),
-            body: BlocConsumer<TabCubit, int>(
-              listener: (context, tabIndex) => _handleTabChange(tabIndex),
-              builder: (context, currentTab) {
-                return MainTabsView(currentViewIndex: currentTab);
-              },
-            ),
-            bottomNavigationBar: CustomBottomNavigationBar(
-              currentIndex: context.watch<TabCubit>().state,
-              onItemTapped: (index) => context.read<TabCubit>().setTab(index),
-            ),
-          ),
+    return BlocListener<ProfileCubit, ProfileDataState>(
+      listenWhen: (_, state) => state is SessionExpired,
+      listener: (context, state) {
+        context.pushNamedAndRemoveUntil(
+          Routes.loginView,
+          predicate: (route) => false,
         );
       },
+      child: Scaffold(
+        appBar: basicAppBar(),
+        body: BlocConsumer<TabCubit, int>(
+          listener: (context, tabIndex) => _handleTabChange(tabIndex),
+          builder: (context, currentTab) {
+            return MainTabsView(currentViewIndex: currentTab);
+          },
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: context.watch<TabCubit>().state,
+          onItemTapped: (index) => context.read<TabCubit>().setTab(index),
+        ),
+      ),
     );
   }
 }

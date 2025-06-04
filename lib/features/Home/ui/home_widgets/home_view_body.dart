@@ -31,6 +31,7 @@ class HomeViewBody extends StatelessWidget {
         Expanded(
           child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
             builder: (context, state) {
+        
               // Loading state
               if (state is MarketPlaceLoading) {
                 return const CustomLoader(type: LoaderType.adaptive);
@@ -38,12 +39,17 @@ class HomeViewBody extends StatelessWidget {
 
               // Error state
               if (state is MarketPlaceError) {
-                return CustomErrorTextWidget(errorMessage: state.error);
+                return CustomErrorTextWidget(
+                  errorMessage: state.error,
+                  onRetry: () => context.read<MarketplaceCubit>().getListings(),
+                );
               }
 
               // Success state with data
               if (state is MarketPlaceSuccess) {
                 final listings = state.listings;
+                final cubit = context.read<MarketplaceCubit>();
+                cubit.initSortOptionsIfNeeded(context);
 
                 return Column(
                   children: [
@@ -63,7 +69,11 @@ class HomeViewBody extends StatelessWidget {
                     const AdaptiveDivider(),
                     // Display count and sort option
                     ResultsCountAndSortButton(
-                      propertyLength: listings.length.toString(),
+                      propertiesCount: listings.length.toString(),
+                      selectedSort: cubit.selectedSort,
+                      sortOptions: cubit.sortOptions,
+                      onSortSelected: cubit.sortListings,
+
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
                       rightPadding: kPaddingDefaultHorizontal,

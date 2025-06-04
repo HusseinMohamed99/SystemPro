@@ -99,8 +99,9 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       _visibleListings
         ..clear()
         ..addAll(_cachedListingsByFilter[effectiveFilter]!);
-      if (_visibleListings.isNotEmpty)
+      if (_visibleListings.isNotEmpty) {
         pagination.cursor = _visibleListings.last.id ?? 0;
+      }
       _emitSortedSuccess();
       return;
     }

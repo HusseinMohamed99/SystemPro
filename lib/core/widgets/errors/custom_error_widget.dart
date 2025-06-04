@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
@@ -14,7 +16,7 @@ class CustomErrorTextWidget extends StatelessWidget {
     this.textStyle,
     this.textAlign = TextAlign.center,
     this.textColor,
-    this.onRetry, // ✅ added here
+    this.onRetry,
   });
 
   final String errorMessage;
@@ -27,10 +29,7 @@ class CustomErrorTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
+    return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
@@ -51,23 +50,42 @@ class CustomErrorTextWidget extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               verticalSpacing(12),
-              TextButton(
-                onPressed: onRetry,
-                child: Text(
-                  '↻ ${context.localization.try_again}',
-                  style: context.titleSmall?.copyWith(
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.primaryBlue,
-                      darkColor: ColorManager.secondaryBlue,
+              GestureDetector(
+                onTap: onRetry,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.refresh_outlined,
+                      size: kIconSizeDefault.sp,
+                      color: AdaptiveColor.adaptiveColor(
+                        context: context,
+                        lightColor: ColorManager.primaryBlue,
+                        darkColor: ColorManager.secondaryBlue,
+                      ),
                     ),
-                  ),
+
+                    horizontalSpacing(4),
+                    Text(
+                      context.localization.try_again,
+                      style: context.titleMedium?.copyWith(
+                        color: AdaptiveColor.adaptiveColor(
+                          context: context,
+                          lightColor: ColorManager.primaryBlue,
+                          darkColor: ColorManager.secondaryBlue,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ],
-        ),
-      ),
-    );
+        )
+        .allPadding(
+          vPadding: kPaddingDefaultVertical,
+          hPadding: kPaddingDefaultHorizontal,
+        )
+        .center();
   }
 }

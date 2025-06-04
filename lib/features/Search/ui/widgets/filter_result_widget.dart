@@ -53,6 +53,8 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
         ),
         body: BlocBuilder<MarketplaceCubit, MarketplaceState>(
           builder: (context, state) {
+          final cubit = context.watch<MarketplaceCubit>();
+
             if (state is MarketPlaceLoading) {
               return const CustomLoader();
             }
@@ -73,7 +75,10 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
                 children: [
                   const AdaptiveDivider(),
                   ResultsCountAndSortButton(
-                    propertyLength: listings.length.toString(),
+                    propertiesCount: listings.length.toString(),
+                    selectedSort: cubit.selectedSort,
+                    sortOptions: cubit.sortOptions,
+                    onSortSelected: cubit.sortListings,
                   ).onlyPadding(
                     leftPadding: kPaddingDefaultHorizontal,
                     rightPadding: kPaddingDefaultHorizontal,

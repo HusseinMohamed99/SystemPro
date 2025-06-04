@@ -43,7 +43,6 @@ class RealEstateSliverList extends StatelessWidget {
             key: ValueKey('${listing.id}_${listing.isFavorite}'),
             listing: listing,
             index: index,
-            // onToggleFavorite: onToggleFavoriteBuilder,
             heroTag: heroTagBuilder?.call(listing),
             showImage: showImage,
           ),

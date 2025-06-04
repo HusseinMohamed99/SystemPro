@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/routing/routes.dart';
@@ -92,12 +93,14 @@ class ProfileView extends StatelessWidget {
         }
 
         if (state is UserDataLoading) {
-                         return const CustomLoader(type: LoaderType.adaptive);
-
+          return const CustomLoader(type: LoaderType.adaptive);
         }
 
         return const SizedBox.shrink();
       },
+    ).allPadding(
+      vPadding: kPaddingDefaultVertical,
+      hPadding: kPaddingDefaultHorizontal,
     );
   }
 }
