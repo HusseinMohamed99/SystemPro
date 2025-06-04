@@ -14,7 +14,7 @@ platform :android do
       android_artifact_type: "APK",
       android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
       groups: "SystemProTester",
-      release_notes: "Second Fastlane Firebase Distribution v1.0.0 🚀👩‍💻"
+      release_notes: "Fastlane Firebase Distribution v1.0.0 🚀👩‍💻 4/6/2025"
     )
   end
 end
