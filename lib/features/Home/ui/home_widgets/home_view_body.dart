@@ -15,7 +15,6 @@ import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_b
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,12 +30,10 @@ class HomeViewBody extends StatelessWidget {
         Expanded(
           child: BlocBuilder<MarketplaceCubit, MarketplaceState>(
             builder: (context, state) {
-        
               // Loading state
               if (state is MarketPlaceLoading) {
                 return const CustomLoader(type: LoaderType.adaptive);
               }
-
               // Error state
               if (state is MarketPlaceError) {
                 return CustomErrorTextWidget(
@@ -44,13 +41,11 @@ class HomeViewBody extends StatelessWidget {
                   onRetry: () => context.read<MarketplaceCubit>().getListings(),
                 );
               }
-
               // Success state with data
               if (state is MarketPlaceSuccess) {
                 final listings = state.listings;
                 final cubit = context.read<MarketplaceCubit>();
                 cubit.initSortOptionsIfNeeded(context);
-
                 return Column(
                   children: [
                     // Toggle filter buttons (e.g., buy/rent)
@@ -70,22 +65,19 @@ class HomeViewBody extends StatelessWidget {
                     // Display count and sort option
                     ResultsCountAndSortButton(
                       propertiesCount: listings.length.toString(),
-                      selectedSort: cubit.selectedSort,
+                      selectedSort: state.selectedSort,
                       sortOptions: cubit.sortOptions,
                       onSortSelected: cubit.sortListings,
-
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
                       rightPadding: kPaddingDefaultHorizontal,
                       topPadding: kPaddingDefaultVertical,
                     ),
-
                     // Main listings view
                     Expanded(child: ListingsList(listings: listings)),
                   ],
                 );
               }
-
               // Initial or unknown state
               return const SizedBox.shrink();
             },

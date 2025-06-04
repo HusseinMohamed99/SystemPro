@@ -305,6 +305,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       MarketplaceState.success(
         listings: List.from(_visibleListings),
         selectedFilter: _currentFilter,
+        selectedSort: _currentSort,
       ),
     );
   }
@@ -313,14 +314,14 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   void clearHydratedCache() => clear();
 
   /// 💾 Convert current state to JSON for hydration
-  @override
+@override
   Map<String, dynamic>? toJson(MarketplaceState state) {
     return state.whenOrNull(
       success:
-          (listings, selectedFilter) => {
+          (listings, selectedFilter, selectedSort) => {
             'listings': listings.map((e) => e.toJson()).toList(),
             'filter': selectedFilter,
-            'sort': _currentSort.name,
+            'sort': selectedSort.name, // ✅ استخدم من الحالة بدل _currentSort
             'cachedListings': _cachedListingsByFilter.map(
               (key, value) =>
                   MapEntry(key, value.map((e) => e.toJson()).toList()),
@@ -328,6 +329,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
           },
     );
   }
+
 
   /// ♻️ Rebuild state from saved JSON
   @override
@@ -356,6 +358,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       return MarketplaceState.success(
         listings: _visibleListings,
         selectedFilter: _currentFilter,
+        selectedSort: _currentSort,
       );
     } catch (_) {
       return null;

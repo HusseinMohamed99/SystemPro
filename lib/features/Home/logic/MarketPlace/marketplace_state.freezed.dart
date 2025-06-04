@@ -21,7 +21,11 @@ mixin _$MarketplaceState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings, String selectedFilter)
+    required TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )
     success,
     required TResult Function(String error) error,
   }) => throw _privateConstructorUsedError;
@@ -29,14 +33,24 @@ mixin _$MarketplaceState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings, String selectedFilter)? success,
+    TResult? Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult? Function(String error)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings, String selectedFilter)? success,
+    TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -131,7 +145,11 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings, String selectedFilter)
+    required TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )
     success,
     required TResult Function(String error) error,
   }) {
@@ -143,7 +161,12 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings, String selectedFilter)? success,
+    TResult? Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult? Function(String error)? error,
   }) {
     return initial?.call();
@@ -154,7 +177,12 @@ class _$MarketPlaceInitialImpl implements MarketPlaceInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings, String selectedFilter)? success,
+    TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -251,7 +279,11 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings, String selectedFilter)
+    required TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )
     success,
     required TResult Function(String error) error,
   }) {
@@ -263,7 +295,12 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings, String selectedFilter)? success,
+    TResult? Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -274,7 +311,12 @@ class _$MarketPlaceLoadingImpl implements MarketPlaceLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings, String selectedFilter)? success,
+    TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -333,7 +375,11 @@ abstract class _$$MarketPlaceSuccessImplCopyWith<$Res> {
     $Res Function(_$MarketPlaceSuccessImpl) then,
   ) = __$$MarketPlaceSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Listing> listings, String selectedFilter});
+  $Res call({
+    List<Listing> listings,
+    String selectedFilter,
+    SortType selectedSort,
+  });
 }
 
 /// @nodoc
@@ -349,7 +395,11 @@ class __$$MarketPlaceSuccessImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? listings = null, Object? selectedFilter = null}) {
+  $Res call({
+    Object? listings = null,
+    Object? selectedFilter = null,
+    Object? selectedSort = null,
+  }) {
     return _then(
       _$MarketPlaceSuccessImpl(
         listings:
@@ -362,6 +412,11 @@ class __$$MarketPlaceSuccessImplCopyWithImpl<$Res>
                 ? _value.selectedFilter
                 : selectedFilter // ignore: cast_nullable_to_non_nullable
                     as String,
+        selectedSort:
+            null == selectedSort
+                ? _value.selectedSort
+                : selectedSort // ignore: cast_nullable_to_non_nullable
+                    as SortType,
       ),
     );
   }
@@ -373,6 +428,7 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
   const _$MarketPlaceSuccessImpl({
     required final List<Listing> listings,
     required this.selectedFilter,
+    required this.selectedSort,
   }) : _listings = listings;
 
   final List<Listing> _listings;
@@ -385,10 +441,12 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
 
   @override
   final String selectedFilter;
+  @override
+  final SortType selectedSort;
 
   @override
   String toString() {
-    return 'MarketplaceState.success(listings: $listings, selectedFilter: $selectedFilter)';
+    return 'MarketplaceState.success(listings: $listings, selectedFilter: $selectedFilter, selectedSort: $selectedSort)';
   }
 
   @override
@@ -398,7 +456,9 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
             other is _$MarketPlaceSuccessImpl &&
             const DeepCollectionEquality().equals(other._listings, _listings) &&
             (identical(other.selectedFilter, selectedFilter) ||
-                other.selectedFilter == selectedFilter));
+                other.selectedFilter == selectedFilter) &&
+            (identical(other.selectedSort, selectedSort) ||
+                other.selectedSort == selectedSort));
   }
 
   @override
@@ -406,6 +466,7 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
     runtimeType,
     const DeepCollectionEquality().hash(_listings),
     selectedFilter,
+    selectedSort,
   );
 
   /// Create a copy of MarketplaceState
@@ -424,11 +485,15 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings, String selectedFilter)
+    required TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )
     success,
     required TResult Function(String error) error,
   }) {
-    return success(listings, selectedFilter);
+    return success(listings, selectedFilter, selectedSort);
   }
 
   @override
@@ -436,10 +501,15 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings, String selectedFilter)? success,
+    TResult? Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult? Function(String error)? error,
   }) {
-    return success?.call(listings, selectedFilter);
+    return success?.call(listings, selectedFilter, selectedSort);
   }
 
   @override
@@ -447,12 +517,17 @@ class _$MarketPlaceSuccessImpl implements MarketPlaceSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings, String selectedFilter)? success,
+    TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(listings, selectedFilter);
+      return success(listings, selectedFilter, selectedSort);
     }
     return orElse();
   }
@@ -499,10 +574,12 @@ abstract class MarketPlaceSuccess implements MarketplaceState {
   const factory MarketPlaceSuccess({
     required final List<Listing> listings,
     required final String selectedFilter,
+    required final SortType selectedSort,
   }) = _$MarketPlaceSuccessImpl;
 
   List<Listing> get listings;
   String get selectedFilter;
+  SortType get selectedSort;
 
   /// Create a copy of MarketplaceState
   /// with the given fields replaced by the non-null parameter values.
@@ -586,7 +663,11 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Listing> listings, String selectedFilter)
+    required TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )
     success,
     required TResult Function(String error) error,
   }) {
@@ -598,7 +679,12 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Listing> listings, String selectedFilter)? success,
+    TResult? Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -609,7 +695,12 @@ class _$MarketPlaceErrorImpl implements MarketPlaceError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Listing> listings, String selectedFilter)? success,
+    TResult Function(
+      List<Listing> listings,
+      String selectedFilter,
+      SortType selectedSort,
+    )?
+    success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

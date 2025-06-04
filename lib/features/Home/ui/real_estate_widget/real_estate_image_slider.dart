@@ -143,11 +143,11 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                         : BlocSelector<
                           MarketplaceCubit,
                           MarketplaceState,
-                          bool
+                          bool?
                         >(
                           selector: (state) {
                             return state.maybeWhen(
-                              success: (listings, _) {
+                              success: (listings, _, _) {
                                 return listings
                                     .firstWhere(
                                       (l) => l.id == widget.listingId,
@@ -156,22 +156,25 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                                     )
                                     .isFavorite;
                               },
-                              orElse: () => false,
+                              orElse: () => null,
                             );
                           },
                           builder: (context, isFavorited) {
+                            // اختيار اللون حسب الحالة
+                            final color =
+                                isFavorited == true
+                                    ? ColorManager.brightRed
+                                    : AdaptiveColor.adaptiveColor(
+                                      context: context,
+                                      lightColor: ColorManager.tertiaryBlack,
+                                      darkColor: ColorManager.hintGrey,
+                                    );
+
                             return Icon(
-                              isFavorited
+                              isFavorited == true
                                   ? Icons.favorite
                                   : Icons.favorite_border,
-                              color:
-                                  isFavorited
-                                      ? ColorManager.brightRed
-                                      : AdaptiveColor.adaptiveColor(
-                                        context: context,
-                                        lightColor: ColorManager.tertiaryBlack,
-                                        darkColor: ColorManager.hintGrey,
-                                      ),
+                              color: color,
                               size: kIconSizeDefault.sp,
                             );
                           },
