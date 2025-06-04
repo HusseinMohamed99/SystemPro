@@ -209,4 +209,13 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       ),
     );
   }
+  bool _hasLoadedOnce = false;
+
+  /// Load favorite listings only once unless explicitly refreshed.
+  void loadFavoritesOnce() {
+    if (_hasLoadedOnce) return;
+    getFavoriteListings(forceRefresh: true);
+    _hasLoadedOnce = true;
+  }
+
 }

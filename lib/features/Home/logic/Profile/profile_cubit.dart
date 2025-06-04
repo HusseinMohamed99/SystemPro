@@ -151,4 +151,13 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     userNameFocusNode.dispose();
     return super.close();
   }
+  bool _hasLoadedOnce = false;
+
+  /// Load user profile data once, only if not loaded before.
+  void loadProfileOnce() {
+    if (_hasLoadedOnce) return;
+    emitGetProfileStates();
+    _hasLoadedOnce = true;
+  }
+
 }

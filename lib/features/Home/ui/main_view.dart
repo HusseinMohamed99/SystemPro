@@ -5,16 +5,13 @@ import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_state.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
-import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
-import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
-import 'package:system_pro/features/Home/logic/Profile/profile_state.dart';
 import 'package:system_pro/features/Home/logic/Taps/tap_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/custom_bottom_navigation_bar.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/main_view_body.dart';
 
-/// The main screen containing bottom navigation, app bar, and tab switching logic.
+/// The root widget that sets up BLoC providers and initializes the main tab view.
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
@@ -23,7 +20,7 @@ class MainView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => TabCubit()),
-        BlocProvider(create: (_) => getIt<MarketplaceCubit>()),
+        BlocProvider(create: (_) => getIt<MarketplaceCubit>()..initIfNeeded()),
         BlocProvider(create: (_) => getIt<FavoriteCubit>()),
         BlocProvider(create: (_) => getIt<ProfileCubit>()),
         BlocProvider(create: (_) => getIt<ChangeThemingCubit>()),
@@ -33,6 +30,8 @@ class MainView extends StatelessWidget {
   }
 }
 
+/// Handles tab switching and UI based on the current selected tab.
+/// Loads data only once per tab using internal flags.
 class _MainViewContent extends StatefulWidget {
   const _MainViewContent();
 
@@ -41,58 +40,32 @@ class _MainViewContent extends StatefulWidget {
 }
 
 class _MainViewContentState extends State<_MainViewContent> {
+  late final Map<int, VoidCallback> _tabLoaders;
+
   @override
   void initState() {
     super.initState();
-    _loadInitialData();
-  }
 
-  /// Load marketplace listings on first frame
-  void _loadInitialData() {
+    final marketplaceCubit = context.read<MarketplaceCubit>();
+    final favoriteCubit = context.read<FavoriteCubit>();
+    final profileCubit = context.read<ProfileCubit>();
+
+    // Map linking tab indices to their corresponding data loaders
+    _tabLoaders = {
+      0: marketplaceCubit.loadListingsOnce,
+      1: favoriteCubit.loadFavoritesOnce,
+      2: profileCubit.loadProfileOnce,
+    };
+
+    // Trigger first-time data load for the initial tab (Marketplace)
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MarketplaceCubit>().getListings();
+      _tabLoaders[0]?.call();
     });
   }
 
-  /// Checks if the current state is already loaded to avoid duplicate API calls
-  bool _shouldLoad(dynamic state, List<Type> loadedStates) {
-    return !loadedStates.any((type) => state.runtimeType == type);
-  }
-
-  /// Handles tab change by loading data based on the selected tab
-  void _handleTabChange(int tabIndex) {
-    switch (tabIndex) {
-      case 0:
-        _handleMarketplaceTab();
-        break;
-      case 1:
-        _handleFavoritesTab();
-        break;
-      case 2:
-        _handleProfileTab();
-        break;
-    }
-  }
-
-  void _handleMarketplaceTab() {
-    final cubit = context.read<MarketplaceCubit>();
-    if (_shouldLoad(cubit.state, [MarketPlaceLoading, MarketPlaceSuccess])) {
-      cubit.getListings();
-    }
-  }
-
-  void _handleFavoritesTab() {
-    final cubit = context.read<FavoriteCubit>();
-    if (_shouldLoad(cubit.state, [GetFavoriteLoading, GetFavoriteSuccess])) {
-      cubit.getFavoriteListings(forceRefresh: true);
-    }
-  }
-
-  void _handleProfileTab() {
-    final cubit = context.read<ProfileCubit>();
-    if (_shouldLoad(cubit.state, [UserDataLoading, UserDataSuccess])) {
-      cubit.emitGetProfileStates();
-    }
+  /// Trigger the loader callback for the selected tab if available
+  void _handleTabChange(int index) {
+    _tabLoaders[index]?.call();
   }
 
   @override

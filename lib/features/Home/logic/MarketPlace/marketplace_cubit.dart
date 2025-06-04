@@ -340,4 +340,21 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       return null;
     }
   }
+  bool _hasLoadedOnce = false;
+
+  /// Public method to load listings only once
+  void loadListingsOnce() {
+    if (_hasLoadedOnce) return;
+    getListings();
+    _hasLoadedOnce = true;
+  }
+
+  /// If needed, load initial data during `MultiBlocProvider`
+  void initIfNeeded() {
+    if (!_hasLoadedOnce) {
+      getListings();
+      _hasLoadedOnce = true;
+    }
+  }
+
 }
