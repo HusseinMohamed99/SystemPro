@@ -49,7 +49,7 @@ class LocationRealEstate extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Image.asset(Assets.images.map.path, height: 200.h, width: 320.w),
+            Image.asset(Assets.images.map.path, height: 200.h, width: context.width),
             PositionedDirectional(
               child: GestureDetector(
                 onTap: () {
