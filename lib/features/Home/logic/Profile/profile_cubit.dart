@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
 import 'package:system_pro/features/Home/data/repos/profile_repo.dart';
@@ -151,6 +152,7 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     userNameFocusNode.dispose();
     return super.close();
   }
+
   bool _hasLoadedOnce = false;
 
   /// Load user profile data once, only if not loaded before.
@@ -160,4 +162,25 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     _hasLoadedOnce = true;
   }
 
+  Future<void> checkSessionValidity() async {
+    AppLogs.log('🔍 Checking session validity...');
+    final result = await _profileRepo.getSeekerProfile();
+
+    await result.when(
+      success: (_) {},
+      failure: (error) async {
+        final code = error.apiErrorModel.code;
+        if (code == 401 || code == 404) {
+          AppLogs.log('🚨 Session expired');
+          await logoutLocally();
+        }
+      },
+    );
+  }
+
+  Future<void> logoutLocally() async {
+    await CachingHelper.clearAllSecuredData();
+    await CachingHelper.clearAllData();
+    emit(const ProfileDataState.sessionExpired()); // الحالة المخصصة للفصل
+  }
 }

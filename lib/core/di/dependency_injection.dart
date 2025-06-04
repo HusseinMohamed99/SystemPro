@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
@@ -130,8 +131,10 @@ void _registerAuthModule() {
 
 /// Registers profile-related cubit and repository
 void _registerProfileModule() {
-  _registerLazySingleton(() => ProfileRepo(getIt()));
+  _registerLazySingleton(() => ProfileRepo(getIt(), getIt()));
   _registerFactory(() => ProfileCubit(getIt()));
+  _registerLazySingleton(() => const FlutterSecureStorage());
+  _registerLazySingleton(() => AuthLocalService(getIt()));
 }
 
 /// Registers edit profile dependencies

@@ -10,18 +10,24 @@ class ProfileDataState<T> with _$ProfileDataState<T> {
   const factory ProfileDataState.logoutSuccess(T data) = LogoutSuccess<T>;
   const factory ProfileDataState.logoutError({required String error}) =
       LogoutError;
+
   const factory ProfileDataState.deleteAccountLoading() = DeleteAccountLoading;
   const factory ProfileDataState.deleteAccountSuccess(T data) =
       DeleteAccountSuccess<T>;
   const factory ProfileDataState.deleteAccountError({required String error}) =
       DeleteAccountError;
+
   const factory ProfileDataState.userDataLoading() = UserDataLoading;
   const factory ProfileDataState.userDataSuccess(T data) = UserDataSuccess<T>;
   const factory ProfileDataState.userDataError({required String error}) =
       UserDataError;
+
   const factory ProfileDataState.editProfileLoading() = EditProfileLoading;
   const factory ProfileDataState.editProfileSuccess(T data) =
       EditProfileSuccess<T>;
   const factory ProfileDataState.editProfileError({required String error}) =
       EditProfileError;
+
+  /// New case for session expiration
+  const factory ProfileDataState.sessionExpired() = SessionExpired;
 }

@@ -32,6 +32,7 @@ mixin _$ProfileDataState<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -48,6 +49,7 @@ mixin _$ProfileDataState<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -64,6 +66,7 @@ mixin _$ProfileDataState<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -83,6 +86,7 @@ mixin _$ProfileDataState<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -99,6 +103,7 @@ mixin _$ProfileDataState<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -115,6 +120,7 @@ mixin _$ProfileDataState<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -197,6 +203,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return initial();
   }
@@ -217,6 +224,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return initial?.call();
   }
@@ -237,6 +245,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -263,6 +272,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return initial(this);
   }
@@ -283,6 +293,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return initial?.call(this);
   }
@@ -303,6 +314,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -372,6 +384,7 @@ class _$LogoutLoadingImpl<T> implements LogoutLoading<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return logoutLoading();
   }
@@ -392,6 +405,7 @@ class _$LogoutLoadingImpl<T> implements LogoutLoading<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return logoutLoading?.call();
   }
@@ -412,6 +426,7 @@ class _$LogoutLoadingImpl<T> implements LogoutLoading<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (logoutLoading != null) {
@@ -438,6 +453,7 @@ class _$LogoutLoadingImpl<T> implements LogoutLoading<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return logoutLoading(this);
   }
@@ -458,6 +474,7 @@ class _$LogoutLoadingImpl<T> implements LogoutLoading<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return logoutLoading?.call(this);
   }
@@ -478,6 +495,7 @@ class _$LogoutLoadingImpl<T> implements LogoutLoading<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (logoutLoading != null) {
@@ -578,6 +596,7 @@ class _$LogoutSuccessImpl<T> implements LogoutSuccess<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return logoutSuccess(data);
   }
@@ -598,6 +617,7 @@ class _$LogoutSuccessImpl<T> implements LogoutSuccess<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return logoutSuccess?.call(data);
   }
@@ -618,6 +638,7 @@ class _$LogoutSuccessImpl<T> implements LogoutSuccess<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (logoutSuccess != null) {
@@ -644,6 +665,7 @@ class _$LogoutSuccessImpl<T> implements LogoutSuccess<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return logoutSuccess(this);
   }
@@ -664,6 +686,7 @@ class _$LogoutSuccessImpl<T> implements LogoutSuccess<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return logoutSuccess?.call(this);
   }
@@ -684,6 +707,7 @@ class _$LogoutSuccessImpl<T> implements LogoutSuccess<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (logoutSuccess != null) {
@@ -792,6 +816,7 @@ class _$LogoutErrorImpl<T> implements LogoutError<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return logoutError(error);
   }
@@ -812,6 +837,7 @@ class _$LogoutErrorImpl<T> implements LogoutError<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return logoutError?.call(error);
   }
@@ -832,6 +858,7 @@ class _$LogoutErrorImpl<T> implements LogoutError<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (logoutError != null) {
@@ -858,6 +885,7 @@ class _$LogoutErrorImpl<T> implements LogoutError<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return logoutError(this);
   }
@@ -878,6 +906,7 @@ class _$LogoutErrorImpl<T> implements LogoutError<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return logoutError?.call(this);
   }
@@ -898,6 +927,7 @@ class _$LogoutErrorImpl<T> implements LogoutError<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (logoutError != null) {
@@ -978,6 +1008,7 @@ class _$DeleteAccountLoadingImpl<T> implements DeleteAccountLoading<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return deleteAccountLoading();
   }
@@ -998,6 +1029,7 @@ class _$DeleteAccountLoadingImpl<T> implements DeleteAccountLoading<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return deleteAccountLoading?.call();
   }
@@ -1018,6 +1050,7 @@ class _$DeleteAccountLoadingImpl<T> implements DeleteAccountLoading<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (deleteAccountLoading != null) {
@@ -1044,6 +1077,7 @@ class _$DeleteAccountLoadingImpl<T> implements DeleteAccountLoading<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return deleteAccountLoading(this);
   }
@@ -1064,6 +1098,7 @@ class _$DeleteAccountLoadingImpl<T> implements DeleteAccountLoading<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return deleteAccountLoading?.call(this);
   }
@@ -1084,6 +1119,7 @@ class _$DeleteAccountLoadingImpl<T> implements DeleteAccountLoading<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (deleteAccountLoading != null) {
@@ -1185,6 +1221,7 @@ class _$DeleteAccountSuccessImpl<T> implements DeleteAccountSuccess<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return deleteAccountSuccess(data);
   }
@@ -1205,6 +1242,7 @@ class _$DeleteAccountSuccessImpl<T> implements DeleteAccountSuccess<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return deleteAccountSuccess?.call(data);
   }
@@ -1225,6 +1263,7 @@ class _$DeleteAccountSuccessImpl<T> implements DeleteAccountSuccess<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (deleteAccountSuccess != null) {
@@ -1251,6 +1290,7 @@ class _$DeleteAccountSuccessImpl<T> implements DeleteAccountSuccess<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return deleteAccountSuccess(this);
   }
@@ -1271,6 +1311,7 @@ class _$DeleteAccountSuccessImpl<T> implements DeleteAccountSuccess<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return deleteAccountSuccess?.call(this);
   }
@@ -1291,6 +1332,7 @@ class _$DeleteAccountSuccessImpl<T> implements DeleteAccountSuccess<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (deleteAccountSuccess != null) {
@@ -1401,6 +1443,7 @@ class _$DeleteAccountErrorImpl<T> implements DeleteAccountError<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return deleteAccountError(error);
   }
@@ -1421,6 +1464,7 @@ class _$DeleteAccountErrorImpl<T> implements DeleteAccountError<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return deleteAccountError?.call(error);
   }
@@ -1441,6 +1485,7 @@ class _$DeleteAccountErrorImpl<T> implements DeleteAccountError<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (deleteAccountError != null) {
@@ -1467,6 +1512,7 @@ class _$DeleteAccountErrorImpl<T> implements DeleteAccountError<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return deleteAccountError(this);
   }
@@ -1487,6 +1533,7 @@ class _$DeleteAccountErrorImpl<T> implements DeleteAccountError<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return deleteAccountError?.call(this);
   }
@@ -1507,6 +1554,7 @@ class _$DeleteAccountErrorImpl<T> implements DeleteAccountError<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (deleteAccountError != null) {
@@ -1585,6 +1633,7 @@ class _$UserDataLoadingImpl<T> implements UserDataLoading<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return userDataLoading();
   }
@@ -1605,6 +1654,7 @@ class _$UserDataLoadingImpl<T> implements UserDataLoading<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return userDataLoading?.call();
   }
@@ -1625,6 +1675,7 @@ class _$UserDataLoadingImpl<T> implements UserDataLoading<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (userDataLoading != null) {
@@ -1651,6 +1702,7 @@ class _$UserDataLoadingImpl<T> implements UserDataLoading<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return userDataLoading(this);
   }
@@ -1671,6 +1723,7 @@ class _$UserDataLoadingImpl<T> implements UserDataLoading<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return userDataLoading?.call(this);
   }
@@ -1691,6 +1744,7 @@ class _$UserDataLoadingImpl<T> implements UserDataLoading<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (userDataLoading != null) {
@@ -1791,6 +1845,7 @@ class _$UserDataSuccessImpl<T> implements UserDataSuccess<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return userDataSuccess(data);
   }
@@ -1811,6 +1866,7 @@ class _$UserDataSuccessImpl<T> implements UserDataSuccess<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return userDataSuccess?.call(data);
   }
@@ -1831,6 +1887,7 @@ class _$UserDataSuccessImpl<T> implements UserDataSuccess<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (userDataSuccess != null) {
@@ -1857,6 +1914,7 @@ class _$UserDataSuccessImpl<T> implements UserDataSuccess<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return userDataSuccess(this);
   }
@@ -1877,6 +1935,7 @@ class _$UserDataSuccessImpl<T> implements UserDataSuccess<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return userDataSuccess?.call(this);
   }
@@ -1897,6 +1956,7 @@ class _$UserDataSuccessImpl<T> implements UserDataSuccess<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (userDataSuccess != null) {
@@ -2005,6 +2065,7 @@ class _$UserDataErrorImpl<T> implements UserDataError<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return userDataError(error);
   }
@@ -2025,6 +2086,7 @@ class _$UserDataErrorImpl<T> implements UserDataError<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return userDataError?.call(error);
   }
@@ -2045,6 +2107,7 @@ class _$UserDataErrorImpl<T> implements UserDataError<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (userDataError != null) {
@@ -2071,6 +2134,7 @@ class _$UserDataErrorImpl<T> implements UserDataError<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return userDataError(this);
   }
@@ -2091,6 +2155,7 @@ class _$UserDataErrorImpl<T> implements UserDataError<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return userDataError?.call(this);
   }
@@ -2111,6 +2176,7 @@ class _$UserDataErrorImpl<T> implements UserDataError<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (userDataError != null) {
@@ -2190,6 +2256,7 @@ class _$EditProfileLoadingImpl<T> implements EditProfileLoading<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return editProfileLoading();
   }
@@ -2210,6 +2277,7 @@ class _$EditProfileLoadingImpl<T> implements EditProfileLoading<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return editProfileLoading?.call();
   }
@@ -2230,6 +2298,7 @@ class _$EditProfileLoadingImpl<T> implements EditProfileLoading<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (editProfileLoading != null) {
@@ -2256,6 +2325,7 @@ class _$EditProfileLoadingImpl<T> implements EditProfileLoading<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return editProfileLoading(this);
   }
@@ -2276,6 +2346,7 @@ class _$EditProfileLoadingImpl<T> implements EditProfileLoading<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return editProfileLoading?.call(this);
   }
@@ -2296,6 +2367,7 @@ class _$EditProfileLoadingImpl<T> implements EditProfileLoading<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (editProfileLoading != null) {
@@ -2397,6 +2469,7 @@ class _$EditProfileSuccessImpl<T> implements EditProfileSuccess<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return editProfileSuccess(data);
   }
@@ -2417,6 +2490,7 @@ class _$EditProfileSuccessImpl<T> implements EditProfileSuccess<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return editProfileSuccess?.call(data);
   }
@@ -2437,6 +2511,7 @@ class _$EditProfileSuccessImpl<T> implements EditProfileSuccess<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (editProfileSuccess != null) {
@@ -2463,6 +2538,7 @@ class _$EditProfileSuccessImpl<T> implements EditProfileSuccess<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return editProfileSuccess(this);
   }
@@ -2483,6 +2559,7 @@ class _$EditProfileSuccessImpl<T> implements EditProfileSuccess<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return editProfileSuccess?.call(this);
   }
@@ -2503,6 +2580,7 @@ class _$EditProfileSuccessImpl<T> implements EditProfileSuccess<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (editProfileSuccess != null) {
@@ -2611,6 +2689,7 @@ class _$EditProfileErrorImpl<T> implements EditProfileError<T> {
     required TResult Function() editProfileLoading,
     required TResult Function(T data) editProfileSuccess,
     required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
   }) {
     return editProfileError(error);
   }
@@ -2631,6 +2710,7 @@ class _$EditProfileErrorImpl<T> implements EditProfileError<T> {
     TResult? Function()? editProfileLoading,
     TResult? Function(T data)? editProfileSuccess,
     TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
   }) {
     return editProfileError?.call(error);
   }
@@ -2651,6 +2731,7 @@ class _$EditProfileErrorImpl<T> implements EditProfileError<T> {
     TResult Function()? editProfileLoading,
     TResult Function(T data)? editProfileSuccess,
     TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
     required TResult orElse(),
   }) {
     if (editProfileError != null) {
@@ -2677,6 +2758,7 @@ class _$EditProfileErrorImpl<T> implements EditProfileError<T> {
     required TResult Function(EditProfileLoading<T> value) editProfileLoading,
     required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
     required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
   }) {
     return editProfileError(this);
   }
@@ -2697,6 +2779,7 @@ class _$EditProfileErrorImpl<T> implements EditProfileError<T> {
     TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
   }) {
     return editProfileError?.call(this);
   }
@@ -2717,6 +2800,7 @@ class _$EditProfileErrorImpl<T> implements EditProfileError<T> {
     TResult Function(EditProfileLoading<T> value)? editProfileLoading,
     TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
     TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
     required TResult orElse(),
   }) {
     if (editProfileError != null) {
@@ -2737,4 +2821,185 @@ abstract class EditProfileError<T> implements ProfileDataState<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EditProfileErrorImplCopyWith<T, _$EditProfileErrorImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SessionExpiredImplCopyWith<T, $Res> {
+  factory _$$SessionExpiredImplCopyWith(
+    _$SessionExpiredImpl<T> value,
+    $Res Function(_$SessionExpiredImpl<T>) then,
+  ) = __$$SessionExpiredImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$SessionExpiredImplCopyWithImpl<T, $Res>
+    extends _$ProfileDataStateCopyWithImpl<T, $Res, _$SessionExpiredImpl<T>>
+    implements _$$SessionExpiredImplCopyWith<T, $Res> {
+  __$$SessionExpiredImplCopyWithImpl(
+    _$SessionExpiredImpl<T> _value,
+    $Res Function(_$SessionExpiredImpl<T>) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ProfileDataState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$SessionExpiredImpl<T> implements SessionExpired<T> {
+  const _$SessionExpiredImpl();
+
+  @override
+  String toString() {
+    return 'ProfileDataState<$T>.sessionExpired()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SessionExpiredImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() logoutLoading,
+    required TResult Function(T data) logoutSuccess,
+    required TResult Function(String error) logoutError,
+    required TResult Function() deleteAccountLoading,
+    required TResult Function(T data) deleteAccountSuccess,
+    required TResult Function(String error) deleteAccountError,
+    required TResult Function() userDataLoading,
+    required TResult Function(T data) userDataSuccess,
+    required TResult Function(String error) userDataError,
+    required TResult Function() editProfileLoading,
+    required TResult Function(T data) editProfileSuccess,
+    required TResult Function(String error) editProfileError,
+    required TResult Function() sessionExpired,
+  }) {
+    return sessionExpired();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? logoutLoading,
+    TResult? Function(T data)? logoutSuccess,
+    TResult? Function(String error)? logoutError,
+    TResult? Function()? deleteAccountLoading,
+    TResult? Function(T data)? deleteAccountSuccess,
+    TResult? Function(String error)? deleteAccountError,
+    TResult? Function()? userDataLoading,
+    TResult? Function(T data)? userDataSuccess,
+    TResult? Function(String error)? userDataError,
+    TResult? Function()? editProfileLoading,
+    TResult? Function(T data)? editProfileSuccess,
+    TResult? Function(String error)? editProfileError,
+    TResult? Function()? sessionExpired,
+  }) {
+    return sessionExpired?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? logoutLoading,
+    TResult Function(T data)? logoutSuccess,
+    TResult Function(String error)? logoutError,
+    TResult Function()? deleteAccountLoading,
+    TResult Function(T data)? deleteAccountSuccess,
+    TResult Function(String error)? deleteAccountError,
+    TResult Function()? userDataLoading,
+    TResult Function(T data)? userDataSuccess,
+    TResult Function(String error)? userDataError,
+    TResult Function()? editProfileLoading,
+    TResult Function(T data)? editProfileSuccess,
+    TResult Function(String error)? editProfileError,
+    TResult Function()? sessionExpired,
+    required TResult orElse(),
+  }) {
+    if (sessionExpired != null) {
+      return sessionExpired();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LogoutLoading<T> value) logoutLoading,
+    required TResult Function(LogoutSuccess<T> value) logoutSuccess,
+    required TResult Function(LogoutError<T> value) logoutError,
+    required TResult Function(DeleteAccountLoading<T> value)
+    deleteAccountLoading,
+    required TResult Function(DeleteAccountSuccess<T> value)
+    deleteAccountSuccess,
+    required TResult Function(DeleteAccountError<T> value) deleteAccountError,
+    required TResult Function(UserDataLoading<T> value) userDataLoading,
+    required TResult Function(UserDataSuccess<T> value) userDataSuccess,
+    required TResult Function(UserDataError<T> value) userDataError,
+    required TResult Function(EditProfileLoading<T> value) editProfileLoading,
+    required TResult Function(EditProfileSuccess<T> value) editProfileSuccess,
+    required TResult Function(EditProfileError<T> value) editProfileError,
+    required TResult Function(SessionExpired<T> value) sessionExpired,
+  }) {
+    return sessionExpired(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LogoutLoading<T> value)? logoutLoading,
+    TResult? Function(LogoutSuccess<T> value)? logoutSuccess,
+    TResult? Function(LogoutError<T> value)? logoutError,
+    TResult? Function(DeleteAccountLoading<T> value)? deleteAccountLoading,
+    TResult? Function(DeleteAccountSuccess<T> value)? deleteAccountSuccess,
+    TResult? Function(DeleteAccountError<T> value)? deleteAccountError,
+    TResult? Function(UserDataLoading<T> value)? userDataLoading,
+    TResult? Function(UserDataSuccess<T> value)? userDataSuccess,
+    TResult? Function(UserDataError<T> value)? userDataError,
+    TResult? Function(EditProfileLoading<T> value)? editProfileLoading,
+    TResult? Function(EditProfileSuccess<T> value)? editProfileSuccess,
+    TResult? Function(EditProfileError<T> value)? editProfileError,
+    TResult? Function(SessionExpired<T> value)? sessionExpired,
+  }) {
+    return sessionExpired?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LogoutLoading<T> value)? logoutLoading,
+    TResult Function(LogoutSuccess<T> value)? logoutSuccess,
+    TResult Function(LogoutError<T> value)? logoutError,
+    TResult Function(DeleteAccountLoading<T> value)? deleteAccountLoading,
+    TResult Function(DeleteAccountSuccess<T> value)? deleteAccountSuccess,
+    TResult Function(DeleteAccountError<T> value)? deleteAccountError,
+    TResult Function(UserDataLoading<T> value)? userDataLoading,
+    TResult Function(UserDataSuccess<T> value)? userDataSuccess,
+    TResult Function(UserDataError<T> value)? userDataError,
+    TResult Function(EditProfileLoading<T> value)? editProfileLoading,
+    TResult Function(EditProfileSuccess<T> value)? editProfileSuccess,
+    TResult Function(EditProfileError<T> value)? editProfileError,
+    TResult Function(SessionExpired<T> value)? sessionExpired,
+    required TResult orElse(),
+  }) {
+    if (sessionExpired != null) {
+      return sessionExpired(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SessionExpired<T> implements ProfileDataState<T> {
+  const factory SessionExpired() = _$SessionExpiredImpl<T>;
 }

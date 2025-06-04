@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:system_pro/core/networking/backend/api_constants.dart';
 import 'package:system_pro/core/networking/backend/api_success_model.dart';
@@ -95,4 +96,23 @@ abstract class ApiService {
   Future<CategoryResponse> getCategories({
     @Query('with_subcategories') bool withSubcategories = true,
   });
+}
+
+class AuthLocalService {
+  AuthLocalService(this._storage);
+  static const _tokenKey = 'access_token';
+
+  final FlutterSecureStorage _storage;
+
+  Future<void> removeToken() async {
+    await _storage.delete(key: _tokenKey);
+  }
+
+  Future<void> saveToken(String token) async {
+    await _storage.write(key: _tokenKey, value: token);
+  }
+
+  Future<String?> getToken() async {
+    return await _storage.read(key: _tokenKey);
+  }
 }
