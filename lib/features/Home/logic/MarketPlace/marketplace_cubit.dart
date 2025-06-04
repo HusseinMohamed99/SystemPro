@@ -1,3 +1,4 @@
+// 📦 Imports
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
@@ -11,14 +12,15 @@ import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dar
 import 'package:system_pro/features/Home/logic/Paginations/pagination_state.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
+// 🧩 Sort model
 class SortOptionModel {
   SortOptionModel({required this.label, required this.sortType});
   final String label;
   final SortType sortType;
 }
 
-
-
+// 🧠 MarketplaceCubit: handles listing fetching, filtering,
+// sorting, favorites, and hydration
 class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   MarketplaceCubit(this._marketplaceRepo)
     : super(const MarketplaceState.initial());
@@ -31,16 +33,15 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
 
   String _currentFilter = '';
   SortType _currentSort = SortType.newest;
-
   bool _hasLoadedOnce = false;
 
-  SortType get selectedSort => _currentSort;
-
-  /// ✅ تم التهيئة بقيمة افتراضية لتجنب LateInitializationError
   List<SortOptionModel> sortOptions = [];
 
+  // 🌟 Public Getters
+  SortType get selectedSort => _currentSort;
   String get currentFilter => _currentFilter;
 
+  /// 🟢 Initial one-time fetch
   void initIfNeeded() {
     if (!_hasLoadedOnce) {
       getListings();
@@ -48,15 +49,8 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     }
   }
 
-  void loadListingsOnce() {
-    if (_hasLoadedOnce) return;
-    getListings();
-    _hasLoadedOnce = true;
-  }
-
-
-
-void initSortOptionsIfNeeded(BuildContext context) {
+  /// 🏷️ Initialize localized sort labels
+  void initSortOptionsIfNeeded(BuildContext context) {
     if (sortOptions.isEmpty) {
       sortOptions = [
         SortOptionModel(
@@ -79,35 +73,24 @@ void initSortOptionsIfNeeded(BuildContext context) {
     }
   }
 
+  /// 🔖 Get localized label for SortType
   String getLabelForSort(SortType sortType) {
-    try {
-      return sortOptions.firstWhere((e) => e.sortType == sortType).label;
-    } catch (_) {
-      return '';
-    }
+    return sortOptions
+        .firstWhere(
+          (e) => e.sortType == sortType,
+          orElse: () => SortOptionModel(label: '', sortType: sortType),
+        )
+        .label;
   }
 
-  void _emitSuccessState() {
-    _sortListings(_currentSort);
-    emit(
-      MarketplaceState.success(
-        listings: List.from(_visibleListings),
-        selectedFilter: _currentFilter,
-      ),
-    );
-  }
-
-  void _emitError(String message) {
-    emit(MarketplaceState.error(message));
-  }
-
+  /// 📥 Public method to fetch listings with filter/caching logic
   Future<void> getListings({String? filter, bool forceRefresh = false}) async {
     final effectiveFilter = (filter?.isNotEmpty ?? false) ? filter! : 'buy';
 
     if (!forceRefresh &&
         _currentFilter == effectiveFilter &&
         _visibleListings.isNotEmpty) {
-      _emitSuccessState();
+      _emitSortedSuccess();
       return;
     }
 
@@ -116,10 +99,9 @@ void initSortOptionsIfNeeded(BuildContext context) {
       _visibleListings
         ..clear()
         ..addAll(_cachedListingsByFilter[effectiveFilter]!);
-      if (_visibleListings.isNotEmpty) {
+      if (_visibleListings.isNotEmpty)
         pagination.cursor = _visibleListings.last.id ?? 0;
-      }
-      _emitSuccessState();
+      _emitSortedSuccess();
       return;
     }
 
@@ -139,6 +121,7 @@ void initSortOptionsIfNeeded(BuildContext context) {
     );
   }
 
+  /// 🔁 Load next page for current filter
   Future<void> loadMore() async {
     await _fetchAndHandleListings(
       request: FilterRequestModel(
@@ -151,6 +134,7 @@ void initSortOptionsIfNeeded(BuildContext context) {
     );
   }
 
+  /// 🎯 Fetch with custom args (filter screen)
   Future<void> fetchAndFilterListings(FilterResultArguments args) async {
     emit(const MarketplaceState.loading());
     pagination.reset();
@@ -167,6 +151,7 @@ void initSortOptionsIfNeeded(BuildContext context) {
     );
   }
 
+  /// ➕ Load more from filter args
   Future<void> loadMoreWithArgs(FilterResultArguments args) async {
     final key = args.hashCode.toString();
     await _fetchAndHandleListings(
@@ -179,6 +164,7 @@ void initSortOptionsIfNeeded(BuildContext context) {
     );
   }
 
+  /// 🔄 Internal method that fetches, paginates, and caches listings
   Future<void> _fetchAndHandleListings({
     required FilterRequestModel request,
     required String cacheKey,
@@ -192,10 +178,9 @@ void initSortOptionsIfNeeded(BuildContext context) {
       result.when(
         success: (response) {
           final newItems = response.data?.listings ?? [];
-
           if (newItems.isEmpty) {
             pagination.hasMore = false;
-            _emitSuccessState();
+            _emitSortedSuccess();
             return;
           }
 
@@ -209,31 +194,28 @@ void initSortOptionsIfNeeded(BuildContext context) {
             _cachedListingsByFilter[cacheKey] = List.from(_visibleListings);
           }
 
-          _emitSuccessState();
+          _emitSortedSuccess();
         },
-        failure: (err) => _emitError('Error: ${err.apiErrorModel.message}'),
+        failure:
+            (err) => emit(
+              MarketplaceState.error('Error: ${err.apiErrorModel.message}'),
+            ),
       );
     } catch (e) {
-      _emitError('Unexpected error: $e');
+      emit(MarketplaceState.error('Unexpected error: $e'));
     } finally {
       pagination.isLoading = false;
     }
   }
 
+  /// 🔃 Apply selected sort type
   void sortListings(SortType sortType, {bool shouldEmit = true}) {
     _currentSort = (sortType == SortType.reset) ? SortType.newest : sortType;
     _sortListings(_currentSort);
-
-    if (shouldEmit) {
-      emit(
-        MarketplaceState.success(
-          listings: List.from(_visibleListings),
-          selectedFilter: _currentFilter,
-        ),
-      );
-    }
+    if (shouldEmit) _emitSortedSuccess();
   }
 
+  /// 🔃 Internal sorting logic
   void _sortListings(SortType sortType) {
     if (_visibleListings.isEmpty) return;
 
@@ -263,10 +245,10 @@ void initSortOptionsIfNeeded(BuildContext context) {
     }
   }
 
+  /// 💖 Toggle favorite status and sync with favorite cubit
   Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
     try {
       final result = await _marketplaceRepo.toggleFavorite(id);
-
       return result.when(
         success: (res) {
           final isFav = res.data?.isFavorited ?? false;
@@ -277,7 +259,7 @@ void initSortOptionsIfNeeded(BuildContext context) {
             );
           }
 
-          _emitSuccessState();
+          _emitSortedSuccess();
 
           final updated = listing?.copyWith(isFavorite: isFav);
           final favoriteCubit = getIt<FavoriteCubit>();
@@ -290,50 +272,46 @@ void initSortOptionsIfNeeded(BuildContext context) {
           return updated;
         },
         failure: (err) {
-          _emitError('Favorite toggle failed: ${err.apiErrorModel.message}');
+          emit(
+            MarketplaceState.error(
+              'Favorite toggle failed: ${err.apiErrorModel.message}',
+            ),
+          );
           return null;
         },
       );
     } catch (e) {
-      _emitError('Unexpected error: $e');
+      emit(MarketplaceState.error('Unexpected error: $e'));
       return null;
     }
   }
 
+  /// 🧹 Update listing locally if favorite status changed externally
   void updateListingFavoriteStatus(int listingId, bool isFavorite) {
     final index = _visibleListings.indexWhere((e) => e.id == listingId);
     if (index != -1) {
       _visibleListings[index] = _visibleListings[index].copyWith(
         isFavorite: isFavorite,
       );
-      emit(
-        MarketplaceState.success(
-          listings: List.from(_visibleListings),
-          selectedFilter: _currentFilter,
-        ),
-      );
+      _emitSortedSuccess();
     }
   }
 
-  void filterListings(String filter) async {
-    _currentFilter = filter;
-    final filtered =
-        _visibleListings
-            .where((l) => l.listingType?.toLowerCase() == filter.toLowerCase())
-            .toList();
-
+  /// 🧼 Emit sorted success state
+  void _emitSortedSuccess() {
+    _sortListings(_currentSort);
     emit(
       MarketplaceState.success(
-        listings: filtered,
+        listings: List.from(_visibleListings),
         selectedFilter: _currentFilter,
       ),
     );
   }
 
-  void clearHydratedCache() {
-    clear();
-  }
+  /// 🧯 Clear hydrated cache manually
+  void clearHydratedCache() => clear();
 
+  /// 💾 Convert current state to JSON for hydration
   @override
   Map<String, dynamic>? toJson(MarketplaceState state) {
     return state.whenOrNull(
@@ -350,6 +328,7 @@ void initSortOptionsIfNeeded(BuildContext context) {
     );
   }
 
+  /// ♻️ Rebuild state from saved JSON
   @override
   MarketplaceState? fromJson(Map<String, dynamic> json) {
     try {

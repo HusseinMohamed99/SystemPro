@@ -11,7 +11,8 @@ import 'package:system_pro/features/Home/logic/Taps/tap_cubit.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/custom_bottom_navigation_bar.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/main_view_body.dart';
 
-/// The root widget that sets up BLoC providers and initializes the main tab view.
+/// The root widget that sets up BLoC providers
+///  and initializes the main tab view.
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
@@ -52,7 +53,7 @@ class _MainViewContentState extends State<_MainViewContent> {
 
     // Map linking tab indices to their corresponding data loaders
     _tabLoaders = {
-      0: marketplaceCubit.loadListingsOnce,
+      0: marketplaceCubit.initIfNeeded,
       1: favoriteCubit.loadFavoritesOnce,
       2: profileCubit.loadProfileOnce,
     };
