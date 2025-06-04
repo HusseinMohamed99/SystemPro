@@ -48,6 +48,7 @@ class _ListingsListState extends State<ListingsList> {
       onNotification: (notification) {
         if (_shouldLoadMore(notification, cubit)) {
           _debounce(cubit.loadMore);
+
         }
         return false;
       },
