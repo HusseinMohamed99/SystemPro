@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -12,53 +15,47 @@ class EditProfileForm extends StatelessWidget {
   const EditProfileForm({
     super.key,
     required this.userName,
-    required this.cubit,
+    required this.profileCubit,
   });
-
   final String userName;
-  final ProfileCubit cubit;
-
+  final ProfileCubit profileCubit;
   @override
   Widget build(BuildContext context) {
-    final bool isFormValid = cubit.userNameController.text.isNotEmpty;
-
+    final bool isFormValid = profileCubit.userNameController.text.isNotEmpty;
     return Form(
-      key: cubit.formKey,
+      key: profileCubit.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Full Name Input
           NameFormField(
-            nameController: cubit.userNameController,
-            focusNode: cubit.userNameFocusNode,
+            nameController: profileCubit.userNameController,
+            focusNode: profileCubit.userNameFocusNode,
           ),
-
-          const SizedBox(height: 24),
-
+          verticalSpacing(kSpacingXLarge),
           // Save Button
           CustomButton(
             text: context.localization.save_changes,
             isLoading:
-                cubit.state is EditProfileLoading, // Assume loading state
+                profileCubit.state
+                    is EditProfileLoading, // Assume loading state
             isDisabled: !isFormValid,
             onPressed: () {
-              if (cubit.formKey.currentState!.validate()) {
-                cubit.updateUserProfile();
+              if (profileCubit.formKey.currentState!.validate()) {
+                profileCubit.updateUserProfile();
               }
             },
           ),
-
-          const SizedBox(height: 32),
-
+          verticalSpacing(kSpacingXXLarge),
           // Delete Account Link
           TextButton(
             onPressed: () {
-              cubit.emitDeleteAccountStates();
+              profileCubit.emitDeleteAccountStates();
               DioFactory.clearAuthorizationHeader(); // Clear auth token
             },
             child: Text(
               context.localization.delete_my_account,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: context.titleLarge?.copyWith(
                 fontWeight: FontWeightHelper.medium,
                 color: ColorManager.primaryBlue,
               ),

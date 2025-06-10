@@ -28,10 +28,12 @@ class EditProfileView extends StatelessWidget {
           if (state is EditProfileError) {
             context.showSnackBar(state.error);
           } else if (state is EditProfileSuccess) {
-            context.showSnackBar('تم تحديث البيانات بنجاح');
+            context.showSnackBar(context.localization.update_data_successfully);
             Navigator.pop(context, true);
           } else if (state is DeleteAccountSuccess) {
-            context.showSnackBar('تم حذف الحساب بنجاح');
+            context.showSnackBar(
+              context.localization.delete_account_successfully,
+            );
             context.pushNamedAndRemoveUntil(
               Routes.loginView,
               predicate: (route) => false,
@@ -39,18 +41,21 @@ class EditProfileView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          final cubit = context.read<ProfileCubit>();
+          final profileCubit = context.read<ProfileCubit>();
 
-          if (cubit.userNameController.text.trim().isEmpty) {
+          if (profileCubit.userNameController.text.trim().isEmpty) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              cubit.initializeUserName(userName);
+              profileCubit.initializeUserName(userName);
             });
           }
 
           return LoadingIndicatorOverlay(
             isLoading:
                 state is EditProfileLoading || state is DeleteAccountLoading,
-            child: EditProfileForm(userName: userName, cubit: cubit).allPadding(
+            child: EditProfileForm(
+              userName: userName,
+              profileCubit: profileCubit,
+            ).allPadding(
               vPadding: kPaddingLargeVertical,
               hPadding: kPaddingDefaultHorizontal,
             ),

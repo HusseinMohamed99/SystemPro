@@ -359,6 +359,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unknown_error": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع في التطبيق. برجاء إغلاق التطبيق وإعادة تشغيله.",
     ),
+    "update_data_successfully": MessageLookupByLibrary.simpleMessage(
+      "تم تحديث البيانات بنجاح",
+    ),
     "user_disabled_message": MessageLookupByLibrary.simpleMessage(
       "تم تعطيل حساب المستخدم من قبل المسؤول",
     ),

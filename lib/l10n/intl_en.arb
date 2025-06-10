@@ -379,5 +379,7 @@
   "sale":"Sale",
   "@sale": {},
   "reset_sort":"Reset Sort",
-  "@reset_sort": {}
+  "@reset_sort": {},
+    "update_data_successfully":"Data updated successfully",
+  "@update_data_successfully": {}
 }

@@ -383,5 +383,8 @@
   "sale":"البيع",
   "@sale": {},
   "reset_sort":"اعادة ترتيب",
-  "@reset_sort": {}
+  "@reset_sort": {},
+  "update_data_successfully":"تم تحديث البيانات بنجاح",
+  "@update_data_successfully": {}
+
 }

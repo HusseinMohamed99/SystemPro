@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:system_pro/generated/intl/messages_all.dart';
+import 'intl/messages_all.dart';
 
 // **************************************************************************
 // Generator: Flutter Intl IDE plugin
@@ -1538,6 +1538,16 @@ class S {
   /// `Reset Sort`
   String get reset_sort {
     return Intl.message('Reset Sort', name: 'reset_sort', desc: '', args: []);
+  }
+
+  /// `Data updated successfully`
+  String get update_data_successfully {
+    return Intl.message(
+      'Data updated successfully',
+      name: 'update_data_successfully',
+      desc: '',
+      args: [],
+    );
   }
 }
 
