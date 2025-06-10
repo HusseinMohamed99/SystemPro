@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
-enum LoaderType { circular, adaptive, wave }
 
 /// A unified and customizable loading indicator widget for all types.
 class CustomLoader extends StatelessWidget {

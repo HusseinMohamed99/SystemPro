@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 /// A reusable widget that shows "Have an account?"
@@ -16,37 +16,24 @@ class HaveAnAccountWidget extends StatelessWidget {
     this.animationDuration = const Duration(milliseconds: 600),
     this.textAlign = TextAlign.center,
   });
-
   final String title1;
   final String title2;
   final VoidCallback onTap;
   final Duration animationDuration;
   final TextAlign textAlign;
-
   @override
   Widget build(BuildContext context) {
     // Shared text style for consistency
     final baseTextStyle = context.titleMedium;
-
     // Default text style (gray or white depending on theme)
     final defaultStyle = baseTextStyle?.copyWith(
-      color: AdaptiveColor.adaptiveColor(
-        context: context,
-        lightColor: ColorManager.softGrey,
-        darkColor: ColorManager.pureWhite,
-      ),
+      color: customSoftGreyAndWhiteColor(context),
     );
-
     // Highlight style for the actionable part (blue and semi-bold)
     final highlightStyle = baseTextStyle?.copyWith(
-      color: AdaptiveColor.adaptiveColor(
-        context: context,
-        lightColor: ColorManager.primaryBlue,
-        darkColor: ColorManager.secondaryBlue,
-      ),
+      color: customPrimaryAndSecondaryBlueColor(context),
       fontWeight: FontWeightHelper.semiBold,
     );
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap, // Execute provided tap action

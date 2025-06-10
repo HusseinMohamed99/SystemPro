@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart';
 
 class CustomIconImage extends StatelessWidget {
@@ -25,13 +25,7 @@ class CustomIconImage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Determines the appropriate icon color
     // based on current theme if not overridden.
-    final iconColor =
-        color ??
-        AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.softGrey,
-          darkColor: ColorManager.softWhite,
-        );
+    final iconColor = color ?? customSoftGreyAndWhiteColor(context);
 
     return SizedBox(
       width: kSizeSecondaryWidth.w,

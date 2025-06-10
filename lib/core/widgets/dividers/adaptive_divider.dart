@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 /// A reusable divider that adapts its color based on the current theme.
@@ -27,11 +28,7 @@ class AdaptiveDivider extends StatelessWidget {
       color:
           color ??
           // Use adaptive color depending on theme mode
-          AdaptiveColor.adaptiveColor(
-            context: context,
-            lightColor: ColorManager.borderGrey,
-            darkColor: ColorManager.iconGrey,
-          ),
+         customBorderGreyAndIconGreyColor(context), 
       thickness: thickness,
       height: height ?? 1.h,
     );

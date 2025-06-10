@@ -4,8 +4,8 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 /// A customizable widget to display error messages centered on screen.
 /// Supports adaptive theming, text style overrides, and retry callback.
@@ -18,7 +18,6 @@ class CustomErrorTextWidget extends StatelessWidget {
     this.textColor,
     this.onRetry,
   });
-
   final String errorMessage;
   final TextStyle? textStyle;
   final TextAlign textAlign;
@@ -26,7 +25,6 @@ class CustomErrorTextWidget extends StatelessWidget {
 
   /// Optional callback to allow retry (e.g., reload action)
   final VoidCallback? onRetry;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,13 +37,7 @@ class CustomErrorTextWidget extends StatelessWidget {
                   textStyle ??
                   context.titleMedium?.copyWith(
                     fontSize: 16.sp,
-                    color:
-                        textColor ??
-                        AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.softGrey,
-                          darkColor: ColorManager.hintGrey,
-                        ),
+                    color: textColor ?? customSoftAndHintGreyColor(context),
                   ),
             ),
             if (onRetry != null) ...[
@@ -58,22 +50,13 @@ class CustomErrorTextWidget extends StatelessWidget {
                     Icon(
                       Icons.refresh_outlined,
                       size: kIconSizeDefault.sp,
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.primaryBlue,
-                        darkColor: ColorManager.secondaryBlue,
-                      ),
+                      color: customPrimaryAndSecondaryBlueColor(context),
                     ),
-
                     horizontalSpacing(4),
                     Text(
                       context.localization.try_again,
                       style: context.titleMedium?.copyWith(
-                        color: AdaptiveColor.adaptiveColor(
-                          context: context,
-                          lightColor: ColorManager.primaryBlue,
-                          darkColor: ColorManager.secondaryBlue,
-                        ),
+                        color: customPrimaryAndSecondaryBlueColor(context),
                       ),
                     ),
                   ],

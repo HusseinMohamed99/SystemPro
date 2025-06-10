@@ -54,3 +54,6 @@ enum DataSource {
   /// Default error type.
   defaultError,
 }
+
+/// 
+enum LoaderType { circular, adaptive, wave }

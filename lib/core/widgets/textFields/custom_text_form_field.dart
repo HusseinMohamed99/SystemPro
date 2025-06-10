@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/outlineBorder/custom_outline_border.dart';
 
@@ -63,27 +64,15 @@ class CustomTextFormField extends StatelessWidget {
       autofillHints: autofillHints,
       maxLines: maxLines,
       style: context.titleLarge?.copyWith(
-        color: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.pureBlack,
-          darkColor: ColorManager.pureWhite,
-        ),
+        color: customBlackAndWhiteColor(context),
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.pureWhite,
-          darkColor: ColorManager.tertiaryBlack,
-        ),
+        fillColor: customWhiteAndTertiaryBlackColor(context),
         errorMaxLines: 2,
         hintText: hintText,
         hintStyle: context.titleLarge?.copyWith(
-          color: AdaptiveColor.adaptiveColor(
-            context: context,
-            lightColor: ColorManager.softGrey,
-            darkColor: ColorManager.hintGrey,
-          ),
+          color: customSoftAndHintGreyColor(context),
         ),
         contentPadding: EdgeInsetsDirectional.symmetric(
           horizontal: kPaddingContentHorizontal.w,

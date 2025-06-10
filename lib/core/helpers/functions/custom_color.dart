@@ -112,3 +112,11 @@ Color customShadowAndSecondaryBlueColor(BuildContext context) {
     darkColor: ColorManager.secondaryShadowBlue,
   );
 }
+
+Color customBorderGreyAndIconGreyColor(BuildContext context) {
+  return AdaptiveColor.adaptiveColor(
+    context: context,
+    lightColor: ColorManager.borderGrey,
+    darkColor: ColorManager.iconGrey,
+  );
+}

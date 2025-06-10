@@ -4,8 +4,8 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/images/custom_icon_image.dart';
 import 'package:system_pro/core/widgets/outlineBorder/custom_outline_border.dart';
@@ -60,27 +60,15 @@ class CustomSearchTextField extends StatelessWidget {
       onChanged: onChanged,
       onSubmitted: onSubmitted,
       style: context.titleMedium?.copyWith(
-        color: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.primaryBlack,
-          darkColor: ColorManager.softWhite,
-        ),
+        color: customBlackAndWhiteColor(context),
         fontWeight: FontWeightHelper.regular,
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.softWhite,
-          darkColor: ColorManager.tertiaryBlack,
-        ),
+        fillColor: customWhiteAndTertiaryBlackColor(context),
         hintText: hintText ?? context.localization.search,
         hintStyle: context.titleMedium?.copyWith(
-          color: AdaptiveColor.adaptiveColor(
-            context: context,
-            lightColor: ColorManager.softGrey,
-            darkColor: ColorManager.hintGrey,
-          ),
+          color: customSoftAndHintGreyColor(context),
           fontWeight: FontWeightHelper.regular,
         ),
         // Show custom search icon or provided prefix
