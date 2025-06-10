@@ -56,6 +56,10 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                       (child, animation) =>
                           ScaleTransition(scale: animation, child: child),
                   child: ChoiceChip(
+                    side: BorderSide.none,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
                     key: ValueKey(type),
                     labelPadding: EdgeInsetsDirectional.symmetric(
                       vertical: 4.h,
@@ -89,9 +93,6 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                       context,
                     ),
                     disabledColor: customShadowBlueAndDarkGreyColor(context),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
                     showCheckmark: false,
                   ),
                 ),

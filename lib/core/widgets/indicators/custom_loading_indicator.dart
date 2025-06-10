@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
-
 
 /// A unified and customizable loading indicator widget for all types.
 class CustomLoader extends StatelessWidget {
@@ -26,9 +26,7 @@ class CustomLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loaderColor =
-        color ??
-        customPrimaryAndSecondaryBlueColor(context);
+    final loaderColor = color ?? customPrimaryAndSecondaryBlueColor(context);
 
     switch (type) {
       case LoaderType.adaptive:
@@ -48,14 +46,14 @@ class CustomLoader extends StatelessWidget {
         );
 
       case LoaderType.circular:
-      return SizedBox(
+        return SizedBox(
           width: size ?? 20.w,
           height: size ?? 20.w,
           child: CircularProgressIndicator.adaptive(
             strokeWidth: 2,
             valueColor: AlwaysStoppedAnimation<Color>(loaderColor),
           ),
-        );
+        ).center();
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -30,9 +31,11 @@ class RecentSearchesScreen extends StatefulWidget {
 class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
   final TextEditingController _searchController = TextEditingController();
   final List<Map<String, String>> _recentSearches = [];
-  final List<Map<String, String>> _searchResults = [];
+  List<Map<String, String>> _searchResults = [];
   List<Map<String, String>> _locations = [];
   Map<String, String>? _selectedLocation;
+  bool _isLoading = false;
+  Timer? _searchDebounce;
 
   @override
   void initState() {
@@ -41,31 +44,46 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
   }
 
   Future<void> _initializeData() async {
+    setState(() => _isLoading = true);
     await Future.wait([_loadLocations(), _loadRecentSearches()]);
+    setState(() => _isLoading = false);
   }
 
   Future<void> _loadLocations() async {
     try {
       final jsonString = await rootBundle.loadString(Assets.location.locations);
       final List<dynamic> data = json.decode(jsonString);
+
       _locations =
           data.expand((region) {
+            final regionNameAr = region['name_ar'] as String;
+            final regionNameEn = region['name_en'] as String;
+
             return (region['cities'] as List).expand<Map<String, String>>((
               city,
             ) {
-              return (city['districts'] as List).map<Map<String, String>>(
-                (district) => {
-                  'district_en': district['name_en'],
-                  'district_ar': district['name_ar'],
-                  'city_en': city['name_en'],
-                  'city_ar': city['name_ar'],
-                },
-              );
+              final cityNameAr = city['name_ar'] as String;
+              final cityNameEn = city['name_en'] as String;
+
+              return (city['districts'] as List).map<Map<String, String>>((
+                district,
+              ) {
+                return {
+                  'district_ar': district['name_ar'] as String,
+                  'district_en': district['name_en'] as String,
+                  'city_ar': cityNameAr,
+                  'city_en': cityNameEn,
+                  'region_ar': regionNameAr,
+                  'region_en': regionNameEn,
+                };
+              });
             });
           }).toList();
+
       if (mounted) setState(() {});
     } catch (e) {
       AppLogs.log('Error loading locations: $e', type: LogType.error);
+      rethrow;
     }
   }
 
@@ -76,18 +94,19 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
       );
       final searches =
           data.map((e) {
-            final decoded = json.decode(e);
+            final decoded = json.decode(e) as Map<String, dynamic>;
             return {
-              'district_en': decoded['district_en'],
-              'district_ar': decoded['district_ar'],
-              'city_en': decoded['city_en'],
-              'city_ar': decoded['city_ar'],
+              'district_en': decoded['district_en'] as String,
+              'district_ar': decoded['district_ar'] as String,
+              'city_en': decoded['city_en'] as String,
+              'city_ar': decoded['city_ar'] as String,
             };
           }).toList();
+
       if (mounted) {
         setState(() {
           _recentSearches.clear();
-          _recentSearches.addAll(searches as Iterable<Map<String, String>>);
+          _recentSearches.addAll(searches);
         });
       }
     } catch (e) {
@@ -95,33 +114,37 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     }
   }
 
- void _handleSearch(String query) {
-    if (query.isEmpty) {
-      setState(() => _searchResults.clear());
-      return;
-    }
+  bool _isArabicText(String text) {
+    final arabicRegex = RegExp(r'[\u0600-\u06FF]');
+    return arabicRegex.hasMatch(text);
+  }
 
-    final q = query.toLowerCase();
+  void _handleSearch(String query) {
+    if (_searchDebounce?.isActive ?? false) _searchDebounce?.cancel();
 
-    // Detect input language, not UI language
-    final isInputArabic = RegExp(r'[\u0600-\u06FF]').hasMatch(query);
+    _searchDebounce = Timer(const Duration(milliseconds: 300), () {
+      if (query.isEmpty) {
+        setState(_searchResults.clear);
+        return;
+      }
 
-    final results =
-        _locations.where((location) {
-          if (isInputArabic) {
-            return (location['district_ar']?.contains(query) ?? false) ||
-                (location['city_ar']?.contains(query) ?? false);
-          } else {
-            return (location['district_en']?.toLowerCase().contains(q) ??
-                    false) ||
-                (location['city_en']?.toLowerCase().contains(q) ?? false);
-          }
-        }).toList();
+      final isArabic = _isArabicText(query);
+      final results =
+          _locations.where((location) {
+            if (isArabic) {
+              return (location['district_ar']?.contains(query) ?? false) ||
+                  (location['city_ar']?.contains(query) ?? false) ||
+                  (location['region_ar']?.contains(query) ?? false);
+            } else {
+              final q = query.toLowerCase();
+              return (location['district_en']?.toLowerCase().contains(q) ??
+                      false) ||
+                  (location['city_en']?.toLowerCase().contains(q) ?? false) ||
+                  (location['region_en']?.toLowerCase().contains(q) ?? false);
+            }
+          }).toList();
 
-    setState(() {
-      _searchResults
-        ..clear()
-        ..addAll(results);
+      setState(() => _searchResults = results);
     });
   }
 
@@ -133,16 +156,21 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
           item['city_en'] == location['city_en'] &&
           item['city_ar'] == location['city_ar'],
     );
+
     _recentSearches.insert(0, location);
     _selectedLocation = location;
+
     await CachingHelper.setData(
       SharedPrefKeys.recentSearchesKey,
       _recentSearches.map((e) => json.encode(e)).toList(),
     );
+
     if (mounted) {
       setState(() {
         _searchController.text =
-            '${location['district_ar']}، ${location['city_ar']}';
+            context.isAr
+                ? '${location['district_ar']}، ${location['city_ar']}'
+                : '${location['district_en']}, ${location['city_en']}';
       });
     }
   }
@@ -174,6 +202,10 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
   }
 
   Widget _buildLocationsList() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     final isSearching = _searchController.text.isNotEmpty;
     final locations = isSearching ? _searchResults : _recentSearches;
     final isArabic = context.isAr;
@@ -205,37 +237,34 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
                 final customLocation = {
                   'district_ar': query,
                   'district_en': query,
-                  'city_ar': '',
-                  'city_en': '',
+                  'city_ar': isArabic ? 'موقع مخصص' : 'Custom location',
+                  'city_en': 'Custom location',
                 };
                 _handleLocationSelect(customLocation);
               },
             );
           }
 
-         if (_searchResults.isEmpty && isSearching && query.isNotEmpty) {
+          if (!isSearching && index == locations.length) {
             return ListTile(
-              leading: const Icon(Icons.add_location_alt_outlined),
+              leading: const Icon(Icons.delete_outline),
               title: Text(
-                isArabic
-                    ? 'إضافة "$query" كموقع مخصص'
-                    : 'Add "$query" as custom location',
+                isArabic ? 'مسح عمليات البحث' : 'Clear recent searches',
                 style: context.titleMedium?.copyWith(
                   fontWeight: FontWeightHelper.medium,
                 ),
               ),
-              onTap: () {
-                final customLocation = {
-                  'district_ar': query,
-                  'district_en': query,
-                  'city_ar': '',
-                  'city_en': '',
-                };
-                _handleLocationSelect(customLocation);
+              onTap: () async {
+                context.showSnackBar(
+                  isArabic ? 'تم مسح سجل البحث' : 'Recent searches cleared',
+                );
+                if (mounted) setState(_recentSearches.clear);
+                await CachingHelper.removeData(
+                  SharedPrefKeys.recentSearchesKey,
+                );
               },
             );
           }
-
 
           final location = locations[index];
           return TweenAnimationBuilder(
@@ -341,6 +370,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
 
   @override
   void dispose() {
+    _searchDebounce?.cancel();
     _searchController.dispose();
     super.dispose();
   }

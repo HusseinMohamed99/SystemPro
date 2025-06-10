@@ -6,6 +6,7 @@ import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/features/Search/ui/widgets/filter_view_body.dart';
+
 class FilterView extends StatelessWidget {
   const FilterView({super.key, required this.locationArgument});
   final LocationArgument locationArgument;
@@ -15,10 +16,9 @@ class FilterView extends StatelessWidget {
       appBar: customSecondaryAppBar(
         context,
         title: context.localization.filter,
-        textColor:
-        customPureWhiteAndBlackColor(context),
+        textColor: customPrimaryAndSecondaryBlueColor(context),
       ),
-      body:FilterViewBody(locationArgument: locationArgument).allPadding(
+      body: FilterViewBody(locationArgument: locationArgument).allPadding(
         vPadding: kPaddingDefaultVertical,
         hPadding: kPaddingDefaultHorizontal,
       ),

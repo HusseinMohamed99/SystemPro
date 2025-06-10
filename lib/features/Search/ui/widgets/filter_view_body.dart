@@ -6,6 +6,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
+import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
@@ -172,16 +173,21 @@ class _FilterViewBodyState extends State<FilterViewBody> {
 
   List<Widget> _buildSectionForCategory(List<Category> categories) {
     if (categories.isEmpty) return [];
+
     final Category current = categories.firstWhere(
       (cat) => cat.id == selectedCategoryId,
       orElse: () => categories.first,
     );
+
+    // استخراج الـ FilterType من الاسم الإنجليزي
+    final filterType = getFilterTypeFromName(current.name ?? '');
+
     final widgets = <Widget>[
       SliverToBoxAdapter(
         child: PropertyTypeWidget(
           key: propertyKey,
           titleType:
-              current.name == context.localization.lands
+              filterType == FilterType.land
                   ? context.localization.lands_type
                   : null,
           subcategories: current.subcategories ?? [],
@@ -197,12 +203,16 @@ class _FilterViewBodyState extends State<FilterViewBody> {
         ),
       ),
       SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-      if (current.name == context.localization.residentail) ...[
+
+      // فقط لو النوع Residential أو Commercial
+      if (filterType == FilterType.residential ||
+          filterType == FilterType.commercial) ...[
         SliverToBoxAdapter(child: BedroomsWidget(key: bedroomsKey)),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
         SliverToBoxAdapter(child: BathroomsWidget(key: bathroomsKey)),
         SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
       ],
+
       SliverToBoxAdapter(
         child: PropertySizeWidget(
           minSizeController: minSizeController,
@@ -212,6 +222,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
         ),
       ),
       SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
+
       if (current.amenities != null && current.amenities!.isNotEmpty)
         SliverToBoxAdapter(
           child: AmenitiesWidget(
@@ -220,6 +231,7 @@ class _FilterViewBodyState extends State<FilterViewBody> {
           ),
         ),
     ];
+
     return widgets;
   }
 }

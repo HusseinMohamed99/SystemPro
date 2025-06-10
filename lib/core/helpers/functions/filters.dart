@@ -51,3 +51,15 @@ String filterToggleValue(FilterToggle toggle) {
       return 'booking';
   }
 }
+FilterType? getFilterTypeFromName(String name) {
+  switch (name.toLowerCase()) {
+    case 'residential':
+      return FilterType.residential;
+    case 'commercial':
+      return FilterType.commercial;
+    case 'land':
+      return FilterType.land;
+    default:
+      return null;
+  }
+}
