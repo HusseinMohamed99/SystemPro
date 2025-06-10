@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/widgets/animations/otp_animated_input.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
@@ -27,11 +28,11 @@ class EmailVerifyViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<EmailVerifyCubit>();
+    final emailVerifyCubit = context.read<EmailVerifyCubit>();
 
     // Start the timer only once after screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      cubit.startTimerIfNeeded();
+      emailVerifyCubit.startTimerIfNeeded();
     });
 
     return BlocBuilder<EmailVerifyCubit, EmailVerifyState>(
@@ -42,23 +43,17 @@ class EmailVerifyViewBody extends StatelessWidget {
               curr is TimerTicking ||
               curr is EmailVerifyLoading,
       builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: hPadding,
-            vertical: vPadding,
+        return Form(
+          key: emailVerifyCubit.formKey,
+          child: CustomScrollView(
+            slivers: [
+              _buildHeader(context),
+              _buildOtpField(context, emailVerifyCubit, state),
+              _buildSubmitButton(context, emailVerifyCubit, state),
+              _buildResendSection(context, emailVerifyCubit),
+            ],
           ),
-          child: Form(
-            key: cubit.formKey,
-            child: CustomScrollView(
-              slivers: [
-                _buildHeader(context),
-                _buildOtpField(context, cubit, state),
-                _buildSubmitButton(context, cubit, state),
-                _buildResendSection(context, cubit),
-              ],
-            ),
-          ),
-        );
+        ).allPadding(vPadding: vPadding, hPadding: hPadding);
       },
     );
   }

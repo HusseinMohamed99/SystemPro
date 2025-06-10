@@ -11,40 +11,37 @@ import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_p
 /// Forgot Password form with email input and send button
 class ForgotPasswordForm extends StatelessWidget {
   const ForgotPasswordForm({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ForgotPasswordCubit>();
-
+    final forgotPasswordCubit = context.read<ForgotPasswordCubit>();
     return Form(
-      key: cubit.formKey,
+      key: forgotPasswordCubit.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // ✅ Email Input Field
           EmailFormField(
-            emailController: cubit.emailController,
-            focusNode: cubit.emailFocusNode,
+            emailController: forgotPasswordCubit.emailController,
+            focusNode: forgotPasswordCubit.emailFocusNode,
           ),
-
           verticalSpacing(kSpacingXXLarge),
-
           // ✅ Reactive Submit Button
           BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
-            buildWhen: (prev, curr) =>
-                curr is ForgotPasswordLoading ||
-                curr is ForgotPasswordFormValidityChanged,
+            buildWhen:
+                (prev, curr) =>
+                    curr is ForgotPasswordLoading ||
+                    curr is ForgotPasswordFormValidityChanged,
             builder: (context, state) {
-              final isDisabled = !cubit.isFormValid;
+              final isDisabled = !forgotPasswordCubit.isFormValid;
               final isLoading = state is ForgotPasswordLoading;
-
               return CustomButton(
                 text: context.localization.send_code,
                 isDisabled: isDisabled,
                 isLoading: isLoading,
                 onPressed: () {
-                  if (cubit.formKey.currentState?.validate() ?? false) {
-                    cubit.submitForgotPassword();
+                  if (forgotPasswordCubit.formKey.currentState?.validate() ??
+                      false) {
+                    forgotPasswordCubit.submitForgotPassword();
                   }
                 },
               );

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/ui/widgets/forgot_password_form.dart';
 
 /// Forgot Password screen content (title, subtitle, form)
@@ -38,11 +38,7 @@ class ForgotPasswordViewBody extends StatelessWidget {
         Text(
           context.localization.forgot_password_subtitle,
           style: context.titleLarge?.copyWith(
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.softGrey,
-              darkColor: ColorManager.hintGrey,
-            ),
+            color: customSoftAndHintGreyColor(context),
           ),
         ),
       ],

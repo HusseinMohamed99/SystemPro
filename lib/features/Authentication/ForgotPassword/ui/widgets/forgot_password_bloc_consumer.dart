@@ -15,34 +15,27 @@ import 'package:system_pro/features/Authentication/ForgotPassword/ui/widgets/for
 /// This widget combines state listener and builder for Forgot Password screen.
 class ForgotPasswordBlocConsumer extends StatelessWidget {
   const ForgotPasswordBlocConsumer({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
       listener: (context, state) {
         if (state is ForgotPasswordSuccess) {
           // 🎯 Show success feedback to user
-          context.showSnackBar(
-            context.localization.check_email,
-          );
-
+          context.showSnackBar(context.localization.check_email);
           // 🎯 Navigate to OTP screen with email from state
           final email =
               context.read<ForgotPasswordCubit>().emailController.text.trim();
-
           context.pushReplacementNamed(
             Routes.forgotPasswordOtpView,
             arguments: ForgotPasswordRequestBody(email: email),
           );
         }
-
         if (state is ForgotPasswordError) {
           context.showSnackBar(state.error);
         }
       },
       builder: (context, state) {
         final isLoading = state is ForgotPasswordLoading;
-
         return LoadingIndicatorOverlay(
           isLoading: isLoading,
           child: const ForgotPasswordViewBody().allPadding(
