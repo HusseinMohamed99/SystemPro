@@ -13,7 +13,6 @@ import 'package:system_pro/core/logic/localization/localization_state.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';

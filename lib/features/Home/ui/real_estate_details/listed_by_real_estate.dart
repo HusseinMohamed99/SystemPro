@@ -8,7 +8,6 @@ import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';

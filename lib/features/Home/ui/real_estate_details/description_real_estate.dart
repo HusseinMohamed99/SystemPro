@@ -4,7 +4,6 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 class DescriptionWidget extends StatelessWidget {
