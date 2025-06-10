@@ -5,9 +5,9 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/textFields/email_form_field_widget.dart';
 import 'package:system_pro/core/widgets/textFields/password_form_field_widget.dart';
@@ -60,11 +60,7 @@ class LoginForm extends StatelessWidget {
                   context.localization.forgot_password,
                   textAlign: TextAlign.right,
                   style: context.titleMedium?.copyWith(
-                    color: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.primaryBlue,
-                      darkColor: ColorManager.secondaryBlue,
-                    ),
+                    color:customPrimaryAndSecondaryBlueColor(context),
                   ),
                 ),
               ),

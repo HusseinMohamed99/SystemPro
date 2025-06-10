@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/widgets/appBars/basic_app_bar.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
@@ -22,18 +23,15 @@ class SourceProfileView extends StatefulWidget {
 
   /// Optional marketer ID (only one of companyId or marketerId must be passed)
   final int? marketerId;
-
   @override
   State<SourceProfileView> createState() => _SourceProfileViewState();
 }
 
 class _SourceProfileViewState extends State<SourceProfileView> {
   final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
-
     // Trigger data load after first build frame
     final cubit = context.read<RealEstateCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -42,7 +40,6 @@ class _SourceProfileViewState extends State<SourceProfileView> {
         marketerId: widget.marketerId,
       );
     });
-
     // Scroll listener for loading more listings when near the bottom
     _scrollController.addListener(() {
       final cubit = context.read<RealEstateCubit>();
@@ -69,9 +66,7 @@ class _SourceProfileViewState extends State<SourceProfileView> {
         listener: (context, state) {
           // Display error messages as snackbars
           if (state is FilteredListingsError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.error)));
+            context.showSnackBar(state.error);
           }
         },
         builder: (context, state) {
@@ -89,7 +84,6 @@ class _SourceProfileViewState extends State<SourceProfileView> {
               ),
             );
           }
-
           // Handle success or paginated loading
           if (state is FilteredListingsSuccess ||
               state is FilteredListingsLoadingMore) {
@@ -97,29 +91,23 @@ class _SourceProfileViewState extends State<SourceProfileView> {
                 state is FilteredListingsSuccess
                     ? state.filteredListings
                     : (state as FilteredListingsLoadingMore).currentListings;
-
             if (listings.isEmpty) {
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
               );
             }
-
             // Extract current source based on listing (company or marketer)
             final sourceId = widget.companyId ?? widget.marketerId;
             final company = listings.first.company;
             final marketer = listings.first.marketer;
-
             final isValidSource =
                 (company?.id == sourceId) || (marketer?.id == sourceId);
-
             if (!isValidSource) {
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
               );
             }
-
             final source = (company ?? marketer) as RealEstateSource;
-
             return GetSourceProfileSuccess(
               realEstateSource: source,
               realEstateSourceListings: listings,
@@ -128,7 +116,6 @@ class _SourceProfileViewState extends State<SourceProfileView> {
               isLoadingMore: state is FilteredListingsLoadingMore,
             ).hPadding(kPaddingDefaultHorizontal);
           }
-
           // Show loader during initial fetch
           return const CustomLoader(type: LoaderType.adaptive);
         },

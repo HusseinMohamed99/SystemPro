@@ -4,6 +4,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -27,13 +28,11 @@ class GetSourceProfileSuccess extends StatelessWidget {
     required this.scrollController,
     this.isLoadingMore = false,
   });
-
   final RealEstateSource realEstateSource;
   final List<Listing> realEstateSourceListings;
   final bool isCompanyProfile;
   final ScrollController scrollController;
   final bool isLoadingMore;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -81,11 +80,7 @@ class GetSourceProfileSuccess extends StatelessWidget {
                     '${realEstateSourceListings.length} ${context.localization.properties}',
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
-                      color: AdaptiveColor.adaptiveColor(
-                        context: context,
-                        lightColor: ColorManager.softGrey,
-                        darkColor: ColorManager.hintGrey,
-                      ),
+                      color: customSoftAndHintGreyColor(context), 
                     ),
                   ),
                 ],
@@ -93,21 +88,16 @@ class GetSourceProfileSuccess extends StatelessWidget {
             ),
           ],
         ),
-
         verticalSpacing(kSpacingXLarge),
         // 📍 Location Info
         LocationWidget(location: realEstateSource.address ?? ''),
-
         verticalSpacing(kSpacingDefault),
-
         // 📄 About/Bio
         AboutRealEstateWidget(description: realEstateSource.bio ?? ''),
         verticalSpacing(kSpacingLarge),
-
         // ─ Divider
         const AdaptiveDivider(),
         verticalSpacing(kSpacingDefault),
-
         // 🏠 Properties Count
         Text(
           context.localization.properties,
@@ -116,7 +106,6 @@ class GetSourceProfileSuccess extends StatelessWidget {
           ),
         ),
         const AdaptiveDivider(), verticalSpacing(kSpacingDefault),
-
         // 🟦 Scrollable Profile Details Section
         Expanded(
           child: CustomScrollView(
@@ -124,7 +113,6 @@ class GetSourceProfileSuccess extends StatelessWidget {
             slivers: [
               // 🏘 Real Estate Listings
               RealEstateSliverList(listings: realEstateSourceListings),
-
               // 🔄 Loader if loading more items
               if (isLoadingMore)
                 SliverToBoxAdapter(

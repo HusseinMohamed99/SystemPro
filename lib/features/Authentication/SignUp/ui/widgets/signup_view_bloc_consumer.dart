@@ -15,7 +15,6 @@ import 'package:system_pro/features/Authentication/SignUp/ui/widgets/signup_view
 /// and handles navigation and loading overlay globally.
 class SignupViewBlocConsumer extends StatelessWidget {
   const SignupViewBlocConsumer({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignupCubit, SignupState>(
@@ -28,7 +27,6 @@ class SignupViewBlocConsumer extends StatelessWidget {
               arguments: state.data.userData?.email,
             );
         }
-
         if (state is SignupError) {
           context.showSnackBar(state.error);
         }

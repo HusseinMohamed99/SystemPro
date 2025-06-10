@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 
 /// A widget to display a short description with a "see more / read less" toggle.
@@ -58,11 +58,7 @@ class _AboutRealEstateWidgetState extends State<AboutRealEstateWidget> {
                     : context.localization.see_more,
                 style: context.titleMedium?.copyWith(
                   fontWeight: FontWeightHelper.regular,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.primaryBlue,
-                    darkColor: ColorManager.secondaryBlue,
-                  ),
+                  color: customPrimaryAndSecondaryBlueColor(context),
                 ),
               ),
             ),
