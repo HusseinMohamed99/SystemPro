@@ -17,7 +17,6 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
-
 class CustomProfileCardList extends StatelessWidget {
   const CustomProfileCardList({super.key, required this.userName});
   final String userName;
@@ -74,7 +73,6 @@ class CustomProfileCardList extends StatelessWidget {
       },
     );
   }
-
   Future<void> _showLanguageSelectionSheet(
     BuildContext context,
     String selectedLanguageCode,
@@ -97,7 +95,6 @@ class CustomProfileCardList extends StatelessWidget {
       },
     );
   }
-
   Future<void> _updateLanguage(
     BuildContext context,
     String languageCode,
@@ -106,7 +103,6 @@ class CustomProfileCardList extends StatelessWidget {
       languageCode,
     );
   }
-
   Future<void> _showThemeSelectionSheet(
     BuildContext context,
     bool isDarkMode,
@@ -129,15 +125,12 @@ class CustomProfileCardList extends StatelessWidget {
       },
     );
   }
-
   Future<void> _updateTheme(BuildContext context, bool isDarkMode) async {
     final cubit = context.read<ChangeThemingCubit>();
     if (cubit.isClosed) return;
-
     await CachingHelper.setData(SharedPrefKeys.isDarkMode, isDarkMode);
     cubit.toggleTheme();
   }
-
   Future<dynamic> customBottomSheet({
     required BuildContext context,
     required String title,
@@ -208,7 +201,6 @@ class CustomProfileCardList extends StatelessWidget {
     );
   }
 }
-
 List<String> profileCardList(BuildContext context) => [
   context.localization.edit_profile,
   context.localization.language,

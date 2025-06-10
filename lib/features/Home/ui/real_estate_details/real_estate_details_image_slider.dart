@@ -10,7 +10,6 @@ import 'package:system_pro/features/Home/data/model/realestate/listing_image.dar
 class RealEstateDetailsImage extends StatefulWidget {
   const RealEstateDetailsImage({super.key, this.images});
   final List<ListingImage>? images;
-
   @override
   State<RealEstateDetailsImage> createState() => _RealEstateDetailsImageState();
 }
@@ -18,7 +17,6 @@ class RealEstateDetailsImage extends StatefulWidget {
 class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -73,7 +71,7 @@ class _RealEstateDetailsImageState extends State<RealEstateDetailsImage> {
               ),
               child: Icon(
                 Icons.arrow_back_ios_new,
-                size: 16.sp,
+                size: kIconSizeMedium.sp,
                 color: customBlackAndWhiteColor(context),
               ),
             ),

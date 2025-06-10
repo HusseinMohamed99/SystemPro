@@ -20,7 +20,6 @@ class PurposeWidget extends StatelessWidget {
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-
         Text(
           '${context.localization.for_to} ${_localizedPurpose(context, purpose)}',
           style: context.titleMedium?.copyWith(
