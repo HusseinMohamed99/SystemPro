@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/functions/filters.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -13,23 +14,19 @@ class ToggleCategoryWidget extends StatefulWidget {
     required this.filters,
     required this.enabledSlugs,
   });
-
   final List<FilterType> filters;
   final List<String> enabledSlugs;
   final void Function(String selectedSlug) onCategoryChanged;
-
   @override
   State<ToggleCategoryWidget> createState() => _ToggleCategoryWidgetState();
 }
 
 class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
   late FilterType selectedType;
-
   @override
   void initState() {
     super.initState();
     selectedType = widget.filters.first;
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final initialSlug = filterTypeValue(selectedType);
       if (widget.enabledSlugs.contains(initialSlug)) {
@@ -43,11 +40,7 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        color: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.shadowBlue,
-          darkColor: ColorManager.tertiaryBlack,
-        ),
+        color: customShadowBlueAndTertiaryBlackColor(context),
       ),
       child: Row(
         children:
@@ -56,7 +49,6 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
               final slug = filterTypeValue(type);
               final isSelected = selectedType == type;
               final isEnabled = widget.enabledSlugs.contains(slug);
-
               return Expanded(
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
@@ -78,11 +70,7 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                               isSelected
                                   ? ColorManager.pureWhite
                                   : isEnabled
-                                  ? AdaptiveColor.adaptiveColor(
-                                    context: context,
-                                    lightColor: ColorManager.primaryBlue,
-                                    darkColor: ColorManager.iconGrey,
-                                  )
+                                  ? customPrimaryBlueAndIconGreyColor(context)
                                   : ColorManager.iconGrey,
                           fontWeight: FontWeightHelper.medium,
                         ),
@@ -97,16 +85,10 @@ class _ToggleCategoryWidgetState extends State<ToggleCategoryWidget> {
                             }
                             : null,
                     selectedColor: ColorManager.primaryBlue,
-                    backgroundColor: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.shadowBlue,
-                      darkColor: ColorManager.tertiaryBlack,
+                    backgroundColor: customShadowBlueAndTertiaryBlackColor(
+                      context,
                     ),
-                    disabledColor: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.shadowBlue,
-                      darkColor: ColorManager.darkGrey,
-                    ),
+                    disabledColor: customShadowBlueAndDarkGreyColor(context),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100),
                     ),

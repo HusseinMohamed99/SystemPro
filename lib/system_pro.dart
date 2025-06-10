@@ -28,24 +28,51 @@ class SystemProApp extends StatelessWidget {
 
     return AdaptiveLayout(
       mobileLayout:
-          (_) => MaterialApp(
-            title: 'System Pro',
-            debugShowCheckedModeBanner: false,
-            theme: buildLightTheming(textTheme: themeCubit.lightTextTheme),
-            darkTheme: buildDarkTheming(textTheme: themeCubit.darkTextTheme),
-            themeMode: themeMode,
-            locale: locale,
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
-            onGenerateRoute: appRouter.generateRoute,
-            initialRoute: getInitialRoute(),
+          (_) => MediaQuery(
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: const TextScaler.linear(1.0)),
+            child: MaterialApp(
+              title: 'System Pro',
+              debugShowCheckedModeBanner: false,
+              theme: buildLightTheming(textTheme: themeCubit.lightTextTheme),
+              darkTheme: buildDarkTheming(textTheme: themeCubit.darkTextTheme),
+              themeMode: themeMode,
+              locale: locale,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              onGenerateRoute: appRouter.generateRoute,
+              initialRoute: getInitialRoute(),
+            ),
           ),
-      tabletLayout: (_) => const Text('Tablet Layout'),
+      tabletLayout:
+          (_) => MediaQuery(
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: const TextScaler.linear(1.0)),
+            child: MaterialApp(
+              title: 'System Pro',
+              debugShowCheckedModeBanner: false,
+              theme: buildLightTheming(textTheme: themeCubit.lightTextTheme),
+              darkTheme: buildDarkTheming(textTheme: themeCubit.darkTextTheme),
+              themeMode: themeMode,
+              locale: locale,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              onGenerateRoute: appRouter.generateRoute,
+              initialRoute: getInitialRoute(),
+            ),
+          ),
       desktopLayout: (_) => const Text('Desktop Layout'),
     );
   }

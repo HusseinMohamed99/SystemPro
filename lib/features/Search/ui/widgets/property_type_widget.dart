@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
@@ -10,18 +11,15 @@ import 'package:system_pro/features/Search/data/model/category_response.dart';
 
 class PropertyTypeWidget extends StatefulWidget {
   const PropertyTypeWidget({super.key, this.titleType, this.subcategories});
-
   final String? titleType;
   final List<Subcategory>? subcategories;
-
   @override
   State<PropertyTypeWidget> createState() => PropertyTypeWidgetState();
 }
 
 class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
-  int? selectedTypeId; // ✅ بدل Set -> اختيار واحد فقط
+  int? selectedTypeId;
   bool showAll = false;
-
   void clearSelection() {
     setState(() => selectedTypeId = null);
   }
@@ -30,13 +28,11 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
   Widget build(BuildContext context) {
     final typesToShow =
         showAll ? widget.subcategories : widget.subcategories?.take(5).toList();
-
     if (widget.subcategories == null || widget.subcategories!.isEmpty) {
       return CustomErrorTextWidget(
         errorMessage: context.localization.no_data_found,
       );
     }
-
     return Column(
       spacing: kSpacingSmall.h,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,27 +57,17 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                       color:
                           isSelected
                               ? ColorManager.pureWhite
-                              : AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.softGrey,
-                                darkColor: ColorManager.hintGrey,
-                              ),
+                              : customSoftAndHintGreyColor(context),
                     ),
                   ),
                   selectedColor: ColorManager.primaryBlue,
-                  backgroundColor: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.pureWhite,
-                    darkColor: ColorManager.tertiaryBlack,
-                  ),
+                  backgroundColor: customWhiteAndTertiaryBlackColor(context),
                   side:
                       isSelected
                           ? BorderSide.none
                           : BorderSide(
-                            color: AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.borderGrey,
-                              darkColor: ColorManager.tertiaryBlack,
+                            color: customBorderGreyAndTertiaryBlackColor(
+                              context,
                             ),
                           ),
                   selected: isSelected,
@@ -89,7 +75,6 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
                     setState(() {
                       final id = subcategory.id;
                       if (id == null) return;
-
                       // ✅ Toggle selection logic
                       if (selectedTypeId == id) {
                         selectedTypeId = null;
@@ -111,11 +96,7 @@ class PropertyTypeWidgetState extends State<PropertyTypeWidget> {
               textAlign: TextAlign.center,
               style: context.titleMedium?.copyWith(
                 fontWeight: FontWeightHelper.medium,
-                color: AdaptiveColor.adaptiveColor(
-                  context: context,
-                  lightColor: ColorManager.primaryBlue,
-                  darkColor: ColorManager.secondaryBlue,
-                ),
+                color: customPrimaryAndSecondaryBlueColor(context),
               ),
             ),
           ),

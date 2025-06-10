@@ -18,10 +18,8 @@ import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_state.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card_list.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_info.dart';
-
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileCubit, ProfileDataState>(
@@ -29,7 +27,6 @@ class ProfileView extends StatelessWidget {
         if (state is UserDataError) {
           context.showSnackBar(state.error);
         }
-
         if (state is LogoutSuccess) {
           context.showSnackBar(context.localization.logout_successfully);
           context.pushNamedAndRemoveUntil(
@@ -85,7 +82,6 @@ class ProfileView extends StatelessWidget {
             ],
           );
         }
-
         if (state is UserDataLoading) {
           return const CustomLoader(type: LoaderType.adaptive);
         } else if (state is UserDataError) {

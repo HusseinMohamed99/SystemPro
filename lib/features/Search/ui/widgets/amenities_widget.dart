@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Search/data/model/category_response.dart';
 
@@ -57,36 +57,18 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                       fontWeight: FontWeightHelper.regular,
                       color:
                           isSelected
-                              ? AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.pureWhite,
-                                darkColor: ColorManager.tertiaryBlack,
-                              )
-                              : AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.softGrey,
-                                darkColor: ColorManager.iconGrey,
-                              ),
+                              ? customWhiteAndTertiaryBlackColor(context)
+                              : customSoftAndIconGreyColor(context),
                     ),
                   ),
-                  selectedColor: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.primaryBlue,
-                    darkColor: ColorManager.secondaryBlue,
-                  ),
-                  backgroundColor: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.pureWhite,
-                    darkColor: ColorManager.tertiaryBlack,
-                  ),
+                  selectedColor: customPrimaryAndSecondaryBlueColor(context),
+                  backgroundColor: customWhiteAndTertiaryBlackColor(context),
                   side:
                       isSelected
                           ? BorderSide.none
                           : BorderSide(
-                            color: AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.borderGrey,
-                              darkColor: ColorManager.tertiaryBlack,
+                            color: customBorderGreyAndTertiaryBlackColor(
+                              context,
                             ),
                           ),
                   selected: isSelected,
@@ -110,7 +92,7 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
               });
             },
             child: Padding(
-              padding: const EdgeInsets.only(top: 12.0),
+              padding:  EdgeInsetsDirectional.only(top: 12.0.h),
               child: Text(
                 showAll
                     ? context.localization.show_less
@@ -118,11 +100,7 @@ class AmenitiesWidgetState extends State<AmenitiesWidget> {
                 textAlign: TextAlign.center,
                 style: context.titleMedium?.copyWith(
                   fontWeight: FontWeightHelper.medium,
-                  color: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.primaryBlue,
-                    darkColor: ColorManager.secondaryBlue,
-                  ),
+                  color: customPrimaryAndSecondaryBlueColor(context),
                 ),
               ),
             ),

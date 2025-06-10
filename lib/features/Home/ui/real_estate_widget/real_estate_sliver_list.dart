@@ -24,17 +24,14 @@ class RealEstateSliverList extends StatelessWidget {
 
   /// Whether to show property image inside the list item
   final bool showImage;
-
   @override
   Widget build(BuildContext context) {
     if (listings.isEmpty) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
-
     return SliverList.separated(
       itemBuilder: (context, index) {
         final listing = listings[index];
-
         return GestureDetector(
           onTap: () {
             context.pushNamed(Routes.realEstateDetailsView, arguments: listing);

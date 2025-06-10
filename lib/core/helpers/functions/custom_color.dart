@@ -136,3 +136,19 @@ Color customPureBlackAndIconGreyColor(BuildContext context) {
     darkColor: ColorManager.iconGrey,
   );
 }
+
+Color customPrimaryBlueAndIconGreyColor(BuildContext context) {
+  return AdaptiveColor.adaptiveColor(
+    context: context,
+    lightColor: ColorManager.primaryBlue,
+    darkColor: ColorManager.iconGrey,
+  );
+}
+
+Color customShadowBlueAndDarkGreyColor(BuildContext context) {
+  return AdaptiveColor.adaptiveColor(
+    context: context,
+    lightColor: ColorManager.shadowBlue,
+    darkColor: ColorManager.darkGrey,
+  );
+}

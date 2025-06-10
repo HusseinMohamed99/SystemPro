@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,44 +10,38 @@ import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/gen/assets.gen.dart';
-
 class RecentSearchesScreen extends StatefulWidget {
   const RecentSearchesScreen({super.key});
   @override
   State<RecentSearchesScreen> createState() => _RecentSearchesScreenState();
 }
-
 class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
   final TextEditingController _searchController = TextEditingController();
   final List<Map<String, String>> _recentSearches = [];
   final List<Map<String, String>> _searchResults = [];
   List<Map<String, String>> _locations = [];
   Map<String, String>? _selectedLocation;
-
   @override
   void initState() {
     super.initState();
     _initializeData();
   }
-
   Future<void> _initializeData() async {
     await Future.wait([_loadLocations(), _loadRecentSearches()]);
   }
-
   Future<void> _loadLocations() async {
     try {
       final jsonString = await rootBundle.loadString(Assets.location.locations);
       final List<dynamic> data = json.decode(jsonString);
-
       _locations =
           data.expand((region) {
             return (region['cities'] as List).expand<Map<String, String>>((
@@ -64,13 +57,11 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               );
             });
           }).toList();
-
       setState(() {});
     } catch (e) {
       AppLogs.log('Error loading locations: $e', type: LogType.error);
     }
   }
-
   Future<void> _loadRecentSearches() async {
     try {
       final data = CachingHelper.getListString(
@@ -86,7 +77,6 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               'city_ar': decoded['city_ar'] as String,
             };
           }).toList();
-
       setState(() {
         _recentSearches.clear();
         _recentSearches.addAll(searches);
@@ -95,7 +85,6 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
       AppLogs.log('Error loading recent searches: $e', type: LogType.error);
     }
   }
-
   void _handleSearch(String query) {
     if (query.isEmpty) {
       setState(_searchResults.clear);
@@ -110,13 +99,11 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               (location['city_en']?.toLowerCase().contains(q) ?? false) ||
               (location['city_ar']?.contains(query) ?? false);
         }).toList();
-
     setState(() {
       _searchResults.clear();
       _searchResults.addAll(results);
     });
   }
-
   Future<void> _handleLocationSelect(Map<String, String> location) async {
     _recentSearches.removeWhere(
       (item) =>
@@ -125,21 +112,17 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
           item['city_en'] == location['city_en'] &&
           item['city_ar'] == location['city_ar'],
     );
-
     _recentSearches.insert(0, location);
     _selectedLocation = location;
-
     await CachingHelper.setData(
       SharedPrefKeys.recentSearchesKey,
       _recentSearches.map((e) => json.encode(e)).toList(),
     );
-
     setState(() {
       _searchController.text =
           '${location['district_ar']}، ${location['city_ar']}';
     });
   }
-
   Widget _buildSearchHeader() {
     return Row(
       children: [
@@ -148,11 +131,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
           child: Icon(
             Icons.close,
             size: kIconSizeDefault.sp,
-            color: AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.softGrey,
-              darkColor: ColorManager.iconGrey,
-            ),
+            color: customSoftAndIconGreyColor(context),
           ),
         ),
         horizontalSpacing(kSpacingSmall),
@@ -166,23 +145,18 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
       ],
     );
   }
-
   Widget _buildLocationsList() {
     final isSearching = _searchController.text.isNotEmpty;
     final locations = isSearching ? _searchResults : _recentSearches;
     final isArabic = context.isAr;
     final query = _searchController.text.trim();
-
     if (locations.isEmpty && !isSearching) {
-      // لا تعرض أي حاجة لو مفيش داتا ومفيش بحث
       return const SizedBox.shrink();
     }
-
     final itemCount =
         locations.isEmpty && isSearching
             ? 1
             : locations.length + (isSearching ? 0 : 1); // +1 for "Clear"
-
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsetsDirectional.zero,
@@ -212,7 +186,6 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               },
             );
           }
-
           // زر المسح في حالة الريسنت فقط
           if (!isSearching && index == locations.length) {
             return ListTile(
@@ -235,18 +208,13 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               },
             );
           }
-
           final location = locations[index];
           return ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Icon(
               isSearching ? Icons.place : Icons.history,
               size: kIconSizeDefault.sp,
-              color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.softGrey,
-                darkColor: ColorManager.iconGrey,
-              ),
+              color: customSoftAndIconGreyColor(context),
             ),
             title: Text(
               isArabic
@@ -266,7 +234,6 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     final isSearching = _searchController.text.isNotEmpty;
@@ -317,7 +284,6 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
       ],
     );
   }
-
   @override
   void dispose() {
     _searchController.dispose();

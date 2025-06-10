@@ -5,9 +5,9 @@ import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
@@ -29,7 +29,6 @@ import 'package:system_pro/features/Search/ui/widgets/toggle_category_widget.dar
 class FilterViewBody extends StatefulWidget {
   const FilterViewBody({super.key, required this.locationArgument});
   final LocationArgument locationArgument;
-
   @override
   State<FilterViewBody> createState() => _FilterViewBodyState();
 }
@@ -39,20 +38,16 @@ class _FilterViewBodyState extends State<FilterViewBody> {
   final bathroomsKey = GlobalKey<BathroomsWidgetState>();
   final amenitiesKey = GlobalKey<AmenitiesWidgetState>();
   final propertyKey = GlobalKey<PropertyTypeWidgetState>();
-
   int selectedCategoryId = 1;
   String selectedBuyRentOption = 'buy';
-
   final minPriceController = TextEditingController();
   final maxPriceController = TextEditingController();
   final minPriceFocusNode = FocusNode();
   final maxPriceFocusNode = FocusNode();
-
   final minSizeController = TextEditingController();
   final maxSizeController = TextEditingController();
   final minSizeFocusNode = FocusNode();
   final maxSizeFocusNode = FocusNode();
-
   @override
   void dispose() {
     minPriceController.dispose();
@@ -85,22 +80,22 @@ class _FilterViewBodyState extends State<FilterViewBody> {
         if (state is Error) {
           return CustomErrorTextWidget(errorMessage: state.error);
         }
-
         if (state is! Success) return const SizedBox.shrink();
-
         final categories = state.data.data?.categories ?? [];
         if (categories.isEmpty) {
           return const CustomErrorTextWidget(
             errorMessage: 'لا توجد فئات متاحة',
           );
         }
-
         return Column(
           children: [
             ToggleCategoryWidget(
               filters: FilterType.values,
               enabledSlugs:
-                  categories.map((e) => e.name).whereType<String>().toList(),
+                  categories
+                      .map((item) => item.name)
+                      .whereType<String>()
+                      .toList(),
               onCategoryChanged: (slug) {
                 final category = categories.firstWhere(
                   (cat) => cat.name == slug,
@@ -108,7 +103,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                 setState(() => selectedCategoryId = category.id ?? 1);
               },
             ),
-
             verticalSpacing(kSpacingXXLarge),
             BuyRentToggleWidget(
               filtersToggle: FilterToggle.values,
@@ -134,16 +128,10 @@ class _FilterViewBodyState extends State<FilterViewBody> {
                   child: CustomButton(
                     text: context.localization.clear_all,
                     onPressed: clearAll,
-                    backgroundColor: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.shadowBlue,
-                      darkColor: ColorManager.tertiaryBlack,
+                    backgroundColor: customShadowBlueAndTertiaryBlackColor(
+                      context,
                     ),
-                    textStyleColor: AdaptiveColor.adaptiveColor(
-                      context: context,
-                      lightColor: ColorManager.primaryBlue,
-                      darkColor: ColorManager.pureWhite,
-                    ),
+                    textStyleColor: customPrimaryBlueAndWhiteColor(context),
                   ),
                 ),
                 horizontalSpacing(kSpacingDefault),
@@ -184,12 +172,10 @@ class _FilterViewBodyState extends State<FilterViewBody> {
 
   List<Widget> _buildSectionForCategory(List<Category> categories) {
     if (categories.isEmpty) return [];
-
     final Category current = categories.firstWhere(
       (cat) => cat.id == selectedCategoryId,
       orElse: () => categories.first,
     );
-
     final widgets = <Widget>[
       SliverToBoxAdapter(
         child: PropertyTypeWidget(
@@ -234,7 +220,6 @@ class _FilterViewBodyState extends State<FilterViewBody> {
           ),
         ),
     ];
-
     return widgets;
   }
 }

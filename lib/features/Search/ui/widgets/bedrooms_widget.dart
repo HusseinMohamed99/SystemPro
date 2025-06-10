@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
@@ -49,44 +50,34 @@ class BedroomsWidgetState extends State<BedroomsWidget> {
         Wrap(
           spacing: 8,
           children:
-              options.map((e) {
-                final isSelected = selectedOption == e;
+              options.map((item) {
+                final isSelected = selectedOption == item;
                 return ChoiceChip(
                   showCheckmark: false,
                   label: Text(
-                    e,
+                    item,
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
                       color:
                           isSelected
                               ? ColorManager.pureWhite
-                              : AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.softGrey,
-                                darkColor: ColorManager.pureWhite,
-                              ),
+                              : customSoftGreyAndWhiteColor(context),
                     ),
                   ),
                   selectedColor: ColorManager.primaryBlue,
-                  backgroundColor: AdaptiveColor.adaptiveColor(
-                    context: context,
-                    lightColor: ColorManager.pureWhite,
-                    darkColor: ColorManager.tertiaryBlack,
-                  ),
+                  backgroundColor: customWhiteAndTertiaryBlackColor(context),
                   side:
                       isSelected
                           ? BorderSide.none
                           : BorderSide(
-                            color: AdaptiveColor.adaptiveColor(
-                              context: context,
-                              lightColor: ColorManager.borderGrey,
-                              darkColor: ColorManager.tertiaryBlack,
+                            color: customBorderGreyAndTertiaryBlackColor(
+                              context,
                             ),
                           ),
                   selected: isSelected,
                   onSelected: (_) {
                     setState(() {
-                      selectedOption = isSelected ? null : e;
+                      selectedOption = isSelected ? null : item;
                     });
                   },
                 );

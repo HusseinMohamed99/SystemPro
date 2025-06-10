@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -53,9 +54,13 @@ void main() async {
       designSize: const Size(393, 852),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder:
-          (_, _) =>
-              AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode),
+      builder: (_, _) {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+        return AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode);
+      },
     );
   } catch (e, stack) {
     AppLogs.log('Init error: $e', type: LogType.error);

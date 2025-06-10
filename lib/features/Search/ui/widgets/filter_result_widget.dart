@@ -4,7 +4,7 @@ import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/widgets/appBars/custom_secondary_app_bar.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
@@ -45,15 +45,11 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
         appBar: customSecondaryAppBar(
           context,
           title: context.localization.results_search,
-          textColor: AdaptiveColor.adaptiveColor(
-            context: context,
-            lightColor: ColorManager.primaryBlue,
-            darkColor: ColorManager.pureWhite,
-          ),
+          textColor: customPrimaryBlueAndWhiteColor(context),
         ),
         body: BlocBuilder<MarketplaceCubit, MarketplaceState>(
           builder: (context, state) {
-          final cubit = context.watch<MarketplaceCubit>();
+            final cubit = context.watch<MarketplaceCubit>();
 
             if (state is MarketPlaceLoading) {
               return const CustomLoader();
@@ -94,7 +90,9 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
               );
             }
 
-            return const SizedBox.shrink();
+            return CustomErrorTextWidget(
+              errorMessage: context.localization.unknown_error,
+            ).center();
           },
         ),
       ),

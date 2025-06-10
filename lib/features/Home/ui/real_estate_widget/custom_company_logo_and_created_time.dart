@@ -17,18 +17,15 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
     required this.company,
     required this.marketer,
   });
-
   final String dateTime;
   final Company company;
   final Marketer marketer;
-
   @override
   Widget build(BuildContext context) {
     final bool isCompany = company.id != null;
     final int? id = isCompany ? company.id : marketer.id;
     final String? imageUrl =
         isCompany ? company.pictureUrl : marketer.pictureUrl;
-
     return Row(
       children: [
         // Display how long ago the listing was created
@@ -40,7 +37,6 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
           ),
         ),
         const Spacer(),
-
         // Display clickable logo image (company or marketer)
         if (id != null)
           GestureDetector(

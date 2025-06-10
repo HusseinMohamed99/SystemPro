@@ -25,13 +25,11 @@ class RealEstateImageSlider extends StatefulWidget {
     this.onToggleFavorite,
     this.heroTag,
   });
-
   final List<ListingImage>? images;
   final int listingId;
   final Listing? listing;
   final void Function(Listing updatedListing)? onToggleFavorite;
   final String? heroTag; // Optional tag for Hero animation
-
   @override
   State<RealEstateImageSlider> createState() => _RealEstateImageSliderState();
 }
@@ -40,7 +38,6 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
   bool _isToggling = false; // ✅ Prevent double taps
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -49,24 +46,19 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
 
   void _toggleFavorite() async {
     if (widget.listing == null || _isToggling) return;
-
     setState(() => _isToggling = true); // ✅ Lock button
-
     final cubit = context.read<MarketplaceCubit>();
     final updated = await cubit.toggleFavorite(
       widget.listingId,
       listing: widget.listing,
     );
-
     if (updated != null) {
       final favCubit = context.read<FavoriteCubit>();
       updated.isFavorite
           ? favCubit.addToFavorites(updated)
           : favCubit.removeFromFavorites(updated.id!);
-
       widget.onToggleFavorite?.call(updated);
     }
-
     setState(() => _isToggling = false); // ✅ Unlock
   }
 
@@ -76,7 +68,6 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
     final isFromCompanyProfile = currentRoute == Routes.sourceProfileView;
     final imageCount = widget.images?.length ?? 0;
     final fallbackImage = widget.listing?.pictureUrl ?? '';
-
     final imageSlider = ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(16),
@@ -106,13 +97,11 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                 ),
       ),
     );
-
     return Stack(
       children: [
         widget.heroTag != null
             ? Hero(tag: widget.heroTag!, child: imageSlider)
             : imageSlider,
-
         if (!isFromCompanyProfile)
           Positioned(
             top: 16.h,
@@ -157,12 +146,10 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
                             );
                           },
                           builder: (context, isFavorited) {
-                            // اختيار اللون حسب الحالة
                             final color =
                                 isFavorited == true
                                     ? ColorManager.brightRed
                                     : customBlackAndHintGreyColor(context);
-
                             return Icon(
                               isFavorited == true
                                   ? Icons.favorite
@@ -175,7 +162,6 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
               ),
             ),
           ),
-
         if (imageCount > 1)
           Positioned(
             bottom: 8.h,
