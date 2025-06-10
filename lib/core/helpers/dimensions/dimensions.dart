@@ -30,6 +30,7 @@ const double kButtonMaxHeight = 74.0;
 
 /// Icon sizes
 const double kIconSizeDefault = 24.0;
+const double kIconSizeSecondary = 20.0;
 const double kIconSizeMedium = 16.0;
 
 /// General width/height dimensions

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 
 /// A stateless widget representing an inactive navigation bar item.
 /// Uses adaptive theming for light/dark mode support.
@@ -24,11 +24,7 @@ class InactiveNavigationItem extends StatelessWidget {
           SvgPicture.asset(
             icon,
             colorFilter: ColorFilter.mode(
-              AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.softGrey,
-                darkColor: ColorManager.iconGrey,
-              ),
+              customSoftAndIconGreyColor(context),
               BlendMode.srcIn,
             ),
             // Optional: semanticsLabel: title,
@@ -36,11 +32,7 @@ class InactiveNavigationItem extends StatelessWidget {
           Text(
             title,
             style: context.titleSmall?.copyWith(
-              color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.softGrey,
-                darkColor: ColorManager.hintGrey,
-              ),
+              color: customSoftAndHintGreyColor(context),
             ),
           ),
         ],

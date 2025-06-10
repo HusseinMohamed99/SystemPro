@@ -30,7 +30,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/login',
+            'api/v1/mobile/login',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -58,7 +58,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/register',
+            'api/v1/mobile/register',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -88,7 +88,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/forgot-password',
+            'api/v1/mobile/forgot-password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -118,7 +118,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/verify-registration',
+            'api/v1/mobile/verify-registration',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -148,7 +148,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/verify-reset-password',
+            'api/v1/mobile/verify-reset-password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -178,7 +178,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/resend-otp',
+            'api/v1/mobile/resend-otp',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -208,7 +208,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/reset-password',
+            'api/v1/mobile/reset-password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -235,7 +235,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/logout',
+            'api/v1/mobile/logout',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -262,7 +262,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/delete-account',
+            'api/v1/mobile/delete-account',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -289,7 +289,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/profile',
+            'api/v1/mobile/profile',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -319,7 +319,7 @@ class _ApiService implements ApiService {
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/profile/update',
+            'api/v1/mobile/profile/update',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -349,7 +349,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/marketplace/listings/cursor',
+            'api/v1/marketplace/listings/cursor',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -376,7 +376,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/favorites/${listingId}',
+            'api/v1/mobile/favorites/${listingId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -403,7 +403,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile/favorites',
+            'api/v1/mobile/favorites',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -434,7 +434,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'api/mobile',
+            'api/v1/mobile',
             queryParameters: queryParameters,
             data: _data,
           )

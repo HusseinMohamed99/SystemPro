@@ -16,11 +16,9 @@ class CustomProfileCard extends StatelessWidget {
     required this.themeMode,
     this.onTap,
   });
-
   final bool isLocalization, isThemeMode;
   final String title, language, themeMode;
   final VoidCallback? onTap;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -54,7 +52,7 @@ class CustomProfileCard extends StatelessWidget {
                     Icon(
                       Icons.arrow_forward_ios,
                       color: customBlackAndWhiteColor(context),
-                      size: 20.sp,
+                      size: kIconSizeSecondary.sp,
                     ),
                   ],
                 )
@@ -62,7 +60,7 @@ class CustomProfileCard extends StatelessWidget {
                 Icon(
                   Icons.arrow_forward_ios,
                   color: customBlackAndWhiteColor(context),
-                  size: 20.sp,
+                  size: kIconSizeSecondary.sp,
                 ),
             ],
           ),

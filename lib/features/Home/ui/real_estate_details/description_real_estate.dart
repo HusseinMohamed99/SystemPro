@@ -21,7 +21,6 @@ class DescriptionWidget extends StatelessWidget {
           ),
         ),
         verticalSpacing(kSpacingSmall),
-
         StatefulBuilder(
           builder: (context, setState) {
             final TextEditingController textController = TextEditingController(
@@ -45,7 +44,9 @@ class DescriptionWidget extends StatelessWidget {
                         context: context,
                         builder:
                             (context) => AlertDialog(
-                              backgroundColor: customWhiteAndTertiaryBlackColor(context),
+                              backgroundColor: customWhiteAndTertiaryBlackColor(
+                                context,
+                              ),
                               content: SingleChildScrollView(
                                 child: Text(
                                   textController.text,

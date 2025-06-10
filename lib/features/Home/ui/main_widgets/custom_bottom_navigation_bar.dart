@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/features/Home/data/model/navBar/bottom_navigation_bar_model.dart';
 import 'package:system_pro/features/Home/ui/main_widgets/navigation_bar_item.dart';
 
@@ -22,11 +22,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
     return Material(
       elevation: 8,
-      color: AdaptiveColor.adaptiveColor(
-        context: context,
-        lightColor: ColorManager.pureWhite,
-        darkColor: ColorManager.tertiaryBlack,
-      ),
+      color: customWhiteAndTertiaryBlackColor(context),
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(30),
         topRight: Radius.circular(30),

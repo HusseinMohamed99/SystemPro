@@ -6,6 +6,7 @@ import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dar
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/features/Home/data/model/realestate/amenities.dart';
+
 class AmenitiesWidget extends StatelessWidget {
   const AmenitiesWidget({super.key, required this.amenities});
   final List<Amenities> amenities;
@@ -15,30 +16,28 @@ class AmenitiesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: kSpacingDefault.h,
       children: [
-      
-            Text(
+        Text(
           context.localization.amenities,
           style: context.titleLarge?.copyWith(
             fontWeight: FontWeightHelper.medium,
           ),
         ),
-        
-          Wrap(
-            spacing: kSpacingXLarge.w,
-            runSpacing: kSpacingSmall.h,
-            children:
-                amenities.map((amenity) {
-                  return SizedBox(
-                    width: context.width * 0.40,
-                    child: Text(
-                      amenity.name ?? '',
-                      style: context.titleMedium?.copyWith(
-                        fontWeight: FontWeightHelper.regular,
-                      ),
+        Wrap(
+          spacing: kSpacingXLarge.w,
+          runSpacing: kSpacingSmall.h,
+          children:
+              amenities.map((amenity) {
+                return SizedBox(
+                  width: context.width * 0.40,
+                  child: Text(
+                    amenity.name ?? '',
+                    style: context.titleMedium?.copyWith(
+                      fontWeight: FontWeightHelper.regular,
                     ),
-                  );
-                }).toList(),
-          ),
+                  ),
+                );
+              }).toList(),
+        ),
       ],
     );
   }
