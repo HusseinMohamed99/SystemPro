@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
 /// A reusable divider that adapts its color based on the current theme.
 /// Also supports custom thickness and height with default values.
