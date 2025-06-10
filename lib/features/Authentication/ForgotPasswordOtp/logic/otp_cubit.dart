@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/check_otp_request_body.dart';
@@ -20,7 +21,6 @@ class OtpCubit extends Cubit<OtpState> {
   int _secondsRemaining = 59;
   bool _isCompleted = false;
 
-  // Accessors for UI
   bool get canResend => _secondsRemaining == 0;
   int get secondsLeft => _secondsRemaining;
   bool get isCompleted => _isCompleted;
@@ -45,38 +45,43 @@ class OtpCubit extends Cubit<OtpState> {
     });
   }
 
-  /// Used once after screen loads to avoid re-triggering the timer
+  /// Called once after screen loads to avoid re-triggering the timer
   void startTimerIfNeeded() {
     if (_secondsRemaining == 59 && !(_timer?.isActive ?? false)) {
       startTimer();
     }
   }
 
-  /// Called when user finishes or changes input
+  /// Updates internal state when OTP is fully entered
   void markOtpCompletion(bool value) {
     if (_isCompleted == value) return;
     _isCompleted = value;
     emit(OtpState.inputCompletionChanged(isCompleted: _isCompleted));
   }
 
-  /// Calls API to verify OTP
+  /// Verifies OTP with backend
   Future<void> checkOtp(CheckOtpRequestBody request) async {
     emit(const OtpState.otpLoading());
 
     final response = await _otpRepo.checkOtp(request);
 
     response.when(
-      success: (data) => emit(OtpState.otpSuccess(data)),
-      failure:
-          (error) => emit(
-            OtpState.otpError(
-              error: error.apiErrorModel.message ?? 'Verification failed',
-            ),
+      success: (data) {
+        emit(OtpState.otpSuccess(data));
+      },
+      failure: (error) {
+        emit(
+          OtpState.otpError(
+            error: error.apiErrorModel.message ?? 'Verification failed',
           ),
+        );
+        // إعادة تفعيل الزر بعد الفشل
+        emit(OtpState.inputCompletionChanged(isCompleted: _isCompleted));
+      },
     );
   }
 
-  /// Calls API to resend OTP, and restarts timer if allowed
+  /// Resends OTP and restarts timer if allowed
   Future<void> resendOtp(ResendOtpRequestBody request) async {
     if (_secondsRemaining > 0) return;
 
@@ -86,15 +91,18 @@ class OtpCubit extends Cubit<OtpState> {
 
     response.when(
       success: (data) {
-        emit(OtpState.otpSuccess(data));
-        startTimer();
+        emit(OtpState.otpSuccess(data)); // تم التبديل لحالة مستقلة
+        startTimer(); // Restart timer
       },
-      failure:
-          (error) => emit(
-            OtpState.otpError(
-              error: error.apiErrorModel.message ?? 'Failed to resend code',
-            ),
+      failure: (error) {
+        emit(
+          OtpState.otpError(
+            error: error.apiErrorModel.message ?? 'Failed to resend code',
           ),
+        );
+        // تأكيد أنه يمكن تفعيل زر الإرسال مرة أخرى
+        emit(const OtpState.otpResendAvailable());
+      },
     );
   }
 

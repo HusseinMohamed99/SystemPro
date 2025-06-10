@@ -25,6 +25,9 @@ class LoginViewBlocConsumer extends StatelessWidget {
             ..showSnackBar(context.localization.sign_in_successfully)
             ..pushReplacementNamed(Routes.mainView);
         }
+        else if (state is LoginError) {
+          context.showSnackBar(state.error);
+        }
       },
       builder: (context, state) {
         final shouldShowLoading = state is LoginLoading;

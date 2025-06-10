@@ -10,6 +10,7 @@ import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_p
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   ForgotPasswordCubit(this._forgotPasswordRepo)
     : super(const ForgotPasswordState.initial()) {
+    // Listen to changes in email field and validate form on every change
     emailController.addListener(_updateFormValidity);
   }
 
@@ -35,6 +36,9 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   /// Sends forgot password request to backend.
   Future<void> submitForgotPassword() async {
+    final isValid = formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+
     emit(const ForgotPasswordState.forgotPasswordLoading());
 
     final email = emailController.text.trim();
@@ -53,11 +57,16 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
             error: error.apiErrorModel.message ?? 'Something went wrong.',
           ),
         );
+
+        // إعادة حالة الفورم لتفعيل الزر من جديد
+        emit(
+          ForgotPasswordState.forgotPasswordFormValidityChanged(_isFormValid),
+        );
       },
     );
   }
 
-  /// Optional: Basic email validation
+  /// Basic email format validation.
   bool _isValidEmail(String email) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);

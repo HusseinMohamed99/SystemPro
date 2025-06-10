@@ -36,6 +36,7 @@ class LoginForm extends StatelessWidget {
 
         return Form(
           key: cubit.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             spacing: kSpacingDefault.h,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,7 +61,7 @@ class LoginForm extends StatelessWidget {
                   context.localization.forgot_password,
                   textAlign: TextAlign.right,
                   style: context.titleMedium?.copyWith(
-                    color:customPrimaryAndSecondaryBlueColor(context),
+                    color: customPrimaryAndSecondaryBlueColor(context),
                   ),
                 ),
               ),

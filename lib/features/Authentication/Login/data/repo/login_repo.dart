@@ -19,12 +19,8 @@ class LoginRepo {
       // Call login API through the API service
       final response = await _apiService.login(request);
       return ApiResult.success(response);
-    } catch (error, stackTrace) {
-      // Log error with email context for better debugging
-      AppLogs.log(
-        'Login error for ${request.email}: $error\n$stackTrace',
-        type: LogType.error,
-      );
+    } catch (error) {
+   
       // Map and return a structured error
       return ApiResult.failure(ErrorHandler.handle(error));
     }

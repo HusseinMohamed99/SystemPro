@@ -4,7 +4,7 @@ import 'package:system_pro/features/Authentication/ChangePassword/data/model/cha
 import 'package:system_pro/features/Authentication/ChangePassword/data/repo/change_password_repo.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_state.dart';
 
-/// Handles change password logic and form state management.
+/// Cubit class responsible for handling the change password form state and logic.
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   ChangePasswordCubit(this._repo) : super(const ChangePasswordState.initial());
 
@@ -23,15 +23,15 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   bool isPasswordVisible = true;
   IconData visibilityIcon = Icons.visibility_off;
 
-  // Form validation tracking
   bool _isFormValid = false;
   bool get isFormValid => _isFormValid;
 
-  /// Toggles password visibility and updates icon
- void togglePasswordVisibility() {
+  /// Toggles the visibility of the password and updates the icon accordingly.
+  void togglePasswordVisibility() {
     isPasswordVisible = !isPasswordVisible;
     visibilityIcon =
         isPasswordVisible ? Icons.visibility_off : Icons.visibility;
+
     emit(
       ChangePasswordState.passwordVisibilityChanged(
         isPasswordVisible: isPasswordVisible,
@@ -40,8 +40,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     );
   }
 
-
-  /// Updates form validation flag and emits if changed
+  /// Validates both fields and emits a form validity change state.
   void updateFormValidationState() {
     final isValid =
         newPasswordController.text.isNotEmpty &&
@@ -54,7 +53,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     }
   }
 
-  /// Submits the change password request
+  /// Submits the change password request if the form is valid.
   Future<void> changePassword({required String email}) async {
     final isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
@@ -71,10 +70,12 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
     response.when(
       success: (res) {
+        // Clear fields and reset state
         newPasswordController.clear();
         confirmPasswordController.clear();
         _isFormValid = false;
         emit(ChangePasswordState.changePasswordSuccess(res));
+        emit(const FormValidationChanged()); // Re-enable button
       },
       failure: (error) {
         emit(
@@ -82,11 +83,12 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
             error: error.apiErrorModel.message ?? 'Something went wrong',
           ),
         );
+        emit(const FormValidationChanged()); // Re-enable button on failure
       },
     );
   }
 
-  /// Cleans up resources
+  /// Dispose all controllers and focus nodes when cubit is closed.
   @override
   Future<void> close() {
     newPasswordController.dispose();

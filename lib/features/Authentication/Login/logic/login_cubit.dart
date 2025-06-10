@@ -70,7 +70,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   /// Perform login using repository and emit appropriate state
-  Future<void> _performLogin() async {
+Future<void> _performLogin() async {
     emit(const LoginState.loginLoading());
 
     try {
@@ -92,10 +92,14 @@ class LoginCubit extends Cubit<LoginState> {
               error: error.apiErrorModel.message ?? 'Login failed',
             ),
           );
+          // ✅ Restore form state to allow button again
+          emit(LoginState.formValidityChanged(_isFormValid));
         },
       );
     } catch (e) {
       emit(const LoginState.loginError(error: 'Unexpected error occurred'));
+      // ✅ Restore form state even on unexpected errors
+      emit(LoginState.formValidityChanged(_isFormValid));
     }
   }
 
