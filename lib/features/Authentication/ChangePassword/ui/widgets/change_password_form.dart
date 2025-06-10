@@ -22,10 +22,10 @@ class ChangePasswordForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ChangePasswordCubit>();
+    final changePasswordCubit = context.read<ChangePasswordCubit>();
 
     return Form(
-      key: cubit.formKey,
+      key: changePasswordCubit.formKey,
       child: Column(
         spacing: kSpacingXLarge.h,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,31 +42,39 @@ class ChangePasswordForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   PasswordFormField(
-                    focusNode: cubit.newPasswordFocusNode,
-                    passwordController: cubit.newPasswordController,
-                    isPassword: cubit.isPasswordVisible,
-                    suffixIconOnTap: cubit.togglePasswordVisibility,
-                    visibilityIcon: cubit.visibilityIcon,
-                    onChanged: (_) => cubit.updateFormValidationState(),
+                    focusNode: changePasswordCubit.newPasswordFocusNode,
+                    passwordController:
+                        changePasswordCubit.newPasswordController,
+                    isPassword: changePasswordCubit.isPasswordVisible,
+                    suffixIconOnTap:
+                        changePasswordCubit.togglePasswordVisibility,
+                    visibilityIcon: changePasswordCubit.visibilityIcon,
+                    onChanged:
+                        (_) => changePasswordCubit.updateFormValidationState(),
                   ),
                   ConfirmPasswordFormField(
-                    focusNode: cubit.confirmPasswordFocusNode,
-                    passwordController: cubit.newPasswordController,
-                    confirmPasswordController: cubit.confirmPasswordController,
-                    isPassword: cubit.isPasswordVisible,
-                    suffixIconOnTap: cubit.togglePasswordVisibility,
-                    visibilityIcon: cubit.visibilityIcon,
-                    onChanged: (_) => cubit.updateFormValidationState(),
+                    focusNode: changePasswordCubit.confirmPasswordFocusNode,
+                    passwordController:
+                        changePasswordCubit.newPasswordController,
+                    confirmPasswordController:
+                        changePasswordCubit.confirmPasswordController,
+                    isPassword: changePasswordCubit.isPasswordVisible,
+                    suffixIconOnTap:
+                        changePasswordCubit.togglePasswordVisibility,
+                    visibilityIcon: changePasswordCubit.visibilityIcon,
+                    onChanged:
+                        (_) => changePasswordCubit.updateFormValidationState(),
                   ),
                   verticalSpacing(kSpacingSmaller),
                   CustomButton(
                     text: context.localization.reset_password,
                     isLoading: isLoading,
-                    isDisabled: !cubit.isFormValid,
+                    isDisabled: !changePasswordCubit.isFormValid,
                     onPressed: () {
-                      if (cubit.formKey.currentState!.validate()) {
+                      if (changePasswordCubit.formKey.currentState!
+                          .validate()) {
                         FocusScope.of(context).unfocus();
-                        cubit.changePassword(email: email);
+                        changePasswordCubit.changePassword(email: email);
                       }
                     },
                   ),

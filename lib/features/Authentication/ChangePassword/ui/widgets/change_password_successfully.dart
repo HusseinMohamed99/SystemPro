@@ -5,6 +5,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -18,19 +19,10 @@ class ChangePasswordSuccessfully extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const lightColor = ColorManager.pureBlack;
-    const darkColor = ColorManager.pureWhite;
-    final textColor = AdaptiveColor.adaptiveColor(
-      context: context,
-      lightColor: lightColor,
-      darkColor: darkColor,
-    );
+    
+    final textColor = customBlackAndWhiteColor(context);
 
-    final subtitleColor = AdaptiveColor.adaptiveColor(
-      context: context,
-      lightColor: ColorManager.softGrey,
-      darkColor: ColorManager.hintGrey,
-    );
+    final subtitleColor = customSoftAndHintGreyColor(context);
 
     return Scaffold(
       appBar: basicAppBar(),

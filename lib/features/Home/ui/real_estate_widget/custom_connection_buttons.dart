@@ -29,7 +29,7 @@ class CustomConnectionButton extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(
                 vertical: kPaddingMediumVertical.h,
               ),
-              backgroundColor: customShowdBlueAndFourthBlackColor(context),
+              backgroundColor: customShadowBlueAndFourthBlackColor(context),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(kBorderRadiusMedium).r,
@@ -63,7 +63,7 @@ class CustomConnectionButton extends StatelessWidget {
               padding: EdgeInsetsDirectional.symmetric(
                 vertical: kPaddingMediumVertical.h,
               ),
-              backgroundColor: customShowdBlueAndFourthBlackColor(context),
+              backgroundColor: customShadowBlueAndFourthBlackColor(context),
               side: BorderSide.none,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),

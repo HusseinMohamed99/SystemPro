@@ -89,7 +89,7 @@ Color customSoftGreyAndWhiteColor(BuildContext context) {
   );
 }
 
-Color customShowdBlueAndFourthBlackColor(BuildContext context) {
+Color customShadowBlueAndFourthBlackColor(BuildContext context) {
   return AdaptiveColor.adaptiveColor(
     context: context,
     lightColor: ColorManager.shadowBlue,
