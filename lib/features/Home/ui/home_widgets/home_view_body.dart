@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/errors/custom_error_widget.dart';
@@ -44,8 +45,8 @@ class HomeViewBody extends StatelessWidget {
               // Success state with data
               if (state is MarketPlaceSuccess) {
                 final listings = state.listings;
-                final cubit = context.read<MarketplaceCubit>();
-                cubit.initSortOptionsIfNeeded(context);
+                final marketPlaceCubit = context.read<MarketplaceCubit>();
+                marketPlaceCubit.initSortOptionsIfNeeded(context);
                 return Column(
                   children: [
                     // Toggle filter buttons (e.g., buy/rent)
@@ -53,8 +54,7 @@ class HomeViewBody extends StatelessWidget {
                       selectedFilter: state.selectedFilter,
                       filtersToggle: FilterToggle.values,
                       onToggleChanged: (filter) {
-                        final cubit = context.read<MarketplaceCubit>();
-                        cubit.getListings(filter: filter);
+                        marketPlaceCubit.getListings(filter: filter);
                       },
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
@@ -66,8 +66,8 @@ class HomeViewBody extends StatelessWidget {
                     ResultsCountAndSortButton(
                       propertiesCount: listings.length.toString(),
                       selectedSort: state.selectedSort,
-                      sortOptions: cubit.sortOptions,
-                      onSortSelected: cubit.sortListings,
+                      sortOptions: marketPlaceCubit.sortOptions,
+                      onSortSelected: marketPlaceCubit.sortListings,
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
                       rightPadding: kPaddingDefaultHorizontal,
@@ -79,7 +79,9 @@ class HomeViewBody extends StatelessWidget {
                 );
               }
               // Initial or unknown state
-              return const SizedBox.shrink();
+              return CustomErrorTextWidget(
+                errorMessage: context.localization.unknown_error,
+              ).center();
             },
           ),
         ),

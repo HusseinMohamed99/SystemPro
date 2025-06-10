@@ -20,16 +20,13 @@ class ResultsCountAndSortButton extends StatelessWidget {
     required this.sortOptions,
     required this.onSortSelected,
   });
-
   final String propertiesCount;
   final SortType selectedSort;
   final List<SortOptionModel> sortOptions;
   final void Function(SortType) onSortSelected;
-
   @override
   Widget build(BuildContext context) {
     final localization = context.localization;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

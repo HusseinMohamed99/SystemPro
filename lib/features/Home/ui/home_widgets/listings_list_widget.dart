@@ -34,7 +34,7 @@ class _ListingsListState extends State<ListingsList> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<MarketplaceCubit>();
+    final marketPlaceCubit = context.read<MarketplaceCubit>();
 
     // Show error widget if no listings are available
     if (widget.listings.isEmpty) {
@@ -46,9 +46,8 @@ class _ListingsListState extends State<ListingsList> {
     return NotificationListener<ScrollNotification>(
       // Detect scroll to bottom with debounce to prevent rapid loadMore calls
       onNotification: (notification) {
-        if (_shouldLoadMore(notification, cubit)) {
-          _debounce(cubit.loadMore);
-
+        if (_shouldLoadMore(notification, marketPlaceCubit)) {
+          _debounce(marketPlaceCubit.loadMore);
         }
         return false;
       },
@@ -60,10 +59,10 @@ class _ListingsListState extends State<ListingsList> {
           // Spacing and loader
           SliverToBoxAdapter(child: verticalSpacing(20)),
 
-          if (_showLoader(cubit))
+          if (_showLoader(marketPlaceCubit))
             const SliverToBoxAdapter(child: Center(child: CustomLoader())),
 
-          if (_showLoader(cubit))
+          if (_showLoader(marketPlaceCubit))
             SliverToBoxAdapter(child: verticalSpacing(40)),
         ],
       ),

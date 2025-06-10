@@ -29,13 +29,11 @@ class PropertyFiltersRow extends StatelessWidget {
     /// Horizontal spacing between items (defaults to 10.0)
     this.itemSpacing = 10.0,
   });
-
   final List<FilterToggle> filtersToggle;
   final String selectedFilter;
   final void Function(String selectedValue) onToggleChanged;
   final int maxItemsPerRow;
   final double itemSpacing;
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -45,14 +43,11 @@ class PropertyFiltersRow extends StatelessWidget {
             filtersToggle.length < maxItemsPerRow
                 ? filtersToggle.length
                 : maxItemsPerRow;
-
         // Calculate total spacing between items
         final double totalSpacing = itemSpacing * (effectiveCount - 1);
-
         // Compute the width of each chip
         final double itemWidth =
             (constraints.maxWidth - totalSpacing) / effectiveCount;
-
         return Wrap(
           spacing: itemSpacing,
           runSpacing: 10.h,
@@ -62,21 +57,16 @@ class PropertyFiltersRow extends StatelessWidget {
                 final label = filterToggleLabel(context, toggle);
                 final value = filterToggleValue(toggle);
                 final isSelected = selectedFilter == value;
-
                 // Define theme-aware colors
                 final selectedTextColor = customPrimaryBlueAndWhiteColor(
                   context,
                 );
-
                 final unselectedTextColor = customSoftAndHintGreyColor(context);
-
                 final selectedBackgroundColor = customShadowAndPrimaryBlueColor(
                   context,
                 );
-
                 final unselectedBackgroundColor =
                     customWhiteAndTertiaryBlackColor(context);
-
                 final borderColor = customShadowBlueAndTertiaryBlackColor(
                   context,
                 );
