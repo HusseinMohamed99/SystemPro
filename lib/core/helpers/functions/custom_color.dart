@@ -120,3 +120,11 @@ Color customBorderGreyAndIconGreyColor(BuildContext context) {
     darkColor: ColorManager.iconGrey,
   );
 }
+
+Color customPureAndTertiaryBlackColor(BuildContext context) {
+  return AdaptiveColor.adaptiveColor(
+    context: context,
+    lightColor: ColorManager.pureBlack,
+    darkColor: ColorManager.tertiaryBlack,
+  );
+}

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/animations/otp_animated_input.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
@@ -16,17 +16,13 @@ import 'package:system_pro/features/Authentication/ForgotPasswordOtp/logic/otp_s
 
 class ForgotPasswordOtpViewBody extends StatelessWidget {
   const ForgotPasswordOtpViewBody({super.key, required this.email});
-
   final String email;
-
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<OtpCubit>();
-
+    final otpCubit = context.read<OtpCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      cubit.startTimerIfNeeded(); // تمنع إعادة تشغيل التايمر كل مرة
+      otpCubit.startTimerIfNeeded();
     });
-
     return BlocBuilder<OtpCubit, OtpState>(
       buildWhen:
           (prev, curr) =>
@@ -39,10 +35,9 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
         final canResend = state is OtpResendAvailable;
         final hasError = state is OtpError;
         final isLoading = state is OtpLoading;
-        final isCompleted = cubit.isCompleted;
-
+        final isCompleted = otpCubit.isCompleted;
         return Form(
-          key: cubit.formKey,
+          key: otpCubit.formKey,
           child: CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: [
@@ -60,21 +55,13 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                       TextSpan(
                         text: context.localization.we_sent_code,
                         style: context.titleLarge?.copyWith(
-                          color: AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.softGrey,
-                            darkColor: ColorManager.hintGrey,
-                          ),
+                          color: customSoftAndHintGreyColor(context),
                         ),
                       ),
                       TextSpan(
                         text: '  $email',
                         style: context.titleLarge?.copyWith(
-                          color: AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.primaryBlue,
-                            darkColor: ColorManager.secondaryBlue,
-                          ),
+                          color: customPrimaryAndSecondaryBlueColor(context),
                         ),
                       ),
                     ],
@@ -82,20 +69,18 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXLarge)),
-
               // OTP Input
               SliverToBoxAdapter(
                 child: OtpAnimatedInput(
-                  controller: cubit.validationCodeController,
+                  controller: otpCubit.validationCodeController,
                   hasError: hasError,
                   onChanged:
-                      (code) => cubit.markOtpCompletion(code.length == 4),
+                      (code) => otpCubit.markOtpCompletion(code.length == 4),
                   onCompleted:
-                      (code) => cubit.markOtpCompletion(code.length == 4),
+                      (code) => otpCubit.markOtpCompletion(code.length == 4),
                 ),
               ),
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-
               // Verify Button
               SliverToBoxAdapter(
                 child: CustomButton(
@@ -103,20 +88,18 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                   isLoading: isLoading,
                   isDisabled: !isCompleted,
                   onPressed: () {
-                    if (cubit.formKey.currentState?.validate() ?? false) {
-                      cubit.checkOtp(
+                    if (otpCubit.formKey.currentState?.validate() ?? false) {
+                      otpCubit.checkOtp(
                         CheckOtpRequestBody(
                           email: email,
-                          otp: cubit.validationCodeController.text.trim(),
+                          otp: otpCubit.validationCodeController.text.trim(),
                         ),
                       );
                     }
                   },
                 ),
               ),
-
               SliverToBoxAdapter(child: verticalSpacing(kSpacingXXXLarge)),
-
               // Resend Section
               SliverToBoxAdapter(
                 child: Text.rich(
@@ -126,23 +109,15 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                     style: context.titleLarge?.copyWith(
                       color:
                           canResend
-                              ? AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.primaryBlue,
-                                darkColor: ColorManager.secondaryBlue,
-                              )
-                              : AdaptiveColor.adaptiveColor(
-                                context: context,
-                                lightColor: ColorManager.softGrey,
-                                darkColor: ColorManager.hintGrey,
-                              ),
+                              ? customPrimaryAndSecondaryBlueColor(context)
+                              : customSoftAndHintGreyColor(context),
                       fontWeight: FontWeightHelper.semiBold,
                     ),
                     recognizer:
                         TapGestureRecognizer()
                           ..onTap = () {
                             if (canResend) {
-                              cubit.resendOtp(
+                              otpCubit.resendOtp(
                                 ResendOtpRequestBody(
                                   email: email,
                                   type: 'register',
@@ -154,11 +129,7 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                       TextSpan(
                         text: '00:${secondsLeft.toString().padLeft(2, '0')}',
                         style: context.titleLarge?.copyWith(
-                          color: AdaptiveColor.adaptiveColor(
-                            context: context,
-                            lightColor: ColorManager.softGrey,
-                            darkColor: ColorManager.hintGrey,
-                          ),
+                          color: customSoftAndHintGreyColor(context),
                           fontWeight: FontWeightHelper.semiBold,
                         ),
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/validations/validation_manager.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 
@@ -14,12 +15,10 @@ class CustomPinputOtpCodeWidget extends StatefulWidget {
     this.onCompleted,
     this.onChanged,
   });
-
   final TextEditingController validationCodeController;
   final bool hasError;
   final void Function(String)? onCompleted;
   final void Function(String)? onChanged;
-
   @override
   State<CustomPinputOtpCodeWidget> createState() =>
       _CustomPinputOtpCodeWidgetState();
@@ -30,19 +29,15 @@ class _CustomPinputOtpCodeWidgetState extends State<CustomPinputOtpCodeWidget>
   late final AnimationController _controller;
   late final Animation<double> _shakeAnimation;
   late final Animation<double> _fadeInAnimation;
-
   static const double _shakeOffset = 12;
   static const double _pinSize = 77.0;
-
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       duration: const Duration(milliseconds: 400),
       vsync: this,
     );
-
     _shakeAnimation = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 0, end: -_shakeOffset), weight: 1),
       TweenSequenceItem(
@@ -59,12 +54,10 @@ class _CustomPinputOtpCodeWidgetState extends State<CustomPinputOtpCodeWidget>
       ),
       TweenSequenceItem(tween: Tween(begin: _shakeOffset, end: 0), weight: 1),
     ]).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-
     _fadeInAnimation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeIn,
     );
-
     _controller.forward();
   }
 
@@ -97,22 +90,16 @@ class _CustomPinputOtpCodeWidgetState extends State<CustomPinputOtpCodeWidget>
         validator: (value) => ValidationManager.otpValidator(context, value),
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        onCompleted:
-            widget.onCompleted, // ✅ تنفيذ الكولباك عند إدخال الكود بالكامل
-            onChanged: widget.onChanged,
-            
+        onCompleted: widget.onCompleted,
+        onChanged: widget.onChanged,
         cursor: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
             height: 3,
             width: 30,
-            margin: EdgeInsets.only(top: 10.h),
+            margin: EdgeInsetsDirectional.only(top: 10.h),
             decoration: BoxDecoration(
-              color: AdaptiveColor.adaptiveColor(
-                context: context,
-                lightColor: ColorManager.pureBlack,
-                darkColor: ColorManager.tertiaryBlack,
-              ),
+              color: customPureAndTertiaryBlackColor(context),
               borderRadius: BorderRadius.circular(15),
             ),
           ),
@@ -134,22 +121,13 @@ class _CustomPinputOtpCodeWidgetState extends State<CustomPinputOtpCodeWidget>
             ? ColorManager.errorRed
             : isFocused
             ? ColorManager.primaryBlue
-            : AdaptiveColor.adaptiveColor(
-              context: context,
-              lightColor: ColorManager.borderGrey,
-              darkColor: ColorManager.tertiaryBlack,
-            );
-
+            : customBorderGreyAndTertiaryBlackColor(context);
     return PinTheme(
       width: _pinSize.w,
       height: _pinSize.h,
       textStyle: context.headlineLarge,
       decoration: BoxDecoration(
-        color: AdaptiveColor.adaptiveColor(
-          context: context,
-          lightColor: ColorManager.pureWhite,
-          darkColor: ColorManager.tertiaryBlack,
-        ),
+        color: customWhiteAndTertiaryBlackColor(context),
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: borderColor, width: isFocused ? 1.5 : 1),
       ),
