@@ -20,13 +20,16 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = bottomNavBarItems(context);
 
-    return Material(
-      elevation: 8,
+    return Container(
+     
+      decoration: BoxDecoration( 
       color: customWhiteAndTertiaryBlackColor(context),
-      borderRadius: const BorderRadius.only(
+          borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(30),
         topRight: Radius.circular(30),
       ),
+      ),
+    
       child: Container(
         width: double.infinity,
         height: 70.h,

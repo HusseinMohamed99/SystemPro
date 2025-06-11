@@ -89,15 +89,15 @@ class ColorManager {
 /// Helper class for returning colors adaptive
 ///  to the current theme (dark or light).
 class AdaptiveColor {
-  /// Returns [darkColor] if dark mode is enabled,
-  ///  otherwise returns [lightColor].
-  /// Relies on [ChangeThemingCubit] to determine current theme.
+  /// Returns [darkColor] if current ThemeMode is dark,
+  /// otherwise returns [lightColor].
+  /// Relies on Theme.of(context).brightness.
   static Color adaptiveColor({
     required BuildContext context,
     required Color lightColor,
     required Color darkColor,
   }) {
-    final isDark = context.read<ChangeThemingCubit>().state.isDarkMode;
-    return isDark ? darkColor : lightColor;
+    final brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark ? darkColor : lightColor;
   }
 }
