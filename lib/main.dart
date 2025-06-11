@@ -8,7 +8,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:system_pro/app_bootstrap.dart';
 import 'package:system_pro/bloc_observer.dart';
+import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
+import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/widgets/errors/init_error_screen.dart';
@@ -36,7 +38,13 @@ void main() async {
                 await getTemporaryDirectory().then((d) => d.path),
               ),
     );
-
+    AppConfig.isLoggedInUser =
+        !(await CachingHelper.getSecuredString(
+          SharedPrefKeys.userToken,
+        )).isNullOrEmpty();
+    AppConfig.userToken = await CachingHelper.getSecuredString(
+      SharedPrefKeys.userToken,
+    );
     await CachingHelper.init();
     Bloc.observer = MyBlocObserver();
 

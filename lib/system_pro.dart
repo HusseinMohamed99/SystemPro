@@ -12,8 +12,8 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/generated/l10n.dart';
 
 class SystemProApp extends StatelessWidget {
-  const SystemProApp({super.key});
-
+  const SystemProApp({super.key, required this.appRouter});
+  final AppRouters appRouter;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChangeLocalizationCubit, ChangeLocalizationState>(
@@ -41,11 +41,8 @@ class SystemProApp extends StatelessWidget {
                       GlobalCupertinoLocalizations.delegate,
                     ],
                     supportedLocales: S.delegate.supportedLocales,
-                    onGenerateRoute: AppRouters().generateRoute,
-                    initialRoute:
-                        AppConfig.isLoggedInUser
-                            ? Routes.mainView
-                            : Routes.loginView,
+                    onGenerateRoute: appRouter.generateRoute,
+                    initialRoute: getInitialRoute(),
                   ),
               tabletLayout:
                   (_) => MaterialApp(
@@ -65,11 +62,8 @@ class SystemProApp extends StatelessWidget {
                       GlobalCupertinoLocalizations.delegate,
                     ],
                     supportedLocales: S.delegate.supportedLocales,
-                    onGenerateRoute: AppRouters().generateRoute,
-                    initialRoute:
-                        AppConfig.isLoggedInUser
-                            ? Routes.mainView
-                            : Routes.loginView,
+                    onGenerateRoute: appRouter.generateRoute,
+                    initialRoute: getInitialRoute(),
                   ),
               desktopLayout: (_) => const Text('Desktop Layout'),
             );
@@ -77,5 +71,9 @@ class SystemProApp extends StatelessWidget {
         );
       },
     );
+  }
+
+  String getInitialRoute() {
+    return AppConfig.isLoggedInUser ? Routes.mainView : Routes.loginView;
   }
 }

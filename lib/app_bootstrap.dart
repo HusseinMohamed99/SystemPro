@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
+import 'package:system_pro/core/routing/app_router.dart';
 import 'package:system_pro/system_pro.dart';
 
 class AppBootstrap extends StatefulWidget {
@@ -35,7 +36,7 @@ class _AppBootstrapState extends State<AppBootstrap> {
         BlocProvider(create: (_) => getIt<ChangeLocalizationCubit>()),
         BlocProvider(create: (_) => getIt<ChangeThemingCubit>()),
       ],
-      child: const SystemProApp(),
+      child: SystemProApp(appRouter: AppRouters()),
     );
   }
 }
