@@ -66,8 +66,7 @@ extension DataSourceExtension on DataSource {
           message: ResponseMessage.noInternetConnection(lang),
         );
       case DataSource.defaultError:
-      default:
-        return ApiErrorModel(
+      return ApiErrorModel(
           code: ResponseCode.defaultError,
           message: ResponseMessage.defaultError(lang),
         );
