@@ -8,9 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:system_pro/app_bootstrap.dart';
 import 'package:system_pro/bloc_observer.dart';
-import 'package:system_pro/core/helpers/constants/keys.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
-import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/widgets/errors/init_error_screen.dart';
@@ -34,22 +32,14 @@ void main() async {
       storageDirectory:
           kIsWeb
               ? HydratedStorageDirectory.web
-              : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+              : HydratedStorageDirectory(
+                await getTemporaryDirectory().then((d) => d.path),
+              ),
     );
+
     await CachingHelper.init();
     Bloc.observer = MyBlocObserver();
-    AppConfig.isLoggedInUser =
-        !(await CachingHelper.getSecuredString(
-          SharedPrefKeys.userToken,
-        )).isNullOrEmpty();
-    final savedLocale = CachingHelper.getString(
-      SharedPrefKeys.selectedLanguage,
-    );
-    final isDarkMode = CachingHelper.getBool(SharedPrefKeys.isDarkMode);
 
-    AppConfig.userToken = await CachingHelper.getSecuredString(
-      SharedPrefKeys.userToken,
-    );
     app = ScreenUtilInit(
       designSize: const Size(393, 852),
       minTextAdapt: true,
@@ -59,7 +49,7 @@ void main() async {
           DeviceOrientation.portraitUp,
           DeviceOrientation.portraitDown,
         ]);
-        return AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode);
+        return const AppBootstrap();
       },
     );
   } catch (e, stack) {

@@ -17,51 +17,38 @@ import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card.dart';
+
 class CustomProfileCardList extends StatelessWidget {
   const CustomProfileCardList({super.key, required this.userName});
+
   final String userName;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChangeLocalizationCubit, ChangeLocalizationState>(
       builder: (context, state) {
-        final String selectedLanguage =
+        final selectedLanguage =
             CachingHelper.getData(SharedPrefKeys.selectedLanguage) ?? 'en';
-        final bool isDarkMode =
+        final isDarkMode =
             CachingHelper.getData(SharedPrefKeys.isDarkMode) ?? false;
-        final String currentLanguage =
+
+        final currentLanguage =
             selectedLanguage == 'ar'
                 ? context.localization.arabic
                 : context.localization.english;
-        final String currentThemeMode =
+        final currentThemeMode =
             isDarkMode
                 ? context.localization.dark_mode
                 : context.localization.light_mode;
+
         final profileCards = profileCardList(context);
+
         return SliverList.separated(
           itemCount: profileCards.length,
-          separatorBuilder: (context, index) => const AdaptiveDivider(),
+          separatorBuilder: (_, _) => const AdaptiveDivider(),
           itemBuilder: (context, index) {
             return CustomProfileCard(
-              onTap: () async {
-                final navigator = Navigator.of(context);
-                final profileCubit = context.read<ProfileCubit>();
-                if (index == 0) {
-                  final result = await navigator.pushNamed(
-                    Routes.editProfileView,
-                    arguments: userName,
-                  );
-                  if (result == true) {
-                    profileCubit.emitGetProfileStates(context: context);
-                  }
-                } else if (index == 1) {
-                  await _showLanguageSelectionSheet(
-                    navigator.context,
-                    selectedLanguage,
-                  );
-                } else if (index == 2) {
-                  await _showThemeSelectionSheet(navigator.context, isDarkMode);
-                }
-              },
+              onTap: () => _handleCardTap(context, index),
               isLocalization: index == 1,
               isThemeMode: index == 2,
               title: profileCards[index],
@@ -73,93 +60,99 @@ class CustomProfileCardList extends StatelessWidget {
       },
     );
   }
-  Future<void> _showLanguageSelectionSheet(
-    BuildContext context,
-    String selectedLanguageCode,
-  ) async {
-    final localization = context.localization;
-    await customBottomSheet(
-      context: context,
-      title: localization.language,
-      firstTitle: localization.english,
-      secondTitle: localization.arabic,
-      firstOnTap: () async {
-        if (selectedLanguageCode != 'en') {
-          await _updateLanguage(context, 'en');
-        }
-      },
-      secondOnTap: () async {
-        if (selectedLanguageCode != 'ar') {
-          await _updateLanguage(context, 'ar');
-        }
-      },
+
+  void _handleCardTap(BuildContext context, int index) async {
+    final navigator = Navigator.of(context);
+    final profileCubit = context.read<ProfileCubit>();
+
+    switch (index) {
+      case 0:
+        final result = await navigator.pushNamed(
+          Routes.editProfileView,
+          arguments: userName,
+        );
+        if (result == true) profileCubit.emitGetProfileStates(context: context);
+        break;
+      case 1:
+        await _showLanguageSheet(context);
+        break;
+      case 2:
+        await _showThemeSheet(context);
+        break;
+    }
+  }
+
+  Future<void> _showLanguageSheet(BuildContext context) async {
+    final selected =
+        CachingHelper.getData(SharedPrefKeys.selectedLanguage) ?? 'en';
+    await _showTwoOptionsSheet(
+      context,
+      title: context.localization.language,
+      firstTitle: context.localization.english,
+      secondTitle: context.localization.arabic,
+      onFirstTap: () => _updateLanguage(context, 'en', selected),
+      onSecondTap: () => _updateLanguage(context, 'ar', selected),
     );
   }
+
+  Future<void> _showThemeSheet(BuildContext context) async {
+    final isDark = CachingHelper.getData(SharedPrefKeys.isDarkMode) ?? false;
+    await _showTwoOptionsSheet(
+      context,
+      title: context.localization.theme_mode,
+      firstTitle: context.localization.light_mode,
+      secondTitle: context.localization.dark_mode,
+      onFirstTap: () => _updateTheme(context, false, isDark),
+      onSecondTap: () => _updateTheme(context, true, isDark),
+    );
+  }
+
   Future<void> _updateLanguage(
     BuildContext context,
-    String languageCode,
+    String code,
+    String current,
   ) async {
-    await context.read<ChangeLocalizationCubit>().changeLocalization(
-      languageCode,
-    );
+    if (code != current) {
+      await context.read<ChangeLocalizationCubit>().changeLocalization(code);
+    }
   }
-  Future<void> _showThemeSelectionSheet(
+
+  Future<void> _updateTheme(
     BuildContext context,
-    bool isDarkMode,
+    bool newMode,
+    bool currentMode,
   ) async {
-    final localization = context.localization;
-    await customBottomSheet(
-      context: context,
-      title: localization.theme_mode,
-      firstTitle: localization.light_mode,
-      secondTitle: localization.dark_mode,
-      firstOnTap: () async {
-        if (isDarkMode) {
-          await _updateTheme(context, false);
-        }
-      },
-      secondOnTap: () async {
-        if (!isDarkMode) {
-          await _updateTheme(context, true);
-        }
-      },
-    );
+    if (newMode != currentMode) {
+      await CachingHelper.setData(SharedPrefKeys.isDarkMode, newMode);
+      context.read<ChangeThemingCubit>().toggleTheme();
+    }
   }
-  Future<void> _updateTheme(BuildContext context, bool isDarkMode) async {
-    final cubit = context.read<ChangeThemingCubit>();
-    if (cubit.isClosed) return;
-    await CachingHelper.setData(SharedPrefKeys.isDarkMode, isDarkMode);
-    cubit.toggleTheme();
-  }
-  Future<dynamic> customBottomSheet({
-    required BuildContext context,
+
+  Future<void> _showTwoOptionsSheet(
+    BuildContext context, {
     required String title,
     required String firstTitle,
     required String secondTitle,
-    required VoidCallback firstOnTap,
-    required VoidCallback secondOnTap,
+    required VoidCallback onFirstTap,
+    required VoidCallback onSecondTap,
   }) {
     final localization = context.localization;
     return showModalBottomSheet(
       backgroundColor: customWhiteAndTertiaryBlackColor(context),
       context: context,
       builder:
-          (context) => Container(
-            padding: EdgeInsetsDirectional.symmetric(
+          (context) => Padding(
+            padding: EdgeInsets.symmetric(
               vertical: kSpacingDefault.h,
               horizontal: kSpacingDefault.w,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(
-                  alignment: AlignmentDirectional.center,
-                  child: Container(
-                    width: 40.w,
-                    height: 4.h,
-                    color: customSoftAndIconGreyColor(context),
-                  ),
+                Container(
+                  width: 40.w,
+                  height: 4.h,
+                  color: customSoftAndIconGreyColor(context),
                 ),
                 verticalSpacing(kSpacingDefault),
                 Text(
@@ -170,29 +163,17 @@ class CustomProfileCardList extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  title: Text(
-                    firstTitle,
-                    style: context.titleLarge?.copyWith(
-                      fontWeight: FontWeightHelper.medium,
-                      color: customBlackAndHintGreyColor(context),
-                    ),
-                  ),
+                  title: Text(firstTitle, style: context.titleLarge),
                   onTap: () {
                     context.pop();
-                    firstOnTap();
+                    onFirstTap();
                   },
                 ),
                 ListTile(
-                  title: Text(
-                    secondTitle,
-                    style: context.titleLarge?.copyWith(
-                      fontWeight: FontWeightHelper.medium,
-                      color: customBlackAndHintGreyColor(context),
-                    ),
-                  ),
+                  title: Text(secondTitle, style: context.titleLarge),
                   onTap: () {
-                   context.pop();
-                    secondOnTap();
+                    context.pop();
+                    onSecondTap();
                   },
                 ),
               ],
@@ -201,6 +182,7 @@ class CustomProfileCardList extends StatelessWidget {
     );
   }
 }
+
 List<String> profileCardList(BuildContext context) => [
   context.localization.edit_profile,
   context.localization.language,

@@ -19,44 +19,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ChangeThemingState {
   ThemeData get theme => throw _privateConstructorUsedError;
   bool get isDarkMode => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ThemeData theme, bool isDarkMode) initial,
-    required TResult Function(ThemeData theme, bool isDarkMode) loading,
-    required TResult Function(ThemeData theme, bool isDarkMode) loaded,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loaded,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult Function(ThemeData theme, bool isDarkMode)? loaded,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
 
   /// Create a copy of ChangeThemingState
   /// with the given fields replaced by the non-null parameter values.
@@ -109,24 +71,24 @@ class _$ChangeThemingStateCopyWithImpl<$Res, $Val extends ChangeThemingState>
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
+abstract class _$$ChangeThemingStateImplCopyWith<$Res>
     implements $ChangeThemingStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-    _$InitialImpl value,
-    $Res Function(_$InitialImpl) then,
-  ) = __$$InitialImplCopyWithImpl<$Res>;
+  factory _$$ChangeThemingStateImplCopyWith(
+    _$ChangeThemingStateImpl value,
+    $Res Function(_$ChangeThemingStateImpl) then,
+  ) = __$$ChangeThemingStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({ThemeData theme, bool isDarkMode});
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$ChangeThemingStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-    _$InitialImpl _value,
-    $Res Function(_$InitialImpl) _then,
+class __$$ChangeThemingStateImplCopyWithImpl<$Res>
+    extends _$ChangeThemingStateCopyWithImpl<$Res, _$ChangeThemingStateImpl>
+    implements _$$ChangeThemingStateImplCopyWith<$Res> {
+  __$$ChangeThemingStateImplCopyWithImpl(
+    _$ChangeThemingStateImpl _value,
+    $Res Function(_$ChangeThemingStateImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of ChangeThemingState
@@ -135,7 +97,7 @@ class __$$InitialImplCopyWithImpl<$Res>
   @override
   $Res call({Object? theme = null, Object? isDarkMode = null}) {
     return _then(
-      _$InitialImpl(
+      _$ChangeThemingStateImpl(
         theme:
             null == theme
                 ? _value.theme
@@ -153,8 +115,11 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl({required this.theme, required this.isDarkMode});
+class _$ChangeThemingStateImpl implements _ChangeThemingState {
+  const _$ChangeThemingStateImpl({
+    required this.theme,
+    required this.isDarkMode,
+  });
 
   @override
   final ThemeData theme;
@@ -163,14 +128,14 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'ChangeThemingState.initial(theme: $theme, isDarkMode: $isDarkMode)';
+    return 'ChangeThemingState(theme: $theme, isDarkMode: $isDarkMode)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
+            other is _$ChangeThemingStateImpl &&
             (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.isDarkMode, isDarkMode) ||
                 other.isDarkMode == isDarkMode));
@@ -184,83 +149,18 @@ class _$InitialImpl implements _Initial {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ThemeData theme, bool isDarkMode) initial,
-    required TResult Function(ThemeData theme, bool isDarkMode) loading,
-    required TResult Function(ThemeData theme, bool isDarkMode) loaded,
-  }) {
-    return initial(theme, isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loaded,
-  }) {
-    return initial?.call(theme, isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult Function(ThemeData theme, bool isDarkMode)? loaded,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(theme, isDarkMode);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
+  _$$ChangeThemingStateImplCopyWith<_$ChangeThemingStateImpl> get copyWith =>
+      __$$ChangeThemingStateImplCopyWithImpl<_$ChangeThemingStateImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _Initial implements ChangeThemingState {
-  const factory _Initial({
+abstract class _ChangeThemingState implements ChangeThemingState {
+  const factory _ChangeThemingState({
     required final ThemeData theme,
     required final bool isDarkMode,
-  }) = _$InitialImpl;
+  }) = _$ChangeThemingStateImpl;
 
   @override
   ThemeData get theme;
@@ -271,340 +171,6 @@ abstract class _Initial implements ChangeThemingState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res>
-    implements $ChangeThemingStateCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ThemeData theme, bool isDarkMode});
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$ChangeThemingStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ChangeThemingState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? theme = null, Object? isDarkMode = null}) {
-    return _then(
-      _$LoadingImpl(
-        theme:
-            null == theme
-                ? _value.theme
-                : theme // ignore: cast_nullable_to_non_nullable
-                    as ThemeData,
-        isDarkMode:
-            null == isDarkMode
-                ? _value.isDarkMode
-                : isDarkMode // ignore: cast_nullable_to_non_nullable
-                    as bool,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl({required this.theme, required this.isDarkMode});
-
-  @override
-  final ThemeData theme;
-  @override
-  final bool isDarkMode;
-
-  @override
-  String toString() {
-    return 'ChangeThemingState.loading(theme: $theme, isDarkMode: $isDarkMode)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
-            (identical(other.theme, theme) || other.theme == theme) &&
-            (identical(other.isDarkMode, isDarkMode) ||
-                other.isDarkMode == isDarkMode));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, theme, isDarkMode);
-
-  /// Create a copy of ChangeThemingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ThemeData theme, bool isDarkMode) initial,
-    required TResult Function(ThemeData theme, bool isDarkMode) loading,
-    required TResult Function(ThemeData theme, bool isDarkMode) loaded,
-  }) {
-    return loading(theme, isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loaded,
-  }) {
-    return loading?.call(theme, isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult Function(ThemeData theme, bool isDarkMode)? loaded,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(theme, isDarkMode);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements ChangeThemingState {
-  const factory _Loading({
-    required final ThemeData theme,
-    required final bool isDarkMode,
-  }) = _$LoadingImpl;
-
-  @override
-  ThemeData get theme;
-  @override
-  bool get isDarkMode;
-
-  /// Create a copy of ChangeThemingState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res>
-    implements $ChangeThemingStateCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-    _$LoadedImpl value,
-    $Res Function(_$LoadedImpl) then,
-  ) = __$$LoadedImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ThemeData theme, bool isDarkMode});
-}
-
-/// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$ChangeThemingStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-    _$LoadedImpl _value,
-    $Res Function(_$LoadedImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ChangeThemingState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? theme = null, Object? isDarkMode = null}) {
-    return _then(
-      _$LoadedImpl(
-        theme:
-            null == theme
-                ? _value.theme
-                : theme // ignore: cast_nullable_to_non_nullable
-                    as ThemeData,
-        isDarkMode:
-            null == isDarkMode
-                ? _value.isDarkMode
-                : isDarkMode // ignore: cast_nullable_to_non_nullable
-                    as bool,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl({required this.theme, required this.isDarkMode});
-
-  @override
-  final ThemeData theme;
-  @override
-  final bool isDarkMode;
-
-  @override
-  String toString() {
-    return 'ChangeThemingState.loaded(theme: $theme, isDarkMode: $isDarkMode)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
-            (identical(other.theme, theme) || other.theme == theme) &&
-            (identical(other.isDarkMode, isDarkMode) ||
-                other.isDarkMode == isDarkMode));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, theme, isDarkMode);
-
-  /// Create a copy of ChangeThemingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ThemeData theme, bool isDarkMode) initial,
-    required TResult Function(ThemeData theme, bool isDarkMode) loading,
-    required TResult Function(ThemeData theme, bool isDarkMode) loaded,
-  }) {
-    return loaded(theme, isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult? Function(ThemeData theme, bool isDarkMode)? loaded,
-  }) {
-    return loaded?.call(theme, isDarkMode);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ThemeData theme, bool isDarkMode)? initial,
-    TResult Function(ThemeData theme, bool isDarkMode)? loading,
-    TResult Function(ThemeData theme, bool isDarkMode)? loaded,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(theme, isDarkMode);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements ChangeThemingState {
-  const factory _Loaded({
-    required final ThemeData theme,
-    required final bool isDarkMode,
-  }) = _$LoadedImpl;
-
-  @override
-  ThemeData get theme;
-  @override
-  bool get isDarkMode;
-
-  /// Create a copy of ChangeThemingState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+  _$$ChangeThemingStateImplCopyWith<_$ChangeThemingStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

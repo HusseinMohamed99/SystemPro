@@ -18,6 +18,7 @@ import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 import 'package:system_pro/features/Home/logic/Profile/profile_state.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_card_list.dart';
 import 'package:system_pro/features/Home/ui/profile_widgets/custom_profile_info.dart';
+
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
   @override
@@ -61,7 +62,9 @@ class ProfileView extends StatelessWidget {
                         alignment: AlignmentDirectional.bottomEnd,
                         child: TextButton(
                           onPressed: () {
-                            context.read<ProfileCubit>().emitLogoutStates(context: context);
+                            context.read<ProfileCubit>().emitLogoutStates(
+                              context: context,
+                            );
                             DioFactory.clearAuthorizationHeader();
                           },
                           child: Text(
@@ -87,10 +90,15 @@ class ProfileView extends StatelessWidget {
         } else if (state is UserDataError) {
           return CustomErrorTextWidget(
             errorMessage: state.error,
-            onRetry: () => context.read<ProfileCubit>().emitGetProfileStates(context: context),
+            onRetry:
+                () => context.read<ProfileCubit>().emitGetProfileStates(
+                  context: context,
+                ),
           );
         }
-        return const SizedBox.shrink();
+        return CustomErrorTextWidget(
+          errorMessage: context.localization.unknown_error,
+        );
       },
     ).allPadding(
       vPadding: kPaddingDefaultVertical,
