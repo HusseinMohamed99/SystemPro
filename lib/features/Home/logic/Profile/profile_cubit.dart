@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
@@ -10,12 +11,14 @@ class ProfileCubit extends Cubit<ProfileDataState> {
   ProfileCubit(this._profileRepo) : super(const ProfileDataState.initial());
   final ProfileRepo _profileRepo;
 
-  void emitLogoutStates() async {
+  void emitLogoutStates({required BuildContext context}) async {
     // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
     if (isClosed) return;
+    
+    final lang = context.localeCode;
 
     emit(const ProfileDataState.logoutLoading());
-    final response = await _profileRepo.logout();
+    final response = await _profileRepo.logout(lang);
     await response.when(
       success: (profileDataResponse) async {
         await CachingHelper.clearAllSecuredData();
@@ -39,12 +42,13 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     );
   }
 
-  void emitDeleteAccountStates() async {
+  void emitDeleteAccountStates({required BuildContext context}) async {
     // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
     if (isClosed) return;
+    final lang = context.localeCode;
 
     emit(const ProfileDataState.deleteAccountLoading());
-    final response = await _profileRepo.deleteAccount();
+    final response = await _profileRepo.deleteAccount(lang);
     await response.when(
       success: (profileDataResponse) async {
         await CachingHelper.clearAllSecuredData();
@@ -68,12 +72,13 @@ class ProfileCubit extends Cubit<ProfileDataState> {
     );
   }
 
-  void emitGetProfileStates() async {
+  void emitGetProfileStates({required BuildContext context}) async {
     // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
     if (isClosed) return;
+    final lang = context.localeCode;
 
     emit(const ProfileDataState.userDataLoading());
-    final response = await _profileRepo.getSeekerProfile();
+    final response = await _profileRepo.getSeekerProfile(lang);
     response.when(
       success: (userDataResponse) {
         // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
@@ -98,20 +103,21 @@ class ProfileCubit extends Cubit<ProfileDataState> {
   final FocusNode userNameFocusNode = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Future<void> updateUserProfile() async {
+  Future<void> updateUserProfile({required BuildContext context}) async {
     // التحقق من أن الـ Cubit لم يتم إغلاقه بعد
     if (isClosed) return;
+    final lang = context.localeCode;
 
     emit(const ProfileDataState.editProfileLoading());
     try {
       final requestBody = EditProfileRequestBody(
         userName: userNameController.text,
       );
-      final response = await _profileRepo.editProfile(requestBody);
+      final response = await _profileRepo.editProfile(requestBody,lang);
       response.when(
         success: (editProfileResponse) {
           // إعادة جلب البيانات بعد التعديل
-          emitGetProfileStates();
+          emitGetProfileStates(context: context);
 
           // تأكد من عدم إرسال الحالة مرتين أو أكثر
           if (!isClosed) {
@@ -156,15 +162,17 @@ class ProfileCubit extends Cubit<ProfileDataState> {
   bool _hasLoadedOnce = false;
 
   /// Load user profile data once, only if not loaded before.
-  void loadProfileOnce() {
+  void loadProfileOnce({required BuildContext context}) {
     if (_hasLoadedOnce) return;
-    emitGetProfileStates();
+    emitGetProfileStates(context: context);
     _hasLoadedOnce = true;
   }
 
-  Future<void> checkSessionValidity() async {
+  Future<void> checkSessionValidity({required BuildContext context}) async {
     AppLogs.log('🔍 Checking session validity...');
-    final result = await _profileRepo.getSeekerProfile();
+          final lang = context.localeCode;
+
+    final result = await _profileRepo.getSeekerProfile(lang);
 
     await result.when(
       success: (_) {},

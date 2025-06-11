@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/features/Authentication/Login/data/model/login_request_body.dart';
@@ -63,14 +64,16 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   /// Validate and submit the login form
-  void submitIfFormValid() {
+  void submitIfFormValid({required BuildContext context}) {
     if (formKey.currentState?.validate() ?? false) {
-      _performLogin();
+      final lang = context.localeCode; // استخراج اللغة قبل async
+      _performLogin(lang: lang); // مرر القيمة فقط
     }
   }
 
   /// Perform login using repository and emit appropriate state
-Future<void> _performLogin() async {
+Future<void> _performLogin({required String lang}) async {
+
     emit(const LoginState.loginLoading());
 
     try {
@@ -79,6 +82,7 @@ Future<void> _performLogin() async {
           email: emailController.text,
           password: passwordController.text,
         ),
+        lang,
       );
 
       await response.when(

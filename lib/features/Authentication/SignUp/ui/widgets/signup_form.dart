@@ -69,7 +69,7 @@ class SignupForm extends StatelessWidget {
                 text: context.localization.sign_up,
                 isLoading: isLoading,
                 isDisabled: isDisabled,
-                onPressed: cubit.submitIfFormValid,
+                onPressed: () => cubit.submitIfFormValid(context: context),
               ),
               const Spacer(),
               HaveAnAccountWidget(

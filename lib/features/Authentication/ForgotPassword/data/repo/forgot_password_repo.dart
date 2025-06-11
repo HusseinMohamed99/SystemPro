@@ -16,12 +16,13 @@ class ForgotPasswordRepo {
   /// or [ApiResult.failure] with error details if an exception occurs.
   Future<ApiResult<ForgotPasswordResponse>> forgotPassword(
     ForgotPasswordRequestBody requestBody,
+    String lang,
   ) async {
     try {
       final response = await _apiService.forgotPassword(requestBody);
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 }

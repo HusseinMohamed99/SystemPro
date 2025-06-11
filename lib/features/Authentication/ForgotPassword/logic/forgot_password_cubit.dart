@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/model/forgot_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/data/repo/forgot_password_repo.dart';
 import 'package:system_pro/features/Authentication/ForgotPassword/logic/forgot_password_state.dart';
@@ -35,9 +36,10 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   /// Sends forgot password request to backend.
-  Future<void> submitForgotPassword() async {
+  Future<void> submitForgotPassword({required BuildContext context}) async {
     final isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
+    final lang = context.localeCode;
 
     emit(const ForgotPasswordState.forgotPasswordLoading());
 
@@ -45,6 +47,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
     final response = await _forgotPasswordRepo.forgotPassword(
       ForgotPasswordRequestBody(email: email),
+      lang,
     );
 
     response.when(

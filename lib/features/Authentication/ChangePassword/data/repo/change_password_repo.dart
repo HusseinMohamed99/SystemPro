@@ -1,7 +1,6 @@
 import 'package:system_pro/core/networking/backend/api_error_handler.dart';
 import 'package:system_pro/core/networking/backend/api_result.dart';
 import 'package:system_pro/core/networking/backend/api_service.dart';
-
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_response.dart';
 
@@ -16,13 +15,13 @@ class ChangePasswordRepo {
   /// Returns either a successful response or an error wrapped in ApiResult.
   Future<ApiResult<ChangePasswordResponse>> changePassword(
     ChangePasswordRequestBody request,
+    String lang,
   ) async {
     try {
       final response = await _apiService.changePassword(request);
       return ApiResult.success(response);
     } catch (error) {
-      // Catch and map the error using a global handler
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error, lang));
     }
   }
 }

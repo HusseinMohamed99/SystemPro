@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/features/EditProfile/data/model/edit_profile_request_body.dart';
 import 'package:system_pro/features/EditProfile/data/repo/edit_profile_repo.dart';
 import 'package:system_pro/features/EditProfile/logic/edit_profile_state.dart';
@@ -13,13 +14,14 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final FocusNode userNameFocusNode = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Future<void> updateUserProfile() async {
+  Future<void> updateUserProfile({required BuildContext context}) async {
+      final lang = context.localeCode;
     emit(const EditProfileState.editProfileLoading());
     try {
       final requestBody = EditProfileRequestBody(
         userName: userNameController.text,
       );
-      final response = await _editProfileRepo.editProfile(requestBody);
+      final response = await _editProfileRepo.editProfile(requestBody,lang);
       response.when(
         success: (editProfileResponse) {
           emit(EditProfileState.editProfileSuccess(editProfileResponse));

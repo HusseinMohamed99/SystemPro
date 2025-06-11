@@ -136,7 +136,10 @@ class AppRouters {
             builder:
                 (_) => BlocProvider(
                   create:
-                      (context) => getIt<CategoriesCubit>()..getCategories(),
+                      (context) =>
+                          getIt<CategoriesCubit>()
+                            ..getCategories(context: context),
+
                   child: FilterView(locationArgument: arguments),
                 ),
           );

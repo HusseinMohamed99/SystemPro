@@ -8,22 +8,26 @@ class FavoriteRepo {
   FavoriteRepo(this._apiService);
   final ApiService _apiService;
 
-  Future<ApiResult<GetFavoritesResponse>> getFavoriteListings() async {
+  Future<ApiResult<GetFavoritesResponse>> getFavoriteListings(
+    String lang,
+  ) async {
     try {
       final response = await _apiService.getFavoriteListings();
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error, lang));
     }
   }
-  Future<ApiResult<ToggleFavoriteResponse>> toggleFavorite(int id) async {
+
+  Future<ApiResult<ToggleFavoriteResponse>> toggleFavorite(
+    int id,
+    String lang,
+  ) async {
     try {
       final response = await _apiService.toggleFavorite(id);
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error, lang));
     }
   }
-
-
 }

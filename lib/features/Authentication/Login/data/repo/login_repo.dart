@@ -12,7 +12,9 @@ class LoginRepo {
 
   /// Calls the login API and returns either success or failure result.
   /// Returns [ApiResult.success] if successful, otherwise [ApiResult.failure].
-  Future<ApiResult<LoginResponse>> login(LoginRequestBody request) async {
+  Future<ApiResult<LoginResponse>> login(LoginRequestBody request,
+    String lang,
+  ) async {
     try {
       // Call login API through the API service
       final response = await _apiService.login(request);
@@ -20,7 +22,7 @@ class LoginRepo {
     } catch (error) {
    
       // Map and return a structured error
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 }

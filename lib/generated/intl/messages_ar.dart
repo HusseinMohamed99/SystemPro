@@ -127,6 +127,42 @@ class MessageLookup extends MessageLookupByLibrary {
       "أدخل بريدك الإلكتروني",
     ),
     "enter_password": MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور"),
+    "errorBadRequest": MessageLookupByLibrary.simpleMessage(
+      "طلب غير صالح. يرجى التحقق من البيانات.",
+    ),
+    "errorCache": MessageLookupByLibrary.simpleMessage(
+      "تعذر تحميل البيانات المؤقتة.",
+    ),
+    "errorConflict": MessageLookupByLibrary.simpleMessage(
+      "يوجد تعارض. حاول لاحقًا.",
+    ),
+    "errorDefault": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ ما. حاول مرة أخرى لاحقًا.",
+    ),
+    "errorForbidden": MessageLookupByLibrary.simpleMessage(
+      "الوصول مرفوض. تحقق من صلاحياتك.",
+    ),
+    "errorInternalServer": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا.",
+    ),
+    "errorNoContent": MessageLookupByLibrary.simpleMessage(
+      "لا توجد بيانات متاحة.",
+    ),
+    "errorNoInternet": MessageLookupByLibrary.simpleMessage(
+      "لا يوجد اتصال بالإنترنت. تحقق من الشبكة.",
+    ),
+    "errorNotFound": MessageLookupByLibrary.simpleMessage(
+      "العنصر المطلوب غير موجود.",
+    ),
+    "errorTimeout": MessageLookupByLibrary.simpleMessage(
+      "انتهت مهلة الطلب. تحقق من الاتصال بالإنترنت.",
+    ),
+    "errorUnauthorized": MessageLookupByLibrary.simpleMessage(
+      "الدخول غير مصرح به. يرجى تسجيل الدخول مجددًا.",
+    ),
+    "errorUnknown": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ غير معروف. حاول مرة أخرى.",
+    ),
     "failed_to_upload_image": MessageLookupByLibrary.simpleMessage(
       "فشل تحميل الصورة",
     ),
@@ -185,6 +221,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
     "light_mode": MessageLookupByLibrary.simpleMessage("فاتح"),
     "listed_by": MessageLookupByLibrary.simpleMessage("مدرج بواسطة"),
+    "loading": MessageLookupByLibrary.simpleMessage(
+      "جاري التحميل، الرجاء الانتظار...",
+    ),
     "location": MessageLookupByLibrary.simpleMessage("الموقع"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -211,6 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_result": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
     "not_receive_code": MessageLookupByLibrary.simpleMessage("لم تستلم الرمز؟"),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
+    "ok": MessageLookupByLibrary.simpleMessage("حسنًا"),
     "oldest": MessageLookupByLibrary.simpleMessage("الأقدم"),
     "oneDayAgo": MessageLookupByLibrary.simpleMessage("منذ يوم"),
     "oneHourAgo": MessageLookupByLibrary.simpleMessage("منذ ساعة"),
@@ -314,6 +354,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "residentail": MessageLookupByLibrary.simpleMessage("سكني"),
     "result": MessageLookupByLibrary.simpleMessage("النتائج"),
     "results_search": MessageLookupByLibrary.simpleMessage("نتائج البحث"),
+    "retry": MessageLookupByLibrary.simpleMessage("يرجى المحاولة مرة أخرى."),
     "sale": MessageLookupByLibrary.simpleMessage("البيع"),
     "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
     "save_changes": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),

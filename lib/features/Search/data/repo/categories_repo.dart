@@ -7,12 +7,12 @@ class CategoriesRepo {
   CategoriesRepo(this._apiService);
   final ApiService _apiService;
 
-  Future<ApiResult<CategoryResponse>> getCategories() async {
+  Future<ApiResult<CategoryResponse>> getCategories(String lang) async {
     try {
       final response = await _apiService.getCategories();
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 }

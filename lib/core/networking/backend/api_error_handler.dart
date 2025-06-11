@@ -26,29 +26,30 @@ class ResponseCode {
 
 /// Default messages for known errors.
 class ResponseMessage {
-  static const String noContent = ApiErrors.noContent;
-  static const String badRequest = ApiErrors.badRequestError;
-  static const String unauthorized = ApiErrors.unauthorizedError;
-  static const String forbidden = ApiErrors.forbiddenError;
-  static const String internalServerError = ApiErrors.internalServerError;
-  static const String notFound = ApiErrors.notFoundError;
-
-  static const String connectTimeout = ApiErrors.timeoutError;
-  static const String cancel = ApiErrors.defaultError;
-  static const String receiveTimeout = ApiErrors.timeoutError;
-  static const String sendTimeout = ApiErrors.timeoutError;
-  static const String cacheError = ApiErrors.cacheError;
-  static const String noInternetConnection = ApiErrors.noInternetError;
-  static const String defaultError = ApiErrors.defaultError;
+  static String noContent(String lang) => ApiErrors.noContent(lang);
+  static String badRequest(String lang) => ApiErrors.badRequestError(lang);
+  static String unauthorized(String lang) => ApiErrors.unauthorizedError(lang);
+  static String forbidden(String lang) => ApiErrors.forbiddenError(lang);
+  static String internalServerError(String lang) =>
+      ApiErrors.internalServerError(lang);
+  static String notFound(String lang) => ApiErrors.notFoundError(lang);
+  static String connectTimeout(String lang) => ApiErrors.timeoutError(lang);
+  static String cancel(String lang) => ApiErrors.defaultError(lang);
+  static String receiveTimeout(String lang) => ApiErrors.timeoutError(lang);
+  static String sendTimeout(String lang) => ApiErrors.timeoutError(lang);
+  static String cacheError(String lang) => ApiErrors.cacheError(lang);
+  static String noInternetConnection(String lang) =>
+      ApiErrors.noInternetError(lang);
+  static String defaultError(String lang) => ApiErrors.defaultError(lang);
 }
 
 /// Converts Dio errors into a unified error model.
 class ErrorHandler implements Exception {
-  ErrorHandler.handle(dynamic error) {
+  ErrorHandler.handle(dynamic error, String lang) {
     if (error is DioException) {
-      apiErrorModel = _handleDioError(error);
+      apiErrorModel = _handleDioError(error, lang);
     } else {
-      apiErrorModel = DataSource.defaultError.getFailure();
+      apiErrorModel = DataSource.defaultError.getFailure(lang);
     }
   }
 
@@ -56,73 +57,66 @@ class ErrorHandler implements Exception {
 }
 
 /// Main logic to extract error details from DioException.
-ApiErrorModel _handleDioError(DioException error) {
+ApiErrorModel _handleDioError(DioException error, String lang) {
   switch (error.type) {
     case DioExceptionType.connectionTimeout:
-      return DataSource.connectTimeout.getFailure();
-
+      return DataSource.connectTimeout.getFailure(lang);
     case DioExceptionType.sendTimeout:
-      return DataSource.sendTimeout.getFailure();
-
+      return DataSource.sendTimeout.getFailure(lang);
     case DioExceptionType.receiveTimeout:
-      return DataSource.receiveTimeout.getFailure();
-
+      return DataSource.receiveTimeout.getFailure(lang);
     case DioExceptionType.badResponse:
     case DioExceptionType.unknown:
       final statusCode = error.response?.statusCode;
       final data = error.response?.data;
 
-      // Fallbacks for common HTTP status codes
       if (statusCode != null) {
         switch (statusCode) {
           case ResponseCode.unauthorized:
             return ApiErrorModel(
               code: ResponseCode.unauthorized,
-              message: ResponseMessage.unauthorized,
+              message: ResponseMessage.unauthorized(lang),
             );
           case ResponseCode.forbidden:
             return ApiErrorModel(
               code: ResponseCode.forbidden,
-              message: ResponseMessage.forbidden,
+              message: ResponseMessage.forbidden(lang),
             );
           case ResponseCode.notFound:
             return ApiErrorModel(
               code: ResponseCode.notFound,
-              message: ResponseMessage.notFound,
+              message: ResponseMessage.notFound(lang),
             );
           case ResponseCode.apiLogicError:
-            // For validation errors like 422
             return ApiErrorModel(
               code: ResponseCode.apiLogicError,
-              message: 'Invalid input. Please check and try again.',
+              message: ResponseMessage.badRequest(lang),
             );
           case ResponseCode.internalServerError:
             return ApiErrorModel(
               code: ResponseCode.internalServerError,
-              message: ResponseMessage.internalServerError,
+              message: ResponseMessage.internalServerError(lang),
             );
         }
       }
 
-      // Try to parse API error response if available
       if (data != null) {
         try {
           return ApiErrorModel.fromJson(data);
         } catch (_) {
-          return DataSource.defaultError.getFailure();
+          return DataSource.defaultError.getFailure(lang);
         }
       }
-
-      return DataSource.defaultError.getFailure();
+      return DataSource.defaultError.getFailure(lang);
 
     case DioExceptionType.cancel:
-      return DataSource.cancel.getFailure();
+      return DataSource.cancel.getFailure(lang);
 
     case DioExceptionType.connectionError:
     case DioExceptionType.badCertificate:
       return ApiErrorModel(
         code: ResponseCode.defaultError,
-        message: 'Connection issue. Please check your network and try again.',
+        message: ResponseMessage.defaultError(lang),
       );
   }
 }

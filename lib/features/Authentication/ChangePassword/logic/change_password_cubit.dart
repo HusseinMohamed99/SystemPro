@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/model/change_password_request_body.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/repo/change_password_repo.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_state.dart';
@@ -54,9 +55,12 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   }
 
   /// Submits the change password request if the form is valid.
-  Future<void> changePassword({required String email}) async {
+  Future<void> changePassword({required String email,
+    required BuildContext context,
+  }) async {
     final isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
+    final lang = context.localeCode;
 
     emit(const ChangePasswordState.changePasswordLoading());
 
@@ -66,7 +70,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       confirmPassword: confirmPasswordController.text.trim(),
     );
 
-    final response = await _repo.changePassword(request);
+    final response = await _repo.changePassword(request,lang);
 
     response.when(
       success: (res) {

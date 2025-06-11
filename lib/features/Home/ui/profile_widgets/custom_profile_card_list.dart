@@ -51,7 +51,7 @@ class CustomProfileCardList extends StatelessWidget {
                     arguments: userName,
                   );
                   if (result == true) {
-                    profileCubit.emitGetProfileStates();
+                    profileCubit.emitGetProfileStates(context: context);
                   }
                 } else if (index == 1) {
                   await _showLanguageSelectionSheet(

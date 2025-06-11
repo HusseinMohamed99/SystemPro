@@ -11,7 +11,14 @@ extension LocalizationExtension on BuildContext {
   /// context.localization.appTitle;
   S get localization => S.of(this);
 
-  /// Returns `true` if the current locale is Arabic (`'ar'`),otherwise `false`.
+  /// Returns `true` if the current locale is Arabic (`'ar'`),
+  ///  otherwise `false`.
   /// Useful for setting direction, layout, or font logic.
   bool get isAr => Localizations.localeOf(this).languageCode == 'ar';
+  String get localeCode => Localizations.localeOf(this).languageCode;
+
+  /// Returns text direction based on current language.
+  /// Can be used for layout control.
+  TextDirection get textDirection =>
+      isAr ? TextDirection.rtl : TextDirection.ltr;
 }

@@ -47,7 +47,9 @@ class _ListingsListState extends State<ListingsList> {
       // Detect scroll to bottom with debounce to prevent rapid loadMore calls
       onNotification: (notification) {
         if (_shouldLoadMore(notification, marketPlaceCubit)) {
-          _debounce(marketPlaceCubit.loadMore);
+          _debounce(() {
+            marketPlaceCubit.loadMore(lang: context.localeCode);
+          });
         }
         return false;
       },

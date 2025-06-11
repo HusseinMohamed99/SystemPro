@@ -15,6 +15,7 @@ class SignupRepo {
   /// Sends signup request to the API and returns success or structured failure.
   Future<ApiResult<SignupResponse>> signup(
     SignupRequestBody signUpRequestBody,
+    String lang,
   ) async {
     try {
       final response = await _apiService.signup(signUpRequestBody);
@@ -24,7 +25,7 @@ class SignupRepo {
       AppLogs.log('Signup error: $error', type: LogType.error);
 
       // Return wrapped error
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 }

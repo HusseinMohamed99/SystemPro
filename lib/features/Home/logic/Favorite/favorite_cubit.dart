@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/favorite_repo.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
@@ -24,9 +26,9 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   bool get hasMore => _loadedCount < _favoriteListings.length;
 
   /// Load favorite listings either from cache or API
-  Future<void> getFavoriteListings({bool forceRefresh = false}) async {
+  Future<void> getFavoriteListings({bool forceRefresh = false, required BuildContext context}) async {
     if (isLoading) return;
-
+    final lang = context.localeCode;
     if (_isCacheLoaded && !forceRefresh) {
       emit(
         FavoriteState.getFavoriteSuccess(
@@ -42,7 +44,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     emit(const FavoriteState.getFavoriteLoading());
 
     try {
-      final result = await _favoriteRepo.getFavoriteListings();
+      final result = await _favoriteRepo.getFavoriteListings(lang);
 
       result.when(
         success: (response) {
@@ -82,9 +84,9 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   /// Toggle favorite status and update internal cache accordingly
-  Future<void> toggleFavorite(int id, {Listing? listing}) async {
+  Future<void> toggleFavorite(int id, {Listing? listing,required String lang}) async {
     try {
-      final result = await _favoriteRepo.toggleFavorite(id);
+      final result = await _favoriteRepo.toggleFavorite(id,lang);
 
       result.when(
         success: (response) {
@@ -161,8 +163,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   /// Manually refresh all favorites from server
-  Future<void> refreshFavorites() async {
-    await getFavoriteListings(forceRefresh: true);
+  Future<void> refreshFavorites({required BuildContext context}) async {
+    await getFavoriteListings(forceRefresh: true, context: context);
   }
 
   /// Clear local cache, useful on logout
@@ -212,9 +214,9 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   bool _hasLoadedOnce = false;
 
   /// Load favorite listings only once unless explicitly refreshed.
-  void loadFavoritesOnce() {
+  void loadFavoritesOnce({required BuildContext context}) {
     if (_hasLoadedOnce) return;
-    getFavoriteListings(forceRefresh: true);
+    getFavoriteListings(forceRefresh: true, context: context);
     _hasLoadedOnce = true;
   }
 

@@ -42,9 +42,9 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   String get currentFilter => _currentFilter;
 
   /// 🟢 Initial one-time fetch
-  void initIfNeeded() {
+  void initIfNeeded({required BuildContext context}) {
     if (!_hasLoadedOnce) {
-      getListings();
+      getListings(context: context);
       _hasLoadedOnce = true;
     }
   }
@@ -84,7 +84,8 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 📥 Public method to fetch listings with filter/caching logic
-  Future<void> getListings({String? filter, bool forceRefresh = false}) async {
+  Future<void> getListings({String? filter, bool forceRefresh = false, required BuildContext context,
+    }) async {
     final effectiveFilter = (filter?.isNotEmpty ?? false) ? filter! : 'buy';
 
     if (!forceRefresh &&
@@ -105,6 +106,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
       _emitSortedSuccess();
       return;
     }
+    final lang = context.localeCode;
 
     emit(const MarketplaceState.loading());
     pagination.reset();
@@ -112,6 +114,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     _currentFilter = effectiveFilter;
 
     await _fetchAndHandleListings(
+      lang: lang,
       request: FilterRequestModel(
         direction: pagination.direction,
         cursor: pagination.cursor,
@@ -123,8 +126,9 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 🔁 Load next page for current filter
-  Future<void> loadMore() async {
+  Future<void> loadMore({required String lang}) async {
     await _fetchAndHandleListings(
+      lang: lang,
       request: FilterRequestModel(
         direction: pagination.direction,
         cursor: pagination.cursor,
@@ -136,13 +140,14 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 🎯 Fetch with custom args (filter screen)
-  Future<void> fetchAndFilterListings(FilterResultArguments args) async {
+  Future<void> fetchAndFilterListings(FilterResultArguments args, {required String lang}) async {
     emit(const MarketplaceState.loading());
     pagination.reset();
     _visibleListings.clear();
     final key = args.hashCode.toString();
 
     await _fetchAndHandleListings(
+      lang: lang,
       request: FilterRequestModel.fromArgs(args).copyWith(
         direction: pagination.direction,
         cursor: pagination.cursor,
@@ -153,9 +158,10 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// ➕ Load more from filter args
-  Future<void> loadMoreWithArgs(FilterResultArguments args) async {
+  Future<void> loadMoreWithArgs(FilterResultArguments args, {required String lang}) async {
     final key = args.hashCode.toString();
     await _fetchAndHandleListings(
+      lang: lang,
       request: FilterRequestModel.fromArgs(args).copyWith(
         direction: pagination.direction,
         cursor: pagination.cursor,
@@ -169,12 +175,13 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   Future<void> _fetchAndHandleListings({
     required FilterRequestModel request,
     required String cacheKey,
+    required String lang,
   }) async {
     if (pagination.isLoading || !pagination.hasMore) return;
     pagination.isLoading = true;
 
     try {
-      final result = await _marketplaceRepo.getMarketplaceListings(request);
+      final result = await _marketplaceRepo.getMarketplaceListings(request,lang);
 
       result.when(
         success: (response) {
@@ -247,9 +254,9 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 💖 Toggle favorite status and sync with favorite cubit
-  Future<Listing?> toggleFavorite(int id, {Listing? listing}) async {
+  Future<Listing?> toggleFavorite(int id, {Listing? listing,required String lang}) async {
     try {
-      final result = await _marketplaceRepo.toggleFavorite(id);
+      final result = await _marketplaceRepo.toggleFavorite(id,lang);
       return result.when(
         success: (res) {
           final isFav = res.data?.isFavorited ?? false;

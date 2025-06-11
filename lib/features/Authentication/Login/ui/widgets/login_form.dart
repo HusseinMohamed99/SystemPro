@@ -71,7 +71,8 @@ class LoginForm extends StatelessWidget {
                 text: context.localization.login,
                 isLoading: isLoading,
                 isDisabled: isDisabled,
-                onPressed: cubit.submitIfFormValid,
+              onPressed: () => cubit.submitIfFormValid(context: context),
+
               ),
               const Spacer(),
               // Sign up redirection

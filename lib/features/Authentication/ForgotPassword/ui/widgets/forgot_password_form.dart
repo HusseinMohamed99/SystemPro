@@ -41,7 +41,7 @@ class ForgotPasswordForm extends StatelessWidget {
                 onPressed: () {
                   if (forgotPasswordCubit.formKey.currentState?.validate() ??
                       false) {
-                    forgotPasswordCubit.submitForgotPassword();
+                    forgotPasswordCubit.submitForgotPassword(context: context);
                   }
                 },
               );

@@ -38,7 +38,8 @@ class _SourceProfileViewState extends State<SourceProfileView> {
       cubit.getListingsBySource(
         companyId: widget.companyId,
         marketerId: widget.marketerId,
-      );
+      context: context );
+    
     });
     // Scroll listener for loading more listings when near the bottom
     _scrollController.addListener(() {
@@ -47,7 +48,10 @@ class _SourceProfileViewState extends State<SourceProfileView> {
               _scrollController.position.maxScrollExtent - 100 &&
           cubit.hasMore &&
           !cubit.isLoading) {
-        cubit.loadMoreListingsBySource();
+        cubit.loadMoreListingsBySource(
+          lang:     context.localeCode
+
+        );
       }
     });
   }
@@ -79,6 +83,7 @@ class _SourceProfileViewState extends State<SourceProfileView> {
                   context.read<RealEstateCubit>().getListingsBySource(
                     companyId: widget.companyId,
                     marketerId: widget.marketerId,
+                    context: context
                   );
                 },
               ),

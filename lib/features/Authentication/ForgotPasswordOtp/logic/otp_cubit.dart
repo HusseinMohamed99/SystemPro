@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/check_otp_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/model/resend_otp_request_body.dart';
 import 'package:system_pro/features/Authentication/ForgotPasswordOtp/data/repo/otp_repo.dart';
@@ -60,10 +61,12 @@ class OtpCubit extends Cubit<OtpState> {
   }
 
   /// Verifies OTP with backend
-  Future<void> checkOtp(CheckOtpRequestBody request) async {
+  Future<void> checkOtp(CheckOtpRequestBody request,{required BuildContext context}) async {
+        final lang = context.localeCode;
+
     emit(const OtpState.otpLoading());
 
-    final response = await _otpRepo.checkOtp(request);
+    final response = await _otpRepo.checkOtp(request,lang);
 
     response.when(
       success: (data) {
@@ -82,12 +85,13 @@ class OtpCubit extends Cubit<OtpState> {
   }
 
   /// Resends OTP and restarts timer if allowed
-  Future<void> resendOtp(ResendOtpRequestBody request) async {
+  Future<void> resendOtp(ResendOtpRequestBody request,{required BuildContext context}) async {
     if (_secondsRemaining > 0) return;
+    final lang = context.localeCode;
 
     emit(const OtpState.otpLoading());
 
-    final response = await _otpRepo.resendOtp(request);
+    final response = await _otpRepo.resendOtp(request,lang);
 
     response.when(
       success: (data) {

@@ -14,24 +14,26 @@ class EmailVerifyRepo {
   /// Verifies the email using the provided [EmailVerifyRequestBody]
   Future<ApiResult<EmailVerifyResponse>> verifyEmail(
     EmailVerifyRequestBody request,
+    String lang,
   ) async {
-    return _handleApiCall(() => _apiService.emailVerify(request));
+    return _handleApiCall(() => _apiService.emailVerify(request),lang);
   }
 
   /// Resends the OTP to the provided email/phone using [ResendOtpRequestBody]
   Future<ApiResult<ResendOtpResponse>> resendOtp(
     ResendOtpRequestBody request,
+    String lang,
   ) async {
-    return _handleApiCall(() => _apiService.resendOtp(request));
+    return _handleApiCall(() => _apiService.resendOtp(request),lang);
   }
 
   /// Shared method to handle API calls and error catching
-  Future<ApiResult<T>> _handleApiCall<T>(Future<T> Function() apiCall) async {
+  Future<ApiResult<T>> _handleApiCall<T>(Future<T> Function() apiCall,String lang) async {
     try {
       final response = await apiCall();
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 }

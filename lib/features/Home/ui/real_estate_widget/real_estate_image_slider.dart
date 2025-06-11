@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/routing/routes.dart';
@@ -51,6 +52,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
     final updated = await cubit.toggleFavorite(
       widget.listingId,
       listing: widget.listing,
+      lang: context.localeCode,
     );
     if (updated != null) {
       final favCubit = context.read<FavoriteCubit>();

@@ -61,7 +61,7 @@ class ProfileView extends StatelessWidget {
                         alignment: AlignmentDirectional.bottomEnd,
                         child: TextButton(
                           onPressed: () {
-                            context.read<ProfileCubit>().emitLogoutStates();
+                            context.read<ProfileCubit>().emitLogoutStates(context: context);
                             DioFactory.clearAuthorizationHeader();
                           },
                           child: Text(
@@ -87,7 +87,7 @@ class ProfileView extends StatelessWidget {
         } else if (state is UserDataError) {
           return CustomErrorTextWidget(
             errorMessage: state.error,
-            onRetry: () => context.read<ProfileCubit>().emitGetProfileStates(),
+            onRetry: () => context.read<ProfileCubit>().emitGetProfileStates(context: context),
           );
         }
         return const SizedBox.shrink();

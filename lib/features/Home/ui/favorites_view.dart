@@ -36,7 +36,7 @@ class _FavoritesViewState extends State<FavoritesView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    context.read<FavoriteCubit>().getFavoriteListings(forceRefresh: true);
+    context.read<FavoriteCubit>().getFavoriteListings(forceRefresh: true, context: context);
   }
   @override
   void dispose() {
@@ -74,7 +74,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                 }
                 return RefreshIndicator(
                   onRefresh:
-                      () => context.read<FavoriteCubit>().refreshFavorites(),
+                      () => context.read<FavoriteCubit>().refreshFavorites(context: context),
                   child: FavoritesViewBody(
                     listings: listings,
                     scrollController: _scrollController,
@@ -85,7 +85,7 @@ class _FavoritesViewState extends State<FavoritesView> {
               }
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_favorite_properties,
-                onRetry: () => context.read<FavoriteCubit>().refreshFavorites(),
+                onRetry: () => context.read<FavoriteCubit>().refreshFavorites(context: context),
               );
             },
           ),

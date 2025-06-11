@@ -33,7 +33,7 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
     super.didChangeDependencies();
     if (_isFirstBuild) {
       _isFirstBuild = false;
-      context.read<MarketplaceCubit>().fetchAndFilterListings(widget.arguments);
+      context.read<MarketplaceCubit>().fetchAndFilterListings(widget.arguments, lang: context.localeCode);
     }
   }
 
@@ -116,7 +116,7 @@ class ListingsListFilter extends StatelessWidget {
       onNotification: (scrollInfo) {
         if (scrollInfo.metrics.pixels >=
             scrollInfo.metrics.maxScrollExtent - 200) {
-          marketplaceCubit.loadMoreWithArgs(arguments);
+          marketplaceCubit.loadMoreWithArgs(arguments, lang: context.localeCode);
         }
         return false;
       },

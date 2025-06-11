@@ -11,41 +11,42 @@ class ProfileRepo {
   final ApiService _apiService;
   final AuthLocalService _authLocalService;
 
-  Future<ApiResult<ApiSuccessModel>> logout() async {
+  Future<ApiResult<ApiSuccessModel>> logout(String lang) async {
     try {
       final response = await _apiService.logout();
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 
-  Future<ApiResult<ApiSuccessModel>> deleteAccount() async {
+  Future<ApiResult<ApiSuccessModel>> deleteAccount(String lang) async {
     try {
       final response = await _apiService.deleteAccount();
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 
-  Future<ApiResult<UserDataResponse>> getSeekerProfile() async {
+  Future<ApiResult<UserDataResponse>> getSeekerProfile(String lang) async {
     try {
       final response = await _apiService.getUserData();
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 
   Future<ApiResult<EditProfileResponse>> editProfile(
     EditProfileRequestBody editProfileRequestBody,
+    String lang
   ) async {
     try {
       final response = await _apiService.editProfile(editProfileRequestBody);
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 

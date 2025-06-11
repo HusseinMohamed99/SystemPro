@@ -1549,6 +1549,146 @@ class S {
       args: [],
     );
   }
+
+  /// `Invalid request. Please check your inputs.`
+  String get errorBadRequest {
+    return Intl.message(
+      'Invalid request. Please check your inputs.',
+      name: 'errorBadRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No content available.`
+  String get errorNoContent {
+    return Intl.message(
+      'No content available.',
+      name: 'errorNoContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Access forbidden. Please check your permissions.`
+  String get errorForbidden {
+    return Intl.message(
+      'Access forbidden. Please check your permissions.',
+      name: 'errorForbidden',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized access. Please login again.`
+  String get errorUnauthorized {
+    return Intl.message(
+      'Unauthorized access. Please login again.',
+      name: 'errorUnauthorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Requested resource not found.`
+  String get errorNotFound {
+    return Intl.message(
+      'Requested resource not found.',
+      name: 'errorNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conflict detected. Please try again later.`
+  String get errorConflict {
+    return Intl.message(
+      'Conflict detected. Please try again later.',
+      name: 'errorConflict',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Server encountered an error. Please try again later.`
+  String get errorInternalServer {
+    return Intl.message(
+      'Server encountered an error. Please try again later.',
+      name: 'errorInternalServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unknown error occurred. Please try again.`
+  String get errorUnknown {
+    return Intl.message(
+      'An unknown error occurred. Please try again.',
+      name: 'errorUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request timed out. Please check your internet connection.`
+  String get errorTimeout {
+    return Intl.message(
+      'Request timed out. Please check your internet connection.',
+      name: 'errorTimeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong. Please try again later.`
+  String get errorDefault {
+    return Intl.message(
+      'Something went wrong. Please try again later.',
+      name: 'errorDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unable to load cached data.`
+  String get errorCache {
+    return Intl.message(
+      'Unable to load cached data.',
+      name: 'errorCache',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No internet connection. Check your network.`
+  String get errorNoInternet {
+    return Intl.message(
+      'No internet connection. Check your network.',
+      name: 'errorNoInternet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading, please wait...`
+  String get loading {
+    return Intl.message(
+      'Loading, please wait...',
+      name: 'loading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please try again.`
+  String get retry {
+    return Intl.message('Please try again.', name: 'retry', desc: '', args: []);
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message('OK', name: 'ok', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/data/model/email_verify_request_body.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/data/repo/email_verify_repo.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/logic/email_verify_state.dart';
@@ -60,13 +61,16 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   }
 
   /// Validates OTP and triggers verification logic
-  Future<void> verifyEmail({required String email}) async {
+  Future<void> verifyEmail({required String email, required BuildContext context}) async {
+        final lang = context.localeCode;
+
     emit(const EmailVerifyState.emailVerifyLoading());
 
     final otp = validationCodeController.text.trim();
 
     final response = await _emailVerifyRepo.verifyEmail(
       EmailVerifyRequestBody(email: email, otp: otp),
+      lang,
     );
 
     response.when(
@@ -89,13 +93,15 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   }
 
   /// Sends a new OTP if cooldown expired
-  Future<void> resendOtp({required String email}) async {
+  Future<void> resendOtp({required String email, required BuildContext context}) async {
     if (_secondsLeft > 0) return;
+    final lang = context.localeCode;
 
     emit(const EmailVerifyState.resendOtpLoading());
 
     final response = await _emailVerifyRepo.resendOtp(
       ResendOtpRequestBody(email: email, type: 'register'),
+      lang,
     );
 
     response.when(

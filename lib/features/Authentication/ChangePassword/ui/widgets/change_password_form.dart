@@ -74,7 +74,10 @@ class ChangePasswordForm extends StatelessWidget {
                       if (changePasswordCubit.formKey.currentState!
                           .validate()) {
                         FocusScope.of(context).unfocus();
-                        changePasswordCubit.changePassword(email: email);
+                        changePasswordCubit.changePassword(
+                          email: email,
+                          context: context,
+                        );
                       }
                     },
                   ),

@@ -22,7 +22,10 @@ class MainView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => TabCubit()),
-        BlocProvider(create: (_) => getIt<MarketplaceCubit>()..initIfNeeded()),
+        BlocProvider(
+          create:
+              (_) => getIt<MarketplaceCubit>()..initIfNeeded(context: context),
+        ),
         BlocProvider(create: (_) => getIt<FavoriteCubit>()),
         BlocProvider(create: (_) => getIt<ProfileCubit>()),
       ],
@@ -53,16 +56,18 @@ class _MainViewContentState extends State<_MainViewContent> {
 
     // Map linking tab indices to their corresponding data loaders
     _tabLoaders = {
-      0: marketplaceCubit.initIfNeeded,
-      1: favoriteCubit.loadFavoritesOnce,
-      2: profileCubit.loadProfileOnce,
+      0: () => marketplaceCubit.initIfNeeded(context: context),
+      1: () => favoriteCubit.loadFavoritesOnce(context: context),
+      2: () => profileCubit.loadProfileOnce(context: context),
     };
 
     // Trigger first-time data load for the initial tab (Marketplace)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _tabLoaders[0]?.call();
       // Validate session after initial render
-      profileCubit.checkSessionValidity(); // Check session validity
+      profileCubit.checkSessionValidity(
+        context: context,
+      ); // Check session validity
     });
   }
 

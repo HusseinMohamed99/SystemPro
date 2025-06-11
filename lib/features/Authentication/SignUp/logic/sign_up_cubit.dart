@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
+import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/model/sign_up_request_body.dart';
 import 'package:system_pro/features/Authentication/SignUp/data/repo/sign_up_repo.dart';
@@ -61,14 +62,14 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   /// Triggers signup only if form is valid
-  Future<void> submitIfFormValid() async {
+  Future<void> submitIfFormValid({required BuildContext context}) async {
     final isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
-
-    await _emitSignupStates();
+    final lang = context.localeCode;
+    await _emitSignupStates(lang: lang);
   }
 
-  Future<void> _emitSignupStates() async {
+  Future<void> _emitSignupStates({required String lang}) async {
     emit(const SignupState.signupLoading());
 
     final response = await _signupRepo.signup(
@@ -78,6 +79,8 @@ class SignupCubit extends Cubit<SignupState> {
         password: passwordController.text,
         confirmPassword: confirmPasswordController.text,
       ),
+      lang,
+
     );
 
     response.when(

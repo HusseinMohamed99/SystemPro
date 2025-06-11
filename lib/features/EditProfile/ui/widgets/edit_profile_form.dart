@@ -42,7 +42,7 @@ class EditProfileForm extends StatelessWidget {
             isDisabled: !isFormValid,
             onPressed: () {
               if (profileCubit.formKey.currentState!.validate()) {
-                profileCubit.updateUserProfile();
+                profileCubit.updateUserProfile(context: context);
               }
             },
           ),
@@ -50,7 +50,7 @@ class EditProfileForm extends StatelessWidget {
           // Delete Account Link
           TextButton(
             onPressed: () {
-              profileCubit.emitDeleteAccountStates();
+              profileCubit.emitDeleteAccountStates(context: context);
               DioFactory.clearAuthorizationHeader(); // Clear auth token
             },
             child: Text(

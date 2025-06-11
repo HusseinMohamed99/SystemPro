@@ -109,7 +109,7 @@ class EmailVerifyViewBody extends StatelessWidget {
           isDisabled: !isCompleted,
           onPressed: () {
             if (cubit.formKey.currentState?.validate() ?? false) {
-              cubit.verifyEmail(email: email);
+              cubit.verifyEmail(email: email, context: context);
             }
           },
         ),
@@ -134,7 +134,7 @@ class EmailVerifyViewBody extends StatelessWidget {
         child: ResendCodeText(
           canResend: canResend,
           secondsLeft: secondsLeft,
-          onResendTap: () => cubit.resendOtp(email: email),
+          onResendTap: () => cubit.resendOtp(email: email, context: context),
         ),
       ),
     );

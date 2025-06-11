@@ -127,6 +127,42 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_password": MessageLookupByLibrary.simpleMessage(
       "Enter your password",
     ),
+    "errorBadRequest": MessageLookupByLibrary.simpleMessage(
+      "Invalid request. Please check your inputs.",
+    ),
+    "errorCache": MessageLookupByLibrary.simpleMessage(
+      "Unable to load cached data.",
+    ),
+    "errorConflict": MessageLookupByLibrary.simpleMessage(
+      "Conflict detected. Please try again later.",
+    ),
+    "errorDefault": MessageLookupByLibrary.simpleMessage(
+      "Something went wrong. Please try again later.",
+    ),
+    "errorForbidden": MessageLookupByLibrary.simpleMessage(
+      "Access forbidden. Please check your permissions.",
+    ),
+    "errorInternalServer": MessageLookupByLibrary.simpleMessage(
+      "Server encountered an error. Please try again later.",
+    ),
+    "errorNoContent": MessageLookupByLibrary.simpleMessage(
+      "No content available.",
+    ),
+    "errorNoInternet": MessageLookupByLibrary.simpleMessage(
+      "No internet connection. Check your network.",
+    ),
+    "errorNotFound": MessageLookupByLibrary.simpleMessage(
+      "Requested resource not found.",
+    ),
+    "errorTimeout": MessageLookupByLibrary.simpleMessage(
+      "Request timed out. Please check your internet connection.",
+    ),
+    "errorUnauthorized": MessageLookupByLibrary.simpleMessage(
+      "Unauthorized access. Please login again.",
+    ),
+    "errorUnknown": MessageLookupByLibrary.simpleMessage(
+      "An unknown error occurred. Please try again.",
+    ),
     "failed_to_upload_image": MessageLookupByLibrary.simpleMessage(
       "Image not available",
     ),
@@ -183,6 +219,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light"),
     "listed_by": MessageLookupByLibrary.simpleMessage("Listed by"),
+    "loading": MessageLookupByLibrary.simpleMessage("Loading, please wait..."),
     "location": MessageLookupByLibrary.simpleMessage("Location"),
     "login": MessageLookupByLibrary.simpleMessage("Log in"),
     "logout": MessageLookupByLibrary.simpleMessage("Log out"),
@@ -211,6 +248,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Didn\'t receive code?",
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
     "oneDayAgo": MessageLookupByLibrary.simpleMessage("1 day ago"),
     "oneHourAgo": MessageLookupByLibrary.simpleMessage("1 hour ago"),
@@ -312,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "residentail": MessageLookupByLibrary.simpleMessage("Residential"),
     "result": MessageLookupByLibrary.simpleMessage("Result"),
     "results_search": MessageLookupByLibrary.simpleMessage("Results Search"),
+    "retry": MessageLookupByLibrary.simpleMessage("Please try again."),
     "sale": MessageLookupByLibrary.simpleMessage("Sale"),
     "sar": MessageLookupByLibrary.simpleMessage("SAR"),
     "save_changes": MessageLookupByLibrary.simpleMessage("Save Changes"),

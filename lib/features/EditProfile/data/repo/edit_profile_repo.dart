@@ -10,12 +10,13 @@ class EditProfileRepo {
 
   Future<ApiResult<EditProfileResponse>> editProfile(
   EditProfileRequestBody editProfileRequestBody, 
+  String lang,
    ) async {
     try {
       final response = await _apiService.editProfile(editProfileRequestBody);
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 }

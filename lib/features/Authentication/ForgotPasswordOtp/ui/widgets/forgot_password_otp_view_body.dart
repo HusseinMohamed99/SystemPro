@@ -94,6 +94,7 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                           email: email,
                           otp: otpCubit.validationCodeController.text.trim(),
                         ),
+                        context: context,
                       );
                     }
                   },
@@ -122,6 +123,7 @@ class ForgotPasswordOtpViewBody extends StatelessWidget {
                                   email: email,
                                   type: 'register',
                                 ),
+                                context: context,
                               );
                             }
                           },

@@ -16,24 +16,26 @@ final class OtpRepo {
   /// Sends a request to resend an OTP.
   Future<ApiResult<ResendOtpResponse>> resendOtp(
     ResendOtpRequestBody request,
+    String lang,
   ) async {
     try {
       final response = await _apiService.resendOtp(request);
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 
   /// Sends a request to verify a submitted OTP.
   Future<ApiResult<CheckOtpResponse>> checkOtp(
     CheckOtpRequestBody request,
+    String lang,
   ) async {
     try {
       final response = await _apiService.checkOtp(request);
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
+      return ApiResult.failure(ErrorHandler.handle(error,lang));
     }
   }
 }

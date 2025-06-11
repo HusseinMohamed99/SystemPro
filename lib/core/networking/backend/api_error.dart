@@ -1,27 +1,51 @@
-/// Contains clear error messages to display directly to the user.
+
+/// A class to access localized API error messages.
 class ApiErrors {
-  static const String badRequestError =
-      'Invalid request. Please check your inputs.';
-  static const String noContent = 'No content available.';
-  static const String forbiddenError =
-      'Access forbidden. Please check your permissions.';
-  static const String unauthorizedError =
-      'Unauthorized access. Please login again.';
-  static const String notFoundError = 'Requested resource not found.';
-  static const String conflictError =
-      'Conflict detected. Please try again later.';
-  static const String internalServerError =
-      'Server encountered an error. Please try again later.';
-  static const String unknownError =
-      'An unknown error occurred. Please try again.';
-  static const String timeoutError =
-      'Request timed out. Please check your internet connection.';
-  static const String defaultError =
-      'Something went wrong. Please try again later.';
-  static const String cacheError = 'Unable to load cached data.';
-  static const String noInternetError =
-      'No internet connection. Check your network.';
-  static const String loadingMessage = 'Loading, please wait...';
-  static const String retryAgainMessage = 'Please try again.';
-  static const String ok = 'OK';
+  static String badRequestError(String lang) =>
+      lang == 'ar'
+          ? 'طلب غير صالح. يرجى التحقق من البيانات.'
+          : 'Invalid request. Please check your inputs.';
+
+  static String noContent(String lang) =>
+      lang == 'ar' ? 'لا توجد بيانات متاحة.' : 'No content available.';
+
+  static String forbiddenError(String lang) =>
+      lang == 'ar'
+          ? 'الوصول مرفوض. تحقق من صلاحياتك.'
+          : 'Access forbidden. Please check your permissions.';
+
+  static String unauthorizedError(String lang) =>
+      lang == 'ar'
+          ? 'الدخول غير مصرح به. يرجى تسجيل الدخول مجددًا.'
+          : 'Unauthorized access. Please login again.';
+
+  static String notFoundError(String lang) =>
+      lang == 'ar'
+          ? 'العنصر المطلوب غير موجود.'
+          : 'Requested resource not found.';
+
+  static String internalServerError(String lang) =>
+      lang == 'ar'
+          ? 'حدث خطأ في الخادم. حاول مرة أخرى لاحقًا.'
+          : 'Server encountered an error. Please try again later.';
+
+  static String timeoutError(String lang) =>
+      lang == 'ar'
+          ? 'انتهت مهلة الطلب. تحقق من الاتصال بالإنترنت.'
+          : 'Request timed out. Please check your internet connection.';
+
+  static String defaultError(String lang) =>
+      lang == 'ar'
+          ? 'حدث خطأ ما. حاول مرة أخرى لاحقًا.'
+          : 'Something went wrong. Please try again later.';
+
+  static String cacheError(String lang) =>
+      lang == 'ar'
+          ? 'تعذر تحميل البيانات المؤقتة.'
+          : 'Unable to load cached data.';
+
+  static String noInternetError(String lang) =>
+      lang == 'ar'
+          ? 'لا يوجد اتصال بالإنترنت. تحقق من الشبكة.'
+          : 'No internet connection. Check your network.';
 }

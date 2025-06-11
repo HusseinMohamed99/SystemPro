@@ -39,7 +39,10 @@ class HomeViewBody extends StatelessWidget {
               if (state is MarketPlaceError) {
                 return CustomErrorTextWidget(
                   errorMessage: state.error,
-                  onRetry: () => context.read<MarketplaceCubit>().getListings(),
+                  onRetry:
+                      () => context.read<MarketplaceCubit>().getListings(
+                        context: context,
+                      ),
                 );
               }
               // Success state with data
@@ -54,7 +57,10 @@ class HomeViewBody extends StatelessWidget {
                       selectedFilter: state.selectedFilter,
                       filtersToggle: FilterToggle.values,
                       onToggleChanged: (filter) {
-                        marketPlaceCubit.getListings(filter: filter);
+                        marketPlaceCubit.getListings(
+                          filter: filter,
+                          context: context,
+                        );
                       },
                     ).onlyPadding(
                       leftPadding: kPaddingDefaultHorizontal,
