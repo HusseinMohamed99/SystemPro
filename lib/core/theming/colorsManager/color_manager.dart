@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/extensions/color_extension.dart';
-import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 
 /// Manages the primary and secondary colors used throughout the app.
 class ColorManager {
