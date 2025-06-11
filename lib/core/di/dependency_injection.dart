@@ -7,6 +7,8 @@ import 'package:system_pro/core/logic/theming/change_theming_cubit.dart';
 import 'package:system_pro/core/networking/backend/api_service.dart';
 import 'package:system_pro/core/networking/backend/dio_factory.dart';
 import 'package:system_pro/core/theming/styleManager/text_style.dart';
+import 'package:system_pro/core/theming/themingManager/dark_theming.dart';
+import 'package:system_pro/core/theming/themingManager/light_theming.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/data/repo/change_password_repo.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_cubit.dart';
 import 'package:system_pro/features/Authentication/EmailVerify/data/repo/email_verify_repo.dart';
@@ -56,10 +58,11 @@ void _registerFactory<T extends Object>(T Function() factory) {
 void setupGetIt({
   required BuildContext context,
   required String initialLocale,
+  required bool isDarkMode,
 }) {
   _registerCoreModule();
-  _registerGlobalCubits(context);
-
+  _registerThemingModule(context, isDarkMode);
+  _registerLocalizationModule();
   _registerAuthModule();
   _registerProfileModule();
   _registerEditProfileModule();
@@ -77,18 +80,32 @@ void _registerCoreModule() {
 }
 
 /// Registers theming logic and configuration
-void _registerGlobalCubits(BuildContext context) {
+void _registerThemingModule(BuildContext context, bool isDarkMode) {
   final lightTextTheme = AppTextStyleManager.lightTextTheme(context);
   final darkTextTheme = AppTextStyleManager.darkTextTheme(context);
 
-  _registerLazySingleton(
-    () => ChangeThemingCubit(
-      lightTextTheme: lightTextTheme,
-      darkTextTheme: darkTextTheme,
-    ),
-  );
+  final theme =
+      isDarkMode
+          ? buildDarkTheming(textTheme: darkTextTheme)
+          : buildLightTheming(textTheme: lightTextTheme);
 
-  _registerLazySingleton(ChangeLocalizationCubit.new);
+  if (!getIt.isRegistered<ChangeThemingCubit>()) {
+    getIt.registerSingleton<ChangeThemingCubit>(
+      ChangeThemingCubit(
+        initialTheme: theme,
+        lightTextTheme: lightTextTheme,
+        darkTextTheme: darkTextTheme,
+        isDarkMode: isDarkMode,
+      ),
+    );
+  }
+}
+
+/// Registers localization cubit to manage app language
+void _registerLocalizationModule() {
+  if (!getIt.isRegistered<ChangeLocalizationCubit>()) {
+    getIt.registerSingleton<ChangeLocalizationCubit>(ChangeLocalizationCubit());
+  }
 }
 
 /// Registers authentication-related dependencies

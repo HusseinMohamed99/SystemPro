@@ -34,20 +34,22 @@ void main() async {
       storageDirectory:
           kIsWeb
               ? HydratedStorageDirectory.web
-              : HydratedStorageDirectory(
-                await getTemporaryDirectory().then((d) => d.path),
-              ),
+              : HydratedStorageDirectory((await getTemporaryDirectory()).path),
     );
+    await CachingHelper.init();
+    Bloc.observer = MyBlocObserver();
     AppConfig.isLoggedInUser =
         !(await CachingHelper.getSecuredString(
           SharedPrefKeys.userToken,
         )).isNullOrEmpty();
+    final savedLocale = CachingHelper.getString(
+      SharedPrefKeys.selectedLanguage,
+    );
+    final isDarkMode = CachingHelper.getBool(SharedPrefKeys.isDarkMode);
+
     AppConfig.userToken = await CachingHelper.getSecuredString(
       SharedPrefKeys.userToken,
     );
-    await CachingHelper.init();
-    Bloc.observer = MyBlocObserver();
-
     app = ScreenUtilInit(
       designSize: const Size(393, 852),
       minTextAdapt: true,
@@ -57,7 +59,7 @@ void main() async {
           DeviceOrientation.portraitUp,
           DeviceOrientation.portraitDown,
         ]);
-        return const AppBootstrap();
+        return AppBootstrap(initialLocale: savedLocale, isDarkMode: isDarkMode);
       },
     );
   } catch (e, stack) {
