@@ -7,6 +7,7 @@ import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
+import 'package:system_pro/core/helpers/functions/url_launcher.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/logic/localization/localization_cubit.dart';
 import 'package:system_pro/core/logic/localization/localization_state.dart';
@@ -78,6 +79,30 @@ class CustomProfileCardList extends StatelessWidget {
         break;
       case 2:
         await _showThemeSheet(context);
+        break;
+      case 3:
+        await launchUrlWithPermission(
+          context: context,
+          url: 'https://real-estate-one-lake.vercel.app/#/about',
+        );
+        break;
+      case 4:
+        await launchUrlWithPermission(
+          context: context,
+          url: 'https://real-estate-one-lake.vercel.app/#/about',
+        );
+        break;
+      case 5:
+        await launchUrlWithPermission(
+          context: context,
+          url: 'https://real-estate-one-lake.vercel.app/#/Terms',
+        );
+        break;
+      case 6:
+        await launchUrlWithPermission(
+          context: context,
+          url: 'https://real-estate-one-lake.vercel.app/#/privacy',
+        );
         break;
     }
   }
