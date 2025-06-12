@@ -1,61 +1,23 @@
-import 'dart:async';
-import 'dart:convert';
-
+// ✅ recent_searches_cubit.dart
+// ✅ recent_searches_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:system_pro/core/helpers/constants/keys.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
-import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
 import 'package:system_pro/core/helpers/extensions/snack_bar_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
-import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
-import 'package:system_pro/core/networking/cache/caching_helper.dart';
 import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/buttons/custom_button.dart';
 import 'package:system_pro/core/widgets/searchBars/custom_search_text_field.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
-import 'package:system_pro/gen/assets.gen.dart';
-
-class LocationModel {
-  final String districtAr;
-  final String districtEn;
-  final String cityAr;
-  final String cityEn;
-  final String? regionAr;
-  final String? regionEn;
-
-  LocationModel({
-    required this.districtAr,
-    required this.districtEn,
-    required this.cityAr,
-    required this.cityEn,
-    this.regionAr,
-    this.regionEn,
-  });
-
-  factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
-    districtAr: json['district_ar'] ?? '',
-    districtEn: json['district_en'] ?? '',
-    cityAr: json['city_ar'] ?? '',
-    cityEn: json['city_en'] ?? '',
-    regionAr: json['region_ar'],
-    regionEn: json['region_en'],
-  );
-
-  Map<String, dynamic> toJson() => {
-    'district_ar': districtAr,
-    'district_en': districtEn,
-    'city_ar': cityAr,
-    'city_en': cityEn,
-    if (regionAr != null) 'region_ar': regionAr,
-    if (regionEn != null) 'region_en': regionEn,
-  };
-}
+import 'package:system_pro/features/Search/data/model/location_model.dart';
+import 'package:system_pro/features/Search/logic/recent_searches_cubit.dart';
+import 'package:system_pro/features/Search/logic/recent_searches_state.dart';
 
 class RecentSearchesScreen extends StatefulWidget {
   const RecentSearchesScreen({super.key});
@@ -66,116 +28,20 @@ class RecentSearchesScreen extends StatefulWidget {
 
 class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
   final TextEditingController _searchController = TextEditingController();
-  final List<LocationModel> _recentSearches = [];
-  List<LocationModel> _searchResults = [];
-  List<LocationModel> _locations = [];
-  LocationModel? _selectedLocation;
-  bool _isLoading = false;
-  Timer? _searchDebounce;
 
   @override
   void initState() {
     super.initState();
-    _initializeData();
+    context.read<RecentSearchesCubit>().initialize();
   }
 
-  Future<void> _initializeData() async {
-    setState(() => _isLoading = true);
-    await Future.wait([_loadLocations(), _loadRecentSearches()]);
-    setState(() => _isLoading = false);
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
-  Future<void> _loadLocations() async {
-    try {
-      final jsonString = await rootBundle.loadString(Assets.location.locations);
-      final List<dynamic> data = json.decode(jsonString);
-
-      _locations =
-          data.expand((region) {
-            return (region['cities'] as List).expand<LocationModel>((city) {
-              return (city['districts'] as List).map<LocationModel>((district) {
-                return LocationModel(
-                  districtAr: district['name_ar'],
-                  districtEn: district['name_en'],
-                  cityAr: city['name_ar'],
-                  cityEn: city['name_en'],
-                  regionAr: region['name_ar'],
-                  regionEn: region['name_en'],
-                );
-              });
-            });
-          }).toList();
-
-      if (mounted) setState(() {});
-    } catch (e) {
-      AppLogs.log('Error loading locations: $e', type: LogType.error);
-      rethrow;
-    }
-  }
-
-  Future<void> _loadRecentSearches() async {
-    try {
-      final data = CachingHelper.getListString(
-        SharedPrefKeys.recentSearchesKey,
-      );
-      final searches =
-          data.map((e) => LocationModel.fromJson(json.decode(e))).toList();
-      if (mounted) {
-        setState(() {
-          _recentSearches.clear();
-          _recentSearches.addAll(searches);
-        });
-      }
-    } catch (e) {
-      AppLogs.log('Error loading recent searches: $e', type: LogType.error);
-    }
-  }
-
-  bool _isArabicText(String text) => RegExp(r'[\u0600-\u06FF]').hasMatch(text);
-
-  void _handleSearch(String query) {
-    _searchDebounce?.cancel();
-    _searchDebounce = Timer(const Duration(milliseconds: 300), () {
-      if (query.isEmpty) return setState(() => _searchResults.clear());
-
-      final isArabic = _isArabicText(query);
-      final results =
-          _locations.where((location) {
-            final fields =
-                isArabic
-                    ? [location.districtAr, location.cityAr, location.regionAr]
-                    : [location.districtEn, location.cityEn, location.regionEn];
-            return fields.any(
-              (f) => f?.toLowerCase().contains(query.toLowerCase()) ?? false,
-            );
-          }).toList();
-
-      setState(() => _searchResults = results);
-    });
-  }
-
-  Future<void> _handleLocationSelect(LocationModel location) async {
-    _recentSearches.removeWhere(
-      (item) => json.encode(item.toJson()) == json.encode(location.toJson()),
-    );
-    _recentSearches.insert(0, location);
-    _selectedLocation = location;
-
-    await CachingHelper.setData(
-      SharedPrefKeys.recentSearchesKey,
-      _recentSearches.map((e) => json.encode(e.toJson())).toList(),
-    );
-
-    if (mounted) {
-      setState(() {
-        _searchController.text =
-            context.isAr
-                ? '${location.districtAr}، ${location.cityAr}'
-                : '${location.districtEn}, ${location.cityEn}';
-      });
-    }
-  }
-
+  // ✅ Build a reusable tile for search result or recent item
   Widget _buildSearchTile({
     required IconData icon,
     required String title,
@@ -212,6 +78,7 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     );
   }
 
+  // ✅ Header with close button and search field
   Widget _buildSearchHeader() => Row(
     children: [
       GestureDetector(
@@ -230,26 +97,37 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
         child: CustomSearchTextField(
           readOnly: false,
           controller: _searchController,
-          onChanged: _handleSearch,
+          onChanged: (query) {
+            final isArabic = RegExp(r'[\u0600-\u06FF]').hasMatch(query);
+            context.read<RecentSearchesCubit>().onSearchQueryChanged(
+              query,
+              isArabic: isArabic,
+            );
+          },
         ),
       ),
     ],
   );
-
-  Widget _buildLocationsList() {
-    if (_isLoading) return const Center(child: CircularProgressIndicator());
-
-    final isSearching = _searchController.text.isNotEmpty;
-    final locations = isSearching ? _searchResults : _recentSearches;
-    final isArabic = context.isAr;
+  // ✅ Shows either filtered search results or recent searches list
+  Widget _buildLocationsList(RecentSearchesState state) {
     final query = _searchController.text.trim();
+    final isSearching = query.isNotEmpty;
+    final isArabic = context.isAr;
+    final locations = isSearching ? state.searchResults : state.recentSearches;
 
-    if (locations.isEmpty && !isSearching) return const SizedBox.shrink();
+    if (state.isLoading) {
+      return const Expanded(child: Center(child: CircularProgressIndicator()));
+    }
+
+    if (locations.isEmpty && !isSearching) {
+      return const SizedBox.shrink();
+    }
 
     final itemCount = locations.length + (isSearching ? 0 : 1);
 
     return Expanded(
       child: ListView.builder(
+        key: const PageStorageKey<String>('recentSearches'),
         itemCount: itemCount == 0 ? 1 : itemCount,
         itemBuilder: (context, index) {
           if (locations.isEmpty && isSearching) {
@@ -260,13 +138,17 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
                       ? 'إضافة "$query" كموقع مخصص'
                       : 'Add "$query" as custom location',
               onTap: () {
-                final customLocation = LocationModel(
+                final custom = LocationModel(
                   districtAr: query,
                   districtEn: query,
                   cityAr: isArabic ? 'موقع مخصص' : 'Custom location',
                   cityEn: 'Custom location',
                 );
-                _handleLocationSelect(customLocation);
+                context.read<RecentSearchesCubit>().selectLocation(custom);
+                _searchController.text =
+                    isArabic
+                        ? '${custom.districtAr}، ${custom.cityAr}'
+                        : '${custom.districtEn}, ${custom.cityEn}';
               },
             );
           }
@@ -275,13 +157,10 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
             return _buildSearchTile(
               icon: Icons.delete_outline,
               title: isArabic ? 'مسح عمليات البحث' : 'Clear recent searches',
-              onTap: () async {
+              onTap: () {
+                context.read<RecentSearchesCubit>().clearRecentSearches();
                 context.showSnackBar(
                   isArabic ? 'تم مسح سجل البحث' : 'Recent searches cleared',
-                );
-                setState(_recentSearches.clear);
-                await CachingHelper.removeData(
-                  SharedPrefKeys.recentSearchesKey,
                 );
               },
             );
@@ -298,7 +177,13 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
               icon: isSearching ? Icons.place : Icons.history,
               title: isArabic ? location.districtAr : location.districtEn,
               subtitle: isArabic ? location.cityAr : location.cityEn,
-              onTap: () => _handleLocationSelect(location),
+              onTap: () {
+              context.read<RecentSearchesCubit>().selectLocation(location);
+                _searchController.text =
+                    isArabic
+                        ? '${location.districtAr}، ${location.cityAr}'
+                        : '${location.districtEn}, ${location.cityEn}';
+              },
             ),
           );
         },
@@ -306,61 +191,57 @@ class _RecentSearchesScreenState extends State<RecentSearchesScreen> {
     );
   }
 
+  // ✅ Main build method with done button at the bottom
   @override
   Widget build(BuildContext context) {
-    final isSearching = _searchController.text.isNotEmpty;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSearchHeader(),
-              verticalSpacing(kSpacingXLarge),
-              Text(
-                isSearching
-                    ? context.localization.result
-                    : context.localization.recent_search,
-                style: context.titleMedium?.copyWith(
-                  fontWeight: FontWeightHelper.medium,
-                ),
-              ),
-              verticalSpacing(kSpacingSmall),
-              _buildLocationsList(),
-            ],
-          ),
-        ),
-        CustomButton(
-          text: context.localization.done,
-          onPressed: () {
-            if (_selectedLocation != null) {
-              context.pushNamed(
-                Routes.filterView,
-                arguments: LocationArgument(
-                  district:
-                      context.isAr
-                          ? _selectedLocation!.districtAr
-                          : _selectedLocation!.districtEn,
-                  city:
-                      context.isAr
-                          ? _selectedLocation!.cityAr
-                          : _selectedLocation!.cityEn,
-                ),
-              );
-            } else {
-              context.showSnackBar(context.localization.select_location);
-            }
-          },
-        ),
-      ],
-    );
-  }
+    return BlocBuilder<RecentSearchesCubit, RecentSearchesState>(
+      builder: (context, state) {
+        final isSearching = _searchController.text.isNotEmpty;
+        final isArabic = context.isAr;
 
-  @override
-  void dispose() {
-    _searchDebounce?.cancel();
-    _searchController.dispose();
-    super.dispose();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSearchHeader(),
+                  verticalSpacing(kSpacingXLarge),
+                  Text(
+                    isSearching
+                        ? context.localization.result
+                        : context.localization.recent_search,
+                    style: context.titleMedium?.copyWith(
+                      fontWeight: FontWeightHelper.medium,
+                    ),
+                  ),
+                  verticalSpacing(kSpacingSmall),
+                  _buildLocationsList(state),
+                ],
+              ),
+            ),
+            CustomButton(
+              text: context.localization.done,
+              onPressed: () {
+                final selected = state.selectedLocation;
+                if (selected != null) {
+                  context.pushNamed(
+                    Routes.filterView,
+                    arguments: LocationArgument(
+                      district:
+                          isArabic ? selected.districtAr : selected.districtEn,
+                      city: isArabic ? selected.cityAr : selected.cityEn,
+                    ),
+                  );
+                } else {
+                  context.showSnackBar(context.localization.select_location);
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

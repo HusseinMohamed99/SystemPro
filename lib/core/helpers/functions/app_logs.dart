@@ -23,6 +23,7 @@ class AppLogs {
     String message, {
     LogType type = LogType.debug,
     String tag = '',
+    Object? value,
   }) {
     assert(() {
       late final String prefix;
@@ -62,13 +63,29 @@ class AppLogs {
           tag = tag.isEmpty ? 'Close' : tag;
           break;
       }
+        final String valuePart =
+          value != null ? '\n📦 → ${_formatValue(value)}' : '';
 
       dev.log(
-        '$ansiColor$tag $prefix: $message\x1B[0m',
+        '$ansiColor$tag $prefix: $message$valuePart\x1B[0m',
         name: '$tag $time',
         level: level,
       );
       return true;
     }());
+  }
+  
+  static String _formatValue(Object value) {
+    if (value is List) {
+      if (value.length > 10) {
+        return '[List length: ${value.length}] ${value.take(3).toList()}...';
+      } else {
+        return value.toString();
+      }
+    }
+    if (value.toString().length > 300) {
+      return '${value.toString().substring(0, 300)}...';
+    }
+    return value.toString();
   }
 }

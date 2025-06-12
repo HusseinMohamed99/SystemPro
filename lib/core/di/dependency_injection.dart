@@ -37,6 +37,7 @@ import 'package:system_pro/features/Home/logic/Profile/profile_cubit.dart';
 // Categories / Search
 import 'package:system_pro/features/Search/data/repo/categories_repo.dart';
 import 'package:system_pro/features/Search/logic/categories_cubit.dart';
+import 'package:system_pro/features/Search/logic/recent_searches_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -69,6 +70,7 @@ void setupGetIt({
   _registerMarketplaceModule();
   _registerCompanyProfileModule();
   _registerCategoriesModule();
+  _registerRecentSearchModule();
 }
 
 /// Registers core services like API service and networking layer
@@ -161,4 +163,8 @@ void _registerCompanyProfileModule() {
 void _registerCategoriesModule() {
   _registerLazySingleton(() => CategoriesRepo(getIt()));
   _registerFactory(() => CategoriesCubit(getIt()));
+}
+
+void _registerRecentSearchModule() {
+  _registerFactory(RecentSearchesCubit.new);
 }

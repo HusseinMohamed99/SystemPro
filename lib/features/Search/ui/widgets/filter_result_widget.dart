@@ -78,16 +78,16 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
                   const AdaptiveDivider(),
 
                   // زر العدّاد والترتيب
-                  ResultsCountAndSortButton(
-                    propertiesCount: listings.length.toString(),
-                    selectedSort: cubit.selectedSort,
-                    sortOptions: cubit.sortOptions,
-                    onSortSelected: cubit.sortListings,
-                  ).onlyPadding(
-                    leftPadding: kPaddingDefaultHorizontal,
-                    rightPadding: kPaddingDefaultHorizontal,
-                    topPadding: kPaddingDefaultVertical,
-                  ),
+                  // ResultsCountAndSortButton(
+                  //   propertiesCount: listings.length.toString(),
+                  //   selectedSort: cubit.selectedSort,
+                  //   sortOptions: cubit.sortOptions,
+                  //   onSortSelected: cubit.sortListings,
+                  // ).onlyPadding(
+                  //   leftPadding: kPaddingDefaultHorizontal,
+                  //   rightPadding: kPaddingDefaultHorizontal,
+                  //   topPadding: kPaddingDefaultVertical,
+                  // ),
 
                   // عرض قائمة العقارات
                   Expanded(

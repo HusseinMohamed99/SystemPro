@@ -3,119 +3,136 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/functions/app_logs.dart';
 
+/// Utility class for secure and regular local caching.
 class CachingHelper {
-  // Private constructor to prevent instantiation.
   CachingHelper._();
 
   static late SharedPreferences _preferences;
+  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
-  // Singleton instance for SharedPreferences.
+  /// Initializes the SharedPreferences instance
+  ///  (should be called at app start).
   static Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  // Singleton instance for FlutterSecureStorage.
-  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  /// 🔓 SharedPreferences methods
 
-  /// Removes a value from SharedPreferences with the given [key].
   static Future<void> removeData(String key) async {
-    _logAction('Removing data', key);
+    _log('Removing key', key: key);
     await _preferences.remove(key);
   }
 
-  /// Clears all keys and values in SharedPreferences.
   static Future<void> clearAllData() async {
-    _logAction('Clearing all SharedPreferences data');
+    _log('Clearing SharedPreferences');
     await _preferences.clear();
   }
 
-  /// Saves a value in SharedPreferences with the given [key].
   static Future<void> setData(String key, dynamic value) async {
-    _logAction('Setting data', key, value);
-    if (value is String) {
-      await _preferences.setString(key, value);
-    } else if (value is int) {
-      await _preferences.setInt(key, value);
-    } else if (value is bool) {
-      await _preferences.setBool(key, value);
-    } else if (value is double) {
-      await _preferences.setDouble(key, value);
-    } else if (value is List<String>) {
-      await _preferences.setStringList(key, value);
-    } else {
+    final shortValue = _shortenValue(value);
+    _log('Saving data', key: key, value: shortValue);
+
+    try {
+      if (value is String) {
+        await _preferences.setString(key, value);
+      } else if (value is int) {
+        await _preferences.setInt(key, value);
+      } else if (value is bool) {
+        await _preferences.setBool(key, value);
+      } else if (value is double) {
+        await _preferences.setDouble(key, value);
+      } else if (value is List<String>) {
+        await _preferences.setStringList(key, value);
+      } else {
+        AppLogs.log(
+          'Unsupported type: ${value.runtimeType}',
+          type: LogType.error,
+          tag: 'Cache',
+        );
+      }
+    } catch (e) {
+      AppLogs.log('setData error: $e', type: LogType.error, tag: 'Cache');
+    }
+  }
+
+  static T? getData<T>(String key) {
+    try {
+      final result = _preferences.get(key) as T?;
+      _log('Reading key', key: key, value: result);
+      return result;
+    } catch (e) {
+      AppLogs.log('getData error: $e', type: LogType.error, tag: 'Cache');
+      return null;
+    }
+  }
+
+  static bool getBool(String key) => getData<bool>(key) ?? false;
+  static double getDouble(String key) => getData<double>(key) ?? 0.0;
+  static int getInt(String key) => getData<int>(key) ?? 0;
+  static String getString(String key) => getData<String>(key) ?? '';
+  static List<String> getListString(String key) =>
+      getData<List<String>>(key) ?? [];
+
+  /// 🔐 FlutterSecureStorage methods
+
+  static Future<void> clearSecuredData(String key) async {
+    _log('Removing secure key', key: key, tag: 'Secure');
+    await _secureStorage.delete(key: key);
+  }
+
+  static Future<void> clearAllSecuredData() async {
+    _log('Clearing all secure data', tag: 'Secure');
+    await _secureStorage.deleteAll();
+  }
+
+  static Future<void> setSecuredString(String key, String value) async {
+    _log('Saving secure key', key: key, tag: 'Secure');
+    try {
+      await _secureStorage.write(key: key, value: value);
+    } catch (e) {
       AppLogs.log(
-        'Unsupported value type: ${value.runtimeType}',
+        'setSecuredString error: $e',
         type: LogType.error,
+        tag: 'Secure',
       );
     }
   }
 
-  /// Retrieves a value from SharedPreferences based on its type.
-  static T? getData<T>(String key) {
-    _logAction('Getting data', key);
-    return _preferences.get(key) as T?;
-  }
-
-  /// Gets a bool value from SharedPreferences with the given [key].
-  static bool getBool(String key) {
-    AppLogs.log('Getting bool with key: $key');
-    return _preferences.getBool(key) ?? false;
-  }
-
-  /// Gets a double value from SharedPreferences with the given [key].
-  static double getDouble(String key) {
-    AppLogs.log('Getting double with key: $key');
-    return _preferences.getDouble(key) ?? 0.0;
-  }
-
-  /// Gets an int value from SharedPreferences with the given [key].
-  static int getInt(String key) {
-    AppLogs.log('Getting int with key: $key');
-    return _preferences.getInt(key) ?? 0;
-  }
-
-  /// Gets a String value from SharedPreferences with the given [key].
-  static String getString(String key) {
-    AppLogs.log('Getting String with key: $key');
-    return _preferences.getString(key) ?? '';
-  }
-
-  /// Gets a list of String values from SharedPreferences with the given [key].
-  static List<String> getListString(String key) {
-    AppLogs.log('Getting List<String> with key: $key');
-    return _preferences.getStringList(key) ?? [];
-  }
-
-  /// Removes a specific key from FlutterSecureStorage.
-  static Future<void> clearSecuredData(String key) async {
-    _logAction('Removing secured data', key);
-    await _secureStorage.delete(key: key);
-  }
-
-  /// Clears all keys and values in FlutterSecureStorage.
-  static Future<void> clearAllSecuredData() async {
-    _logAction('Clearing all secured data');
-    await _secureStorage.deleteAll();
-  }
-
-  /// Saves a secured string value in FlutterSecureStorage.
-  static Future<void> setSecuredString(String key, String value) async {
-    _logAction('Setting secured string', key, value);
-    await _secureStorage.write(key: key, value: value);
-  }
-
-  /// Retrieves a secured string value from FlutterSecureStorage.
   static Future<String> getSecuredString(String key) async {
-    _logAction('Getting secured string', key);
-    return await _secureStorage.read(key: key) ?? '';
+    _log('Reading secure key', key: key, tag: 'Secure');
+    try {
+      return await _secureStorage.read(key: key) ?? '';
+    } catch (e) {
+      AppLogs.log(
+        'getSecuredString error: $e',
+        type: LogType.error,
+        tag: 'Secure',
+      );
+      return '';
+    }
   }
 
-  /// Internal utility method to log actions.
-  static void _logAction(String action, [String? key, dynamic value]) {
+  /// ✏️ Shortens value for clean logging.
+  static String _shortenValue(dynamic value) {
+    if (value is List && value.length > 10) {
+      return '[List length: ${value.length}] ${value.take(3).toList()}...';
+    }
+    final str = value.toString();
+    return str.length > 100 ? '${str.substring(0, 100)}...' : str;
+  }
+
+  /// 🪵 Unified logger with tags.
+  static void _log(
+    String action, {
+    String? key,
+    String tag = 'Cache',
+    dynamic value,
+    LogType type = LogType.debug,
+  }) {
     final message =
         value != null
-            ? 'CachingHelper: $action with key: $key and value: $value'
-            : 'CachingHelper: $action with key: $key';
-    AppLogs.log(message);
+            ? '$action → key: $key → value: $value'
+            : '$action → key: $key';
+    AppLogs.log(message, tag: tag, value: value, type: type);
   }
 }

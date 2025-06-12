@@ -29,6 +29,7 @@ import 'package:system_pro/features/Home/ui/real_estate_details/real_estate_deta
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 import 'package:system_pro/features/Search/data/model/location_argument.dart';
 import 'package:system_pro/features/Search/logic/categories_cubit.dart';
+import 'package:system_pro/features/Search/logic/recent_searches_cubit.dart';
 import 'package:system_pro/features/Search/ui/filter_view.dart';
 import 'package:system_pro/features/Search/ui/search_view.dart';
 import 'package:system_pro/features/Search/ui/widgets/filter_result_widget.dart';
@@ -128,7 +129,13 @@ class AppRouters {
 
       // Search screen without additional cubit injection.
       case Routes.searchView:
-        return MaterialPageRoute(builder: (_) => const SearchView());
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => RecentSearchesCubit(),
+                child: const SearchView(),
+              ),
+        );
 
       // Filter screen with type-checked LocationArgument and CategoriesCubit.
       case Routes.filterView:

@@ -14,7 +14,6 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    AppLogs.log('onChange -- ${bloc.runtimeType}, $change', type: LogType.info);
   }
 
   @override
