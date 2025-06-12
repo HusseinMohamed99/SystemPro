@@ -84,9 +84,18 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 📥 Public method to fetch listings with filter/caching logic
-  Future<void> getListings({String? filter, bool forceRefresh = false, required BuildContext context,
-    }) async {
+  Future<void> getListings({
+    String? filter,
+    bool forceRefresh = false,
+    required BuildContext context,
+  }) async {
     final effectiveFilter = (filter?.isNotEmpty ?? false) ? filter! : 'buy';
+    if (forceRefresh) {
+      print('🔄 Force refresh: clearing visible + cache');
+      _visibleListings.clear();
+      _cachedListingsByFilter.remove(effectiveFilter);
+      pagination.reset();
+    }
 
     if (!forceRefresh &&
         _currentFilter == effectiveFilter &&
@@ -140,7 +149,10 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 🎯 Fetch with custom args (filter screen)
-  Future<void> fetchAndFilterListings(FilterResultArguments args, {required String lang}) async {
+  Future<void> fetchAndFilterListings(
+    FilterResultArguments args, {
+    required String lang,
+  }) async {
     emit(const MarketplaceState.loading());
     pagination.reset();
     _visibleListings.clear();
@@ -158,7 +170,10 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// ➕ Load more from filter args
-  Future<void> loadMoreWithArgs(FilterResultArguments args, {required String lang}) async {
+  Future<void> loadMoreWithArgs(
+    FilterResultArguments args, {
+    required String lang,
+  }) async {
     final key = args.hashCode.toString();
     await _fetchAndHandleListings(
       lang: lang,
@@ -181,7 +196,10 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     pagination.isLoading = true;
 
     try {
-      final result = await _marketplaceRepo.getMarketplaceListings(request,lang);
+      final result = await _marketplaceRepo.getMarketplaceListings(
+        request,
+        lang,
+      );
 
       result.when(
         success: (response) {
@@ -254,9 +272,13 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 💖 Toggle favorite status and sync with favorite cubit
-  Future<Listing?> toggleFavorite(int id, {Listing? listing,required String lang}) async {
+  Future<Listing?> toggleFavorite(
+    int id, {
+    Listing? listing,
+    required String lang,
+  }) async {
     try {
-      final result = await _marketplaceRepo.toggleFavorite(id,lang);
+      final result = await _marketplaceRepo.toggleFavorite(id, lang);
       return result.when(
         success: (res) {
           final isFav = res.data?.isFavorited ?? false;
@@ -318,10 +340,15 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }
 
   /// 🧯 Clear hydrated cache manually
-  void clearHydratedCache() => clear();
+  void clearHydratedCache() {
+    clear();
+    _visibleListings.clear();
+    _cachedListingsByFilter.clear();
+    print('🧹 All cache cleared manually.');
+  }
 
   /// 💾 Convert current state to JSON for hydration
-@override
+  @override
   Map<String, dynamic>? toJson(MarketplaceState state) {
     return state.whenOrNull(
       success:
@@ -336,7 +363,6 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
           },
     );
   }
-
 
   /// ♻️ Rebuild state from saved JSON
   @override

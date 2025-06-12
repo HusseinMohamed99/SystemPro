@@ -4,6 +4,7 @@ import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
+import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/helpers/responsive/spacing.dart';
 import 'package:system_pro/core/theming/colorsManager/color_manager.dart';
@@ -19,7 +20,7 @@ import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 
 /// Widget to display a source profile (either company or marketer)
-class GetSourceProfileSuccess extends StatelessWidget {
+class GetSourceProfileSuccess extends StatefulWidget {
   const GetSourceProfileSuccess({
     super.key,
     required this.realEstateSource,
@@ -28,17 +29,50 @@ class GetSourceProfileSuccess extends StatelessWidget {
     required this.scrollController,
     this.isLoadingMore = false,
   });
+
   final RealEstateSource realEstateSource;
   final List<Listing> realEstateSourceListings;
   final bool isCompanyProfile;
   final ScrollController scrollController;
   final bool isLoadingMore;
+
+  @override
+  State<GetSourceProfileSuccess> createState() =>
+      _GetSourceProfileSuccessState();
+}
+
+class _GetSourceProfileSuccessState extends State<GetSourceProfileSuccess> {
+  bool hasScrolled = false;
+  @override
+  void initState() {
+    super.initState();
+
+    widget.scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final offset = widget.scrollController.offset;
+
+    // يظهر إذا بدأ scroll - يختفي إذا عاد للأعلى
+    if (offset <= 0 && hasScrolled) {
+      setState(() => hasScrolled = false);
+    } else if (offset > 0 && !hasScrolled) {
+      setState(() => hasScrolled = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController.removeListener(_onScroll);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 🟦 Profile Header Section
+        // 🟦 Header Section
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -47,40 +81,42 @@ class GetSourceProfileSuccess extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  verticalSpacing(kSpacingLarge),
-                  // Profile Picture Circle
+                  verticalSpacing(kSpacingMedium),
+                  // 👤 Profile Picture
                   Container(
                     width: 100.w,
                     height: 100.h,
                     decoration: BoxDecoration(
                       color: ColorManager.pureBlack,
                       borderRadius: BorderRadius.circular(320),
+                      border: Border.all(
+                        color: ColorManager.primaryBlue,
+                        width: 1.5.w,
+                      ),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(320),
                       child: CustomCachedNetworkImageWidget(
-                        imageURL: realEstateSource.pictureUrl ?? '',
+                        imageURL: widget.realEstateSource.pictureUrl ?? '',
                         height: 100.h,
                         width: 100.w,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   verticalSpacing(kSpacingDefault),
-                  // Name Text
                   Text(
-                    realEstateSource.name ?? '',
+                    widget.realEstateSource.name ?? '',
                     style: context.titleLarge?.copyWith(
                       fontWeight: FontWeightHelper.medium,
                     ),
                   ),
                   verticalSpacing(kSpacingSmall),
-                  // Property count Text
                   Text(
-                    '${realEstateSourceListings.length} ${context.localization.properties}',
+                    '${widget.realEstateSourceListings.length} ${context.localization.properties}',
                     style: context.titleMedium?.copyWith(
                       fontWeight: FontWeightHelper.regular,
-                      color: customSoftAndHintGreyColor(context), 
+                      color: customSoftAndHintGreyColor(context),
                     ),
                   ),
                 ],
@@ -88,45 +124,62 @@ class GetSourceProfileSuccess extends StatelessWidget {
             ),
           ],
         ),
-        verticalSpacing(kSpacingXLarge),
-        // 📍 Location Info
-        LocationWidget(location: realEstateSource.address ?? ''),
-        verticalSpacing(kSpacingDefault),
-        // 📄 About/Bio
-        AboutRealEstateWidget(description: realEstateSource.bio ?? ''),
-        verticalSpacing(kSpacingLarge),
-        // ─ Divider
-        const AdaptiveDivider(),
-        verticalSpacing(kSpacingDefault),
-        // 🏠 Properties Count
-        Text(
-          context.localization.properties,
-          style: context.titleLarge?.copyWith(
-            fontWeight: FontWeightHelper.medium,
-          ),
-        ),
-        const AdaptiveDivider(), verticalSpacing(kSpacingDefault),
-        // 🟦 Scrollable Profile Details Section
+
+        // 🔻 Divider يظهر فقط بعد أول Scroll
+        if (hasScrolled)
+          const AdaptiveDivider().vPadding(kPaddingDefaultVertical),
+
+        // 🟦 Details Section
         Expanded(
-          child: CustomScrollView(
-            controller: scrollController,
-            slivers: [
-              // 🏘 Real Estate Listings
-              RealEstateSliverList(listings: realEstateSourceListings),
-              // 🔄 Loader if loading more items
-              if (isLoadingMore)
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (!hasScrolled && notification.metrics.pixels > 0) {
+                setState(() => hasScrolled = true);
+              }
+              return false;
+            },
+            child: CustomScrollView(
+              controller: widget.scrollController,
+              slivers: [
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                 SliverToBoxAdapter(
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.symmetric(
-                        horizontal: kPaddingDefaultHorizontal.w,
-                        vertical: kPaddingDefaultVertical.h,
-                      ),
-                      child: const CustomLoader(type: LoaderType.adaptive),
+                  child: LocationWidget(
+                    location: widget.realEstateSource.address ?? '',
+                  ),
+                ),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+                SliverToBoxAdapter(
+                  child: AboutRealEstateWidget(
+                    description: widget.realEstateSource.bio ?? '',
+                  ),
+                ),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingLarge)),
+                const SliverToBoxAdapter(child: AdaptiveDivider()),
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+                SliverToBoxAdapter(
+                  child: Text(
+                    context.localization.properties,
+                    style: context.titleLarge?.copyWith(
+                      fontWeight: FontWeightHelper.medium,
                     ),
                   ),
                 ),
-            ],
+                SliverToBoxAdapter(child: verticalSpacing(kSpacingDefault)),
+                RealEstateSliverList(listings: widget.realEstateSourceListings),
+                if (widget.isLoadingMore)
+                  SliverToBoxAdapter(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.symmetric(
+                          horizontal: kPaddingDefaultHorizontal.w,
+                          vertical: kPaddingDefaultVertical.h,
+                        ),
+                        child: const CustomLoader(type: LoaderType.adaptive),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ],
