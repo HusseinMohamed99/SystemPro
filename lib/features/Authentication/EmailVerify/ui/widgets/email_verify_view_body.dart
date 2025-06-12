@@ -53,7 +53,7 @@ class EmailVerifyViewBody extends StatelessWidget {
               _buildResendSection(context, emailVerifyCubit),
             ],
           ),
-        ).allPadding(vPadding: vPadding, hPadding: hPadding);
+        );
       },
     );
   }
