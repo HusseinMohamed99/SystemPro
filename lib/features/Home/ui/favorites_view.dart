@@ -13,11 +13,13 @@ import 'package:system_pro/core/widgets/indicators/custom_loading_indicator.dart
 import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_state.dart';
 import 'package:system_pro/features/Home/ui/fav_widgets/favorites_view_body.dart';
+
 class FavoritesView extends StatefulWidget {
   const FavoritesView({super.key});
   @override
   State<FavoritesView> createState() => _FavoritesViewState();
 }
+
 class _FavoritesViewState extends State<FavoritesView> {
   final _scrollController = ScrollController();
   @override
@@ -33,16 +35,22 @@ class _FavoritesViewState extends State<FavoritesView> {
       }
     });
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    context.read<FavoriteCubit>().getFavoriteListings(forceRefresh: true, context: context);
+    context.read<FavoriteCubit>().getFavoriteListings(
+      forceRefresh: true,
+      context: context,
+    );
   }
+
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,7 +82,9 @@ class _FavoritesViewState extends State<FavoritesView> {
                 }
                 return RefreshIndicator(
                   onRefresh:
-                      () => context.read<FavoriteCubit>().refreshFavorites(context: context),
+                      () => context.read<FavoriteCubit>().refreshFavorites(
+                        context: context,
+                      ),
                   child: FavoritesViewBody(
                     listings: listings,
                     scrollController: _scrollController,
@@ -85,7 +95,10 @@ class _FavoritesViewState extends State<FavoritesView> {
               }
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_favorite_properties,
-                onRetry: () => context.read<FavoriteCubit>().refreshFavorites(context: context),
+                onRetry:
+                    () => context.read<FavoriteCubit>().refreshFavorites(
+                      context: context,
+                    ),
               );
             },
           ),

@@ -54,6 +54,7 @@ class _RealEstateImageSliderState extends State<RealEstateImageSlider> {
       listing: widget.listing,
       lang: context.localeCode,
     );
+    if (!mounted) return;
     if (updated != null) {
       final favCubit = context.read<FavoriteCubit>();
       updated.isFavorite

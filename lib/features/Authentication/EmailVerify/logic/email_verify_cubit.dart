@@ -61,8 +61,11 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   }
 
   /// Validates OTP and triggers verification logic
-  Future<void> verifyEmail({required String email, required BuildContext context}) async {
-        final lang = context.localeCode;
+  Future<void> verifyEmail({
+    required String email,
+    required BuildContext context,
+  }) async {
+    final lang = context.localeCode;
 
     emit(const EmailVerifyState.emailVerifyLoading());
 
@@ -93,7 +96,10 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
   }
 
   /// Sends a new OTP if cooldown expired
-  Future<void> resendOtp({required String email, required BuildContext context}) async {
+  Future<void> resendOtp({
+    required String email,
+    required BuildContext context,
+  }) async {
     if (_secondsLeft > 0) return;
     final lang = context.localeCode;
 

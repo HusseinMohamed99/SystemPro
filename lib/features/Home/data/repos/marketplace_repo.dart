@@ -16,7 +16,7 @@ class MarketplaceRepo {
   /// Fetches marketplace listings with advanced filtering and pagination.
   ///
   /// Returns [ApiResult<MarketplaceResponse>] that includes success or failure.
-Future<ApiResult<MarketplaceResponse>> getMarketplaceListings(
+  Future<ApiResult<MarketplaceResponse>> getMarketplaceListings(
     FilterRequestModel filter,
     String lang,
   ) async {
@@ -26,21 +26,22 @@ Future<ApiResult<MarketplaceResponse>> getMarketplaceListings(
       );
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error,lang));
+      return ApiResult.failure(ErrorHandler.handle(error, lang));
     }
   }
-
-
 
   /// Toggles the favorite state of a listing by its [id].
   ///
   /// Returns [ToggleFavoriteResponse] wrapped in [ApiResult].
-  Future<ApiResult<ToggleFavoriteResponse>> toggleFavorite(int id, String lang) async {
+  Future<ApiResult<ToggleFavoriteResponse>> toggleFavorite(
+    int id,
+    String lang,
+  ) async {
     try {
       final response = await _apiService.toggleFavorite(id);
       return ApiResult.success(response);
     } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error,lang));
+      return ApiResult.failure(ErrorHandler.handle(error, lang));
     }
   }
 }

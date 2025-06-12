@@ -29,7 +29,8 @@ class FilterResultWidget extends StatefulWidget {
 class FilterResultWidgetState extends State<FilterResultWidget> {
   bool _isFirstBuild = true;
 
-  // استدعاء الفلترة عند أول build فقط باستخدام didChangeDependencies (لأن context جاهز هنا)
+  // Call filter only on first build
+  //  using didChangeDependencies (since context is ready here)
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

@@ -61,12 +61,15 @@ class OtpCubit extends Cubit<OtpState> {
   }
 
   /// Verifies OTP with backend
-  Future<void> checkOtp(CheckOtpRequestBody request,{required BuildContext context}) async {
-        final lang = context.localeCode;
+  Future<void> checkOtp(
+    CheckOtpRequestBody request, {
+    required BuildContext context,
+  }) async {
+    final lang = context.localeCode;
 
     emit(const OtpState.otpLoading());
 
-    final response = await _otpRepo.checkOtp(request,lang);
+    final response = await _otpRepo.checkOtp(request, lang);
 
     response.when(
       success: (data) {
@@ -85,13 +88,16 @@ class OtpCubit extends Cubit<OtpState> {
   }
 
   /// Resends OTP and restarts timer if allowed
-  Future<void> resendOtp(ResendOtpRequestBody request,{required BuildContext context}) async {
+  Future<void> resendOtp(
+    ResendOtpRequestBody request, {
+    required BuildContext context,
+  }) async {
     if (_secondsRemaining > 0) return;
     final lang = context.localeCode;
 
     emit(const OtpState.otpLoading());
 
-    final response = await _otpRepo.resendOtp(request,lang);
+    final response = await _otpRepo.resendOtp(request, lang);
 
     response.when(
       success: (data) {

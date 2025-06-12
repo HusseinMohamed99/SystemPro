@@ -26,7 +26,10 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   bool get hasMore => _loadedCount < _favoriteListings.length;
 
   /// Load favorite listings either from cache or API
-  Future<void> getFavoriteListings({bool forceRefresh = false, required BuildContext context}) async {
+  Future<void> getFavoriteListings({
+    bool forceRefresh = false,
+    required BuildContext context,
+  }) async {
     if (isLoading) return;
     final lang = context.localeCode;
     if (_isCacheLoaded && !forceRefresh) {
@@ -84,9 +87,13 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   /// Toggle favorite status and update internal cache accordingly
-  Future<void> toggleFavorite(int id, {Listing? listing,required String lang}) async {
+  Future<void> toggleFavorite(
+    int id, {
+    Listing? listing,
+    required String lang,
+  }) async {
     try {
-      final result = await _favoriteRepo.toggleFavorite(id,lang);
+      final result = await _favoriteRepo.toggleFavorite(id, lang);
 
       result.when(
         success: (response) {
@@ -211,6 +218,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       ),
     );
   }
+
   bool _hasLoadedOnce = false;
 
   /// Load favorite listings only once unless explicitly refreshed.
@@ -219,5 +227,4 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     getFavoriteListings(forceRefresh: true, context: context);
     _hasLoadedOnce = true;
   }
-
 }

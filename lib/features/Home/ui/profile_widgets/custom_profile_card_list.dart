@@ -72,32 +72,37 @@ class CustomProfileCardList extends StatelessWidget {
           Routes.editProfileView,
           arguments: userName,
         );
-        if (result == true) profileCubit.emitGetProfileStates(context: context);
+
+        if (!context.mounted) return;
+
+        if (result == true) {
+          profileCubit.emitGetProfileStates(context: context);
+        }
         break;
+
       case 1:
         await _showLanguageSheet(context);
         break;
+
       case 2:
         await _showThemeSheet(context);
         break;
+
       case 3:
-        await launchUrlWithPermission(
-          context: context,
-          url: 'https://real-estate-one-lake.vercel.app/#/about',
-        );
-        break;
       case 4:
         await launchUrlWithPermission(
           context: context,
           url: 'https://real-estate-one-lake.vercel.app/#/about',
         );
         break;
+
       case 5:
         await launchUrlWithPermission(
           context: context,
           url: 'https://real-estate-one-lake.vercel.app/#/Terms',
         );
         break;
+
       case 6:
         await launchUrlWithPermission(
           context: context,
@@ -149,6 +154,8 @@ class CustomProfileCardList extends StatelessWidget {
   ) async {
     if (newMode != currentMode) {
       await CachingHelper.setData(SharedPrefKeys.isDarkMode, newMode);
+      if (!context.mounted) return;
+
       context.read<ChangeThemingCubit>().toggleTheme();
     }
   }

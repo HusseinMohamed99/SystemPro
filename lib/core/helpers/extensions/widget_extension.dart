@@ -50,13 +50,14 @@ extension WidgetExtension on Widget {
   Widget clipRRect({BorderRadius borderRadius = BorderRadius.zero}) =>
       ClipRRect(borderRadius: borderRadius.r, child: this);
 
-      Widget align ({required Alignment alignment}) => Align(alignment: alignment, child: this);
-      Widget alignTop () => align(alignment: Alignment.topCenter);
-      Widget alignBottom () => align(alignment: Alignment.bottomCenter);
-      Widget alignLeft () => align(alignment: Alignment.centerLeft);
-      Widget alignRight () => align(alignment: Alignment.centerRight);
-      Widget alignTopLeft () => align(alignment: Alignment.topLeft);
-      Widget alignTopRight () => align(alignment: Alignment.topRight);
-      Widget alignBottomLeft () => align(alignment: Alignment.bottomLeft);
+  Widget align({required Alignment alignment}) =>
+      Align(alignment: alignment, child: this);
 
+  Widget alignTop() => align(alignment: Alignment.topCenter);
+  Widget alignBottom() => align(alignment: Alignment.bottomCenter);
+  Widget alignLeft() => align(alignment: Alignment.centerLeft);
+  Widget alignRight() => align(alignment: Alignment.centerRight);
+  Widget alignTopLeft() => align(alignment: Alignment.topLeft);
+  Widget alignTopRight() => align(alignment: Alignment.topRight);
+  Widget alignBottomLeft() => align(alignment: Alignment.bottomLeft);
 }

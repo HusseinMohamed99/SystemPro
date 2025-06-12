@@ -16,7 +16,8 @@ class BottomNavigationBarEntity {
   final String title;
 }
 
-/// Returns a fresh list of bottom nav items every time to ensure proper localization.
+/// Returns a fresh list of bottom nav items
+/// every time to ensure proper localization.
 /// Avoids caching issues when language changes.
 List<BottomNavigationBarEntity> bottomNavBarItems(BuildContext context) {
   return [

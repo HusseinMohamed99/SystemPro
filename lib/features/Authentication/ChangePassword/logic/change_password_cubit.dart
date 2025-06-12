@@ -5,7 +5,8 @@ import 'package:system_pro/features/Authentication/ChangePassword/data/model/cha
 import 'package:system_pro/features/Authentication/ChangePassword/data/repo/change_password_repo.dart';
 import 'package:system_pro/features/Authentication/ChangePassword/logic/change_password_state.dart';
 
-/// Cubit class responsible for handling the change password form state and logic.
+/// Cubit class responsible for handling
+///  the change password form state and logic.
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   ChangePasswordCubit(this._repo) : super(const ChangePasswordState.initial());
 
@@ -55,7 +56,8 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   }
 
   /// Submits the change password request if the form is valid.
-  Future<void> changePassword({required String email,
+  Future<void> changePassword({
+    required String email,
     required BuildContext context,
   }) async {
     final isValid = formKey.currentState?.validate() ?? false;
@@ -70,7 +72,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       confirmPassword: confirmPasswordController.text.trim(),
     );
 
-    final response = await _repo.changePassword(request,lang);
+    final response = await _repo.changePassword(request, lang);
 
     response.when(
       success: (res) {

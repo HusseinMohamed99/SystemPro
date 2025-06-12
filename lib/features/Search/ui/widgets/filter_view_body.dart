@@ -84,8 +84,8 @@ class _FilterViewBodyState extends State<FilterViewBody> {
         if (state is! Success) return const SizedBox.shrink();
         final categories = state.data.data?.categories ?? [];
         if (categories.isEmpty) {
-          return const CustomErrorTextWidget(
-            errorMessage: 'لا توجد فئات متاحة',
+          return  CustomErrorTextWidget(
+            errorMessage: context.localization.no_data_found,
           );
         }
         return Column(

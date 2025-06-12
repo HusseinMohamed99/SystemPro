@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:system_pro/core/di/dependency_injection.dart';
 import 'package:system_pro/core/helpers/enum/enum.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
+import 'package:system_pro/core/helpers/functions/app_logs.dart';
 import 'package:system_pro/features/Home/data/model/realestate/filter_request_model.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/data/repos/marketplace_repo.dart';
@@ -91,7 +92,10 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
   }) async {
     final effectiveFilter = (filter?.isNotEmpty ?? false) ? filter! : 'buy';
     if (forceRefresh) {
-      print('🔄 Force refresh: clearing visible + cache');
+      AppLogs.log(
+        '🔄 Force refresh: clearing visible + cache',
+        type: LogType.info,
+      );
       _visibleListings.clear();
       _cachedListingsByFilter.remove(effectiveFilter);
       pagination.reset();
@@ -344,7 +348,7 @@ class MarketplaceCubit extends HydratedCubit<MarketplaceState> {
     clear();
     _visibleListings.clear();
     _cachedListingsByFilter.clear();
-    print('🧹 All cache cleared manually.');
+    AppLogs.log('🧹 All cache cleared manually.', type: LogType.info);
   }
 
   /// 💾 Convert current state to JSON for hydration
