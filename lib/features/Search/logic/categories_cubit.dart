@@ -9,11 +9,10 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   final CategoriesRepo _repo;
 
-  Future<void> getCategories({required BuildContext context}) async {
-    final lang = context.localeCode;
+  Future<void> getCategories({required String langCode}) async {
     emit(const CategoriesState.loading());
 
-    final response = await _repo.getCategories(lang);
+    final response = await _repo.getCategories(langCode);
 
     response.when(
       success: (data) {

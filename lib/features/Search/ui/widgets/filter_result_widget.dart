@@ -17,6 +17,7 @@ import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_b
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
+// Widget لعرض نتائج الفلترة لعقارات حسب معايير معينة
 class FilterResultWidget extends StatefulWidget {
   const FilterResultWidget({super.key, required this.arguments});
   final FilterResultArguments arguments;
@@ -28,19 +29,23 @@ class FilterResultWidget extends StatefulWidget {
 class FilterResultWidgetState extends State<FilterResultWidget> {
   bool _isFirstBuild = true;
 
+  // استدعاء الفلترة عند أول build فقط باستخدام didChangeDependencies (لأن context جاهز هنا)
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isFirstBuild) {
       _isFirstBuild = false;
-      context.read<MarketplaceCubit>().fetchAndFilterListings(widget.arguments, lang: context.localeCode);
+      context.read<MarketplaceCubit>().fetchAndFilterListings(
+        widget.arguments,
+        lang: context.localeCode,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: getIt<FavoriteCubit>(),
+      value: getIt<FavoriteCubit>(), // يتم مشاركة FavoriteCubit مع الواجهة
       child: Scaffold(
         appBar: customSecondaryAppBar(
           context,
@@ -49,7 +54,7 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
         ),
         body: BlocBuilder<MarketplaceCubit, MarketplaceState>(
           builder: (context, state) {
-            final cubit = context.watch<MarketplaceCubit>();
+            final cubit = context.read<MarketplaceCubit>();
 
             if (state is MarketPlaceLoading) {
               return const CustomLoader();
@@ -70,6 +75,8 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
               return Column(
                 children: [
                   const AdaptiveDivider(),
+
+                  // زر العدّاد والترتيب
                   ResultsCountAndSortButton(
                     propertiesCount: listings.length.toString(),
                     selectedSort: cubit.selectedSort,
@@ -80,6 +87,8 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
                     rightPadding: kPaddingDefaultHorizontal,
                     topPadding: kPaddingDefaultVertical,
                   ),
+
+                  // عرض قائمة العقارات
                   Expanded(
                     child: ListingsListFilter(
                       listings: listings,
@@ -100,12 +109,14 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
   }
 }
 
+// Widget مستقل يعرض قائمة العقارات باستخدام SliverList مع دعم التمرير اللانهائي
 class ListingsListFilter extends StatelessWidget {
   const ListingsListFilter({
     super.key,
     required this.listings,
     required this.arguments,
   });
+
   final List<Listing> listings;
   final FilterResultArguments arguments;
 
@@ -116,7 +127,11 @@ class ListingsListFilter extends StatelessWidget {
       onNotification: (scrollInfo) {
         if (scrollInfo.metrics.pixels >=
             scrollInfo.metrics.maxScrollExtent - 200) {
-          marketplaceCubit.loadMoreWithArgs(arguments, lang: context.localeCode);
+          // تحميل المزيد عند الاقتراب من النهاية
+          marketplaceCubit.loadMoreWithArgs(
+            arguments,
+            lang: context.localeCode,
+          );
         }
         return false;
       },

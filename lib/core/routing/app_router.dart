@@ -133,14 +133,16 @@ class AppRouters {
       // Filter screen with type-checked LocationArgument and CategoriesCubit.
       case Routes.filterView:
         if (arguments is LocationArgument) {
+          final langCode =
+              WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+
           return MaterialPageRoute(
             builder:
                 (_) => BlocProvider(
                   create:
                       (context) =>
                           getIt<CategoriesCubit>()
-                            ..getCategories(context: context),
-
+                            ..getCategories(langCode: langCode),
                   child: FilterView(locationArgument: arguments),
                 ),
           );
