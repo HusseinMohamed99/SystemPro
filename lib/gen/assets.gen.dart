@@ -108,6 +108,21 @@ class $AssetsImagesGen {
   /// File path: assets/images/search.svg
   String get search => 'assets/images/search.svg';
 
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
+  /// File path: assets/images/splash_android12.png
+  AssetGenImage get splashAndroid12 =>
+      const AssetGenImage('assets/images/splash_android12.png');
+
+  /// File path: assets/images/splash_dark.png
+  AssetGenImage get splashDark =>
+      const AssetGenImage('assets/images/splash_dark.png');
+
+  /// File path: assets/images/splash_dark_android12.png
+  AssetGenImage get splashDarkAndroid12 =>
+      const AssetGenImage('assets/images/splash_dark_android12.png');
+
   /// File path: assets/images/whatsapp.svg
   String get whatsapp => 'assets/images/whatsapp.svg';
 
@@ -129,6 +144,10 @@ class $AssetsImagesGen {
     map,
     phone,
     search,
+    splash,
+    splashAndroid12,
+    splashDark,
+    splashDarkAndroid12,
     whatsapp,
   ];
 }

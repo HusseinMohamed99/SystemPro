@@ -1,0 +1,29 @@
+flutter_native_splash:
+  # ✅ الخلفية العامة قبل Android 12Add commentMore actions
+  color: "#FFFFFF"
+  color_dark: "#191D23"
+
+  # ✅ صورة الـ splash لنسخ ما قبل Android 12
+  image: assets/images/splash.png
+  image_dark: assets/images/splash_dark.png
+
+  # ✅ التفعيل على المنصات
+  android: true
+  ios: true
+  web: false
+
+  # ✅ إعدادات Android 12 (مهمة جدًا!)
+  android_12:
+    # ✅ صورة splash المقصوصة داخل دائرة (إجبار من النظام)
+    image: assets/images/splash_android12.png
+    image_dark: assets/images/splash_dark_android12.png
+
+    # ✅ هذه الألوان هنا مهمة جدًا في Android 12!
+    color: "#FFFFFF"         # Light background
+    color_dark: "#191D23"    # Dark background — اجعلها لونك الداكن الفعلي
+
+    # ✅ اجعل الصورة تملأ الشاشة (بدل قصها لدائرة)
+    android_gravity: fill
+
+    # ✅ اجعل splash يحتل الشاشة بالكامل
+    fullscreen: true

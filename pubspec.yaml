@@ -18,6 +18,7 @@ dependencies:
   flutter_gen: ^5.10.0
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.4.6
   flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
   flutter_spinkit: ^5.2.1
@@ -42,6 +43,7 @@ dev_dependencies:
   custom_lint: ^0.7.0
   custom_lint_builder: ^0.7.0
   flutter_gen_runner: ^5.10.0
+  flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter

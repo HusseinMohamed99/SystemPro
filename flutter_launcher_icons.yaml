@@ -1,0 +1,38 @@
+flutter_launcher_icons:
+  # ✅ Enable support for Android
+  android: true
+
+  # ✅ Enable support for iOS
+  ios: true
+
+  # ✅ Main icon image (must be square, recommended size 1024x1024, no transparency)
+  image_path: assets/images/AppIcon.png
+
+  # ✅ Minimum Android SDK version supported (21 = Android 5.0 Lollipop)
+  min_sdk_android: 21
+
+  # ✅ Remove alpha channel for iOS to prevent App Store rejections
+  remove_alpha_ios: true
+
+  # ✅ Background color for icons (important for Android < 8.0)
+  background_color: "#FFFFFF"
+
+  # ✅ Theme color used in web, PWA, and Android system UI overlays
+  theme_color: "#FFFFFF"
+
+  # ✅ Web support with color and icon configuration
+  web:
+    generate: true
+    image_path: assets/images/AppIcon.png
+    background_color: "#FFFFFF"
+    theme_color: "#FFFFFF"
+
+  # ✅ Windows support
+  windows:
+    generate: true
+    image_path: assets/images/AppIcon.png
+
+  # ✅ macOS support
+  macos:
+    generate: true
+    image_path: assets/images/AppIcon.png
