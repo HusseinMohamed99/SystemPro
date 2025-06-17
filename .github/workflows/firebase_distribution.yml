@@ -3,7 +3,7 @@ name: 🚀 Firebase CI/CD with Telegram Notifications
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
