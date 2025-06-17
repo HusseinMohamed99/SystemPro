@@ -2,7 +2,7 @@
 chcp 65001 > nul
 setlocal enabledelayedexpansion
 
-:: إعدادات الريبو
+:: Repo Settings
 set REPO=HusseinMohamed99/SystemPro
 
 if not exist .env (
