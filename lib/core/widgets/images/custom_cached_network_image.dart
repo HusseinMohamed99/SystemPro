@@ -50,7 +50,7 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
                 width: width,
                 height: height,
                 errorBuilder:
-                    (_, __, ___) =>
+                    (_, _, _) =>
                         customErrorWidget ?? _buildErrorWidget(context),
               );
             }
