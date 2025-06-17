@@ -39,12 +39,15 @@ class Company implements RealEstateSource {
   final String? name;
 
   /// Contact email for the company.
+  @override
   final String? email;
 
   /// User role (e.g., admin, agent, owner).
+  @override
   final String? role;
 
   /// Account status (e.g., active, suspended).
+  @override
   final String? status;
 
   /// Profile picture URL of the company.
@@ -53,6 +56,7 @@ class Company implements RealEstateSource {
   final String? pictureUrl;
 
   /// Contact phone number for customer inquiries.
+  @override
   final String? phone;
 
   /// Company’s physical or mailing address.
