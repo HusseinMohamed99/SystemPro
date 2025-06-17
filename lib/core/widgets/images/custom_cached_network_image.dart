@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,7 +37,6 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
       placeholder:
           (context, url) => customLoadingWidget ?? _buildLoadingIndicator(),
       errorWidget: (context, url, error) {
-        // Fallback to Image.memory if CachedNetworkImage fails
         return FutureBuilder<Uint8List?>(
           future: _fetchImageBytes(url),
           builder: (context, snapshot) {
@@ -51,7 +51,7 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
                 width: width,
                 height: height,
                 errorBuilder:
-                    (_, _, _) =>
+                    (_, __, ___) =>
                         customErrorWidget ?? _buildErrorWidget(context),
               );
             }
@@ -75,11 +75,15 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildErrorWidget(BuildContext context) {
+Widget _buildErrorWidget(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final fallbackWidth = width ?? 80.w;
+    final fallbackHeight = height ?? 60.h;
+
     return Container(
-      width: width,
-      height: height,
+      width: fallbackWidth,
+      height: fallbackHeight,
       color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
       alignment: Alignment.center,
       child: Icon(
@@ -90,17 +94,24 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
     );
   }
 
+
   Future<Uint8List?> _fetchImageBytes(String url) async {
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http
+          .get(Uri.parse(url))
+          .timeout(const Duration(seconds: 5)); // ✅ Timeout added
 
       if (response.statusCode == 200 && response.bodyBytes.isNotEmpty) {
         return response.bodyBytes;
       } else {
-        debugPrint('Image fetch failed: HTTP ${response.statusCode}');
+        if (kDebugMode) {
+          debugPrint('Image fetch failed: HTTP ${response.statusCode}');
+        }
       }
     } catch (e) {
-      debugPrint('Exception while fetching image: $e');
+      if (kDebugMode) {
+        debugPrint('Exception while fetching image: $e');
+      }
     }
 
     return null;

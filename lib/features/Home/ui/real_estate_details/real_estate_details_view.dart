@@ -62,9 +62,8 @@ class RealEstateDetailsView extends StatelessWidget {
                       listing.amenities!.isNotEmpty)
                   SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                   SliverToBoxAdapter(
-                    child: ListedByWidget(
-                      company: listing.company ?? const Company(),
-                    ),
+                    child: ListedByWidget(listing: listing),
+
                   ),
                   SliverToBoxAdapter(child: verticalSpacing(kSpacingXLarge)),
                   SliverToBoxAdapter(

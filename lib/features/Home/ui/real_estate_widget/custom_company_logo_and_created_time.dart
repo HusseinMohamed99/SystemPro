@@ -28,7 +28,7 @@ class CompanyLogoAndCreatedTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-final bool isCompany =
+    final bool isCompany =
         listing.companyId != null && listing.marketerId == null;
 
     final int? id = isCompany ? listing.companyId : listing.marketerId;
@@ -48,7 +48,7 @@ final bool isCompany =
         const Spacer(),
 
         // 🏢 صورة الشعار لو البيانات متوفرة
-        if (id != null && imageUrl != null)
+        if (id != null )
           GestureDetector(
             onTap: () {
               if (!_isSamePage(context, id, type)) {

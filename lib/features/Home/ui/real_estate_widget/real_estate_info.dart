@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
+import 'package:system_pro/core/helpers/extensions/price_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
@@ -30,7 +31,7 @@ class RealEstateInfo extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: listing.price ?? '',
+                text: listing.price?.formatPrice() ?? '',
                 style: context.titleLarge?.copyWith(
                   color: customPrimaryAndSecondaryBlueColor(context),
                 ),

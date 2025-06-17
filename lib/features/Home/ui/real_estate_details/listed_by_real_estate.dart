@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/localization_extension.dart';
 import 'package:system_pro/core/helpers/extensions/navigation_extension.dart';
-import 'package:system_pro/core/helpers/extensions/responsive_size_extension.dart';
 import 'package:system_pro/core/helpers/extensions/theming_extension.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
@@ -11,13 +10,27 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
 import 'package:system_pro/core/widgets/images/custom_cached_network_image.dart';
-import 'package:system_pro/features/Home/data/model/realestate/company.dart';
+import 'package:system_pro/features/CompanyProfile/data/model/source_route_argument.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 
 class ListedByWidget extends StatelessWidget {
-  const ListedByWidget({super.key, required this.company});
-  final Company company;
+  const ListedByWidget({super.key, required this.listing});
+  final Listing listing;
+
   @override
   Widget build(BuildContext context) {
+    // 🔍 تحديد إذا كان مصدر الإعلان شركة أم مسوّق
+    final isCompany = listing.companyId != null && listing.marketerId == null;
+    final int? id = isCompany ? listing.companyId : listing.marketerId;
+    final String type = isCompany ? 'company' : 'marketer';
+    final String? name = listing.company?.name;
+    final String? imageUrl = listing.company?.pictureUrl;
+
+    // ⚠️ حماية في حالة البيانات ناقصة
+    if (id == null || imageUrl == null || name == null) {
+      return const SizedBox.shrink(); // لا شيء يُعرض
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: kSpacingDefault.h,
@@ -30,7 +43,7 @@ class ListedByWidget extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsetsDirectional.symmetric(vertical: kSpacingXLarge.h),
-          width: context.width,
+          width: double.infinity,
           decoration: BoxDecoration(
             color: customWhiteAndTertiaryBlackColor(context),
             borderRadius: BorderRadius.circular(8),
@@ -43,13 +56,13 @@ class ListedByWidget extends StatelessWidget {
             spacing: kSpacingDefault.h,
             children: [
               CustomCachedNetworkImageWidget(
-                imageURL: company.pictureUrl,
+                imageURL: imageUrl,
                 width: 120.w,
                 height: 40.h,
                 fit: BoxFit.fitHeight,
               ),
               Text(
-                company.name ?? '',
+                name,
                 style: context.titleLarge?.copyWith(
                   fontWeight: FontWeightHelper.medium,
                 ),
@@ -59,7 +72,7 @@ class ListedByWidget extends StatelessWidget {
                 onTap: () {
                   context.pushNamed(
                     Routes.sourceProfileView,
-                    arguments: company.id,
+                    arguments: SourceRouteArguments(id: id, type: type),
                   );
                 },
                 child: Text(
