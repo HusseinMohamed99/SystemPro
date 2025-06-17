@@ -4,32 +4,36 @@ require 'dotenv'
 Dotenv.load
 
 platform :android do
-  desc "Distribute to Firebase & upload symbols to Sentry"
+  desc "Distribute APK to Firebase and upload mapping to Sentry"
   lane :firebase_distribution do
     # 🧹 Clean & prepare
     sh "flutter clean"
     sh "flutter pub get"
 
-    # ⚙️ Build APK
+    # 🏗️ Build release APK
     sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
 
-    # 🚀 Distribute APK via Firebase
+    # ✅ Ensure correct path
+    apk_path = "build/app/outputs/flutter-apk/app-release.apk"
+    mapping_path = "build/app/outputs/mapping/release"
+
+    # 🚀 Firebase App Distribution
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
-      android_artifact_type: "APK",
-      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      android_artifact_type: "APK",                     # ✅ يضمن أنه يعرف نوع الملف
+      android_artifact_path: apk_path,                  # ✅ تأكد من أنه relative وليس ../
       groups: "SystemProTester",
       release_notes: ENV["FIREBASE_RELEASE_NOTES"]
     )
 
-    # 🧠 Upload proguard/mapping file to Sentry
+    # 🧠 Sentry: upload proguard mapping
     sentry_upload_sourcemaps(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org: ENV["SENTRY_ORG"],
       project: ENV["SENTRY_PROJECT"],
-      dist: Time.now.to_i.to_s, # أو رقم النسخة
-      include: "../build/app/outputs/mapping/release",
+      dist: Time.now.to_i.to_s,
+      include: mapping_path,
       url_prefix: "~/",
       wait: true
     )
