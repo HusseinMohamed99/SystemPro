@@ -16,7 +16,6 @@ import 'package:system_pro/features/CompanyProfile/ui/widgets/get_source_profile
 
 class SourceProfileView extends StatefulWidget {
   const SourceProfileView({super.key, required this.args});
-
   final SourceRouteArguments args;
 
   @override
@@ -29,7 +28,6 @@ class _SourceProfileViewState extends State<SourceProfileView> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<RealEstateCubit>().getListingsBySource(
         companyId: widget.args.isCompany ? widget.args.id : null,
@@ -38,7 +36,6 @@ class _SourceProfileViewState extends State<SourceProfileView> {
       );
     });
 
-    // مستمع للتمرير لتحميل المزيد
     _scrollController.addListener(() {
       final cubit = context.read<RealEstateCubit>();
       if (_scrollController.position.pixels >=
@@ -83,42 +80,46 @@ class _SourceProfileViewState extends State<SourceProfileView> {
               ),
             );
           }
-    
+
           if (state is FilteredListingsSuccess ||
               state is FilteredListingsLoadingMore) {
             final listings =
                 state is FilteredListingsSuccess
                     ? state.filteredListings
                     : (state as FilteredListingsLoadingMore).currentListings;
-    
+
             if (listings.isEmpty) {
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
               );
             }
-    
-            final company = listings.first.company;
-            final marketer = listings.first.marketer;
+
+            final firstListing = listings.first;
+            final company = firstListing.company;
+
+            // ✅ التحقق حسب نوع المصدر
             final isValidSource =
-                (company?.id == sourceId) || (marketer?.id == sourceId);
-    
+                (widget.args.isCompany && company?.id == sourceId) ||
+                (widget.args.isMarketer && firstListing.marketerId == sourceId);
+
             if (!isValidSource) {
               return CustomErrorTextWidget(
                 errorMessage: context.localization.no_data_found,
               );
             }
-    
-            final source = (company ?? marketer) as RealEstateSource;
-    
+
+            // ✅ تحديد المصدر الحقيقي
+            final RealEstateSource? source = company;
+
             return GetSourceProfileSuccess(
-              realEstateSource: source,
+              realEstateSource: source!,
               realEstateSourceListings: listings,
               isCompanyProfile: widget.args.isCompany,
               scrollController: _scrollController,
               isLoadingMore: state is FilteredListingsLoadingMore,
             ).hPadding(kPaddingDefaultHorizontal);
           }
-    
+
           return const CustomLoader(type: LoaderType.adaptive);
         },
       ),

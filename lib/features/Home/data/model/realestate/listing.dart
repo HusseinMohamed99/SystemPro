@@ -3,7 +3,6 @@ import 'package:system_pro/features/Home/data/model/realestate/amenities.dart';
 import 'package:system_pro/features/Home/data/model/realestate/company.dart';
 import 'package:system_pro/features/Home/data/model/realestate/employee.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing_image.dart';
-import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
 import 'package:system_pro/features/Home/data/model/realestate/subcategory.dart';
 
 part 'listing.g.dart';
@@ -40,7 +39,6 @@ class Listing {
     this.releaseDate,
     this.employee,
     this.company,
-    this.marketer,
     this.images,
     this.amenities,
     this.subcategory,
@@ -138,9 +136,6 @@ class Listing {
   /// Associated company.
   final Company? company;
 
-  /// Marketer linked to listing.
-  final Marketer? marketer;
-
   /// Related subcategory info.
   final Subcategory? subcategory;
 
@@ -181,7 +176,6 @@ class Listing {
     String? releaseDate,
     Employee? employee,
     Company? company,
-    Marketer? marketer,
     Subcategory? subcategory,
     List<Amenities>? amenities,
     List<ListingImage>? images,
@@ -215,7 +209,6 @@ class Listing {
       releaseDate: releaseDate ?? this.releaseDate,
       employee: employee ?? this.employee,
       company: company ?? this.company,
-      marketer: marketer ?? this.marketer,
       subcategory: subcategory ?? this.subcategory,
       amenities: amenities ?? this.amenities,
       images: images ?? this.images,

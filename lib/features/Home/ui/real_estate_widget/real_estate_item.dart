@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:system_pro/core/helpers/dimensions/dimensions.dart';
 import 'package:system_pro/core/helpers/extensions/widget_extension.dart';
 import 'package:system_pro/core/helpers/functions/custom_color.dart';
-import 'package:system_pro/features/Home/data/model/realestate/company.dart';
 import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
-import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_image_slider.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_info.dart';
 
@@ -18,16 +16,20 @@ class RealEstateItem extends StatelessWidget {
     this.heroTag,
     this.showImage = true,
   });
+
   final Listing listing;
   final int index;
   final bool showImage;
   final String? heroTag;
+
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(kBorderRadiusDefault).r;
+
     return Card(
-      // ✅ Key includes listing.id only (not isFavorite) to reduce rebuild noise
-      key: ValueKey(listing.id),
+      key: ValueKey(
+        listing.id,
+      ), // Key by ID only (not isFavorite) for stability
       margin: EdgeInsetsDirectional.only(bottom: kPaddingSmallVertical.h),
       color: customWhiteAndTertiaryBlackColor(context),
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
@@ -43,23 +45,14 @@ class RealEstateItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🖼️ Image Section (Hero optional)
+            // 🖼️ Image Section (optional Hero animation)
             if (showImage)
               (heroTag != null)
                   ? Hero(tag: heroTag!, child: _buildImageSlider(context))
                   : _buildImageSlider(context),
-            // ℹ️ Real estate details (info block)
-            RealEstateInfo(
-              price: listing.price ?? '',
-              location: listing.location ?? '',
-              title: listing.title ?? '',
-              bedroomNum: listing.rooms?.toString() ?? '0',
-              bathroomNum: listing.bathrooms?.toString() ?? '0',
-              area: listing.area?.toString() ?? '0',
-              dateTime: listing.createdAt?.toString() ?? '',
-              company: listing.company ?? const Company(),
-              marketer: listing.marketer ?? const Marketer(),
-            ).allPadding(
+
+            // ℹ️ Real estate details (price, title, specs, contact)
+            RealEstateInfo(listing: listing).allPadding(
               vPadding: kPaddingSmallVertical,
               hPadding: kPaddingMediumHorizontal,
             ),
@@ -69,7 +62,7 @@ class RealEstateItem extends StatelessWidget {
     );
   }
 
-  /// Builds the real estate image slider with toggle callback
+  /// Builds the real estate image slider with passed listing
   Widget _buildImageSlider(BuildContext context) {
     return RealEstateImageSlider(
       images: listing.images,

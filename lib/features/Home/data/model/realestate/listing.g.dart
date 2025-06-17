@@ -39,10 +39,6 @@ Listing _$ListingFromJson(Map<String, dynamic> json) => Listing(
       json['company'] == null
           ? null
           : Company.fromJson(json['company'] as Map<String, dynamic>),
-  marketer:
-      json['marketer'] == null
-          ? null
-          : Marketer.fromJson(json['marketer'] as Map<String, dynamic>),
   images:
       (json['images'] as List<dynamic>?)
           ?.map((e) => ListingImage.fromJson(e as Map<String, dynamic>))
@@ -87,7 +83,6 @@ Map<String, dynamic> _$ListingToJson(Listing instance) => <String, dynamic>{
   'release_date': instance.releaseDate,
   'employee': instance.employee,
   'company': instance.company,
-  'marketer': instance.marketer,
   'subcategory': instance.subcategory,
   'amenities': instance.amenities,
   'images': instance.images,

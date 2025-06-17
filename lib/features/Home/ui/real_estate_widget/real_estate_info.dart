@@ -7,8 +7,7 @@ import 'package:system_pro/core/helpers/functions/custom_color.dart';
 import 'package:system_pro/core/theming/styleManager/font_family.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/dividers/adaptive_divider.dart';
-import 'package:system_pro/features/Home/data/model/realestate/company.dart';
-import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_company_logo_and_created_time.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/custom_connection_buttons.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_count_bed_and_bathroom.dart';
@@ -16,22 +15,9 @@ import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_count
 /// Displays detailed real estate info including price, title, location,
 /// specs, company and contact options.
 class RealEstateInfo extends StatelessWidget {
-  const RealEstateInfo({
-    super.key,
-    required this.price,
-    required this.title,
-    required this.location,
-    required this.bedroomNum,
-    required this.bathroomNum,
-    required this.area,
-    required this.dateTime,
-    required this.company,
-    required this.marketer,
-  });
+  const RealEstateInfo({super.key, required this.listing});
 
-  final String price, title, location, bedroomNum, bathroomNum, area, dateTime;
-  final Company company;
-  final Marketer marketer;
+  final Listing listing;
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +25,12 @@ class RealEstateInfo extends StatelessWidget {
       spacing: kSpacingSmall.h,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Price with currency icon
+        // 💰 Price with Saudi Riyal icon
         RichText(
           text: TextSpan(
             children: [
               TextSpan(
-                text: price,
+                text: listing.price ?? '',
                 style: context.titleLarge?.copyWith(
                   color: customPrimaryAndSecondaryBlueColor(context),
                 ),
@@ -60,45 +46,40 @@ class RealEstateInfo extends StatelessWidget {
           ),
         ),
 
-        // Title / Name
+        // 🏡 Title of the listing
         Text(
-          title,
+          listing.title ?? '',
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.medium,
             color: customBlackAndHintGreyColor(context),
           ),
         ),
 
-        // Property specs: bedrooms, bathrooms, area
+        // 🛏️ Bedrooms / Bathrooms / Area
         RealEstateCountBedAndBathRoom(
-          bedroomNum: bedroomNum,
-          bathroomNum: bathroomNum,
-          area: area,
+          bedroomNum: listing.rooms?.toString() ?? '',
+          bathroomNum: listing.bathrooms?.toString() ?? '',
+          area: listing.area ?? '',
         ),
 
-        // Location info
+        // 📍 Location
         Text(
-          location,
+          listing.location ?? '',
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
             color: customSoftAndHintGreyColor(context),
           ),
         ),
 
-        // Company + time
-        CustomCompanyLogoAndCratedTime(
-          dateTime: dateTime,
-          company: company,
-          marketer: marketer,
-        ),
+        // 🕒 Time + company/marketer logo
+        CompanyLogoAndCreatedTimeWidget(listing: listing),
 
-        // Divider
         const AdaptiveDivider().vPadding(kSpacingSmall),
 
-        // Contact Buttons
+        // 📞 Call / WhatsApp buttons
         CustomConnectionButton(
-          whatsAppURL: company.phone ?? '',
-          phoneURL: company.phone ?? '',
+          whatsAppURL: listing.company?.phone ?? '',
+          phoneURL: listing.company?.phone ?? '',
         ),
       ],
     ).onlyPadding(

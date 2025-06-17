@@ -13,7 +13,6 @@ import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 import 'package:system_pro/features/Home/logic/Favorite/favorite_cubit.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_cubit.dart';
 import 'package:system_pro/features/Home/logic/MarketPlace/marketplace_state.dart';
-import 'package:system_pro/features/Home/ui/home_widgets/result_count_and_sort_button.dart';
 import 'package:system_pro/features/Home/ui/real_estate_widget/real_estate_sliver_list.dart';
 import 'package:system_pro/features/Search/data/model/filter_result_arg.dart';
 
@@ -55,7 +54,6 @@ class FilterResultWidgetState extends State<FilterResultWidget> {
         ),
         body: BlocBuilder<MarketplaceCubit, MarketplaceState>(
           builder: (context, state) {
-            final cubit = context.read<MarketplaceCubit>();
 
             if (state is MarketPlaceLoading) {
               return const CustomLoader();

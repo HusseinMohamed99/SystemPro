@@ -7,35 +7,39 @@ import 'package:system_pro/core/routing/routes.dart';
 import 'package:system_pro/core/theming/styleManager/font_weight.dart';
 import 'package:system_pro/core/widgets/images/image_with_dotted_border.dart';
 import 'package:system_pro/features/CompanyProfile/data/model/source_route_argument.dart';
-import 'package:system_pro/features/Home/data/model/realestate/company.dart';
-import 'package:system_pro/features/Home/data/model/realestate/marketer.dart';
+import 'package:system_pro/features/Home/data/model/realestate/listing.dart';
 
-/// Widget to display creation time and clickable company/marketer logo.
-class CustomCompanyLogoAndCratedTime extends StatelessWidget {
-  const CustomCompanyLogoAndCratedTime({
-    super.key,
-    required this.dateTime,
-    required this.company,
-    required this.marketer,
-  });
+/// Widget that shows the listing creation time and clickable company/marketer logo.
+class CompanyLogoAndCreatedTimeWidget extends StatelessWidget {
+  const CompanyLogoAndCreatedTimeWidget({super.key, required this.listing});
 
-  final String dateTime;
-  final Company company;
-  final Marketer marketer;
+  final Listing listing;
+
+  bool _isSamePage(BuildContext context, int id, String type) {
+    final route = ModalRoute.of(context);
+    final currentRoute = route?.settings.name;
+    final currentArgs = route?.settings.arguments;
+
+    return currentRoute == Routes.sourceProfileView &&
+        currentArgs is SourceRouteArguments &&
+        currentArgs.id == id &&
+        currentArgs.type == type;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bool isCompany = company.id != null;
-    final int? id = isCompany ? company.id : marketer.id;
+final bool isCompany =
+        listing.companyId != null && listing.marketerId == null;
+
+    final int? id = isCompany ? listing.companyId : listing.marketerId;
     final String type = isCompany ? 'company' : 'marketer';
-    final String? imageUrl =
-        isCompany ? company.pictureUrl : marketer.pictureUrl;
+    final String? imageUrl = listing.company?.pictureUrl;
 
     return Row(
       children: [
-        // Display how long ago the listing was created
+        // ⏱️ زمن النشر بصيغة "منذ ..."
         Text(
-          TimeAgoHelper.timeAgo(context, dateTime),
+          TimeAgoHelper.timeAgo(context, listing.createdAt ?? ''),
           style: context.titleMedium?.copyWith(
             fontWeight: FontWeightHelper.regular,
             color: customSoftAndHintGreyColor(context),
@@ -43,34 +47,14 @@ class CustomCompanyLogoAndCratedTime extends StatelessWidget {
         ),
         const Spacer(),
 
-        // Display clickable logo image (company or marketer)
+        // 🏢 صورة الشعار لو البيانات متوفرة
         if (id != null && imageUrl != null)
           GestureDetector(
             onTap: () {
-              final route = ModalRoute.of(context);
-              final currentRoute = route?.settings.name;
-              final currentArgs = route?.settings.arguments;
-
-              debugPrint('🔍 Current route: $currentRoute');
-              debugPrint('🔍 Current args: $currentArgs');
-              debugPrint('🔍 Target id: $id | type: $type');
-
-              final bool isSamePage =
-                  currentRoute == Routes.sourceProfileView &&
-                  currentArgs is SourceRouteArguments &&
-                  currentArgs.id == id &&
-                  currentArgs.type == type;
-
-              debugPrint('✅ isSamePage = $isSamePage');
-
-              if (!isSamePage) {
+              if (!_isSamePage(context, id, type)) {
                 context.pushNamed(
                   Routes.sourceProfileView,
                   arguments: SourceRouteArguments(id: id, type: type),
-                );
-              } else {
-                debugPrint(
-                  '⚠️ Navigation prevented: already on the same profile.',
                 );
               }
             },
