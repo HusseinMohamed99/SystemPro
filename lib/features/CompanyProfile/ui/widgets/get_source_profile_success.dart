@@ -73,57 +73,57 @@ class _GetSourceProfileSuccessState extends State<GetSourceProfileSuccess> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 🟦 Header Section
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
+        CustomBackButton(context: context),
+        Column(
           children: [
-            CustomBackButton(context: context),
-            Expanded(
-              child: Column(
-                children: [
-                  verticalSpacing(kSpacingMedium),
-                  // 👤 Profile Picture
-                  Container(
-                    width: 100.w,
-                    height: 100.h,
-                    decoration: BoxDecoration(
-                      color: ColorManager.pureBlack,
-                      borderRadius: BorderRadius.circular(320),
-                      border: Border.all(
-                        color: ColorManager.primaryBlue,
-                        width: 1.5.w,
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(320),
-                      child: CustomCachedNetworkImageWidget(
-                        imageURL: widget.realEstateSource.pictureUrl ?? '',
-                        height: 100.h,
-                        width: 100.w,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  verticalSpacing(kSpacingDefault),
-                  Text(
-                    widget.realEstateSource.name ?? '',
-                    style: context.titleLarge?.copyWith(
-                      fontWeight: FontWeightHelper.medium,
-                    ),
-                  ),
-                  verticalSpacing(kSpacingSmall),
-                  Text(
-                    '${widget.realEstateSourceListings.length} ${context.localization.properties}',
-                    style: context.titleMedium?.copyWith(
-                      fontWeight: FontWeightHelper.regular,
-                      color: customSoftAndHintGreyColor(context),
-                    ),
-                  ),
-                ],
+            verticalSpacing(kSpacingMedium),
+            // 👤 Profile Picture
+            Container(
+              width: 100.w,
+              height: 100.h,
+              decoration: BoxDecoration(
+                color: ColorManager.pureBlack,
+                borderRadius: BorderRadius.circular(320),
+                border: Border.all(
+                  color: ColorManager.primaryBlue,
+                  width: 1.5.w,
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(320),
+                child: CustomCachedNetworkImageWidget(
+                  imageURL: widget.realEstateSource.pictureUrl ?? '',
+                  height: 100.h,
+                  width: 100.w,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            verticalSpacing(kSpacingDefault),
+            Text(
+              widget.realEstateSource.name ?? '',
+              style: context.titleLarge?.copyWith(
+                fontWeight: FontWeightHelper.medium,
+              ),
+            ),
+            verticalSpacing(kSpacingSmall),
+
+            Text(
+              widget.realEstateSource.role?.toUpperCase() ?? '',
+              style: context.titleLarge?.copyWith(
+                fontWeight: FontWeightHelper.medium,
+              ),
+            ),
+            verticalSpacing(kSpacingSmall),
+            Text(
+              '${widget.realEstateSourceListings.length} ${context.localization.properties}',
+              style: context.titleMedium?.copyWith(
+                fontWeight: FontWeightHelper.regular,
+                color: customSoftAndHintGreyColor(context),
               ),
             ),
           ],
-        ),
+        ).center(),
 
         // 🔻 Divider يظهر فقط بعد أول Scroll
         if (hasScrolled)
