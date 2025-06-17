@@ -3,7 +3,7 @@ chcp 65001 > nul
 setlocal enabledelayedexpansion
 
 :: إعدادات الريبو
-set REPO=HusseinMohamed99/SportyMate
+set REPO=HusseinMohamed99/SystemPro
 
 if not exist .env (
   echo ❌ .env file not found
