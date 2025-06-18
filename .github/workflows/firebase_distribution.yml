@@ -58,6 +58,11 @@ jobs:
           cd android
           bundle install
 
+      - name: 🧩 Install Fastlane Plugins
+        run: |
+          cd android
+          bundle exec fastlane install_plugins
+
       - name: 🚀 Firebase Distribution via Fastlane
         run: |
           cd android
