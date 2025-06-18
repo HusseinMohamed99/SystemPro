@@ -1,80 +1,134 @@
-name: 🚀 Firebase CI/CD with Telegram Notifications
+name: 🚀 Firebase CI/CD with Enhanced Notifications
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.32.2"
+  RUBY_VERSION: "3.2"
 
 jobs:
   deploy:
     name: 🔄 Build, Distribute & Notify
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: 🔧 Set up Flutter
+      - name: 🔧 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.2' # عدّل على حسب إصدارك
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+          cache-key: flutter-pub-${{ hashFiles('**/pubspec.lock') }}
 
-      - name: 📦 Install Flutter dependencies
-        run: flutter pub get
-
-      - name: 📁 Generate .env from GitHub Secrets
+      - name: 📦 Install Dependencies
         run: |
-          echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}" >> .env
-          echo "FIREBASE_CLI_TOKEN=${{ secrets.FIREBASE_CLI_TOKEN }}" >> .env
-          echo "FIREBASE_RELEASE_NOTES=${{ secrets.FIREBASE_RELEASE_NOTES }}" >> .env
-          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env
-          echo "SENTRY_ORG=${{ secrets.SENTRY_ORG }}" >> .env
-          echo "SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}" >> .env
-          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
-          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
+          flutter pub get
+          flutter precache --android
 
-      - name: 🛠 Install Ruby, Bundler & Fastlane
+      - name: 🔐 Setup Environment
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ruby-full qrencode jq
-          gem install --user-install bundler
-          export PATH="$HOME/.local/share/gem/ruby/3.2.0/bin:$PATH"
-          bundle config set --local path 'vendor/bundle'
+          cat <<EOF > .env
+          FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_CLI_TOKEN=${{ secrets.FIREBASE_CLI_TOKEN }}
+          FIREBASE_RELEASE_NOTES=$(git log -1 --pretty=%B | sed 's/"/\\"/g')
+          SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG=${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}
+          TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          EOF
+
+      - name: 🛠 Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+
+      - name: 🏗 Setup Fastlane
+        run: |
+          cd android
           bundle install
-        working-directory: android
 
-      - name: 🚀 Distribute via Fastlane
+      - name: 🏗 Build APK
         run: |
-          export PATH="$HOME/.local/share/gem/ruby/3.2.0/bin:$PATH"
+          flutter build apk --release --target lib/main.dart \
+            --dart-define=APP_ENV=production \
+            --no-tree-shake-icons
+
+      - name: 🚀 Firebase Distribution
+        run: |
           cd android
           bundle exec fastlane firebase_distribution
 
-      - name: 🧠 Get Latest Firebase Release ID
-        id: get_release
+      - name: 🔍 Get Release Info
+        id: release_info
         run: |
-          latest_release=$(firebase appdistribution:releases:list \
-            --app "${{ secrets.FIREBASE_APP_ID }}" \
-            --token "${{ secrets.FIREBASE_CLI_TOKEN }}" \
+          response=$(firebase appdistribution:releases:list \
+            --app ${{ secrets.FIREBASE_APP_ID }} \
+            --token ${{ secrets.FIREBASE_CLI_TOKEN }} \
             --limit 1 \
-            --json | jq -r '.releases[0].name' | cut -d'/' -f3)
-          echo "release_id=$latest_release" >> $GITHUB_OUTPUT
+            --json)
+          
+          release_id=$(echo "$response" | jq -r '.releases[0].name' | cut -d'/' -f3)
+          build_version=$(echo "$response" | jq -r '.releases[0].displayVersion')
+          release_notes=$(echo "$response" | jq -r '.releases[0].releaseNotes.text')
 
-      - name: 📸 Generate QR Code for Download Link
+          echo "release_id=$release_id" >> $GITHUB_OUTPUT
+          echo "build_version=$build_version" >> $GITHUB_OUTPUT
+          echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$release_notes" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 📊 Generate Artifacts
         run: |
-          qrencode -o qr.png "https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.get_release.outputs.release_id }}?utm_source=firebase-console"
+          # Generate QR Code
+          qrencode -o qr.png -s 10 -d 300 \
+            "https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }}"
 
-      - name: ✅ Send QR to Telegram
+          # Create release info file
+          cat <<EOF > release-info.md
+          ### 🚀 New Release Available!
+          **Version:** ${{ steps.release_info.outputs.build_version }}
+          **Release Notes:**
+          ${{ steps.release_info.outputs.release_notes }}
+          
+          [Download APK](https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }})
+          EOF
+
+      - name: 📤 Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-assets
+          path: |
+            qr.png
+            release-info.md
+            build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
+
+      - name: 📨 Send Success Notification
         if: success()
         run: |
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendPhoto \
-            -F chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-            -F photo=@qr.png \
-            -F caption="✅ *Build Succeeded!* APK is ready!\nScan to install or click:\n[Install APK](https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.get_release.outputs.release_id }})"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMediaGroup" \
+            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F media='[
+              {"type": "photo", "media": "attach://qr.png", "caption": "✅ *Build Success!*"},
+              {"type": "document", "media": "attach://release-info.md"}
+            ]' \
+            -F qr.png=@qr.png \
+            -F release-info.md=@release-info.md
 
-      - name: ❌ Notify Failure on Telegram
+      - name: 🚨 Send Failure Notification
         if: failure()
         run: |
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
-            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-            -d parse_mode=Markdown \
-            -d text="❌ *Build Failed!* Please check logs here:\n🔗 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode="MarkdownV2" \
+            -d text="❌ *Build Failed* \\[View Logs\\](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"

@@ -1,36 +1,85 @@
-require 'dotenv'
-
-# ✅ تحميل متغيرات البيئة من .env في جذر المشروع
-env_path = File.expand_path("../../../.env", __FILE__)
-Dotenv.load(env_path) if File.exist?(env_path)
+require 'dotenv/load'
 
 default_platform(:android)
 
 platform :android do
   desc "Distribute APK to Firebase and upload mapping to Sentry"
   lane :firebase_distribution do
-    # 🧹 Clean & prepare
+    # 1. تنظيف المشروع وإعداد التبعيات
+    flutter_clean
+    flutter_pub_get
+
+    # 2. بناء APK
+    build_apk
+
+    # 3. الحصول على المسارات الصحيحة
+    apk_path = locate_apk
+    mapping_path = locate_mapping
+
+    # 4. توزيع على Firebase
+    distribute_to_firebase(apk_path)
+
+    # 5. رفع mapping إلى Sentry (اختياري)
+    upload_to_sentry(mapping_path) if ENV["SENTRY_AUTH_TOKEN"]
+  end
+
+  # ---- الوظائف المساعدة ----
+  def flutter_clean
     sh "flutter clean"
+  end
+
+  def flutter_pub_get
     sh "flutter pub get"
+  end
 
-    # 🏗️ Build release APK
+  def build_apk
     sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
+  end
 
-    # ✅ Ensure correct path
-    apk_path = "build/app/outputs/flutter-apk/app-release.apk"
-    mapping_path = "build/app/outputs/mapping/release"
+  def locate_apk
+    # البحث عن APK في عدة مسارات محتملة
+    possible_paths = [
+      File.expand_path("../../build/app/outputs/flutter-apk/app-release.apk", __dir__),
+      File.expand_path("../build/app/outputs/flutter-apk/app-release.apk", __dir__),
+      "build/app/outputs/flutter-apk/app-release.apk"
+    ]
 
-    # 🚀 Firebase App Distribution
+    apk_path = possible_paths.find { |path| File.exist?(path) }
+
+    unless apk_path
+      UI.error("Could not find APK file. Searched in:")
+      possible_paths.each { |path| UI.message("- #{path}") }
+      raise "APK file not found"
+    end
+
+    UI.success("Found APK at: #{apk_path}")
+    apk_path
+  end
+
+  def locate_mapping
+    mapping_dir = File.expand_path("../../build/app/outputs/mapping/release", __dir__)
+    unless Dir.exist?(mapping_dir)
+      UI.important("Mapping directory not found at: #{mapping_dir}")
+      return nil
+    end
+    mapping_dir
+  end
+
+  def distribute_to_firebase(apk_path)
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
-      android_artifact_type: "APK",                     # ✅ يضمن أنه يعرف نوع الملف
-      android_artifact_path: apk_path,                  # ✅ تأكد من أنه relative وليس ../
-      groups: "SystemProTester",
-      release_notes: ENV["FIREBASE_RELEASE_NOTES"]
+      android_artifact_type: "APK",
+      android_artifact_path: apk_path,
+      groups: ENV["FIREBASE_TESTER_GROUPS"] || "testers",
+      release_notes: ENV["FIREBASE_RELEASE_NOTES"] || "New release",
+      debug: true # لطباعة معلومات إضافية للأغراض التشخيصية
     )
+  end
 
-    # 🧠 Sentry: upload proguard mapping
+  def upload_to_sentry(mapping_path)
+    return unless mapping_path
+
     sentry_upload_sourcemaps(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org: ENV["SENTRY_ORG"],
@@ -38,7 +87,8 @@ platform :android do
       dist: Time.now.to_i.to_s,
       include: mapping_path,
       url_prefix: "~/",
-      wait: true
+      wait: true,
+      debug: true
     )
   end
 end
