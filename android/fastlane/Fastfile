@@ -9,25 +9,16 @@ default_platform(:android)
 platform :android do
   desc "Distribute APK to Firebase and upload mapping to Sentry"
   lane :firebase_distribution do
-    # 1. تنظيف المشروع وإعداد التبعيات
     flutter_clean
     flutter_pub_get
-
-    # 2. بناء APK
     build_apk
-
-    # 3. الحصول على المسارات الصحيحة
     apk_path = locate_apk
     mapping_path = locate_mapping
 
-    # 4. توزيع على Firebase
     distribute_to_firebase(apk_path)
-
-    # 5. رفع mapping إلى Sentry (اختياري)
     upload_to_sentry(mapping_path) if ENV["SENTRY_AUTH_TOKEN"]
   end
 
-  # ---- الوظائف المساعدة ----
   def flutter_clean
     sh "flutter clean"
   end
@@ -38,39 +29,32 @@ platform :android do
 
   def build_apk
     sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
-     rescue => e
-    UI.error("Failed to build APK: #{e.message}")
+  rescue => e
+    UI.error("❌ Failed to build APK: #{e.message}")
     raise
-
   end
 
   def locate_apk
-    # البحث عن APK في عدة مسارات محتملة
     possible_paths = [
       File.expand_path("../../build/app/outputs/flutter-apk/app-release.apk", __dir__),
       File.expand_path("../build/app/outputs/flutter-apk/app-release.apk", __dir__),
       "build/app/outputs/flutter-apk/app-release.apk"
     ]
-
     apk_path = possible_paths.find { |path| File.exist?(path) }
-
     unless apk_path
-      UI.error("Could not find APK file. Searched in:")
-      possible_paths.each { |path| UI.message("- #{path}") }
-      raise "APK file not found"
+      UI.user_error!("APK not found. Checked:\n#{possible_paths.join("\n")}")
     end
-
-    UI.success("Found APK at: #{apk_path}")
+    UI.success("✅ Found APK at: #{apk_path}")
     apk_path
   end
 
   def locate_mapping
-    mapping_dir = File.expand_path("../../build/app/outputs/mapping/release", __dir__)
-    unless Dir.exist?(mapping_dir)
-      UI.important("Mapping directory not found at: #{mapping_dir}")
+    path = File.expand_path("../../build/app/outputs/mapping/release", __dir__)
+    unless Dir.exist?(path)
+      UI.important("⚠️ Mapping directory not found: #{path}")
       return nil
     end
-    mapping_dir
+    path
   end
 
   def distribute_to_firebase(apk_path)
@@ -81,13 +65,12 @@ platform :android do
       android_artifact_path: apk_path,
       groups: ENV["Firebase_TESTERS"] || "testers",
       release_notes: ENV["FIREBASE_RELEASE_NOTES"] || "New release",
-      debug: true # لطباعة معلومات إضافية للأغراض التشخيصية
+      debug: true
     )
   end
 
   def upload_to_sentry(mapping_path)
     return unless mapping_path
-
     sentry_upload_sourcemaps(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org: ENV["SENTRY_ORG"],
