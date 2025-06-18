@@ -3,3 +3,5 @@
 # Ensure this file is checked in to source control!
 
 gem 'fastlane-plugin-firebase_app_distribution'
+# android/Pluginfile
+gem 'fastlane-plugin-sentry'
