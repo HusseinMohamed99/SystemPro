@@ -71,7 +71,7 @@ platform :android do
       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
       android_artifact_type: "APK",
       android_artifact_path: apk_path,
-      groups: ENV["FIREBASE_TESTER_GROUPS"] || "testers",
+      groups: ENV["FIREBASE_TESTER"] || "testers",
       release_notes: ENV["FIREBASE_RELEASE_NOTES"] || "New release",
       debug: true # لطباعة معلومات إضافية للأغراض التشخيصية
     )
