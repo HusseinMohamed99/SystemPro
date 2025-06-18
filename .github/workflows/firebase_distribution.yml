@@ -89,6 +89,9 @@ jobs:
           echo "$release_notes" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: 🧩 Install QR Code Generator
+        run: sudo apt-get update && sudo apt-get install -y qrencode
+
       - name: 📊 Generate Artifacts
         run: |
           qr_link="https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }}"
