@@ -21,7 +21,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane android firebase_distribution
 ```
 
-Lane for Android Firebase App Distribution
+Distribute APK to Firebase and upload mapping to Sentry
 
 ----
 
