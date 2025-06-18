@@ -67,7 +67,7 @@ jobs:
       - name: 🚀 Firebase Distribution via Fastlane
         run: |
           cd android
-          bundle exec fastlane firebase_distribution --split-per-abi
+          bundle exec fastlane firebase_distribution
 
       - name: 🔍 Get Release Info
         id: release_info
