@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: 📥 Checkout Repository
+      - name: 📅 Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -28,10 +28,11 @@ jobs:
           cache: true
           cache-key: flutter-pub-${{ hashFiles('**/pubspec.lock') }}
 
+      - name: 🦥 Run Flutter Doctor
+        run: flutter doctor -v
+
       - name: 📦 Install Dependencies
-        run: |
-          flutter pub get
-          flutter precache --android
+        run: flutter pub get
 
       - name: 🔐 Setup Environment
         run: |
@@ -58,7 +59,7 @@ jobs:
           cd android
           bundle install
 
-      - name: 🧩 Install Fastlane Plugins
+      - name: 🥉 Install Fastlane Plugins
         run: |
           cd android
           bundle exec fastlane install_plugins
@@ -66,20 +67,21 @@ jobs:
       - name: 🚀 Firebase Distribution via Fastlane
         run: |
           cd android
-          bundle exec fastlane firebase_distribution
+          bundle exec fastlane firebase_distribution --split-per-abi
 
       - name: 🔍 Get Release Info
         id: release_info
+        continue-on-error: true
         run: |
           response=$(firebase appdistribution:releases:list \
             --app ${{ secrets.FIREBASE_APP_ID }} \
             --token ${{ secrets.FIREBASE_CLI_TOKEN }} \
             --limit 1 \
-            --json)
+            --json || echo "{}")
 
-          release_id=$(echo "$response" | jq -r '.releases[0].name' | cut -d'/' -f3)
-          build_version=$(echo "$response" | jq -r '.releases[0].displayVersion')
-          release_notes=$(echo "$response" | jq -r '.releases[0].releaseNotes.text')
+          release_id=$(echo "$response" | jq -r '.releases[0].name // empty' | cut -d'/' -f3)
+          build_version=$(echo "$response" | jq -r '.releases[0].displayVersion // "unknown"')
+          release_notes=$(echo "$response" | jq -r '.releases[0].releaseNotes.text // "No release notes."')
 
           echo "release_id=$release_id" >> $GITHUB_OUTPUT
           echo "build_version=$build_version" >> $GITHUB_OUTPUT
@@ -89,8 +91,8 @@ jobs:
 
       - name: 📊 Generate Artifacts
         run: |
-          qrencode -o qr.png -s 10 -d 300 \
-            "https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }}"
+          qr_link="https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }}"
+          qrencode -o qr.png -s 10 -d 300 "$qr_link"
 
           cat <<EOF > release-info.md
           ### 🚀 New Release Available!
@@ -98,7 +100,7 @@ jobs:
           **Release Notes:**
           ${{ steps.release_info.outputs.release_notes }}
 
-          [Download APK](https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }})
+          [Download APK]($qr_link)
           EOF
 
       - name: 📤 Upload Artifacts
@@ -115,13 +117,20 @@ jobs:
         if: success()
         run: |
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMediaGroup" \
-            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -F media='[
-              {"type": "photo", "media": "attach://qr.png", "caption": "✅ *Build Success!*"},
-              {"type": "document", "media": "attach://release-info.md"}
-            ]' \
-            -F qr.png=@qr.png \
-            -F release-info.md=@release-info.md
+          -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+          -F media='[
+            {
+              "type": "photo",
+              "media": "attach://qr.png",
+              "caption": "✅ *Build Success!*\n\n📲 *Scan the QR code to download the app directly!*"
+            },
+            {
+              "type": "document",
+              "media": "attach://release-info.md"
+            }
+          ]' \
+          -F qr.png=@qr.png \
+          -F release-info.md=@release-info.md
 
       - name: 🚨 Send Failure Notification
         if: failure()
@@ -129,4 +138,14 @@ jobs:
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
             -d parse_mode="MarkdownV2" \
-            -d text="❌ *Build Failed* \\[View Logs\\](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            -d text="❌ *Build Failed* \\\[View Logs\\](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+
+      - name: 📨 Send Release Summary to Telegram
+        if: success()
+        run: |
+          safe_notes=$(cat release-info.md | tail -n +4 | sed -e 's/[\\*_[\\]()~`>#\\+\\-=!]/\\&/g')
+          release_url="https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }}"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode="MarkdownV2" \
+            --data-urlencode "text=✅ *Release Summary*\n\n📦 Version: *${{ steps.release_info.outputs.build_version }}*\n📜 Notes:\n$safe_notes\n\n🔗 [Download APK]($release_url)"
