@@ -1,86 +1,29 @@
 require 'dotenv'
 
+# ✅ تحميل متغيرات البيئة من .env في جذر المشروع
 env_path = File.expand_path("../../../.env", __FILE__)
 Dotenv.load(env_path) if File.exist?(env_path)
 
 default_platform(:android)
 
 platform :android do
-  desc "Distribute APK to Firebase and upload mapping to Sentry"
+  desc "🚀 Distribute APK to Firebase with Fastlane"
+
   lane :firebase_distribution do
-    flutter_clean
-    flutter_pub_get
-    build_apk
-    apk_path = locate_apk
-    mapping_path = locate_mapping
-
-    distribute_to_firebase(apk_path)
-    upload_to_sentry(mapping_path) if ENV["SENTRY_AUTH_TOKEN"]
-  end
-
-  def flutter_clean
+    # 🧹 تنظيف المشروع قبل البناء
     sh "flutter clean"
-  end
 
-  def flutter_pub_get
-    sh "flutter pub get"
-  end
+    # 🏗️ بناء نسخة الإصدار بصيغة APK
+    sh "flutter build apk --release --no-tree-shake-icons"
 
-  def build_apk
-    sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
-  rescue => e
-    UI.error("❌ Failed to build APK: #{e.message}")
-    raise
-  end
-
-  def locate_apk
-    possible_paths = [
-      File.expand_path("../../build/app/outputs/flutter-apk/app-release.apk", __dir__),
-      File.expand_path("../build/app/outputs/flutter-apk/app-release.apk", __dir__),
-      "build/app/outputs/flutter-apk/app-release.apk"
-    ]
-    apk_path = possible_paths.find { |path| File.exist?(path) }
-    unless apk_path
-      UI.user_error!("APK not found. Checked:\n#{possible_paths.join("\n")}")
-    end
-    UI.success("✅ Found APK at: #{apk_path}")
-    apk_path
-  end
-
-  def locate_mapping
-    path = File.expand_path("../../build/app/outputs/mapping/release", __dir__)
-    unless Dir.exist?(path)
-      UI.important("⚠️ Mapping directory not found: #{path}")
-      return nil
-    end
-    path
-  end
-
-  def distribute_to_firebase(apk_path)
+    # 🚀 توزيع النسخة عبر Firebase App Distribution
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
       android_artifact_type: "APK",
-      android_artifact_path: apk_path,
-      groups: ENV["Firebase_TESTERS"] || "testers",
-      release_notes: ENV["FIREBASE_RELEASE_NOTES"] || "New release",
-      debug: true
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      testers: ENV["FIREBASE_TESTERS"],
+      release_notes: ENV["FIREBASE_RELEASE_NOTES"]
     )
   end
-
-def upload_to_sentry(mapping_path)
-  return unless mapping_path
-  manifest_path = "build/app/intermediates/merged_manifests/release/AndroidManifest.xml"
-  unless File.exist?(manifest_path)
-    UI.user_error!("❌ Merged AndroidManifest.xml not found at #{manifest_path}")
-  end
-
-  sentry_upload_proguard(
-    auth_token: ENV["SENTRY_AUTH_TOKEN"],
-    org_slug: ENV["SENTRY_ORG"],
-    project_slug: ENV["SENTRY_PROJECT"],
-    mapping_path: "#{mapping_path}/mapping.txt",
-    android_manifest_path: manifest_path
-  )
-end
 end
