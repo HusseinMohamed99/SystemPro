@@ -70,15 +70,17 @@ platform :android do
 
 def upload_to_sentry(mapping_path)
   return unless mapping_path
-  version = "1.0.0+#{ENV["BUILD_NUMBER"] || "1"}"
+  manifest_path = "build/app/intermediates/merged_manifests/release/AndroidManifest.xml"
+  unless File.exist?(manifest_path)
+    UI.user_error!("❌ Merged AndroidManifest.xml not found at #{manifest_path}")
+  end
 
   sentry_upload_proguard(
     auth_token: ENV["SENTRY_AUTH_TOKEN"],
     org_slug: ENV["SENTRY_ORG"],
     project_slug: ENV["SENTRY_PROJECT"],
     mapping_path: "#{mapping_path}/mapping.txt",
-    android_manifest_path: "android/app/src/main/AndroidManifest.xml"
+    android_manifest_path: manifest_path
   )
 end
-
 end
