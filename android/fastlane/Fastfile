@@ -1,7 +1,10 @@
-default_platform(:android)
-
 require 'dotenv'
-Dotenv.load
+
+# ✅ تحميل متغيرات البيئة من .env في جذر المشروع
+env_path = File.expand_path("../../../.env", __FILE__)
+Dotenv.load(env_path) if File.exist?(env_path)
+
+default_platform(:android)
 
 platform :android do
   desc "Distribute APK to Firebase and upload mapping to Sentry"
