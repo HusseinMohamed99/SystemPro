@@ -44,6 +44,7 @@ jobs:
           SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}
           TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          Firebase_TESTERS=${{ secrets.FIREBASE_TESTERS }}
           EOF
 
       - name: 🛠 Setup Ruby
@@ -57,13 +58,7 @@ jobs:
           cd android
           bundle install
 
-      - name: 🏗 Build APK
-        run: |
-          flutter build apk --release --target lib/main.dart \
-            --dart-define=APP_ENV=production \
-            --no-tree-shake-icons
-
-      - name: 🚀 Firebase Distribution
+      - name: 🚀 Firebase Distribution via Fastlane
         run: |
           cd android
           bundle exec fastlane firebase_distribution
@@ -76,7 +71,7 @@ jobs:
             --token ${{ secrets.FIREBASE_CLI_TOKEN }} \
             --limit 1 \
             --json)
-          
+
           release_id=$(echo "$response" | jq -r '.releases[0].name' | cut -d'/' -f3)
           build_version=$(echo "$response" | jq -r '.releases[0].displayVersion')
           release_notes=$(echo "$response" | jq -r '.releases[0].releaseNotes.text')
@@ -89,17 +84,15 @@ jobs:
 
       - name: 📊 Generate Artifacts
         run: |
-          # Generate QR Code
           qrencode -o qr.png -s 10 -d 300 \
             "https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }}"
 
-          # Create release info file
           cat <<EOF > release-info.md
           ### 🚀 New Release Available!
           **Version:** ${{ steps.release_info.outputs.build_version }}
           **Release Notes:**
           ${{ steps.release_info.outputs.release_notes }}
-          
+
           [Download APK](https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}/releases/${{ steps.release_info.outputs.release_id }})
           EOF
 
