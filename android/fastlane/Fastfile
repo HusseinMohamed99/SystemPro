@@ -1,6 +1,5 @@
 require 'dotenv'
 
-# ✅ تحميل متغيرات البيئة من .env في جذر المشروع
 env_path = File.expand_path("../../../.env", __FILE__)
 Dotenv.load(env_path) if File.exist?(env_path)
 
