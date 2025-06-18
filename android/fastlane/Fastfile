@@ -68,17 +68,17 @@ platform :android do
     )
   end
 
-  def upload_to_sentry(mapping_path)
-    return unless mapping_path
-     sentry_upload_proguard(
-      auth_token: ENV["SENTRY_AUTH_TOKEN"],
-      org: ENV["SENTRY_ORG"],
-      project: ENV["SENTRY_PROJECT"],
-      dist: Time.now.to_i.to_s,
-      include: mapping_path,
-      url_prefix: "~/",
-      wait: true,
-      debug: true
-    )
-  end
+def upload_to_sentry(mapping_path)
+  return unless mapping_path
+  version = "1.0.0+#{ENV["BUILD_NUMBER"] || "1"}"
+
+  sentry_upload_proguard(
+    auth_token: ENV["SENTRY_AUTH_TOKEN"],
+    org_slug: ENV["SENTRY_ORG"],
+    project_slug: ENV["SENTRY_PROJECT"],
+    mapping_path: "#{mapping_path}/mapping.txt",
+    android_manifest_path: "android/app/src/main/AndroidManifest.xml"
+  )
+end
+
 end
