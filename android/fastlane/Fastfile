@@ -1,4 +1,8 @@
-require 'dotenv/load'
+require 'dotenv'
+
+# ✅ تحميل متغيرات البيئة من .env في جذر المشروع
+env_path = File.expand_path("../../../.env", __FILE__)
+Dotenv.load(env_path) if File.exist?(env_path)
 
 default_platform(:android)
 
@@ -34,6 +38,10 @@ platform :android do
 
   def build_apk
     sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
+     rescue => e
+    UI.error("Failed to build APK: #{e.message}")
+    raise
+
   end
 
   def locate_apk
@@ -71,7 +79,7 @@ platform :android do
       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
       android_artifact_type: "APK",
       android_artifact_path: apk_path,
-      groups: ENV["FIREBASE_TESTER"] || "testers",
+      groups: ENV["Firebase_TESTERS"] || "testers",
       release_notes: ENV["FIREBASE_RELEASE_NOTES"] || "New release",
       debug: true # لطباعة معلومات إضافية للأغراض التشخيصية
     )
