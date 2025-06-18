@@ -1,6 +1,5 @@
 require 'dotenv'
 
-# ✅ تحميل متغيرات البيئة من .env في جذر المشروع
 env_path = File.expand_path("../../../.env", __FILE__)
 Dotenv.load(env_path) if File.exist?(env_path)
 
@@ -71,7 +70,7 @@ platform :android do
 
   def upload_to_sentry(mapping_path)
     return unless mapping_path
-    sentry_upload_sourcemaps(
+     sentry_upload_proguard(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org: ENV["SENTRY_ORG"],
       project: ENV["SENTRY_PROJECT"],
